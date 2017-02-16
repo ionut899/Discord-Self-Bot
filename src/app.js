@@ -51,19 +51,19 @@
           }
 
           if (msg.content.startsWith(delimiter + "calc")) {
-              calc();
+              calc(msg);
           }
 
           /**
            * Debugging
            */
           if (msg.content.startsWith(delimiter + "debug")) {
-              debug();
+              debug(msg);
           }
       }
   });
 
-  function calc() {
+  function calc(msg) {
       let operator = msg.content.split(" ")[2];
       let firstNum = parseInt(msg.content.split(" ")[1]);
       let secondNum = parseInt(msg.content.split(" ")[3]);
@@ -89,7 +89,7 @@
       msg.channel.sendMessage(`The answer to \`${firstNum} ${operator} ${secondNum}\` is \`${result}\``);
   }
 
-  function debug() {
+  function debug(msg) {
       var debugarg = msg.content.slice(9);
       console.log(debugarg);
       if (debugarg === "listchannels") {
