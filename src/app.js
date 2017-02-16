@@ -18,8 +18,8 @@
           if (msg.content.startsWith(delimiter + "help")) {
               var helpEmbed = new Discord.RichEmbed();
 
-              var commands = ["3dsguide", "3dshardmodders", "calc", "tvos"];
-              var info = ["The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "shows how to block OTA updates"];
+              var commands = ["del", "3dsguide", "3dshardmodders", "calc", "tvos"];
+              var info = ["deletes my last message", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "shows how to block OTA updates"];
               helpEmbed.setTitle("--My commands--");
               helpEmbed.addField("Command", commands, true);
               helpEmbed.addField("This does", info, true);
@@ -28,6 +28,10 @@
               helpEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
               msg.delete();
               msg.channel.sendEmbed(helpEmbed);
+          }
+
+          if (msg.content.startsWith(delimiter + "del")) {
+              msg.delete();
           }
 
           if (msg.content.startsWith(delimiter + "3dsguide")) {
