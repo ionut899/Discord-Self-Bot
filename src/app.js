@@ -15,7 +15,7 @@
   client.on("message", msg => {
 
       if (msg.author.id === "112001393140723712") {
-          if (msg.content === delimiter + "help") {
+          if (msg.content.startsWith(delimiter + "help")) {
               var helpEmbed = new Discord.RichEmbed();
 
               var commands = ["3dsguide", "3dshardmodders"];
@@ -31,12 +31,12 @@
               msg.channel.sendEmbed(helpEmbed);
           }
 
-          if (msg.content === delimiter + "3dsguide") {
+          if (msg.content.startsWith(delimiter + "3dsguide")) {
               msg.delete();
               msg.channel.sendMessage("For the one stop guide to hacking your 3DS up to firmware 11.2 go to, read, follow and learn from https://3ds.guide");
           }
 
-          if (msg.content === delimiter + "3dshardmodders") {
+          if (msg.content.startsWith(delimiter + "3dshardmodders")) {
               msg.delete();
               msg.channel.sendMessage("The 3DS scene has verified and trusted hardmodders globally! You can contact them through private messaging on GBAtemp. Find their names here: https://gbatemp.net/threads/list-of-hardmod-installers-by-region.414224/");
           }
@@ -44,8 +44,9 @@
           /**
            * Debugging
            */
-          if (msg.content === delimiter + "debug") {
-              var debugarg = msg.content.slice(7);
+          if (msg.content.startsWith(delimiter + "debug")) {
+              var debugarg = msg.content.slice(9);
+              console.log(debugarg);
               if (debugarg === "listchannels") {
                   var channelsDebugEmbed = new Discord.RichEmbed();
                   var channelNames = msg.guild.channels.map(cn => cn.name);
