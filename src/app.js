@@ -18,15 +18,14 @@
           if (msg.content.startsWith(delimiter + "help")) {
               var helpEmbed = new Discord.RichEmbed();
 
-              var commands = ["3dsguide", "3dshardmodders"];
-              var info = ["The 3DS hacking guide to follow", "List of trusted 3DS hardmodders"];
+              var commands = ["3dsguide", "3dshardmodders", "calc", "tvos"];
+              var info = ["The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "shows how to block OTA updates"];
               helpEmbed.setTitle("--My commands--");
               helpEmbed.addField("Command", commands, true);
               helpEmbed.addField("This does", info, true);
               helpEmbed.setColor("#c61530");
-              helpEmbed.setFooter("A selfbot by Favna");
+              helpEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
               helpEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
-              helpEmbed.setThumbnail("https://i.imgur.com/Ylv4Hdz.jpg")
               msg.delete();
               msg.channel.sendEmbed(helpEmbed);
           }
@@ -39,6 +38,37 @@
           if (msg.content.startsWith(delimiter + "3dshardmodders")) {
               msg.delete();
               msg.channel.sendMessage("The 3DS scene has verified and trusted hardmodders globally! You can contact them through private messaging on GBAtemp. Find their names here: https://gbatemp.net/threads/list-of-hardmod-installers-by-region.414224/");
+          }
+
+          if (msg.content.startsWith(delimiter + "tvos")) {
+              msg.delete();
+              msg.channel.sendMessage("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
+          }
+
+          if (msg.content.startsWith(delimiter + "calc")) {
+              let operator = msg.content.split(" ")[2];
+              let firstNum = parseInt(msg.content.split(" ")[1]);
+              let secondNum = parseInt(msg.content.split(" ")[3]);
+              var result = 0;
+              msg.delete();
+              switch (operator) {
+                  case "*":
+                      result = firstNum * secondNum;
+                      break;
+                  case "+":
+                      result = firstNum + secondNum;
+                      break;
+                  case "-":
+                      result = firstNum - secondNum;
+                      break;
+                  case "/":
+                      result = firstNum / secondNum;
+                      break;
+                  default:
+                      msg.reply("someting went wrong!");
+                      return;
+              }
+              msg.channel.sendMessage(`The answer to \`${firstNum} ${operator} ${secondNum}\` is \`${result}\``);
           }
 
           /**
