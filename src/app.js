@@ -30,10 +30,6 @@
               msg.channel.sendEmbed(helpEmbed);
           }
 
-          if (msg.content.startsWith(delimiter + "del")) {
-              msg.delete();
-          }
-
           if (msg.content.startsWith(delimiter + "3dsguide")) {
               msg.delete();
               msg.channel.sendMessage("For the one stop guide to hacking your 3DS up to firmware 11.2 go to, read, follow and learn from https://3ds.guide");
