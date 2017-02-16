@@ -18,8 +18,8 @@
           if (msg.content.startsWith(delimiter + "help")) {
               var helpEmbed = new Discord.RichEmbed();
 
-              var commands = ["del", "3dsguide", "3dshardmodders", "calc", "tvos"];
-              var info = ["deletes my last message", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "shows how to block OTA updates"];
+              var commands = ["avatar", "3dsguide", "3dshardmodders", "calc", "tvos"];
+              var info = ["Avatar of a user", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "shows how to block OTA updates"];
               helpEmbed.setTitle("--My commands--");
               helpEmbed.addField("Command", commands, true);
               helpEmbed.addField("This does", info, true);
@@ -45,65 +45,78 @@
               msg.channel.sendMessage("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
           }
 
+          if (msg.content.startsWith(delimiter + "avatar")) {
+              var mentionedUser = msg.mentions.users.first();
+              msg.channel.sendMessage(mentionedUser.avatarURL);
+          }
+
           if (msg.content.startsWith(delimiter + "calc")) {
-              let operator = msg.content.split(" ")[2];
-              let firstNum = parseInt(msg.content.split(" ")[1]);
-              let secondNum = parseInt(msg.content.split(" ")[3]);
-              var result = 0;
-              msg.delete();
-              switch (operator) {
-                  case "*":
-                      result = firstNum * secondNum;
-                      break;
-                  case "+":
-                      result = firstNum + secondNum;
-                      break;
-                  case "-":
-                      result = firstNum - secondNum;
-                      break;
-                  case "/":
-                      result = firstNum / secondNum;
-                      break;
-                  default:
-                      msg.reply("someting went wrong!");
-                      return;
-              }
-              msg.channel.sendMessage(`The answer to \`${firstNum} ${operator} ${secondNum}\` is \`${result}\``);
+              calc();
           }
 
           /**
            * Debugging
            */
           if (msg.content.startsWith(delimiter + "debug")) {
-              var debugarg = msg.content.slice(9);
-              console.log(debugarg);
-              if (debugarg === "listchannels") {
-                  var channelsDebugEmbed = new Discord.RichEmbed();
-                  var channelNames = msg.guild.channels.map(cn => cn.name);
-                  var channelIDs = msg.guild.channels.map(cid => cid.id);
-                  channelsDebugEmbed.setTitle("The channels on this server are as follows");
-                  channelsDebugEmbed.addField("Channel name", channelNames, true);
-                  channelsDebugEmbed.addField("\u200b", "\u200b", true);
-                  channelsDebugEmbed.addField("channel ID", channelIDs, true);
-                  channelsDebugEmbed.setColor("#00e5ee");
-                  msg.delete();
-                  msg.channel.sendEmbed(channelsDebugEmbed);
-              }
-
-              if (debugarg === "listroles") {
-                  var rolesDebugEmbed = new Discord.RichEmbed();
-                  var roleIDs = msg.guild.roles.map(rid => rid.id);
-                  var roleNames = msg.guild.roles.map(rn => rn.name)
-                      .slice(1);
-                  roleNames.unshift("Everyone");
-                  rolesDebugEmbed.setTitle("The roles on this server are as follows");
-                  rolesDebugEmbed.addField("Role name", roleNames, true);
-                  rolesDebugEmbed.addField("\u200b", "\u200b", true);
-                  rolesDebugEmbed.addField("Role ID", roleIDs, true);
-                  rolesDebugEmbed.setColor("#d82f2f");
-                  msg.delete();
-                  msg.channel.sendEmbed(rolesDebugEmbed);
-              }
+              debug();
           }
       }
   });
+
+  function calc() {
+      let operator = msg.content.split(" ")[2];
+      let firstNum = parseInt(msg.content.split(" ")[1]);
+      let secondNum = parseInt(msg.content.split(" ")[3]);
+      var result = 0;
+      msg.delete();
+      switch (operator) {
+          case "*":
+              result = firstNum * secondNum;
+              break;
+          case "+":
+              result = firstNum + secondNum;
+              break;
+          case "-":
+              result = firstNum - secondNum;
+              break;
+          case "/":
+              result = firstNum / secondNum;
+              break;
+          default:
+              msg.reply("someting went wrong!");
+              return;
+      }
+      msg.channel.sendMessage(`The answer to \`${firstNum} ${operator} ${secondNum}\` is \`${result}\``);
+  }
+
+  function debug() {
+      var debugarg = msg.content.slice(9);
+      console.log(debugarg);
+      if (debugarg === "listchannels") {
+          var channelsDebugEmbed = new Discord.RichEmbed();
+          var channelNames = msg.guild.channels.map(cn => cn.name);
+          var channelIDs = msg.guild.channels.map(cid => cid.id);
+          channelsDebugEmbed.setTitle("The channels on this server are as follows");
+          channelsDebugEmbed.addField("Channel name", channelNames, true);
+          channelsDebugEmbed.addField("\u200b", "\u200b", true);
+          channelsDebugEmbed.addField("channel ID", channelIDs, true);
+          channelsDebugEmbed.setColor("#00e5ee");
+          msg.delete();
+          msg.channel.sendEmbed(channelsDebugEmbed);
+      }
+
+      if (debugarg === "listroles") {
+          var rolesDebugEmbed = new Discord.RichEmbed();
+          var roleIDs = msg.guild.roles.map(rid => rid.id);
+          var roleNames = msg.guild.roles.map(rn => rn.name)
+              .slice(1);
+          roleNames.unshift("Everyone");
+          rolesDebugEmbed.setTitle("The roles on this server are as follows");
+          rolesDebugEmbed.addField("Role name", roleNames, true);
+          rolesDebugEmbed.addField("\u200b", "\u200b", true);
+          rolesDebugEmbed.addField("Role ID", roleIDs, true);
+          rolesDebugEmbed.setColor("#d82f2f");
+          msg.delete();
+          msg.channel.sendEmbed(rolesDebugEmbed);
+      }
+  }
