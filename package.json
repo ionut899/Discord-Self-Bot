@@ -1,0 +1,25 @@
+{
+  "name": "selfbot",
+  "version": "2.0.0",
+  "description": "Le selfbot",
+  "author": "Favna",
+  "license": "LGPL-3.0",
+  "dependencies": {
+    "discord.js": "^11.0.0"
+  },
+  "main": "src/app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "help",
+    "start": "src/app.js"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/Favna/discordselfbot.git"
+  },
+  "homepage": "https://bitbucket.org/Favna/discordselfbot#readme"
+}
