@@ -50,6 +50,25 @@
               msg.channel.sendMessage(mentionedUser.avatarURL);
           }
 
+          if (msg.content.startsWith(delimiter + "embed")) {
+              let paramString = msg.content.slice(9);
+              let customEmbed = new Discord.RichEmbed();
+
+              msg.delete();
+              let fields = paramString.split(',');
+              fields.forEach(field => {
+                  let chunks = field.split(':');
+                  let header = chunks[0];
+                  let values = chunks[1].split(';');
+                  customEmbed.addField(header, values.join('\n'), true);
+              });
+
+              customEmbed.setColor("#e52431");
+              customEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
+              customEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
+              msg.channel.sendEmbed(customEmbed);
+          }
+
           if (msg.content.startsWith(delimiter + "calc")) {
               calc(msg);
           }
