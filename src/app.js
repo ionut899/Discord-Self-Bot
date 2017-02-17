@@ -18,8 +18,8 @@
           if (msg.content.startsWith(delimiter + "help")) {
               var helpEmbed = new Discord.RichEmbed();
 
-              var commands = ["avatar", "3dsguide", "3dshardmodders", "calc", "tvos"];
-              var info = ["Avatar of a user", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "shows how to block OTA updates"];
+              var commands = [`${delimiter}avatar`, `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}calc`, `${delimiter}tvos`, `${delimiter}embed`];
+              var info = ["Avatar of a user", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "shows how to block OTA updates", "Creates a customized richEmbed"];
               helpEmbed.setTitle("--My commands--");
               helpEmbed.addField("Command", commands, true);
               helpEmbed.addField("This does", info, true);
