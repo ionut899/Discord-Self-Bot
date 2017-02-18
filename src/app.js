@@ -46,25 +46,21 @@
           }
 
           if (msg.content.startsWith(delimiter + "setonline")) {
-
               client.user.setStatus("online");
               msg.delete();
           }
 
           if (msg.content.startsWith(delimiter + "setidle")) {
-
               client.user.setStatus("idle");
               msg.delete();
           }
 
           if (msg.content.startsWith(delimiter + "setdnd")) {
-
               client.user.setStatus("dnd");
               msg.delete();
           }
 
           if (msg.content.startsWith(delimiter + "setinvis")) {
-
               client.user.setStatus("invisible");
               msg.delete();
           }
