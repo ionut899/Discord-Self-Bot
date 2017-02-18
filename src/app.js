@@ -28,42 +28,42 @@
               helpEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
               msg.delete();
               msg.channel.sendEmbed(helpEmbed);
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "3dsguide")) {
               msg.delete();
               msg.channel.sendMessage("For the one stop guide to hacking your 3DS up to firmware 11.2 go to, read, follow and learn from https://3ds.guide");
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "3dshardmodders")) {
               msg.delete();
               msg.channel.sendMessage("The 3DS scene has verified and trusted hardmodders globally! You can contact them through private messaging on GBAtemp. Find their names here: https://gbatemp.net/threads/list-of-hardmod-installers-by-region.414224/");
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "tvos")) {
               msg.delete();
               msg.channel.sendMessage("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "setonline")) {
               client.user.setStatus("online");
               msg.delete();
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "setidle")) {
               client.user.setStatus("idle");
               msg.delete();
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "setdnd")) {
               client.user.setStatus("dnd");
               msg.delete();
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "setinvis")) {
               client.user.setStatus("invisible");
               msg.delete();
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "avatar")) {
               var mentionedUser = msg.mentions.users.first();
@@ -71,21 +71,26 @@
                   mentionedUser = msg.author;
               }
               msg.channel.sendMessage(mentionedUser.avatarURL);
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "embed")) {
               embed(msg);
-          }
+          } else
 
           if (msg.content.startsWith(delimiter + "calc")) {
               calc(msg);
-          }
+          } else
 
-          /**
-           * Debugging
-           */
-          if (msg.content.startsWith(delimiter + "debug")) {
-              debug(msg);
+              /**
+               * Debugging
+               */
+              if (msg.content.startsWith(delimiter + "debug")) {
+                  debug(msg);
+              } else
+
+          if (msg.content.startsWith(delimiter + "opinion")) {
+              msg.delete();
+              msg.channel.sendFile("../images/opinion.gif");
           }
       }
   });
