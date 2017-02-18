@@ -46,23 +46,23 @@
           }
 
           if (msg.content.startsWith(delimiter + "setonline")) {
-              msg.delete():
-                  client.user.setStatus("online");
+              msg.delete();
+              client.user.setStatus("online");
           }
 
           if (msg.content.startsWith(delimiter + "setidle")) {
-              msg.delete():
-                  client.user.setStatus("idle");
+              msg.delete();
+              client.user.setStatus("idle");
           }
 
           if (msg.content.startsWith(delimiter + "setdnd")) {
-              msg.delete():
-                  client.user.setStatus("dnd");
+              msg.delete();
+              client.user.setStatus("dnd");
           }
 
           if (msg.content.startsWith(delimiter + "setinvis")) {
-              msg.delete():
-                  client.user.setStatus("invisible");
+              msg.delete();
+              client.user.setStatus("invisible");
           }
 
           if (msg.content.startsWith(delimiter + "avatar")) {
