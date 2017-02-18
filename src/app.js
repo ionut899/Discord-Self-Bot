@@ -90,7 +90,7 @@
 
           if (msg.content.startsWith(delimiter + "opinion")) {
               msg.delete();
-              msg.channel.sendFile("../images/opinion.gif");
+              msg.channel.sendFile("./discordselfbot/images/opinion.gif");
           }
       }
   });
