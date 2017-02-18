@@ -45,28 +45,32 @@
               msg.channel.sendMessage("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
           }
 
+          if (msg.content.startsWith(delimiter + "setonline")) {
+              client.user.setStatus("online");
+          }
+
+          if (msg.content.startsWith(delimiter + "setidle")) {
+              client.user.setStatus("idle");
+          }
+
+          if (msg.content.startsWith(delimiter + "setdnd")) {
+              client.user.setStatus("dnd");
+          }
+
+          if (msg.content.startsWith(delimiter + "setinvis")) {
+              client.user.setStatus("invisible");
+          }
+
           if (msg.content.startsWith(delimiter + "avatar")) {
               var mentionedUser = msg.mentions.users.first();
+              if (!mentionedUser) {
+                  mentionedUser = msg.author;
+              }
               msg.channel.sendMessage(mentionedUser.avatarURL);
           }
 
           if (msg.content.startsWith(delimiter + "embed")) {
-              let paramString = msg.content.slice(9);
-              let customEmbed = new Discord.RichEmbed();
-
-              msg.delete();
-              let fields = paramString.split(',');
-              fields.forEach(field => {
-                  let chunks = field.split(':');
-                  let header = chunks[0];
-                  let values = chunks[1].split(';');
-                  customEmbed.addField(header, values.join('\n'), true);
-              });
-
-              customEmbed.setColor("#e52431");
-              customEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
-              customEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
-              msg.channel.sendEmbed(customEmbed);
+              embed(msg);
           }
 
           if (msg.content.startsWith(delimiter + "calc")) {
@@ -81,6 +85,26 @@
           }
       }
   });
+
+  function embed(msg) {
+      let paramString = msg.content.slice(9);
+      let customEmbed = new Discord.RichEmbed();
+
+      msg.delete();
+      let fields = paramString.split(',');
+      fields.forEach(field => {
+          let chunks = field.split(':');
+          let header = chunks[0];
+          let values = chunks[1].split(';');
+          customEmbed.addField(header, values.join('\n'), true);
+      });
+
+      customEmbed.setColor("#e52431");
+      customEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
+      customEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
+      msg.channel.sendEmbed(customEmbed);
+  }
+
 
   function calc(msg) {
       let operator = msg.content.split(" ")[2];
