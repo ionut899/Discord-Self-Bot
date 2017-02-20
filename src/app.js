@@ -4,11 +4,13 @@
   const superagent = require('superagent');
   const cheerio = require('cheerio');
   const querystring = require('querystring');
+  const booru = require('booru');
   const client = new Discord.Client();
   const delimiter = settings.prefix;
 
   var moment = require('moment');
   var request = require("request");
+  var urban = require('urban');
 
   // Getting keys
   client.login(settings.token);
@@ -26,9 +28,9 @@
           if (msg.content.startsWith(delimiter + "help")) {
               var helpEmbed = new Discord.RichEmbed();
 
-              var commands = [`${delimiter}google <query>`, `${delimiter}userinfo <@User>`, `${delimiter}avatar`, "-----------------", `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}calc`, `${delimiter}embed`, "-----------------", `${delimiter}tvos`, "-----------------", `${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`];
+              var commands = [`${delimiter}google <query>`, `${delimiter}userinfo <@User>`, `${delimiter}avatar`, `${delimiter}urban <word>`, "-----------------", `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}calc`, `${delimiter}embed`, "-----------------", `${delimiter}tvos`, "-----------------", `${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`];
 
-              var info = ["Find something on google based on a query", "Shows the userinfo of a mentioned user", "Show the avatar of a user", "-----------------", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "Creates a customized richEmbed", "shows how to block OTA updates", "-----------------", "Find NSFW image on <https://rule34.xxx>", "Find NSFW image on <https://e621.net>", "Find NSFW image on <https://gelbooru.com>", "Find NSFW image on <https://rule34.paheal.net>"];
+              var info = ["Find something on google based on a query", "Shows the userinfo of a mentioned user", "Show the avatar of a user", "Define a word with Urban Dictionary", "-----------------", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "Creates a customized richEmbed", "shows how to block OTA updates", "-----------------", "Find NSFW image on <https://rule34.xxx>", "Find NSFW image on <https://e621.net>", "Find NSFW image on <https://gelbooru.com>", "Find NSFW image on <https://rule34.paheal.net>"];
 
               helpEmbed.setTitle("--My commands--");
               helpEmbed.addField("Command", commands, true);
@@ -81,6 +83,7 @@
                       });
               });
           }
+
           // Userinfo of a user
           if (msg.content.startsWith(delimiter + "userinfo")) {
               userInfo(msg);
@@ -92,6 +95,31 @@
                   mentionedUser = msg.author;
               }
               msg.channel.sendMessage(mentionedUser.avatarURL);
+          }
+
+          // Urban Dictionary search
+          if (msg.content.startsWith(delimiter + "urban")) {
+              var urbanQuery = urban(msg.content.slice(7));
+
+              urbanQuery.first(function (json) {
+                  var urbanEmbed = new Discord.RichEmbed;
+                  var urbanWord = json.word;
+                  var urbanDefiniton = json.definition;
+                  var urbanExample = json.example;
+                  var urbanLink = json.permalink;
+
+                  //Adding data to rich embed
+                  urbanEmbed.setAuthor(`Urban Search - ${urbanWord}`, `https://i.imgur.com/miYLsGw.jpg`);
+                  urbanEmbed.setColor("#E86121");
+                  urbanEmbed.setFooter(`${urbanWord} defined by FUGBot`);
+
+                  //Adding fields to rich embed
+                  urbanEmbed.addField("Definition", urbanDefiniton, false);
+                  urbanEmbed.addField("Example", urbanExample, false);
+                  urbanEmbed.addField("Permalink", urbanLink, false);
+
+                  msg.channel.sendEmbed(urbanEmbed);
+              });
           }
 
           /**
