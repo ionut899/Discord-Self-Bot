@@ -269,6 +269,8 @@
       //Third Row
       if (userRoles.length >= 1) {
           userInfoEmbed.addField("Roles", userRoles, true);
+      } else {
+          userInfoEmbed.addField("Roles", "No roles", true);
       }
 
       //Fourth row
