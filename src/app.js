@@ -10,8 +10,11 @@
   var moment = require('moment');
   var request = require("request");
 
-  // Login for my selfbot
+  // Getting keys
   client.login(settings.token);
+  googleapikey = settings.googleapikey;
+  imageEngineKey = settings.imageEngineKey;
+  searchEngineKey = settings.searchEngineKey;
 
   client.on("ready", () => {
       console.log("Hello Again!");
@@ -236,9 +239,8 @@
 
       let userNickname = userGuildMember.nickname;
       let userStatus = user.presence.status;
-      let userRoles = userGuildMember.roles.map(r => r.name);
+      let userRoles = userGuildMember.roles.map(r => r.name).slice(1);
       let userRoleColor = userGuildMember.highestRole.hexColor;
-      let userRoleAmount = parseInt(userRoles.length - 1);
 
       let userCreateDate = moment(user.createdAt).format('MMMM Do YYYY')
       let userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY')
@@ -251,7 +253,7 @@
       userInfoEmbed.setAuthor(`${userName}` + "#" + `${userDiscriminator}`, `${userAvatar}`);
       userInfoEmbed.setColor("#58fc91");
       userInfoEmbed.setImage(userAvatar);
-      userInfoEmbed.setFooter(`has ${userRoleAmount} role(s)`, userAvatar);
+      userInfoEmbed.setFooter(`has ${userRoles.length} role(s)`, userAvatar);
 
       //First row
       userInfoEmbed.addField("ID", userID, true);
@@ -265,7 +267,9 @@
 
 
       //Third Row
-      userInfoEmbed.addField("Roles", userRoles.slice(1).join(', '), false);
+      if (userRoles.length >= 1) {
+          userInfoEmbed.addField("Roles", userRoles.slice(1).join(', '), true);
+      }
 
       //Fourth row
       userInfoEmbed.addField("Created at", userCreateDate, true);
