@@ -26,9 +26,9 @@
           if (msg.content.startsWith(delimiter + "help")) {
               var helpEmbed = new Discord.RichEmbed();
 
-              var commands = [`${delimiter}google <query>`, `${delimiter}userinfo <@User>`, `${delimiter}avatar`, "-----------------", `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}calc`, `${delimiter}embed`, "-----------------", `${delimiter}tvos`];
+              var commands = [`${delimiter}google <query>`, `${delimiter}userinfo <@User>`, `${delimiter}avatar`, "-----------------", `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}calc`, `${delimiter}embed`, "-----------------", `${delimiter}tvos`, "-----------------", `${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`];
 
-              var info = ["Find something on google based on a query", "Shows the userinfo of a mentioned user", "Show the avatar of a user", "-----------------", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "Creates a customized richEmbed", "shows how to block OTA updates"];
+              var info = ["Find something on google based on a query", "Shows the userinfo of a mentioned user", "Show the avatar of a user", "-----------------", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "Creates a customized richEmbed", "shows how to block OTA updates", "-----------------", "Find NSFW image on <https://rule34.xxx>", "Find NSFW image on <https://e621.net>", "Find NSFW image on <https://gelbooru.com>", "Find NSFW image on <https://rule34.paheal.net>"];
 
               helpEmbed.setTitle("--My commands--");
               helpEmbed.addField("Command", commands, true);
@@ -126,11 +126,6 @@
               msg.channel.sendMessage("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
           }
 
-
-
-
-
-
           /**
            * Debugging
            */
@@ -141,6 +136,118 @@
           if (msg.content.startsWith(delimiter + "opinion")) {
               msg.delete();
               msg.channel.sendFile("./discordselfbot/images/opinion.gif");
+          }
+
+          /**
+           * NSFW Searching
+           */
+
+          if (msg.content.startsWith(delimiter + "r34")) {
+              let rule34Tags = msg.content.slice(7).split(" ");
+              if (rule34Tags[0] === '') {
+                  msg.reply("Please provide tags to search for");
+                  return;
+              }
+
+              booru.search("r34", rule34Tags, 100)
+                  .then(booru.commonfy)
+                  .then(images => {
+                      let min = Math.ceil(0);
+                      let max = Math.floor(images.length);
+                      let i = Math.floor(Math.random() * (max - min)) + min;
+
+                      // Show juicy NSFW image
+                      msg.channel.sendMessage(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                  })
+                  .catch(err => {
+                      if (err.name === 'booruError') {
+                          msg.reply("Something went wrong! Try contacting <@112001393140723712>");
+                          console.log(err.message);
+                      } else {
+                          console.log(err);
+                      }
+                  })
+          }
+
+          if (msg.content.startsWith(delimiter + "e621")) {
+              let e621Tags = msg.content.slice(8).split(" ");
+              if (e621Tags[0] === '') {
+                  msg.reply("Please provide tags to search for");
+                  return;
+              }
+
+              booru.search("e621", e621Tags, 100)
+                  .then(booru.commonfy)
+                  .then(images => {
+                      let min = Math.ceil(0);
+                      let max = Math.floor(images.length);
+                      let i = Math.floor(Math.random() * (max - min)) + min;
+
+                      // Show juicy NSFW image
+                      msg.channel.sendMessage(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                  })
+                  .catch(err => {
+                      if (err.name === 'booruError') {
+                          msg.reply("Something went wrong! Try contacting <@112001393140723712>");
+                          console.log(err.message);
+                      } else {
+                          console.log(err);
+                      }
+                  })
+          }
+
+          if (msg.content.startsWith(delimiter + "gelbooru")) {
+              let gelbooruTags = msg.content.slice(12).split(" ");
+              if (gelbooruTags[0] === '') {
+                  msg.reply("Please provide tags to search for");
+                  return;
+              }
+
+              booru.search("gelbooru", gelbooruTags, 100)
+                  .then(booru.commonfy)
+                  .then(images => {
+                      let min = Math.ceil(0);
+                      let max = Math.floor(images.length);
+                      let i = Math.floor(Math.random() * (max - min)) + min;
+
+                      // Show juicy NSFW image
+                      msg.channel.sendMessage(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                  })
+                  .catch(err => {
+                      if (err.name === 'booruError') {
+                          msg.reply("Something went wrong! Try contacting <@112001393140723712>");
+                          console.log(err.message);
+                      } else {
+                          console.log(err);
+                      }
+                  })
+          }
+
+          if (msg.content.startsWith(delimiter + "paheal")) {
+              let rule34paheal = msg.content.slice(10).split(" ");
+              if (rule34paheal[0] === '') {
+                  msg.reply("Please provide tags to search for");
+                  return;
+              }
+
+              booru.search("paheal", rule34paheal, 100)
+                  .then(booru.commonfy)
+                  .then(images => {
+                      let min = Math.ceil(0);
+                      let max = Math.floor(images.length);
+                      let i = Math.floor(Math.random() * (max - min)) + min;
+
+                      // Show juicy NSFW image
+                      msg.channel.sendMessage(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                  })
+                  .catch(err => {
+                      if (err.name === 'booruError') {
+                          msg.reply("Something went wrong! Try contacting <@112001393140723712>");
+                          console.log(err.message);
+                      } else {
+                          console.log(err);
+                      }
+                  })
           }
       }
   });
