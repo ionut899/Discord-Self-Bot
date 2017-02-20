@@ -182,6 +182,10 @@
       let userCreateDate = moment(user.createdAt).format('MMMM Do YYYY')
       let userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY')
 
+      if(userNickname == null) {
+          userNickname = "No Nickname";
+      }
+
       //Adding data to rich embed
       userInfoEmbed.setAuthor(`${userName}` + "#" + `${userDiscriminator}`, `${userAvatar}`);
       userInfoEmbed.setColor("#58fc91");
