@@ -2,10 +2,11 @@
   const Discord = require("discord.js");
   const settings = require("./settings.json");
   const client = new Discord.Client();
-
   const delimiter = settings.prefix;
 
-  // Login for the Populous client
+  var moment = require('moment');
+
+  // Login for my selfbot
   client.login(settings.token);
 
   client.on("ready", () => {
@@ -28,42 +29,23 @@
               helpEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
               msg.delete();
               msg.channel.sendEmbed(helpEmbed);
-          } else
+          }
 
           if (msg.content.startsWith(delimiter + "3dsguide")) {
               msg.delete();
               msg.channel.sendMessage("For the one stop guide to hacking your 3DS up to firmware 11.2 go to, read, follow and learn from https://3ds.guide");
-          } else
+          }
 
           if (msg.content.startsWith(delimiter + "3dshardmodders")) {
               msg.delete();
               msg.channel.sendMessage("The 3DS scene has verified and trusted hardmodders globally! You can contact them through private messaging on GBAtemp. Find their names here: https://gbatemp.net/threads/list-of-hardmod-installers-by-region.414224/");
-          } else
+          }
 
           if (msg.content.startsWith(delimiter + "tvos")) {
               msg.delete();
               msg.channel.sendMessage("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
-          } else
+          }
 
-          if (msg.content.startsWith(delimiter + "setonline")) {
-              client.user.setStatus("online");
-              msg.delete();
-          } else
-
-          if (msg.content.startsWith(delimiter + "setidle")) {
-              client.user.setStatus("idle");
-              msg.delete();
-          } else
-
-          if (msg.content.startsWith(delimiter + "setdnd")) {
-              client.user.setStatus("dnd");
-              msg.delete();
-          } else
-
-          if (msg.content.startsWith(delimiter + "setinvis")) {
-              client.user.setStatus("invisible");
-              msg.delete();
-          } else
 
           if (msg.content.startsWith(delimiter + "avatar")) {
               var mentionedUser = msg.mentions.users.first();
@@ -71,22 +53,26 @@
                   mentionedUser = msg.author;
               }
               msg.channel.sendMessage(mentionedUser.avatarURL);
-          } else
+          }
 
           if (msg.content.startsWith(delimiter + "embed")) {
               embed(msg);
-          } else
+          }
 
           if (msg.content.startsWith(delimiter + "calc")) {
               calc(msg);
-          } else
+          }
+          // Userinfo of a user
+          if (msg.content.startsWith(delimiter + "userinfo")) {
+              userInfo(msg);
+          }
 
-              /**
-               * Debugging
-               */
-              if (msg.content.startsWith(delimiter + "debug")) {
-                  debug(msg);
-              } else
+          /**
+           * Debugging
+           */
+          if (msg.content.startsWith(delimiter + "debug")) {
+              debug(msg);
+          }
 
           if (msg.content.startsWith(delimiter + "opinion")) {
               msg.delete();
@@ -171,4 +157,53 @@
           msg.delete();
           msg.channel.sendEmbed(rolesDebugEmbed);
       }
+  }
+
+  function userInfo(msg) {
+      let userInfoEmbed = new Discord.RichEmbed;
+      let user = msg.mentions.users.first();
+      if (!user) {
+          user = msg.author;
+      }
+      //Variables for the embed
+      let userGuildMember = msg.guild.member(user);
+
+      let userID = user.id;
+      let userName = user.username;
+      let userDiscriminator = user.discriminator;
+      let userAvatar = user.avatarURL;
+
+      let userNickname = userGuildMember.nickname;
+      let userStatus = user.presence.status;
+      let userRoles = userGuildMember.roles.map(r => r.name);
+      let userRoleColor = userGuildMember.highestRole.hexColor;
+      let userRoleAmount = parseInt(userRoles.length - 1);
+
+      let userCreateDate = moment(user.createdAt).format('MMMM Do YYYY')
+      let userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY')
+
+      //Adding data to rich embed
+      userInfoEmbed.setAuthor(`${userName}` + "#" + `${userDiscriminator}`, `${userAvatar}`);
+      userInfoEmbed.setColor("#58fc91");
+      userInfoEmbed.setImage(userAvatar);
+      userInfoEmbed.setFooter(`has ${userRoleAmount} role(s)`, userAvatar);
+
+      //First row
+      userInfoEmbed.addField("ID", userID, true);
+      userInfoEmbed.addField("Discriminator", userDiscriminator, true);
+      userInfoEmbed.addField("Status", userStatus, true);
+
+      //Second row
+      userInfoEmbed.addField("Name", userName, true);
+      userInfoEmbed.addField("Color", userRoleColor, true);
+      userInfoEmbed.addField("Nickname", userNickname, true);
+
+
+      //Third Row
+      userInfoEmbed.addField("Roles", userRoles.slice(1).join(', '), false);
+
+      //Fourth row
+      userInfoEmbed.addField("Created at", userCreateDate, true);
+      userInfoEmbed.addField("Joined at", userJoinedDate, true);
+      msg.channel.sendEmbed(userInfoEmbed);
   }
