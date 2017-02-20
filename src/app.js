@@ -268,7 +268,7 @@
 
       //Third Row
       if (userRoles.length >= 1) {
-          userInfoEmbed.addField("Roles", userRoles.slice(1).join(', '), true);
+          userInfoEmbed.addField("Roles", userRoles, true);
       }
 
       //Fourth row
