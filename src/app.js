@@ -1,10 +1,14 @@
   // import the discord.js and npm modules
   const Discord = require("discord.js");
   const settings = require("./settings.json");
+  const superagent = require('superagent');
+  const cheerio = require('cheerio');
+  const querystring = require('querystring');
   const client = new Discord.Client();
   const delimiter = settings.prefix;
 
   var moment = require('moment');
+  var request = require("request");
 
   // Login for my selfbot
   client.login(settings.token);
@@ -19,8 +23,10 @@
           if (msg.content.startsWith(delimiter + "help")) {
               var helpEmbed = new Discord.RichEmbed();
 
-              var commands = [`${delimiter}avatar`, `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}calc`, `${delimiter}tvos`, `${delimiter}embed`];
-              var info = ["Avatar of a user", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "shows how to block OTA updates", "Creates a customized richEmbed"];
+              var commands = [`${delimiter}google <query>`, `${delimiter}userinfo <@User>`, `${delimiter}avatar`, "-----------------", `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}calc`, `${delimiter}embed`, "-----------------", `${delimiter}tvos`];
+
+              var info = ["Find something on google based on a query", "Shows the userinfo of a mentioned user", "Show the avatar of a user", "-----------------", "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Make a calculation given required parameters", "Creates a customized richEmbed", "shows how to block OTA updates"];
+
               helpEmbed.setTitle("--My commands--");
               helpEmbed.addField("Command", commands, true);
               helpEmbed.addField("This does", info, true);
@@ -30,6 +36,64 @@
               msg.delete();
               msg.channel.sendEmbed(helpEmbed);
           }
+
+
+          /**
+           * Search Engine
+           */
+
+          //Google Regular Search
+          if (msg.content.startsWith(delimiter + "google")) {
+              let searchQuery = msg.content.slice(8);
+              const key = googleapikey;
+              const s = "246821351585742851";
+              const safeSetting = s ? {
+                  1: 'off',
+                  2: 'medium',
+                  3: 'high'
+              }[parseInt(s.nsfw)] : 'medium';
+              const safe = msg.channel.name.includes('hentai') || msg.channel.name.includes('lewd') ? 'off' : safeSetting;
+              console.log('Search:', msg.guild.name, msg.guild.id, '|', searchQuery, '|', safe);
+              msg.channel.sendMessage('`Searching...`').then((message) => {
+
+                  return superagent.get(`https://www.googleapis.com/customsearch/v1?key=${key}&cx=${searchEngineKey}&safe=${safe}&q=${encodeURI(searchQuery)}`)
+                      .then((res) => {
+                          if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
+                          return message.edit(res.body.items[0].link);
+                          //msg.channel.sendMessage(res.body.items[0].link);
+                      })
+                      .catch(() => {
+                          const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(searchQuery)}`;
+                          return superagent.get(SEARCH_URL).then((res) => {
+                              const $ = cheerio.load(res.text);
+                              let href = $('.r').first().find('a').first().attr('href');
+                              if (!href) return Promise.reject(new Error('NO RESULTS'));
+                              href = querystring.parse(href.replace('/url?', ''));
+                              return message.edit(href.q);
+                          })
+                      })
+                      .catch((err) => {
+                          console.error(err);
+                          message.edit('**No Results Found!**');
+                      });
+              });
+          }
+          // Userinfo of a user
+          if (msg.content.startsWith(delimiter + "userinfo")) {
+              userInfo(msg);
+          }
+
+          if (msg.content.startsWith(delimiter + "avatar")) {
+              var mentionedUser = msg.mentions.users.first();
+              if (!mentionedUser) {
+                  mentionedUser = msg.author;
+              }
+              msg.channel.sendMessage(mentionedUser.avatarURL);
+          }
+
+          /**
+           * Custom commands
+           */
 
           if (msg.content.startsWith(delimiter + "3dsguide")) {
               msg.delete();
@@ -41,20 +105,6 @@
               msg.channel.sendMessage("The 3DS scene has verified and trusted hardmodders globally! You can contact them through private messaging on GBAtemp. Find their names here: https://gbatemp.net/threads/list-of-hardmod-installers-by-region.414224/");
           }
 
-          if (msg.content.startsWith(delimiter + "tvos")) {
-              msg.delete();
-              msg.channel.sendMessage("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
-          }
-
-
-          if (msg.content.startsWith(delimiter + "avatar")) {
-              var mentionedUser = msg.mentions.users.first();
-              if (!mentionedUser) {
-                  mentionedUser = msg.author;
-              }
-              msg.channel.sendMessage(mentionedUser.avatarURL);
-          }
-
           if (msg.content.startsWith(delimiter + "embed")) {
               embed(msg);
           }
@@ -62,10 +112,21 @@
           if (msg.content.startsWith(delimiter + "calc")) {
               calc(msg);
           }
-          // Userinfo of a user
-          if (msg.content.startsWith(delimiter + "userinfo")) {
-              userInfo(msg);
+
+
+          /**
+           * Storage
+           */
+
+          if (msg.content.startsWith(delimiter + "tvos")) {
+              msg.delete();
+              msg.channel.sendMessage("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
           }
+
+
+
+
+
 
           /**
            * Debugging
@@ -182,7 +243,7 @@
       let userCreateDate = moment(user.createdAt).format('MMMM Do YYYY')
       let userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY')
 
-      if(userNickname == null) {
+      if (userNickname == null) {
           userNickname = "No Nickname";
       }
 
