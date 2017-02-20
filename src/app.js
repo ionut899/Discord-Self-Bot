@@ -47,7 +47,7 @@
 
           //Google Regular Search
           if (msg.content.startsWith(delimiter + "google")) {
-              let searchQuery = msg.content.slice(8);
+              let searchQuery = msg.content.slice(10);
               const key = googleapikey;
               const s = "246821351585742851";
               const safeSetting = s ? {
