@@ -53,8 +53,9 @@ client.on("message", msg => {
             helpEmbed.setColor("#c61530");
             helpEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
             helpEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
-            msg.delete();
-            msg.channel.sendEmbed(helpEmbed);
+            msg.edit({
+                embed: helpEmbed
+            });
         }
 
 
@@ -73,11 +74,11 @@ client.on("message", msg => {
                 q: encodeURI(searchQuery),
             };
 
-            msg.channel.sendMessage('`Searching...`').then((botMessage) => {
+            msg.edit('`Searching...`').then(() => {
                 return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
                     .then((res) => {
                         if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
-                        return botMessage.edit(res.body.items[0].link);
+                        return msg.edit(res.body.items[0].link);
                     })
                     .catch(() => {
                         const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(searchQuery)}`;
@@ -86,12 +87,12 @@ client.on("message", msg => {
                             let href = $('.r').first().find('a').first().attr('href');
                             if (!href) return Promise.reject(new Error('NO RESULTS'));
                             href = querystring.parse(href.replace('/url?', ''));
-                            return botMessage.edit(href.q);
+                            return msg.edit(href.q);
                         })
                     })
                     .catch((err) => {
                         console.error(err);
-                        botMessage.edit('**No Results Found!**');
+                        msg.edit('**No Results Found!**');
                     });
             });
         }
@@ -106,32 +107,40 @@ client.on("message", msg => {
             if (!mentionedUser) {
                 mentionedUser = msg.author;
             }
-            msg.channel.sendMessage(mentionedUser.avatarURL);
+            msg.edit(mentionedUser.avatarURL);
         }
 
         // Urban Dictionary search
         if (msg.content.startsWith(delimiter + "urban")) {
-            var urbanQuery = urban(msg.content.slice(7));
+            var urbanQuery = urban(msg.content.slice(9));
 
-            urbanQuery.first(function (json) {
-                var urbanEmbed = new Discord.RichEmbed;
-                var urbanWord = json.word;
-                var urbanDefiniton = json.definition;
-                var urbanExample = json.example;
-                var urbanLink = json.permalink;
+            msg.edit('**Opening Dictionary...**').then(() => {
+                urbanQuery.first(function (json) {
+                    if (json == undefined) {
+                        msg.edit('**No Results Found!**');
+                        return;
+                    }
+                    var urbanEmbed = new Discord.RichEmbed;
+                    var urbanWord = json.word;
+                    var urbanDefiniton = json.definition;
+                    var urbanExample = json.example;
+                    var urbanLink = json.permalink;
 
-                //Adding data to rich embed
-                urbanEmbed.setAuthor(`Urban Search - ${urbanWord}`, `https://i.imgur.com/miYLsGw.jpg`);
-                urbanEmbed.setColor("#E86121");
-                urbanEmbed.setFooter(`${urbanWord} defined by PGBot`);
+                    //Adding data to rich embed
+                    urbanEmbed.setAuthor(`Urban Search - ${urbanWord}`, `https://i.imgur.com/miYLsGw.jpg`);
+                    urbanEmbed.setColor("#E86121");
+                    urbanEmbed.setFooter(`${urbanWord} defined by PGBot`);
 
-                //Adding fields to rich embed
-                urbanEmbed.addField("Definition", urbanDefiniton, false);
-                urbanEmbed.addField("Example", urbanExample, false);
-                urbanEmbed.addField("Permalink", urbanLink, false);
+                    //Adding fields to rich embed
+                    urbanEmbed.addField("Definition", urbanDefiniton, false);
+                    urbanEmbed.addField("Example", urbanExample, false);
+                    urbanEmbed.addField("Permalink", urbanLink, false);
 
-                msg.channel.sendEmbed(urbanEmbed);
-            });
+                    msg.edit({
+                        embed: urbanEmbed
+                    });
+                });
+            })
         }
 
         // Word define
@@ -140,12 +149,12 @@ client.on("message", msg => {
             let word = args.join(' ');
             let defineEmbed = new Discord.RichEmbed();
 
-            msg.channel.sendMessage('**Opening Dictionary...**').then((botMessage) => {
+            msg.edit('**Opening Dictionary...**').then(() => {
                 superagent.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${word}`)
                     .then((res) => res.body)
                     .then((res) => {
                         if (res.tuc == undefined) {
-                            botMessage.edit('**No results found!**')
+                            msg.edit('**No results found!**')
                             return;
                         }
                         const final = [`**Definitions for __${word}__:**`];
@@ -159,13 +168,13 @@ client.on("message", msg => {
                         defineEmbed.setColor("#6984C4");
                         defineEmbed.setDescription(final);
                         defineEmbed.setFooter("PGBot", "http://i.imgur.com/xLtftbs.png")
-                        botMessage.edit({
+                        msg.edit({
                             embed: defineEmbed
                         });
                     })
                     .catch((err) => {
                         console.error(err);
-                        botMessage.edit('**No results found!**');
+                        msg.edit('**No results found!**');
                     });
             });
         }
@@ -175,23 +184,22 @@ client.on("message", msg => {
          */
 
         if (msg.content.startsWith(delimiter + "3dsguide")) {
-            msg.delete();
-            msg.channel.sendMessage("For the one stop guide to hacking your 3DS up to firmware 11.2 go to, read, follow and learn from https://3ds.guide");
+            msg.edit("For the one stop guide to hacking your 3DS up to firmware 11.2 go to, read, follow and learn from https://3ds.guide");
         }
 
         if (msg.content.startsWith(delimiter + "3dshardmodders")) {
-            msg.delete();
-            msg.channel.sendMessage("The 3DS scene has verified and trusted hardmodders globally! You can contact them through private messaging on GBAtemp. Find their names here: https://gbatemp.net/threads/list-of-hardmod-installers-by-region.414224/");
+            msg.edit("The 3DS scene has verified and trusted hardmodders globally! You can contact them through private messaging on GBAtemp. Find their names here: https://gbatemp.net/threads/list-of-hardmod-installers-by-region.414224/");
         }
 
         if (msg.content.startsWith(delimiter + "tvos")) {
-            msg.delete();
-            msg.channel.sendMessage("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
+            msg.edit("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
         }
 
         if (msg.content.startsWith(delimiter + "opinion")) {
-            msg.delete();
-            msg.channel.sendFile("./discordselfbot/images/opinion.gif");
+            //   msg.channel.sendFile("./discordselfbot/images/opinion.gif");
+            msg.edit({
+                file: "./discordselfbot/images/opinion.gif"
+            })
         }
 
         /**
@@ -220,7 +228,7 @@ client.on("message", msg => {
         if (msg.content.startsWith(delimiter + "r34")) {
             let rule34Tags = msg.content.slice(7).split(" ");
             if (rule34Tags[0] === '') {
-                msg.reply("Please provide tags to search for");
+                msg.edit("You forgot to supply tags");
                 return;
             }
 
@@ -232,11 +240,10 @@ client.on("message", msg => {
                     let i = Math.floor(Math.random() * (max - min)) + min;
 
                     // Show juicy NSFW image
-                    msg.channel.sendMessage(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                    msg.edit(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
                 })
                 .catch(err => {
                     if (err.name === 'booruError') {
-                        msg.reply("Something went wrong! Try contacting <@112001393140723712>");
                         console.log(err.message);
                     } else {
                         console.log(err);
@@ -247,7 +254,7 @@ client.on("message", msg => {
         if (msg.content.startsWith(delimiter + "e621")) {
             let e621Tags = msg.content.slice(8).split(" ");
             if (e621Tags[0] === '') {
-                msg.reply("Please provide tags to search for");
+                msg.edit("You forgot to supply tags");
                 return;
             }
 
@@ -259,11 +266,10 @@ client.on("message", msg => {
                     let i = Math.floor(Math.random() * (max - min)) + min;
 
                     // Show juicy NSFW image
-                    msg.channel.sendMessage(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                    msg.edit(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
                 })
                 .catch(err => {
                     if (err.name === 'booruError') {
-                        msg.reply("Something went wrong! Try contacting <@112001393140723712>");
                         console.log(err.message);
                     } else {
                         console.log(err);
@@ -274,7 +280,7 @@ client.on("message", msg => {
         if (msg.content.startsWith(delimiter + "gelbooru")) {
             let gelbooruTags = msg.content.slice(12).split(" ");
             if (gelbooruTags[0] === '') {
-                msg.reply("Please provide tags to search for");
+                msg.edit("You forgot to supply tags");
                 return;
             }
 
@@ -286,11 +292,10 @@ client.on("message", msg => {
                     let i = Math.floor(Math.random() * (max - min)) + min;
 
                     // Show juicy NSFW image
-                    msg.channel.sendMessage(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                    msg.edit(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
                 })
                 .catch(err => {
                     if (err.name === 'booruError') {
-                        msg.reply("Something went wrong! Try contacting <@112001393140723712>");
                         console.log(err.message);
                     } else {
                         console.log(err);
@@ -301,7 +306,7 @@ client.on("message", msg => {
         if (msg.content.startsWith(delimiter + "paheal")) {
             let rule34paheal = msg.content.slice(10).split(" ");
             if (rule34paheal[0] === '') {
-                msg.reply("Please provide tags to search for");
+                msg.edit("You forgot to supply tags");
                 return;
             }
 
@@ -313,11 +318,10 @@ client.on("message", msg => {
                     let i = Math.floor(Math.random() * (max - min)) + min;
 
                     // Show juicy NSFW image
-                    msg.channel.sendMessage(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                    msg.edit(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
                 })
                 .catch(err => {
                     if (err.name === 'booruError') {
-                        msg.reply("Something went wrong! Try contacting <@112001393140723712>");
                         console.log(err.message);
                     } else {
                         console.log(err);
@@ -343,7 +347,9 @@ function embed(msg) {
     customEmbed.setColor("#e52431");
     customEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
     customEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
-    msg.channel.sendEmbed(customEmbed);
+    msg.edit({
+        embed: customEmbed
+    });
 }
 
 
@@ -367,10 +373,10 @@ function calc(msg) {
             result = firstNum / secondNum;
             break;
         default:
-            msg.reply("someting went wrong!");
+            msg.edit("someting went wrong!");
             return;
     }
-    msg.channel.sendMessage(`The answer to \`${firstNum} ${operator} ${secondNum}\` is \`${result}\``);
+    msg.edit(`The answer to \`${firstNum} ${operator} ${secondNum}\` is \`${result}\``);
 }
 
 function debug(msg) {
@@ -385,8 +391,9 @@ function debug(msg) {
         channelsDebugEmbed.addField("\u200b", "\u200b", true);
         channelsDebugEmbed.addField("channel ID", channelIDs, true);
         channelsDebugEmbed.setColor("#00e5ee");
-        msg.delete();
-        msg.channel.sendEmbed(channelsDebugEmbed);
+        msg.edit({
+            embed: channelsDebugEmbed
+        });
     }
 
     if (debugarg === "listroles") {
@@ -400,8 +407,9 @@ function debug(msg) {
         rolesDebugEmbed.addField("\u200b", "\u200b", true);
         rolesDebugEmbed.addField("Role ID", roleIDs, true);
         rolesDebugEmbed.setColor("#d82f2f");
-        msg.delete();
-        msg.channel.sendEmbed(rolesDebugEmbed);
+        msg.edit({
+            embed: rolesDebugEmbed
+        });
     }
 }
 
@@ -458,5 +466,7 @@ function userInfo(msg) {
     //Fourth row
     userInfoEmbed.addField("Created at", userCreateDate, true);
     userInfoEmbed.addField("Joined at", userJoinedDate, true);
-    msg.channel.sendEmbed(userInfoEmbed);
+    msg.edit({
+        embed: userInfoEmbed
+    });
 }
