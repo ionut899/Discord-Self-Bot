@@ -352,7 +352,6 @@ function embed(msg) {
     let paramString = msg.content.slice(9);
     let customEmbed = new Discord.RichEmbed();
 
-    msg.delete();
     let fields = paramString.split(',');
     fields.forEach(field => {
         let chunks = field.split(':');
@@ -375,7 +374,6 @@ function calc(msg) {
     let firstNum = parseInt(msg.content.split(" ")[1]);
     let secondNum = parseInt(msg.content.split(" ")[3]);
     var result = 0;
-    msg.delete();
     switch (operator) {
         case "*":
             result = firstNum * secondNum;
