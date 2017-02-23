@@ -146,7 +146,7 @@ client.on("message", msg => {
                     //Adding data to rich embed
                     urbanEmbed.setAuthor(`Urban Search - ${urbanWord}`, `https://i.imgur.com/miYLsGw.jpg`);
                     urbanEmbed.setColor("#E86121");
-                    urbanEmbed.setFooter(`${urbanWord} defined by PGBot`);
+                    urbanEmbed.setFooter(`${urbanWord} defined by PyrrhaBot`, "https://i.imgur.com/Ylv4Hdz.jpg");
 
                     //Adding fields to rich embed
                     urbanEmbed.addField("Definition", urbanDefiniton, false);
