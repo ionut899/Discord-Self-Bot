@@ -25,6 +25,23 @@ client.on("ready", () => {
 
 client.on("message", msg => {
 
+    if (msg.content.startsWith(delimiter + "valsofembed")) {
+        var valsOfEmbed = new Discord.RichEmbed();
+        valsOfEmbed.setAuthor("This is the author", "https://i.imgur.com/cgr5eSk.png");
+        valsOfEmbed.setColor("#ffffff");
+        valsOfEmbed.setDescription("This is the description");
+        valsOfEmbed.setFooter("This is the footer", "https://i.imgur.com/kPNjOuJ.png");
+        valsOfEmbed.setImage("https://i.imgur.com/l32vg3M.png");
+        valsOfEmbed.setThumbnail("https://i.imgur.com/IQVvBcn.png")
+        valsOfEmbed.setTimestamp();
+        valsOfEmbed.setTitle("This is the title");
+        valsOfEmbed.setURL("https://www.google.com");
+        valsOfEmbed.addField("FieldName", "FieldValue",true)
+        msg.edit({
+            embed: valsOfEmbed
+        });
+    }
+
     if (msg.author.id === "112001393140723712") {
         if (msg.content.startsWith(delimiter + "help")) {
             var helpEmbed = new Discord.RichEmbed();
