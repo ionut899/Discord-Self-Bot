@@ -215,9 +215,6 @@ client.on("message", msg => {
 
         if (msg.content.startsWith(delimiter + "opinion")) {
             msg.channel.sendFile("./discordselfbot/images/opinion.gif");
-            // msg.edit({
-            //     file: "./discordselfbot/images/opinion.gif"
-            // });
         }
 
         /**
