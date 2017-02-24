@@ -6,16 +6,21 @@ const booru = require('booru');
 const request = require("request");
 const moment = require('moment');
 const urban = require('urban');
-const scalc = require('scalc')
+const YouTube = require('youtube-node');
+const scalc = require('scalc');
+const malware = require('malapi').Anime;
+const ordinal = require('ordinal').english;
 
 // import the discord.js and npm modules
 const Discord = require("discord.js");
 const settings = require("./auth.json");
 const delimiter = settings.prefix;
 const client = new Discord.Client();
+const youtube = new YouTube();
 
 // Getting keys
 client.login(settings.token);
+youtube.setKey(settings.googleapikey);
 googleapikey = settings.googleapikey;
 imageEngineKey = settings.imageEngineKey;
 searchEngineKey = settings.searchEngineKey;
@@ -81,61 +86,73 @@ client.on("message", msg => {
          * Search Engine
          */
 
-        //Google Regular Search
-        if (msg.content.startsWith(delimiter + "google")) {
-            let searchQuery = msg.content.slice(8);
-            let safe = 'medium';
+        // Google Image search
+        if (msg.content.startsWith(delimiter + "image")) {
+            let imageQuery = msg.content.slice(7);
+            let safe = 'high'
             let QUERY_PARAMS = {
+                searchType: 'image',
                 key: googleapikey,
-                cx: searchEngineKey,
+                cx: imageEngineKey,
                 safe,
-                q: encodeURI(searchQuery),
+                q: encodeURI(imageQuery),
             };
 
-            msg.edit('`Searching...`').then(() => {
+            console.log('SearchImage:', msg.guild.name, msg.guild.id, '|', imageQuery, '|', safe);
+            msg.channel.send('**Searching...**').then((botMessage) => {
                 return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
-                    .then((res) => {
-                        if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
-                        return msg.edit(res.body.items[0].link);
-                    })
-                    .catch(() => {
-                        const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(searchQuery)}`;
-                        return superagent.get(SEARCH_URL).then((res) => {
+                    .then((res) => botMessage.edit(res.body.items[0].link))
+                    .catch(() =>
+                        superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(message.content)}`)
+                        .then((res) => {
                             const $ = cheerio.load(res.text);
-                            let href = $('.r').first().find('a').first().attr('href');
-                            if (!href) return Promise.reject(new Error('NO RESULTS'));
-                            href = querystring.parse(href.replace('/url?', ''));
-                            return msg.edit(href.q);
+                            const result = $('.images_table').find('img').first().attr('src');
+                            return botMessage.edit(result);
                         })
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                        msg.edit('**No Results Found!**');
+                    ).catch((err) => {
+                        client.error(err);
+                        botMessage.edit('**No Results Found**');
                     });
             });
         }
 
-        // Userinfo of a user
-        if (msg.content.startsWith(delimiter + "userinfo")) {
-            userInfo(msg);
-        }
+        // Youtube Search
+        if (msg.content.startsWith(delimiter + "youtube")) {
+            let query = msg.content.slice(9);
+            youtube.search(query, 1, function (error, result) {
+                if (error) {
+                    msg.channel.sendMessage("An error occurred, please contact <@112001393140723712>");
+                } else {
+                    console.log(result.items);
 
-        if (msg.content.startsWith(delimiter + "avatar")) {
-            var mentionedUser = msg.mentions.users.first();
-            if (!mentionedUser) {
-                mentionedUser = msg.author;
-            }
-            msg.edit(mentionedUser.avatarURL);
+                    if (!result || !result.items || result.items.length < 1) {
+                        msg.channel.sendMessage("No Results found");
+                    } else {
+                        if (result.items[0].id.kind === 'youtube#channel') {
+                            msg.channel.sendMessage(`I found a channel!\nhttps://www.youtube.com/channel/${result.items[0].id.channelId}`);
+                        }
+                        if (result.items[0].id.kind === 'youtube#video') {
+                            msg.channel.sendMessage(`I found a video!\nVideo: https://www.youtube.com/watch?v=${result.items[0].id.videoId}`);
+                        }
+                        if (result.items[0].id.kind === 'youtube#playlist') {
+                            msg.channel.sendMessage(`I found a playlist!\nhttps://www.youtube.com/playlist?list=${result.items[0].id.playlistId}`)
+                        }
+                        if (result.items[0].id.kind !== 'youtube#channel' && result.items[0].id.kind !== 'youtube#video' && result.items[0].id.kind !== 'youtube#playlist') {
+                            msg.channel.sendMessage(`Something went wrong as I did not find a channel, playlist, or video. I ***DID*** find something though! Contact <@112001393140723712> to get this fixed!`)
+                        }
+                    }
+                }
+            });
         }
 
         // Urban Dictionary search
         if (msg.content.startsWith(delimiter + "urban")) {
-            var urbanQuery = urban(msg.content.slice(9));
+            var urbanQuery = urban(msg.content.slice(7));
 
-            msg.edit('**Opening Dictionary...**').then(() => {
+            msg.channel.sendMessage('**Opening Dictionary...**').then((botMessage) => {
                 urbanQuery.first(function (json) {
                     if (json == undefined) {
-                        msg.edit('**No Results Found!**');
+                        botMessage.edit('**No Results Found!**');
                         return;
                     }
                     var urbanEmbed = new Discord.RichEmbed;
@@ -147,18 +164,23 @@ client.on("message", msg => {
                     //Adding data to rich embed
                     urbanEmbed.setAuthor(`Urban Search - ${urbanWord}`, `https://i.imgur.com/miYLsGw.jpg`);
                     urbanEmbed.setColor("#E86121");
-                    urbanEmbed.setFooter(`${urbanWord} defined by PyrrhaBot`, "https://i.imgur.com/Ylv4Hdz.jpg");
+                    urbanEmbed.setFooter(`${urbanWord} defined by PGBot`);
 
                     //Adding fields to rich embed
                     urbanEmbed.addField("Definition", urbanDefiniton, false);
                     urbanEmbed.addField("Example", urbanExample, false);
                     urbanEmbed.addField("Permalink", urbanLink, false);
 
-                    msg.edit({
+                    botMessage.edit({
                         embed: urbanEmbed
                     });
                 });
-            })
+            });
+        }
+
+        // Userinfo of a user
+        if (msg.content.startsWith(delimiter + "userinfo")) {
+            userInfo(msg);
         }
 
         // Word define
@@ -167,12 +189,12 @@ client.on("message", msg => {
             let word = args.join(' ');
             let defineEmbed = new Discord.RichEmbed();
 
-            msg.edit('**Opening Dictionary...**').then(() => {
+            msg.channel.sendMessage('**Opening Dictionary...**').then((botMessage) => {
                 superagent.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${word}`)
                     .then((res) => res.body)
                     .then((res) => {
                         if (res.tuc == undefined) {
-                            msg.edit('**No results found!**')
+                            botMessage.edit('**No results found!**')
                             return;
                         }
                         const final = [`**Definitions for __${word}__:**`];
@@ -186,16 +208,85 @@ client.on("message", msg => {
                         defineEmbed.setColor("#6984C4");
                         defineEmbed.setDescription(final);
                         defineEmbed.setFooter("PGBot", "http://i.imgur.com/xLtftbs.png")
-                        msg.edit({
+                        botMessage.edit({
                             embed: defineEmbed
                         });
                     })
                     .catch((err) => {
                         console.error(err);
-                        msg.edit('**No results found!**');
+                        botMessage.edit('**No results found!**');
                     });
             });
         }
+
+        // MyAnimeList Searching
+        if (msg.content.startsWith(delimiter + "anime")) {
+            let animeQuery = msg.content.slice(7);
+            let animeEmbed = new Discord.RichEmbed();
+
+            msg.channel.sendMessage('**Searching...**').then((animeResult) => {
+                malware.fromName(animeQuery).then(anime => {
+                        let japName = anime.alternativeTitles.japanese;
+                        let engName = anime.alternativeTitles.english;
+                        let score = anime.statistics.score.value;
+                        let type = anime.type;
+                        var episodeCount = anime.episodes;
+                        let status = anime.status;
+                        let synopsis = anime.synopsis;
+                        let image = anime.image;
+                        let animeUrl = `https://myanimelist.net/anime/${anime.id}`;
+
+                        animeEmbed.setAuthor(animeQuery, "https://myanimelist.cdn-dena.com/img/sp/icon/apple-touch-icon-256.png");
+                        animeEmbed.setColor("#448f86");
+                        animeEmbed.setImage(image);
+                        animeEmbed.setFooter("Anime info by PGBot", "http://i.imgur.com/xLtftbs.png");
+                        animeEmbed.setTimestamp();
+                        animeEmbed.setURL(animeUrl);
+
+                        if (japName != null) {
+                            animeEmbed.addField("Japanese name", japName, true);
+                        } else {
+                            animeEmbed.addField("Japanese name", "None", true);
+                        };
+
+                        if (engName != null) {
+                            animeEmbed.addField("English name", engName, true);
+                        } else {
+                            animeEmbed.addField("English name", "None", true);
+                            animeEmbed.addField("\u200b", "\u200b", true);
+                        };
+
+
+                        if (synopsis.length >= 1024) {
+                            animeEmbed.addField("Synposis", `The synopsis for this anime exceeds the maximum length, check the full synopsis on myanimelist.\nSynopsis Snippet:\n${synopsis.slice(0,500)}`, false);
+                        } else {
+                            animeEmbed.addField("Synposis", synopsis, false);
+                        };
+
+                        animeEmbed.addField("Score", score, true);
+                        animeEmbed.addField("Episodes", episodeCount, true);
+                        animeEmbed.addField("Status", status, true);
+                        animeEmbed.addField("URL", animeUrl, true);
+
+                        animeResult.edit({
+                            embed: animeEmbed
+                        });
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        animeResult.edit("**No results found!**")
+                    });
+            });
+        }
+
+        if (msg.content.startsWith(delimiter + "avatar")) {
+            var mentionedUser = msg.mentions.users.first();
+            if (!mentionedUser) {
+                mentionedUser = msg.author;
+            }
+            msg.edit(mentionedUser.avatarURL);
+        }
+
 
         /**
          * Storage
