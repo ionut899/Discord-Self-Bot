@@ -10,7 +10,7 @@ const scalc = require('scalc')
 
 // import the discord.js and npm modules
 const Discord = require("discord.js");
-const settings = require("./settings.json");
+const settings = require("./auth.json");
 const delimiter = settings.prefix;
 const client = new Discord.Client();
 
