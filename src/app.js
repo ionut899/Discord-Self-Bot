@@ -3,9 +3,10 @@ const superagent = require('superagent');
 const cheerio = require('cheerio');
 const querystring = require('querystring');
 const booru = require('booru');
-var request = require("request");
-var moment = require('moment');
-var urban = require('urban');
+const request = require("request");
+const moment = require('moment');
+const urban = require('urban');
+const scalc = require('scalc')
 
 // import the discord.js and npm modules
 const Discord = require("discord.js");
@@ -36,7 +37,7 @@ client.on("message", msg => {
         valsOfEmbed.setTimestamp();
         valsOfEmbed.setTitle("This is the title");
         valsOfEmbed.setURL("https://www.google.com");
-        valsOfEmbed.addField("FieldName", "FieldValue",true)
+        valsOfEmbed.addField("FieldName", "FieldValue", true)
         msg.edit({
             embed: valsOfEmbed
         });
@@ -227,8 +228,12 @@ client.on("message", msg => {
             embed(msg);
         }
 
-        if (msg.content.startsWith(delimiter + "calc")) {
-            calc(msg);
+        if (msg.content.startsWith(delimiter + "cal")) {
+            let toCalc = msg.content.slice(7);
+            msg.edit('**Calculating...**').then(() => {
+                let result = scalc(toCalc);
+                msg.edit(`**The answer to ${toCalc} is ${result}**`)
+            });
         }
 
         /**
@@ -366,32 +371,6 @@ function embed(msg) {
     msg.edit({
         embed: customEmbed
     });
-}
-
-
-function calc(msg) {
-    let operator = msg.content.split(" ")[2];
-    let firstNum = parseInt(msg.content.split(" ")[1]);
-    let secondNum = parseInt(msg.content.split(" ")[3]);
-    var result = 0;
-    switch (operator) {
-        case "*":
-            result = firstNum * secondNum;
-            break;
-        case "+":
-            result = firstNum + secondNum;
-            break;
-        case "-":
-            result = firstNum - secondNum;
-            break;
-        case "/":
-            result = firstNum / secondNum;
-            break;
-        default:
-            msg.edit("someting went wrong!");
-            return;
-    }
-    msg.edit(`The answer to \`${firstNum} ${operator} ${secondNum}\` is \`${result}\``);
 }
 
 function debug(msg) {
