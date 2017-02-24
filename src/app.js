@@ -52,8 +52,8 @@ client.on("message", msg => {
         if (msg.content.startsWith(delimiter + "help")) {
             var helpEmbed = new Discord.RichEmbed();
 
-            var commands = [`${delimiter}google <query>`, `${delimiter}userinfo <@User>`, `${delimiter}avatar`, `${delimiter}urban <word>`, `${delimiter}define <word>`,
-                "-----------------",
+            var commands = ["-----------------",
+                `${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}userinfo <@User>`, `${delimiter}define <word>`, `${delimiter}anime <anime>`, `${delimiter}avatar <user>`,
                 `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`,
                 "-----------------",
                 `${delimiter}calc`, `${delimiter}embed`, `${delimiter}debug <listchannels/listroles>`,
@@ -61,7 +61,8 @@ client.on("message", msg => {
                 `${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`
             ];
 
-            var info = ["Find something on google based on a query", "Shows the userinfo of a mentioned user", "Show the avatar of a user", "Define a word with Urban Dictionary", "Gives definitions of a word",
+            var info = [`-----------------`,
+                "Find something on google based on a query", "Find an image on google based on a query", "Find a video on youtube based on a query", "Define a word with Urban Dictionary", "Shows the userinfo of a mentioned user", "Gives definitions of a word", "Gives info of an anime", "Show the avatar of a user",
                 "-----------------",
                 "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Shows how to block OTA updates", "Shows your opinion gif",
                 "-----------------",
@@ -86,6 +87,40 @@ client.on("message", msg => {
          * Search Engine
          */
 
+        // Google Regular Search
+        if (msg.content.startsWith(delimiter + "google")) {
+            let searchQuery = msg.content.slice(8);
+            let safe = 'high';
+            let QUERY_PARAMS = {
+                key: googleapikey,
+                cx: searchEngineKey,
+                safe,
+                q: encodeURI(searchQuery),
+            };
+
+            msg.edit('`Searching...`').then(() => {
+                return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
+                    .then((res) => {
+                        if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
+                        return msg.edit(res.body.items[0].link);
+                    })
+                    .catch(() => {
+                        const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(searchQuery)}`;
+                        return superagent.get(SEARCH_URL).then((res) => {
+                            const $ = cheerio.load(res.text);
+                            let href = $('.r').first().find('a').first().attr('href');
+                            if (!href) return Promise.reject(new Error('NO RESULTS'));
+                            href = querystring.parse(href.replace('/url?', ''));
+                            return msg.edit(href.q);
+                        })
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        msg.edit('**No Results Found!**');
+                    });
+            });
+        }
+
         // Google Image search
         if (msg.content.startsWith(delimiter + "image")) {
             let imageQuery = msg.content.slice(7);
@@ -98,20 +133,19 @@ client.on("message", msg => {
                 q: encodeURI(imageQuery),
             };
 
-            console.log('SearchImage:', msg.guild.name, msg.guild.id, '|', imageQuery, '|', safe);
-            msg.channel.send('**Searching...**').then((botMessage) => {
+            msg.edit('**Searching...**').then(() => {
                 return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
-                    .then((res) => botMessage.edit(res.body.items[0].link))
+                    .then((res) => msg.edit(res.body.items[0].link))
                     .catch(() =>
                         superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(message.content)}`)
                         .then((res) => {
                             const $ = cheerio.load(res.text);
                             const result = $('.images_table').find('img').first().attr('src');
-                            return botMessage.edit(result);
+                            return msg.edit(result);
                         })
                     ).catch((err) => {
                         client.error(err);
-                        botMessage.edit('**No Results Found**');
+                        msg.edit('**No Results Found**');
                     });
             });
         }
@@ -119,29 +153,31 @@ client.on("message", msg => {
         // Youtube Search
         if (msg.content.startsWith(delimiter + "youtube")) {
             let query = msg.content.slice(9);
-            youtube.search(query, 1, function (error, result) {
-                if (error) {
-                    msg.channel.sendMessage("An error occurred, please contact <@112001393140723712>");
-                } else {
-                    console.log(result.items);
-
-                    if (!result || !result.items || result.items.length < 1) {
-                        msg.channel.sendMessage("No Results found");
+            msg.edit('**Searching...**').then(() => {
+                youtube.search(query, 1, function (error, result) {
+                    if (error) {
+                        msg.edit("An error occurred, please contact <@112001393140723712>");
                     } else {
-                        if (result.items[0].id.kind === 'youtube#channel') {
-                            msg.channel.sendMessage(`I found a channel!\nhttps://www.youtube.com/channel/${result.items[0].id.channelId}`);
-                        }
-                        if (result.items[0].id.kind === 'youtube#video') {
-                            msg.channel.sendMessage(`I found a video!\nVideo: https://www.youtube.com/watch?v=${result.items[0].id.videoId}`);
-                        }
-                        if (result.items[0].id.kind === 'youtube#playlist') {
-                            msg.channel.sendMessage(`I found a playlist!\nhttps://www.youtube.com/playlist?list=${result.items[0].id.playlistId}`)
-                        }
-                        if (result.items[0].id.kind !== 'youtube#channel' && result.items[0].id.kind !== 'youtube#video' && result.items[0].id.kind !== 'youtube#playlist') {
-                            msg.channel.sendMessage(`Something went wrong as I did not find a channel, playlist, or video. I ***DID*** find something though! Contact <@112001393140723712> to get this fixed!`)
+                        console.log(result.items);
+
+                        if (!result || !result.items || result.items.length < 1) {
+                            msg.edit("No Results found");
+                        } else {
+                            if (result.items[0].id.kind === 'youtube#channel') {
+                                msg.edit(`I found a channel!\nhttps://www.youtube.com/channel/${result.items[0].id.channelId}`);
+                            }
+                            if (result.items[0].id.kind === 'youtube#video') {
+                                msg.edit(`I found a video!\nVideo: https://www.youtube.com/watch?v=${result.items[0].id.videoId}`);
+                            }
+                            if (result.items[0].id.kind === 'youtube#playlist') {
+                                msg.edit(`I found a playlist!\nhttps://www.youtube.com/playlist?list=${result.items[0].id.playlistId}`)
+                            }
+                            if (result.items[0].id.kind !== 'youtube#channel' && result.items[0].id.kind !== 'youtube#video' && result.items[0].id.kind !== 'youtube#playlist') {
+                                msg.edit(`Something went wrong as I did not find a channel, playlist, or video. I ***DID*** find something though! Contact <@112001393140723712> to get this fixed!`)
+                            }
                         }
                     }
-                }
+                });
             });
         }
 
@@ -149,10 +185,10 @@ client.on("message", msg => {
         if (msg.content.startsWith(delimiter + "urban")) {
             var urbanQuery = urban(msg.content.slice(7));
 
-            msg.channel.sendMessage('**Opening Dictionary...**').then((botMessage) => {
+            msg.edit('**Opening Dictionary...**').then(() => {
                 urbanQuery.first(function (json) {
                     if (json == undefined) {
-                        botMessage.edit('**No Results Found!**');
+                        msg.edit('**No Results Found!**');
                         return;
                     }
                     var urbanEmbed = new Discord.RichEmbed;
@@ -171,7 +207,7 @@ client.on("message", msg => {
                     urbanEmbed.addField("Example", urbanExample, false);
                     urbanEmbed.addField("Permalink", urbanLink, false);
 
-                    botMessage.edit({
+                    msg.edit({
                         embed: urbanEmbed
                     });
                 });
@@ -189,12 +225,12 @@ client.on("message", msg => {
             let word = args.join(' ');
             let defineEmbed = new Discord.RichEmbed();
 
-            msg.channel.sendMessage('**Opening Dictionary...**').then((botMessage) => {
+            msg.edit('**Opening Dictionary...**').then(() => {
                 superagent.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${word}`)
                     .then((res) => res.body)
                     .then((res) => {
                         if (res.tuc == undefined) {
-                            botMessage.edit('**No results found!**')
+                            msg.edit('**No results found!**')
                             return;
                         }
                         const final = [`**Definitions for __${word}__:**`];
@@ -208,13 +244,13 @@ client.on("message", msg => {
                         defineEmbed.setColor("#6984C4");
                         defineEmbed.setDescription(final);
                         defineEmbed.setFooter("PGBot", "http://i.imgur.com/xLtftbs.png")
-                        botMessage.edit({
+                        msg.edit({
                             embed: defineEmbed
                         });
                     })
                     .catch((err) => {
                         console.error(err);
-                        botMessage.edit('**No results found!**');
+                        msg.edit('**No results found!**');
                     });
             });
         }
@@ -224,7 +260,7 @@ client.on("message", msg => {
             let animeQuery = msg.content.slice(7);
             let animeEmbed = new Discord.RichEmbed();
 
-            msg.channel.sendMessage('**Searching...**').then((animeResult) => {
+            msg.edit('**Searching...**').then(() => {
                 malware.fromName(animeQuery).then(anime => {
                         let japName = anime.alternativeTitles.japanese;
                         let engName = anime.alternativeTitles.english;
@@ -268,13 +304,13 @@ client.on("message", msg => {
                         animeEmbed.addField("Status", status, true);
                         animeEmbed.addField("URL", animeUrl, true);
 
-                        animeResult.edit({
+                        msg.edit({
                             embed: animeEmbed
                         });
                     })
                     .catch((err) => {
                         console.error(err);
-                        animeResult.edit("**No results found!**")
+                        msg.edit("**No results found!**")
                     });
             });
         }
