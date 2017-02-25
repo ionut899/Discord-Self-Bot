@@ -362,14 +362,19 @@ client.on("message", msg => {
         }
 
         if (msg.content.startsWith(delimiter + "switch")) {
-            let startTime = new Date();
-            let endTime = new Date(2017, 3, -27);
-            let days = countdown(startTime, endTime, countdown.DEFAULT, 3).toString();
-            let countdownEmbed = new Discord.RichEmbed();
-            countdownEmbed.addField("Nintendo Switch releases in...", `**${days}**`, false);
-            countdownEmbed.setColor("#FF0000");
-            countdownEmbed.setFooter("Note: Countdown is not live, only shows time since executed", "https://cdn02.nintendo-europe.com/media/images/11_square_images/systems_12/nintendo_switch/SQ_NintendoSwitchLogo.png");
-            msg.channel.sendEmbed(countdownEmbed);
+
+            msg.edit("**Bleep Bloop.. Checking When Switch will release...").then(() => {
+                let startTime = new Date();
+                let endTime = new Date(2017, 3, -27);
+                let days = countdown(startTime, endTime, countdown.DEFAULT, 3).toString();
+                let countdownEmbed = new Discord.RichEmbed();
+                countdownEmbed.addField("Nintendo Switch releases in...", `**${days}**`, false);
+                countdownEmbed.setColor("#FF0000");
+                countdownEmbed.setFooter("Note: Countdown is not live, only shows time since executed", "https://cdn02.nintendo-europe.com/media/images/11_square_images/systems_12/nintendo_switch/SQ_NintendoSwitchLogo.png");
+                msg.edit({
+                    embed: countdownEmbed
+                });
+            })
         }
 
         /**
