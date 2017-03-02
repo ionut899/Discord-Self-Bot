@@ -364,11 +364,11 @@ client.on("message", msg => {
             });
         }
 
-        if (msg.content.startsWith(delimiter + "switch")) {
+        if (msg.content.startsWith(delimiter + "cdswitch")) {
 
             msg.edit("**Bleep Bloop.. Checking When Switch will release...").then(() => {
                 let startTime = new Date();
-                let endTime = new Date(2017, 3, -27);
+                let endTime = new Date(2017, 3, -28);
                 let days = countdown(startTime, endTime, countdown.DEFAULT, 3).toString();
                 let countdownEmbed = new Discord.RichEmbed();
                 countdownEmbed.addField("Nintendo Switch releases in...", `**${days}**`, false);
