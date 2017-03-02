@@ -364,7 +364,7 @@ client.on("message", msg => {
             });
         }
 
-        if (msg.content.startsWith(delimiter + "cdswitch")) {
+        if (msg.content.startsWith(delimiter + "switch")) {
 
             msg.edit("**Bleep Bloop.. Checking When Switch will release...").then(() => {
                 let startTime = new Date();
