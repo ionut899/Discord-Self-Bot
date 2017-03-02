@@ -58,6 +58,7 @@ client.on("message", msg => {
 
             var commands = ["-----------------",
                 `${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}userinfo <@User>`, `${delimiter}define <word>`, `${delimiter}anime <anime>`, `${delimiter}avatar <user>`,
+                "-----------------",
                 `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`,
                 "-----------------",
                 `${delimiter}calc`, `${delimiter}embed`, `${delimiter}debug <listchannels/listroles>`,
