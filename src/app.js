@@ -19,7 +19,7 @@ const delimiter = settings.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
 
-var deathCount = parseInt(1);
+var deathCount = parseInt(3);
 
 // Getting keys
 client.login(settings.token);
@@ -58,7 +58,7 @@ client.on("message", msg => {
             deathCount += 1;
             let deathCountEmbed = new Discord.RichEmbed();
             deathCountEmbed.setColor("#5f93e2");
-            deathCountEmbed.addField("Amount of deaths by Favna in The Legend of Zelda Breath of The Wild:", deathCount)
+            deathCountEmbed.addField("Breath of The Wild Deathcount:", `${deathCount} | ${msg.content.slice(9)}`)
             deathCountEmbed.setFooter("We all know Favna is a total scrub", "https://i.imgur.com/eqxqyFp.png")
             msg.edit({
                 embed: deathCountEmbed
