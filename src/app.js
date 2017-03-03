@@ -19,6 +19,8 @@ const delimiter = settings.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
 
+var deathCount = parseInt(1);
+
 // Getting keys
 client.login(settings.token);
 youtube.setKey(settings.googleapikey);
@@ -49,6 +51,17 @@ client.on("message", msg => {
             valsOfEmbed.addField("FieldName", "FieldValue", true)
             msg.edit({
                 embed: valsOfEmbed
+            });
+        }
+
+        if (msg.content.startsWith(delimiter + "death")) {
+            deathCount += 1;
+            let deathCountEmbed = new Discord.RichEmbed();
+            deathCountEmbed.setColor("#5f93e2");
+            deathCountEmbed.addField("Amount of deaths by Favna in The Legend of Zelda Breath of The Wild:", deathCount)
+            deathCountEmbed.setFooter("We all know Favna is a total scrub", "https://i.imgur.com/eqxqyFp.png")
+            msg.edit({
+                embed: deathCountEmbed
             });
         }
 
@@ -363,22 +376,6 @@ client.on("message", msg => {
                 let result = scalc(toCalc);
                 msg.edit(`**The answer to ${toCalc} is ${result}**`)
             });
-        }
-
-        if (msg.content.startsWith(delimiter + "switch")) {
-
-            msg.edit("**Bleep Bloop.. Checking When Switch will release...").then(() => {
-                let startTime = new Date();
-                let endTime = new Date(2017, 3, -28);
-                let days = countdown(startTime, endTime, countdown.DEFAULT, 3).toString();
-                let countdownEmbed = new Discord.RichEmbed();
-                countdownEmbed.addField("Nintendo Switch releases in...", `**${days}**`, false);
-                countdownEmbed.setColor("#FF0000");
-                countdownEmbed.setFooter("Note: Countdown is not live, only shows time since executed", "https://cdn02.nintendo-europe.com/media/images/11_square_images/systems_12/nintendo_switch/SQ_NintendoSwitchLogo.png");
-                msg.edit({
-                    embed: countdownEmbed
-                });
-            })
         }
 
         /**
