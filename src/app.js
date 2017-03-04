@@ -94,7 +94,7 @@ client.on("message", msg => {
             helpEmbed.addField("This does", info, true);
             helpEmbed.setColor("#c61530");
             helpEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
-            helpEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
+            helpEmbed.setAuthor("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
             msg.edit({
                 embed: helpEmbed
             });
@@ -218,7 +218,7 @@ client.on("message", msg => {
                     //Adding data to rich embed
                     urbanEmbed.setAuthor(`Urban Search - ${urbanWord}`, `https://i.imgur.com/miYLsGw.jpg`);
                     urbanEmbed.setColor("#E86121");
-                    urbanEmbed.setFooter(`${urbanWord} defined by PGBot`);
+                    urbanEmbed.setFooter(`${urbanWord} defined by PyrrhaBot`, "http://i.imgur.com/4U9oMS0.png");
 
                     //Adding fields to rich embed
                     urbanEmbed.addField("Definition", urbanDefiniton, false);
@@ -261,7 +261,7 @@ client.on("message", msg => {
                         }
                         defineEmbed.setColor("#6984C4");
                         defineEmbed.setDescription(final);
-                        defineEmbed.setFooter("PGBot", "http://i.imgur.com/xLtftbs.png")
+                        defineEmbed.setFooter("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
                         msg.edit({
                             embed: defineEmbed
                         });
@@ -293,7 +293,7 @@ client.on("message", msg => {
                         animeEmbed.setAuthor(animeQuery, "https://myanimelist.cdn-dena.com/img/sp/icon/apple-touch-icon-256.png");
                         animeEmbed.setColor("#448f86");
                         animeEmbed.setImage(image);
-                        animeEmbed.setFooter("Anime info by PGBot", "http://i.imgur.com/xLtftbs.png");
+                        animeEmbed.setFooter("Anime info by PyrrhaBot", "http://i.imgur.com/4U9oMS0.png");
                         animeEmbed.setTimestamp();
                         animeEmbed.setURL(animeUrl);
 
@@ -509,7 +509,7 @@ function embed(msg) {
 
     customEmbed.setColor("#e52431");
     customEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
-    customEmbed.setAuthor("PyrrhaBot", "https://i.imgur.com/qPuIzb2.png")
+    customEmbed.setAuthor("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
     msg.edit({
         embed: customEmbed
     });
