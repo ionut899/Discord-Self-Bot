@@ -19,8 +19,7 @@ const delimiter = settings.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
 
-var deathCount = parseInt(14
-);
+var deathCount = parseInt(29);
 
 // Getting keys
 client.login(settings.token);
@@ -38,7 +37,9 @@ client.on("message", msg => {
 
 
     if (msg.author.id === "112001393140723712") {
-        if (msg.content.startsWith(delimiter + "valsofembed")) {
+        var content = msg.content.toLowerCase();
+
+        if (content.startsWith(delimiter + "valsofembed")) {
             var valsOfEmbed = new Discord.RichEmbed();
             valsOfEmbed.setAuthor("This is the author", "https://i.imgur.com/cgr5eSk.png");
             valsOfEmbed.setColor("#ffffff");
@@ -55,7 +56,7 @@ client.on("message", msg => {
             });
         }
 
-        if (msg.content.startsWith(delimiter + "death")) {
+        if (content.startsWith(delimiter + "death")) {
             deathCount += 1;
             let deathCountEmbed = new Discord.RichEmbed();
             deathCountEmbed.setColor("#5f93e2");
@@ -67,7 +68,7 @@ client.on("message", msg => {
         }
 
 
-        if (msg.content.startsWith(delimiter + "help")) {
+        if (content.startsWith(delimiter + "help")) {
             var helpEmbed = new Discord.RichEmbed();
 
             var commands = ["-----------------",
@@ -101,13 +102,9 @@ client.on("message", msg => {
             });
         }
 
-
-        /**
-         * Search Engine
-         */
-
+        // Search Engines
         // Google Regular Search
-        if (msg.content.startsWith(delimiter + "google")) {
+        if (content.startsWith(delimiter + "google")) {
             let searchQuery = msg.content.slice(8);
             let safe = 'high';
             let QUERY_PARAMS = {
@@ -117,7 +114,7 @@ client.on("message", msg => {
                 q: encodeURI(searchQuery),
             };
 
-            msg.edit('`Searching...`').then(() => {
+            msg.edit('**Searching...**').then(() => {
                 return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
                     .then((res) => {
                         if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
@@ -134,14 +131,14 @@ client.on("message", msg => {
                         })
                     })
                     .catch((err) => {
-                        console.error(err);
                         msg.edit('**No Results Found!**');
+                        console.error(err);
                     });
             });
         }
 
         // Google Image search
-        if (msg.content.startsWith(delimiter + "image")) {
+        if (content.startsWith(delimiter + "image")) {
             let imageQuery = msg.content.slice(7);
             let safe = 'high'
             let QUERY_PARAMS = {
@@ -156,43 +153,51 @@ client.on("message", msg => {
                 return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
                     .then((res) => msg.edit(res.body.items[0].link))
                     .catch(() =>
-                        superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(message.content)}`)
+                        superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(imageQuery)}`)
                         .then((res) => {
                             const $ = cheerio.load(res.text);
                             const result = $('.images_table').find('img').first().attr('src');
                             return msg.edit(result);
                         })
                     ).catch((err) => {
-                        client.error(err);
                         msg.edit('**No Results Found**');
+                        console.error(err);
                     });
             });
         }
 
         // Youtube Search
-        if (msg.content.startsWith(delimiter + "youtube")) {
-            let query = msg.content.slice(9);
-            msg.edit('**Searching...**').then(() => {
-                youtube.search(query, 1, function (error, result) {
+        if (content.startsWith(delimiter + "youtube") || content.startsWith(delimiter + "yt")) {
+            let youtubeQuery = content.slice(3, 5) === 'yt' ? msg.content.slice(6) : msg.content.slice(11);
+
+
+            msg.edit('**Searching while prioritizing videos..**').then(() => {
+                youtube.search(youtubeQuery, 50, function (error, result) {
                     if (error) {
                         msg.edit("An error occurred, please contact <@112001393140723712>");
                     } else {
-                        console.log(result.items);
-
                         if (!result || !result.items || result.items.length < 1) {
                             msg.edit("No Results found");
                         } else {
-                            if (result.items[0].id.kind === 'youtube#channel') {
-                                msg.edit(`I found a channel!\nhttps://www.youtube.com/channel/${result.items[0].id.channelId}`);
+                            for (let i = 0; i < result.items.length; i++) {
+                                if (result.items[i].id.kind === 'youtube#video') {
+                                    msg.edit(`Video: https://www.youtube.com/watch?v=${result.items[i].id.videoId}`);
+                                    return;
+                                }
                             }
-                            if (result.items[0].id.kind === 'youtube#video') {
-                                msg.edit(`I found a video!\nVideo: https://www.youtube.com/watch?v=${result.items[0].id.videoId}`);
+
+                            for (let i = 0; i < result.items.length; i++) {
+                                if (result.items[i].id.kind === 'youtube#channel') {
+                                    msg.edit(`Channel: https://www.youtube.com/channel/${result.items[i].id.channelId}`);
+                                    return;
+                                }
                             }
-                            if (result.items[0].id.kind === 'youtube#playlist') {
-                                msg.edit(`I found a playlist!\nhttps://www.youtube.com/playlist?list=${result.items[0].id.playlistId}`)
-                            }
-                            if (result.items[0].id.kind !== 'youtube#channel' && result.items[0].id.kind !== 'youtube#video' && result.items[0].id.kind !== 'youtube#playlist') {
-                                msg.edit(`Something went wrong as I did not find a channel, playlist, or video. I ***DID*** find something though! Contact <@112001393140723712> to get this fixed!`)
+
+                            for (let i = 0; i < result.items.length; i++) {
+                                if (result.items[i].id.kind === 'youtube#playlist') {
+                                    msg.edit(`Playlist: https://www.youtube.com/playlist?list=${result.items[i].id.playlistId}`);
+                                    return;
+                                }
                             }
                         }
                     }
@@ -201,7 +206,7 @@ client.on("message", msg => {
         }
 
         // Urban Dictionary search
-        if (msg.content.startsWith(delimiter + "urban")) {
+        if (content.startsWith(delimiter + "urban")) {
             var urbanQuery = urban(msg.content.slice(7));
 
             msg.edit('**Opening Dictionary...**').then(() => {
@@ -234,25 +239,24 @@ client.on("message", msg => {
         }
 
         // Userinfo of a user
-        if (msg.content.startsWith(delimiter + "userinfo")) {
+        if (content.startsWith(delimiter + "userinfo")) {
             userInfo(msg);
         }
 
         // Word define
-        if (msg.content.startsWith(delimiter + "define")) {
-            let args = msg.content.split(' ').slice(1);
-            let word = args.join(' ');
+        if (content.startsWith(delimiter + "define")) {
+            let defineQuery = msg.content.slice(10);
             let defineEmbed = new Discord.RichEmbed();
 
             msg.edit('**Opening Dictionary...**').then(() => {
-                superagent.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${word}`)
+                superagent.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${defineQuery}`)
                     .then((res) => res.body)
                     .then((res) => {
                         if (res.tuc == undefined) {
                             msg.edit('**No results found!**')
                             return;
                         }
-                        const final = [`**Definitions for __${word}__:**`];
+                        const final = [`**Definitions for __${defineQuery}__:**`];
                         for (let [index, item] of Object.entries(res.tuc.filter(t => t.meanings)[0].meanings.slice(0, 5))) {
 
                             item = item.text
@@ -275,7 +279,7 @@ client.on("message", msg => {
         }
 
         // MyAnimeList Searching
-        if (msg.content.startsWith(delimiter + "anime")) {
+        if (content.startsWith(delimiter + "anime")) {
             let animeQuery = msg.content.slice(7);
             let animeEmbed = new Discord.RichEmbed();
 
@@ -334,7 +338,7 @@ client.on("message", msg => {
             });
         }
 
-        if (msg.content.startsWith(delimiter + "avatar")) {
+        if (content.startsWith(delimiter + "avatar")) {
             var mentionedUser = msg.mentions.users.first();
             if (!mentionedUser) {
                 mentionedUser = msg.author;
@@ -347,19 +351,19 @@ client.on("message", msg => {
          * Storage
          */
 
-        if (msg.content.startsWith(delimiter + "3dsguide")) {
+        if (content.startsWith(delimiter + "3dsguide")) {
             msg.edit("For the one stop guide to hacking your 3DS up to firmware 11.2 go to, read, follow and learn from https://3ds.guide");
         }
 
-        if (msg.content.startsWith(delimiter + "3dshardmodders")) {
+        if (content.startsWith(delimiter + "3dshardmodders")) {
             msg.edit("The 3DS scene has verified and trusted hardmodders globally! You can contact them through private messaging on GBAtemp. Find their names here: https://gbatemp.net/threads/list-of-hardmod-installers-by-region.414224/");
         }
 
-        if (msg.content.startsWith(delimiter + "tvos")) {
+        if (content.startsWith(delimiter + "tvos")) {
             msg.edit("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
         }
 
-        if (msg.content.startsWith(delimiter + "opinion")) {
+        if (content.startsWith(delimiter + "opinion")) {
             msg.channel.sendFile("./discordselfbot/images/opinion.gif");
         }
 
@@ -367,12 +371,12 @@ client.on("message", msg => {
          * Custom
          */
 
-        if (msg.content.startsWith(delimiter + "embed")) {
+        if (content.startsWith(delimiter + "embed")) {
             embed(msg);
         }
 
-        if (msg.content.startsWith(delimiter + "cal")) {
-            let toCalc = msg.content.slice(7);
+        if (content.startsWith(delimiter + "calc")) {
+            let toCalc = msg.content.slice(8);
             msg.edit('**Calculating...**').then(() => {
                 let result = scalc(toCalc);
                 msg.edit(`**The answer to ${toCalc} is ${result}**`)
@@ -382,7 +386,7 @@ client.on("message", msg => {
         /**
          * Debugging
          */
-        if (msg.content.startsWith(delimiter + "debug")) {
+        if (content.startsWith(delimiter + "debug")) {
             debug(msg);
         }
 
@@ -390,7 +394,7 @@ client.on("message", msg => {
          * NSFW Searching
          */
 
-        if (msg.content.startsWith(delimiter + "r34")) {
+        if (content.startsWith(delimiter + "r34")) {
             let rule34Tags = msg.content.slice(7).split(" ");
             if (rule34Tags[0] === '') {
                 msg.edit("You forgot to supply tags");
@@ -416,7 +420,7 @@ client.on("message", msg => {
                 })
         }
 
-        if (msg.content.startsWith(delimiter + "e621")) {
+        if (content.startsWith(delimiter + "e621")) {
             let e621Tags = msg.content.slice(8).split(" ");
             if (e621Tags[0] === '') {
                 msg.edit("You forgot to supply tags");
@@ -442,7 +446,7 @@ client.on("message", msg => {
                 })
         }
 
-        if (msg.content.startsWith(delimiter + "gelbooru")) {
+        if (content.startsWith(delimiter + "gelbooru")) {
             let gelbooruTags = msg.content.slice(12).split(" ");
             if (gelbooruTags[0] === '') {
                 msg.edit("You forgot to supply tags");
@@ -468,7 +472,7 @@ client.on("message", msg => {
                 })
         }
 
-        if (msg.content.startsWith(delimiter + "paheal")) {
+        if (content.startsWith(delimiter + "paheal")) {
             let rule34paheal = msg.content.slice(10).split(" ");
             if (rule34paheal[0] === '') {
                 msg.edit("You forgot to supply tags");
