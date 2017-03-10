@@ -19,7 +19,7 @@ const delimiter = settings.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
 
-var deathCount = parseInt(29);
+var deathCount = parseInt(30);
 
 // Getting keys
 client.login(settings.token);
