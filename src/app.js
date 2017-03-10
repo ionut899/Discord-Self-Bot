@@ -67,6 +67,10 @@ client.on("message", msg => {
             });
         }
 
+        if(content.startsWith(delimiter + "botwmap")) {
+            msg.edit("For an interactive map for The Legend of Zelda: Breath of The Wild map follow this url: https://www.zeldadungeon.net/breath-of-the-wild-interactive-map/")
+        }
+
 
         if (content.startsWith(delimiter + "help")) {
             var helpEmbed = new Discord.RichEmbed();
