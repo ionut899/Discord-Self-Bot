@@ -67,16 +67,16 @@ client.on("message", msg => {
             });
         }
 
-        if(content.startsWith(delimiter + "botwmap")) {
+        if (content.startsWith(delimiter + "botwmap")) {
             msg.edit("For an interactive map for The Legend of Zelda: Breath of The Wild map follow this url: https://www.zeldadungeon.net/breath-of-the-wild-interactive-map/")
         }
 
-        if(content.startsWith(delimiter + "cysource")) {
+        if (content.startsWith(delimiter + "cysource")) {
             let cysource = msg.content.slice(12);
             msg.edit(`To add this repo directly to cydia click the following URL: https://cydia.saurik.com/api/share#?source=${cysource}`);
         }
 
-        if(content.startsWith(delimiter + "cypkg")) {
+        if (content.startsWith(delimiter + "cypkg")) {
             let input = msg.content.split(' ').slice(1);
             msg.edit(`To find this package on Cydia follow this URL: https://cydia.saurik.com/api/share#?source=${input[0]}/&package=${input[1]}`);
         }
@@ -90,6 +90,8 @@ client.on("message", msg => {
                 "-----------------",
                 `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`,
                 "-----------------",
+                `${delimiter}cysource`, `${delimiter}cypkg`,
+                "-----------------",
                 `${delimiter}calc`, `${delimiter}embed`, `${delimiter}debug <listchannels/listroles>`,
                 "-----------------",
                 `${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`
@@ -99,6 +101,8 @@ client.on("message", msg => {
                 "Find something on google based on a query", "Find an image on google based on a query", "Find a video on youtube based on a query", "Define a word with Urban Dictionary", "Shows the userinfo of a mentioned user", "Gives definitions of a word", "Gives info of an anime", "Show the avatar of a user",
                 "-----------------",
                 "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Shows how to block OTA updates", "Shows your opinion gif",
+                "-----------------",
+                "Transforms a URL into a Cydia share URL", "Transforms a package name into a cydia share url",
                 "-----------------",
                 "Make a calculation given required parameters", "Creates a customized richEmbed", "List all channels or roles and their IDs",
                 "-----------------",
