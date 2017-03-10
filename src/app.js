@@ -71,6 +71,16 @@ client.on("message", msg => {
             msg.edit("For an interactive map for The Legend of Zelda: Breath of The Wild map follow this url: https://www.zeldadungeon.net/breath-of-the-wild-interactive-map/")
         }
 
+        if(content.startsWith(delimiter + "cysource")) {
+            let cysource = msg.content.slice(12);
+            msg.edit(`To add this repo directly to cydia click the following URL: https://cydia.saurik.com/api/share#?source=${cysource}`);
+        }
+
+        if(content.startsWith(delimiter + "cypkg")) {
+            let input = msg.content.split(' ').slice(1);
+            msg.edit(`To find this package on Cydia follow this URL: https://cydia.saurik.com/api/share#?source=${input[0]}/&package=${input[1]}`);
+        }
+
 
         if (content.startsWith(delimiter + "help")) {
             var helpEmbed = new Discord.RichEmbed();
