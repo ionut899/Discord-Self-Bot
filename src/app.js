@@ -11,6 +11,7 @@ const scalc = require('scalc');
 const malware = require('malapi').Anime;
 const ordinal = require('ordinal').english;
 const countdown = require('countdown');
+const cydia = require('cydia-api-node');
 
 // import the discord.js and npm modules
 const Discord = require("discord.js");
@@ -18,6 +19,7 @@ const settings = require("./auth.json");
 const delimiter = settings.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
+const regex = /\[\[\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\]\]/gi;
 
 var deathCount = parseInt(30);
 
@@ -33,8 +35,6 @@ client.on("ready", () => {
 });
 
 client.on("message", msg => {
-
-
 
     if (msg.author.id === "112001393140723712") {
         var content = msg.content.toLowerCase();
@@ -79,6 +79,48 @@ client.on("message", msg => {
         if (content.startsWith(delimiter + "cypkg")) {
             let input = msg.content.split(' ').slice(1);
             msg.edit(`To find this package on Cydia follow this URL: https://cydia.saurik.com/api/share#?source=${input[0]}/&package=${input[1]}`);
+        }
+
+        // Cydia Tweak Search
+        if (content.startsWith(delimiter + "cyfind") || regex.test(content)) {
+            let cydiaEmbed = new Discord.RichEmbed();
+            let startBraces = content.indexOf("[[");
+            let endBraces = content.indexOf("]]");
+            let cydiaQuery = content.slice(3, 9) === 'cyfind' ? msg.content.slice(10) : msg.content.slice(startBraces + 2, endBraces);
+
+            cydiaEmbed.setColor("#5D2E1F");
+            cydiaEmbed.setAuthor("Tweak Info", "http://i.imgur.com/OPZfdht.png");
+            cydiaEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg")
+
+            msg.edit("**Searching cydia package...**").then(() => {
+                cydia.getAllInfo(cydiaQuery).then((pkginfo) => {
+                    if (pkginfo === false) {
+                        msg.edit(`**Tweak/Theme \`${cydiaQuery}\` not found!**`);
+                        return;
+                    }
+                    let pkgPrice = pkginfo.price === 0 ? "Free" : pkginfo.price;
+                    let pkgDisplayName = pkginfo.display;
+                    let pkgName = pkginfo.name;
+                    let pkgSummary = pkginfo.summary;
+                    let pkgVersion = pkginfo.version;
+                    let pkgSection = pkginfo.section;
+                    let pkgRepoName = pkginfo.reponame;
+                    let pkgRepoLink = pkginfo.repolink;
+
+                    cydiaEmbed.addField("Display Name", pkgDisplayName, true);
+                    cydiaEmbed.addField("Package Name", pkgName, true);
+                    cydiaEmbed.addField("Description", pkgSummary, true);
+                    cydiaEmbed.addField("Version", pkgVersion, true);
+                    cydiaEmbed.addField("Section", pkgSection, true);
+                    cydiaEmbed.addField("Price", pkgPrice, true);
+                    cydiaEmbed.addField("Link", `[Click Here](http://cydia.saurik.com/package/${pkgName})`, true);
+                    cydiaEmbed.addField("Repo", `[${pkgRepoName}](https://cydia.saurik.com/api/share#?source=${pkgRepoLink})`, true);
+
+                    msg.edit({
+                        embed: cydiaEmbed
+                    });
+                });
+            });
         }
 
 
@@ -382,7 +424,13 @@ client.on("message", msg => {
         }
 
         if (content.startsWith(delimiter + "opinion")) {
-            msg.channel.sendFile("./discordselfbot/images/opinion.gif");
+            msg.delete();
+            msg.channel.sendFile("./pyrrhabot/images/opinion.gif");
+        }
+
+        if (content.startsWith(delimiter + "cp")) {
+            msg.delete();
+            msg.channel.sendFile("./pyrrhabot/images/cp.jpg");
         }
 
         /**
@@ -585,22 +633,17 @@ function userInfo(msg) {
     let userName = user.username;
     let userDiscriminator = user.discriminator;
     let userAvatar = user.avatarURL;
-
-    let userNickname = userGuildMember.nickname;
+    let userNickname = userGuildMember.nickname === null ? "No Nickname" : userGuildMember.nickname;
     let userStatus = user.presence.status;
-    let userRoles = userGuildMember.roles.map(r => r.name).slice(1);
+    let userRoles = userGuildMember.roles.map(r => r.name).slice(1).length >= 1 ? userGuildMember.roles.map(r => r.name).slice(1) : "No Roles";
     let userRoleColor = userGuildMember.highestRole.hexColor;
 
     let userCreateDate = moment(user.createdAt).format('MMMM Do YYYY')
     let userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY')
 
-    if (userNickname == null) {
-        userNickname = "No Nickname";
-    }
-
     //Adding data to rich embed
     userInfoEmbed.setAuthor(`${userName}` + "#" + `${userDiscriminator}`, `${userAvatar}`);
-    userInfoEmbed.setColor("#58fc91");
+    userInfoEmbed.setColor("#d43939");
     userInfoEmbed.setImage(userAvatar);
     userInfoEmbed.setFooter(`has ${userRoles.length} role(s)`, userAvatar);
 
@@ -614,13 +657,8 @@ function userInfo(msg) {
     userInfoEmbed.addField("Color", userRoleColor, true);
     userInfoEmbed.addField("Nickname", userNickname, true);
 
-
     //Third Row
-    if (userRoles.length >= 1) {
-        userInfoEmbed.addField("Roles", userRoles, true);
-    } else {
-        userInfoEmbed.addField("Roles", "No roles", true);
-    }
+    userInfoEmbed.addField("Roles", userRoles, true);
 
     //Fourth row
     userInfoEmbed.addField("Created at", userCreateDate, true);
