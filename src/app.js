@@ -19,7 +19,7 @@ const settings = require("./auth.json");
 const delimiter = settings.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
-const regex = /\[\[\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\]\]/gi;
+const regex = /\$\$\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\$\$/gi;
 
 var deathCount = parseInt(30);
 
