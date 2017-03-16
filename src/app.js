@@ -67,15 +67,19 @@ client.on("message", msg => {
             });
         }
 
+
+        // Breath of the Wild Interactive map
         if (content.startsWith(delimiter + "botwmap")) {
             msg.edit("For an interactive map for The Legend of Zelda: Breath of The Wild map follow this url: https://www.zeldadungeon.net/breath-of-the-wild-interactive-map/")
         }
 
+        // Transform URL to cydia share URL
         if (content.startsWith(delimiter + "cysource")) {
             let cysource = msg.content.slice(12);
             msg.edit(`To add this repo directly to cydia click the following URL: https://cydia.saurik.com/api/share#?source=${cysource}`);
         }
 
+        // Transform source URL and package name to cydia share URL
         if (content.startsWith(delimiter + "cypkg")) {
             let input = msg.content.split(' ').slice(1);
             msg.edit(`To find this package on Cydia follow this URL: https://cydia.saurik.com/api/share#?source=${input[0]}/&package=${input[1]}`);
@@ -122,7 +126,6 @@ client.on("message", msg => {
                 });
             });
         }
-
 
         if (content.startsWith(delimiter + "help")) {
             var helpEmbed = new Discord.RichEmbed();
@@ -467,13 +470,16 @@ client.on("message", msg => {
                 return;
             }
 
-            booru.search("r34", rule34Tags, {limit:1, random:true})
+            booru.search("r34", rule34Tags, {
+                    limit: 1,
+                    random: true
+                })
                 .then(booru.commonfy)
                 .then(images => {
-                   // Show juicy NSFW image
-				   for (let image of images) {
-					   msg.edit(`Score: ${image.common.score}\nImage: ${image.common.file_url}`);
-				   }
+                    // Show juicy NSFW image
+                    for (let image of images) {
+                        msg.edit(`Score: ${image.common.score}\nImage: ${image.common.file_url}`);
+                    }
                 })
                 .catch(err => {
                     if (err.name === 'booruError') {
