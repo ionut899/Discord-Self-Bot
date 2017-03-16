@@ -467,15 +467,13 @@ client.on("message", msg => {
                 return;
             }
 
-            booru.search("r34", rule34Tags, 100)
+            booru.search("r34", rule34Tags, {limit:1, random:true})
                 .then(booru.commonfy)
                 .then(images => {
-                    let min = Math.ceil(0);
-                    let max = Math.floor(images.length);
-                    let i = Math.floor(Math.random() * (max - min)) + min;
-
-                    // Show juicy NSFW image
-                    msg.edit(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                   // Show juicy NSFW image
+				   for (let image of images) {
+					   msg.edit(`Score: ${image.common.score}\nImage: ${image.common.file_url}`);
+				   }
                 })
                 .catch(err => {
                     if (err.name === 'booruError') {
