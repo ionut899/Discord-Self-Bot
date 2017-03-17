@@ -497,15 +497,16 @@ client.on("message", msg => {
                 return;
             }
 
-            booru.search("e621", e621Tags, 100)
+            booru.search("e621", e621Tags, {
+                    limit: 1,
+                    random: true
+                })
                 .then(booru.commonfy)
                 .then(images => {
-                    let min = Math.ceil(0);
-                    let max = Math.floor(images.length);
-                    let i = Math.floor(Math.random() * (max - min)) + min;
-
                     // Show juicy NSFW image
-                    msg.edit(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                    for (let image of images) {
+                        msg.edit(`Score: ${image.common.score}\nImage: ${image.common.file_url}`);
+                    }
                 })
                 .catch(err => {
                     if (err.name === 'booruError') {
@@ -523,15 +524,16 @@ client.on("message", msg => {
                 return;
             }
 
-            booru.search("gelbooru", gelbooruTags, 100)
+            booru.search("gelbooru", gelbooruTags, {
+                    limit: 1,
+                    random: true
+                })
                 .then(booru.commonfy)
                 .then(images => {
-                    let min = Math.ceil(0);
-                    let max = Math.floor(images.length);
-                    let i = Math.floor(Math.random() * (max - min)) + min;
-
                     // Show juicy NSFW image
-                    msg.edit(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                    for (let image of images) {
+                        msg.edit(`Score: ${image.common.score}\nImage: ${image.common.file_url}`);
+                    }
                 })
                 .catch(err => {
                     if (err.name === 'booruError') {
@@ -549,15 +551,16 @@ client.on("message", msg => {
                 return;
             }
 
-            booru.search("paheal", rule34paheal, 100)
+            booru.search("paheal", rule34paheal, {
+                    limit: 1,
+                    random: true
+                })
                 .then(booru.commonfy)
                 .then(images => {
-                    let min = Math.ceil(0);
-                    let max = Math.floor(images.length);
-                    let i = Math.floor(Math.random() * (max - min)) + min;
-
                     // Show juicy NSFW image
-                    msg.edit(`Score: ${images[i].common.score}\nImage: ${images[i].common.file_url}`);
+                    for (let image of images) {
+                        msg.edit(`Score: ${image.common.score}\nImage: ${image.common.file_url}`);
+                    }
                 })
                 .catch(err => {
                     if (err.name === 'booruError') {
