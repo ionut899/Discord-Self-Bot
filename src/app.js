@@ -410,10 +410,7 @@ client.on("message", msg => {
         }
 
 
-        /**
-         * Storage
-         */
-
+// Storage
         if (content.startsWith(delimiter + "3dsguide")) {
             msg.edit("For the one stop guide to hacking your 3DS up to firmware 11.2 go to, read, follow and learn from https://3ds.guide");
         }
@@ -448,7 +445,7 @@ client.on("message", msg => {
             let toCalc = msg.content.slice(8);
             msg.edit('**Calculating...**').then(() => {
                 let result = scalc(toCalc);
-                msg.edit(`**The answer to ${toCalc} is ${result}**`)
+                msg.edit(`\`The answer to ${toCalc} is ${result}\``)
             });
         }
 
