@@ -130,28 +130,26 @@ client.on("message", msg => {
         if (content.startsWith(delimiter + "help")) {
             var helpEmbed = new Discord.RichEmbed();
 
-            var commands = ["-----------------",
-                `${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}userinfo <@User>`, `${delimiter}define <word>`, `${delimiter}anime <anime>`, `${delimiter}avatar <user>`,
+            var commands = [`${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}userinfo <@User>`, `${delimiter}define <word>`, `${delimiter}anime <anime>`, `${delimiter}avatar <user>`,
                 "-----------------",
-                `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`, `${delimiter}botwmap`,  `${delimiter}death <reason>`,
+                `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`, `${delimiter}botwmap`, `${delimiter}death <reason>`,
                 "-----------------",
-                `${delimiter}cysource`, `${delimiter}cypkg`,`${delimiter}cyfind or $$name$$`,
+                `${delimiter}cysource`, `${delimiter}cypkg`, `${delimiter}cyfind or $$name$$`,
                 "-----------------",
                 `${delimiter}calc`, `${delimiter}embed`, `${delimiter}debug <listchannels/listroles>`, `${delimiter}valsofembed`,
                 "-----------------",
                 `${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`
             ];
 
-            var info = [`-----------------`,
-                "Find something on google based on a query", "Find an image on google based on a query", "Find a video on youtube based on a query", "Define a word with Urban Dictionary", "Shows the userinfo of a mentioned user", "Gives definitions of a word", "Gives info of an anime", "Show the avatar of a user",
+            var info = ["Find something on google based on a query", "Find an image on google based on a query", "Find a video on youtube based on a query", "Define a word with Urban Dictionary", "Shows the userinfo of a mentioned user", "Gives definitions of a word", "Gives info of an anime", "Show the avatar of a user",
                 "-----------------",
-                "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Shows how to block OTA updates", "Shows your opinion gif", "Shows the url to the interactive breath of the wild map", "Increase death count by 1 with a reason",
+                "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Shows how to block OTA updates", "Shows your opinion gif", "Interactive Breath of the Wild map", "Increase death count by 1 with a reason",
                 "-----------------",
                 "Transforms a URL into a Cydia share URL", "Transforms a package name into a cydia share url", "Find a package on Cydia",
                 "-----------------",
                 "Make a calculation given required parameters", "Creates a customized richEmbed", "List all channels or roles and their IDs", "Shows the layout of rich embeds",
                 "-----------------",
-                "Find NSFW image on <https://rule34.xxx>", "Find NSFW image on <https://e621.net>", "Find NSFW image on <https://gelbooru.com>", "Find NSFW image on <https://rule34.paheal.net>"
+                "Find NSFW image on [rule34](https://rule34.xxx)", "Find NSFW image on [e621](https://e621.net)", "Find NSFW image on [gelbooru](https://gelbooru.com)", "Find NSFW image on [rule34-paheal](https://rule34.paheal.net)"
             ];
 
             helpEmbed.setTitle("--My commands--");
@@ -410,7 +408,7 @@ client.on("message", msg => {
         }
 
 
-// Storage
+        // Storage
         if (content.startsWith(delimiter + "3dsguide")) {
             msg.edit("For the one stop guide to hacking your 3DS up to firmware 11.2 go to, read, follow and learn from https://3ds.guide");
         }
