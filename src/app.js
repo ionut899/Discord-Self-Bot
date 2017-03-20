@@ -36,11 +36,11 @@ client.on("ready", () => {
 
 client.on("message", msg => {
 
-    if (msg.author.id !== client.user.id) {
+    if (msg.author.id !== "112001393140723712") {
         return;
     } else
 
-    if (msg.author.id === client.user.id) {
+    if (msg.author.id === "112001393140723712") {
         var content = msg.content.toLowerCase();
 
         if (content.startsWith(delimiter + "valsofembed")) {
