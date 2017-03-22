@@ -132,7 +132,7 @@ client.on("message", msg => {
 
             var commands = [`${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}userinfo <@User>`, `${delimiter}define <word>`, `${delimiter}anime <anime>`, `${delimiter}avatar <user>`,
                 "-----------------",
-                `${delimiter}3dsguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`, `${delimiter}botwmap`, `${delimiter}death <reason>`,
+                `${delimiter}3dsguide`, `${delimiter}wiiuguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`, `${delimiter}botwmap`, `${delimiter}death <reason>`,
                 "-----------------",
                 `${delimiter}cysource`, `${delimiter}cypkg`, `${delimiter}cyfind or $$name$$`,
                 "-----------------",
@@ -143,7 +143,7 @@ client.on("message", msg => {
 
             var info = ["Find something on google based on a query", "Find an image on google based on a query", "Find a video on youtube based on a query", "Define a word with Urban Dictionary", "Shows the userinfo of a mentioned user", "Gives definitions of a word", "Gives info of an anime", "Show the avatar of a user",
                 "-----------------",
-                "The 3DS hacking guide to follow", "List of trusted 3DS hardmodders", "Shows how to block OTA updates", "Shows your opinion gif", "Interactive Breath of the Wild map", "Increase death count by 1 with a reason",
+                "The 3DS hacking guide to follow", "The WiiU hacking guide to follow", "List of trusted 3DS hardmodders", "Shows how to block OTA updates", "Shows your opinion gif", "Interactive Breath of the Wild map", "Increase death count by 1 with a reason",
                 "-----------------",
                 "Transforms a URL into a Cydia share URL", "Transforms a package name into a cydia share url", "Find a package on Cydia",
                 "-----------------",
@@ -418,7 +418,23 @@ client.on("message", msg => {
             plaiGuideEmbed.addField("\u200b", "https://3ds.guide");
             plaiGuideEmbed.setFooter("Nintendo 3DS Guide provided by Favna's selfbot", "http://i.imgur.com/4U9oMS0.png");
             plaiGuideEmbed.setThumbnail("https://s-media-cache-ak0.pinimg.com/736x/6d/75/88/6d7588481517a4c959bab8e3df39c92a.jpg")
-            msg.channel.sendEmbed(plaiGuideEmbed);
+            msg.edit({
+                embed: plaiGuideEmbed
+            });
+        }
+
+        if (content.startsWith(delimiter + "wiiuguide")) {
+            let wiiuguideEmbed = new Discord.RichEmbed();
+
+            wiiuguideEmbed.setColor("#00ACCA");
+            wiiuguideEmbed.setTitle("A one stop guide for Wii U");
+            wiiuguideEmbed.setDescription("Want to run game backups on your WiiU? Need instructions on how to set up haxchi, mocha and rednand? Follow this guide");
+            wiiuguideEmbed.addField("\u200b", "https://wiiu.guide");
+            wiiuguideEmbed.setFooter("Wii U Guide provided by PGBot", "http://i.imgur.com/xLtftbs.png");
+            wiiuguideEmbed.setThumbnail("http://i68.tinypic.com/2zizozn.png")
+            msg.edit({
+                embed: wiiuguideEmbed
+            });
         }
 
         if (content.startsWith(delimiter + "3dshardmodders")) {
