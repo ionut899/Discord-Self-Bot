@@ -430,7 +430,7 @@ client.on("message", msg => {
             wiiuguideEmbed.setTitle("A one stop guide for Wii U");
             wiiuguideEmbed.setDescription("Want to run game backups on your WiiU? Need instructions on how to set up haxchi, mocha and rednand? Follow this guide");
             wiiuguideEmbed.addField("\u200b", "https://wiiu.guide");
-            setFooter("Nintendo WiiU Guide provided by Favna's selfbot", "http://i.imgur.com/4U9oMS0.png");
+            wiiuguideEmbed.setFooter("Nintendo WiiU Guide provided by Favna's selfbot", "http://i.imgur.com/4U9oMS0.png");
             wiiuguideEmbed.setThumbnail("http://i68.tinypic.com/2zizozn.png")
             msg.edit({
                 embed: wiiuguideEmbed
