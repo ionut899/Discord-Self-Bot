@@ -19,7 +19,7 @@ const settings = require("./auth.json");
 const delimiter = settings.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
-const regex = /\$\$\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\$\$/gi;
+const regex = /\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\>\>/gi;
 
 var deathCount = parseInt(30);
 
@@ -88,9 +88,9 @@ client.on("message", msg => {
         // Cydia Tweak Search
         if (regex.test(content)) {
             let cydiaEmbed = new Discord.RichEmbed();
-            let startBraces = content.indexOf("$$");
-            let endBraces = content.indexOf("$$");
-            let cydiaQuery = msg.content.slice(startBraces + 2, endBraces);
+            let startMarks = content.indexOf("<<");
+            let endMarks = content.indexOf(">>");
+            let cydiaQuery = msg.content.slice(startMarks + 2, endMarks);
 
             cydiaEmbed.setColor("#5D2E1F");
             cydiaEmbed.setAuthor("Tweak Info", "http://i.imgur.com/OPZfdht.png");
