@@ -130,22 +130,24 @@ client.on("message", msg => {
         if (content.startsWith(delimiter + "help")) {
             var helpEmbed = new Discord.RichEmbed();
 
-            var commands = [`${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}userinfo <@User>`, `${delimiter}define <word>`, `${delimiter}anime <anime>`, `${delimiter}avatar <user>`,
+            var cmdsPart1 = [`${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}userinfo <@User>`, `${delimiter}define <word>`, `${delimiter}anime <anime>`, `${delimiter}avatar <user>`,
                 "-----------------",
-                `${delimiter}3dsguide`, `${delimiter}wiiuguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`, `${delimiter}botwmap`, `${delimiter}death <reason>`,
-                "-----------------",
-                `${delimiter}cysource`, `${delimiter}cypkg`, `${delimiter}cyfind or $$name$$`,
+                `${delimiter}3dsguide`, `${delimiter}wiiuguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`, `${delimiter}botwmap`, `${delimiter}death <reason>`
+            ];
+
+            let cmdsPart2 = [`${delimiter}cysource`, `${delimiter}cypkg`, `${delimiter}cyfind or $$name$$`,
                 "-----------------",
                 `${delimiter}calc`, `${delimiter}embed`, `${delimiter}debug <listchannels/listroles>`, `${delimiter}valsofembed`,
                 "-----------------",
                 `${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`
             ];
 
-            var info = ["Find something on google based on a query", "Find an image on google based on a query", "Find a video on youtube based on a query", "Define a word with Urban Dictionary", "Shows the userinfo of a mentioned user", "Gives definitions of a word", "Gives info of an anime", "Show the avatar of a user",
+            var infoPart1 = ["Find something on google based on a query", "Find an image on google based on a query", "Find a video on youtube based on a query", "Define a word with Urban Dictionary", "Shows the userinfo of a mentioned user", "Gives definitions of a word", "Gives info of an anime", "Show the avatar of a user",
                 "-----------------",
-                "The 3DS hacking guide to follow", "The WiiU hacking guide to follow", "List of trusted 3DS hardmodders", "Shows how to block OTA updates", "Shows your opinion gif", "Interactive Breath of the Wild map", "Increase death count by 1 with a reason",
-                "-----------------",
-                "Transforms a URL into a Cydia share URL", "Transforms a package name into a cydia share url", "Find a package on Cydia",
+                "The 3DS hacking guide to follow", "The WiiU hacking guide to follow", "List of trusted 3DS hardmodders", "Shows how to block OTA updates", "Shows your opinion gif", "Interactive Breath of the Wild map", "Increase death count by 1 with a reason"
+            ];
+
+            let infoPart2 = ["Transforms a URL into a Cydia share URL", "Transforms a package name into a cydia share url", "Find a package on Cydia",
                 "-----------------",
                 "Make a calculation given required parameters", "Creates a customized richEmbed", "List all channels or roles and their IDs", "Shows the layout of rich embeds",
                 "-----------------",
@@ -153,8 +155,10 @@ client.on("message", msg => {
             ];
 
             helpEmbed.setTitle("--My commands--");
-            helpEmbed.addField("Command", commands, true);
-            helpEmbed.addField("This does", info, true);
+            helpEmbed.addField("Command", cmdsPart1, true);
+            helpEmbed.addField("This does", infoPart1, true);
+            helpEmbed.addField("\u200b", cmdsPart2, true);
+            helpEmbed.addField("\u200b", infoPart2, true);
             helpEmbed.setColor("#c61530");
             helpEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
             helpEmbed.setAuthor("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
