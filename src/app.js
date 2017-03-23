@@ -168,68 +168,92 @@ client.on("message", msg => {
         }
 
         // Search Engines
-        // Google Regular Search
-        if (content.startsWith(delimiter + "google")) {
-            let searchQuery = msg.content.slice(8);
-            let safe = 'high';
-            let QUERY_PARAMS = {
+    // Google Regular Search
+    if (content.startsWith(delimiter + "google")) {
+        let searchQuery = msg.content.slice(10);
+        msg.edit('**Searching...**').then(() => {
+            const query = searchQuery //is basically the search sent by you
+                .replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+                .split(' ')
+                .map(x => encodeURIComponent(x))
+                .join('+');
+
+            const QUERY_PARAMS = {
                 key: googleapikey,
-                cx: searchEngineKey,
-                safe,
-                q: encodeURI(searchQuery),
+                limit: 1,
+                indent: true,
+                query,
             };
-
-            msg.edit('**Searching...**').then(() => {
-                return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
-                    .then((res) => {
-                        if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
-                        return msg.edit(res.body.items[0].link);
-                    })
-                    .catch(() => {
-                        const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(searchQuery)}`;
-                        return superagent.get(SEARCH_URL).then((res) => {
-                            const $ = cheerio.load(res.text);
-                            let href = $('.r').first().find('a').first().attr('href');
-                            if (!href) return Promise.reject(new Error('NO RESULTS'));
-                            href = querystring.parse(href.replace('/url?', ''));
-                            return msg.edit(href.q);
-                        })
-                    })
-                    .catch((err) => {
-                        msg.edit('**No Results Found!**');
-                        console.error(err);
-                    });
-            });
-        }
-
-        // Google Image search
-        if (content.startsWith(delimiter + "image")) {
-            let imageQuery = msg.content.slice(7);
-            let safe = 'high'
-            let QUERY_PARAMS = {
-                searchType: 'image',
-                key: googleapikey,
-                cx: imageEngineKey,
-                safe,
-                q: encodeURI(imageQuery),
-            };
-
-            msg.edit('**Searching...**').then(() => {
-                return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
-                    .then((res) => msg.edit(res.body.items[0].link))
-                    .catch(() =>
-                        superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(imageQuery)}`)
+            return superagent.get(`https://kgsearch.googleapis.com/v1/entities:search?${querystring.stringify(QUERY_PARAMS)}`)
+                .then((res) => {
+                    let result = res.body.itemListElement[0];
+                    if (!result || !result.result || !result.result.detailedDescription) return Promise.reject('NO RESULT');
+                    result = result.result;
+                    let types = result['@type'].map(t => t.replace(/([a-z])([A-Z])/g, '$1 $2'));
+                    if (types.length > 1) types = types.filter(t => t !== 'Thing');
+                    const title = `${result.name} ${types.length === 0 ? '' : `(${types.join(', ')})`}`;
+                    const LEARN_MORE_URL = result.detailedDescription.url.replace(/\(/, '%28').replace(/\)/, '%29');
+                    const description = `${result.detailedDescription.articleBody} [Learn More...](${LEARN_MORE_URL})`;
+                    return msg.edit(result.detailedDescription.url, title, description);
+                })
+                .catch((knowledgeErr) => {
+                    let safe = 'high';
+                    let QUERY_PARAMS = {
+                        key: googleapikey,
+                        cx: searchEngineKey,
+                        safe,
+                        q: encodeURI(query),
+                    };
+                    return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
                         .then((res) => {
-                            const $ = cheerio.load(res.text);
-                            const result = $('.images_table').find('img').first().attr('src');
-                            return msg.edit(result);
+                            if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
+                            return msg.edit(res.body.items[0].link);
                         })
-                    ).catch((err) => {
-                        msg.edit('**No Results Found**');
-                        console.error(err);
-                    });
-            });
-        }
+                        .catch(() => {
+                            const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(query)}`;
+                            return superagent.get(SEARCH_URL).then((res) => {
+                                const $ = cheerio.load(res.text);
+                                let href = $('.r').first().find('a').first().attr('href');
+                                if (!href) return Promise.reject(new Error('NO RESULTS'));
+                                href = querystring.parse(href.replace('/url?', ''));
+                                return msg.edit(href.q);
+                            })
+                        })
+                        .catch((searchErr) => {
+                            msg.edit('**No Results Found!**');
+                            console.error(`A regular search error occured!\n================================\n${searchErr}`);
+                        });
+                })
+        })
+    }
+
+    // Google Image search
+    if (content.startsWith(delimiter + "image")) {
+        let imageQuery = msg.content.slice(9);
+        let safe = msg.channel.name.includes('hentai') ? 'off' : 'medium';
+        let QUERY_PARAMS = {
+            searchType: 'image',
+            key: googleapikey,
+            cx: imageEngineKey,
+            safe
+        };
+
+        msg.edit('**Searching...**').then(() => {
+           return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(imageQuery)}`)
+                .then((res) => msg.edit(res.body.items[0].link))
+                .catch(() =>
+                    superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(imageQuery)}`)
+                    .then((res) => {
+                        const $ = cheerio.load(res.text);
+                        const result = $('.images_table').find('img').first().attr('src');
+                        return msg.edit(result);
+                    })
+                ).catch((err) => {
+                    msg.edit('**No Results Found**');
+                    console.error(err);
+                });
+        });
+    }
 
         // Youtube Search
         if (content.startsWith(delimiter + "youtube") || content.startsWith(delimiter + "yt")) {
