@@ -168,92 +168,92 @@ client.on("message", msg => {
         }
 
         // Search Engines
-    // Google Regular Search
-    if (content.startsWith(delimiter + "google")) {
-        let searchQuery = msg.content.slice(10);
-        msg.edit('**Searching...**').then(() => {
-            const query = searchQuery //is basically the search sent by you
-                .replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
-                .split(' ')
-                .map(x => encodeURIComponent(x))
-                .join('+');
+        // Google Regular Search
+        if (content.startsWith(delimiter + "google")) {
+            let searchQuery = msg.content.slice(10);
+            msg.edit('**Searching...**').then(() => {
+                const query = searchQuery //is basically the search sent by you
+                    .replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+                    .split(' ')
+                    .map(x => encodeURIComponent(x))
+                    .join('+');
 
-            const QUERY_PARAMS = {
-                key: googleapikey,
-                limit: 1,
-                indent: true,
-                query,
-            };
-            return superagent.get(`https://kgsearch.googleapis.com/v1/entities:search?${querystring.stringify(QUERY_PARAMS)}`)
-                .then((res) => {
-                    let result = res.body.itemListElement[0];
-                    if (!result || !result.result || !result.result.detailedDescription) return Promise.reject('NO RESULT');
-                    result = result.result;
-                    let types = result['@type'].map(t => t.replace(/([a-z])([A-Z])/g, '$1 $2'));
-                    if (types.length > 1) types = types.filter(t => t !== 'Thing');
-                    const title = `${result.name} ${types.length === 0 ? '' : `(${types.join(', ')})`}`;
-                    const LEARN_MORE_URL = result.detailedDescription.url.replace(/\(/, '%28').replace(/\)/, '%29');
-                    const description = `${result.detailedDescription.articleBody} [Learn More...](${LEARN_MORE_URL})`;
-                    return msg.edit(result.detailedDescription.url, title, description);
-                })
-                .catch((knowledgeErr) => {
-                    let safe = 'high';
-                    let QUERY_PARAMS = {
-                        key: googleapikey,
-                        cx: searchEngineKey,
-                        safe,
-                        q: encodeURI(query),
-                    };
-                    return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
-                        .then((res) => {
-                            if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
-                            return msg.edit(res.body.items[0].link);
-                        })
-                        .catch(() => {
-                            const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(query)}`;
-                            return superagent.get(SEARCH_URL).then((res) => {
-                                const $ = cheerio.load(res.text);
-                                let href = $('.r').first().find('a').first().attr('href');
-                                if (!href) return Promise.reject(new Error('NO RESULTS'));
-                                href = querystring.parse(href.replace('/url?', ''));
-                                return msg.edit(href.q);
-                            })
-                        })
-                        .catch((searchErr) => {
-                            msg.edit('**No Results Found!**');
-                            console.error(`A regular search error occured!\n================================\n${searchErr}`);
-                        });
-                })
-        })
-    }
-
-    // Google Image search
-    if (content.startsWith(delimiter + "image")) {
-        let imageQuery = msg.content.slice(9);
-        let safe = msg.channel.name.includes('hentai') ? 'off' : 'medium';
-        let QUERY_PARAMS = {
-            searchType: 'image',
-            key: googleapikey,
-            cx: imageEngineKey,
-            safe
-        };
-
-        msg.edit('**Searching...**').then(() => {
-           return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(imageQuery)}`)
-                .then((res) => msg.edit(res.body.items[0].link))
-                .catch(() =>
-                    superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(imageQuery)}`)
+                const QUERY_PARAMS = {
+                    key: googleapikey,
+                    limit: 1,
+                    indent: true,
+                    query,
+                };
+                return superagent.get(`https://kgsearch.googleapis.com/v1/entities:search?${querystring.stringify(QUERY_PARAMS)}`)
                     .then((res) => {
-                        const $ = cheerio.load(res.text);
-                        const result = $('.images_table').find('img').first().attr('src');
-                        return msg.edit(result);
+                        let result = res.body.itemListElement[0];
+                        if (!result || !result.result || !result.result.detailedDescription) return Promise.reject('NO RESULT');
+                        result = result.result;
+                        let types = result['@type'].map(t => t.replace(/([a-z])([A-Z])/g, '$1 $2'));
+                        if (types.length > 1) types = types.filter(t => t !== 'Thing');
+                        const title = `${result.name} ${types.length === 0 ? '' : `(${types.join(', ')})`}`;
+                        const LEARN_MORE_URL = result.detailedDescription.url.replace(/\(/, '%28').replace(/\)/, '%29');
+                        const description = `${result.detailedDescription.articleBody} [Learn More...](${LEARN_MORE_URL})`;
+                        return msg.edit(result.detailedDescription.url, title, description);
                     })
-                ).catch((err) => {
-                    msg.edit('**No Results Found**');
-                    console.error(err);
-                });
-        });
-    }
+                    .catch((knowledgeErr) => {
+                        let safe = 'high';
+                        let QUERY_PARAMS = {
+                            key: googleapikey,
+                            cx: searchEngineKey,
+                            safe,
+                            q: encodeURI(query),
+                        };
+                        return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
+                            .then((res) => {
+                                if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
+                                return msg.edit(res.body.items[0].link);
+                            })
+                            .catch(() => {
+                                const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(query)}`;
+                                return superagent.get(SEARCH_URL).then((res) => {
+                                    const $ = cheerio.load(res.text);
+                                    let href = $('.r').first().find('a').first().attr('href');
+                                    if (!href) return Promise.reject(new Error('NO RESULTS'));
+                                    href = querystring.parse(href.replace('/url?', ''));
+                                    return msg.edit(href.q);
+                                })
+                            })
+                            .catch((searchErr) => {
+                                msg.edit('**No Results Found!**');
+                                console.error(`A regular search error occured!\n================================\n${searchErr}`);
+                            });
+                    })
+            })
+        }
+
+        // Google Image search
+        if (content.startsWith(delimiter + "image")) {
+            let imageQuery = msg.content.slice(9);
+            let safe = msg.channel.name.includes('hentai') ? 'off' : 'medium';
+            let QUERY_PARAMS = {
+                searchType: 'image',
+                key: googleapikey,
+                cx: imageEngineKey,
+                safe
+            };
+
+            msg.edit('**Searching...**').then(() => {
+                return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(imageQuery)}`)
+                    .then((res) => msg.edit(res.body.items[0].link))
+                    .catch(() =>
+                        superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(imageQuery)}`)
+                        .then((res) => {
+                            const $ = cheerio.load(res.text);
+                            const result = $('.images_table').find('img').first().attr('src');
+                            return msg.edit(result);
+                        })
+                    ).catch((err) => {
+                        msg.edit('**No Results Found**');
+                        console.error(err);
+                    });
+            });
+        }
 
         // Youtube Search
         if (content.startsWith(delimiter + "youtube") || content.startsWith(delimiter + "yt")) {
@@ -432,7 +432,7 @@ client.on("message", msg => {
             if (!mentionedUser) {
                 mentionedUser = msg.author;
             }
-            msg.edit(mentionedUser.avatarURL);
+            msg.edit(mentionedUser.displayAvatarURL);
         }
 
 
@@ -673,25 +673,26 @@ function userInfo(msg) {
         user = msg.author;
     }
     //Variables for the embed
-    let userGuildMember = msg.guild.member(user);
+    if (msg.channel.type !== 'dm' && msg.channel.type !== 'group') {
+        let userGuildMember = msg.guild.member(user);
+        var userNickname = userGuildMember.nickname === null ? "No Nickname" : userGuildMember.nickname;
+        var userRoles = userGuildMember.roles.map(r => r.name).slice(1).length >= 1 ? userGuildMember.roles.map(r => r.name).slice(1) : "No Roles";
+        var userRoleColor = userGuildMember.highestRole.hexColor;
+        var userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY');
+    };
 
     let userID = user.id;
     let userName = user.username;
     let userDiscriminator = user.discriminator;
-    let userAvatar = user.avatarURL;
-    let userNickname = userGuildMember.nickname === null ? "No Nickname" : userGuildMember.nickname;
+    let userAvatar = user.displayAvatarURL;
     let userStatus = user.presence.status;
-    let userRoles = userGuildMember.roles.map(r => r.name).slice(1).length >= 1 ? userGuildMember.roles.map(r => r.name).slice(1) : "No Roles";
-    let userRoleColor = userGuildMember.highestRole.hexColor;
-
     let userCreateDate = moment(user.createdAt).format('MMMM Do YYYY')
-    let userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY')
 
     //Adding data to rich embed
     userInfoEmbed.setAuthor(`${userName}` + "#" + `${userDiscriminator}`, `${userAvatar}`);
     userInfoEmbed.setColor("#d43939");
     userInfoEmbed.setImage(userAvatar);
-    userInfoEmbed.setFooter(`has ${userRoles.length} role(s)`, userAvatar);
+    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.setFooter(`has ${userRoles.length} role(s)`, userAvatar) : userInfoEmbed.setFooter(`${userName}'s info requested by Favna`, userAvatar)
 
     //First row
     userInfoEmbed.addField("ID", userID, true);
@@ -700,15 +701,16 @@ function userInfo(msg) {
 
     //Second row
     userInfoEmbed.addField("Name", userName, true);
-    userInfoEmbed.addField("Color", userRoleColor, true);
-    userInfoEmbed.addField("Nickname", userNickname, true);
+    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Color", userRoleColor, true) : null;
+
+    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Nickname", userNickname, true) : null;
 
     //Third Row
-    userInfoEmbed.addField("Roles", userRoles, true);
+    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Roles", userRoles, true) : null
 
     //Fourth row
     userInfoEmbed.addField("Created at", userCreateDate, true);
-    userInfoEmbed.addField("Joined at", userJoinedDate, true);
+    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Joined at", userJoinedDate, true) : null
     msg.edit({
         embed: userInfoEmbed
     });
