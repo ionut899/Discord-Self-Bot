@@ -12,6 +12,8 @@ const malware = require('malapi').Anime;
 const ordinal = require('ordinal').english;
 const countdown = require('countdown');
 const cydia = require('cydia-api-node');
+const omdb = require('omdb');
+const imgurUploader = require('imgur-uploader');
 
 // import the discord.js and npm modules
 const Discord = require("discord.js");
@@ -19,7 +21,8 @@ const settings = require("./auth.json");
 const delimiter = settings.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
-const regex = /\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\>\>/gi;
+const cydiaRegex = /\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\>\>/gi;
+const omdbRegex = /\{\{\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\}\}/gi;
 
 var deathCount = parseInt(30);
 
@@ -86,7 +89,7 @@ client.on("message", msg => {
         }
 
         // Cydia Tweak Search
-        if (regex.test(content)) {
+        if (cydiaRegex.test(content)) {
             let cydiaEmbed = new Discord.RichEmbed();
             let startMarks = content.indexOf("<<");
             let endMarks = content.indexOf(">>");
@@ -94,7 +97,7 @@ client.on("message", msg => {
 
             cydiaEmbed.setColor("#5D2E1F");
             cydiaEmbed.setAuthor("Tweak Info", "http://i.imgur.com/OPZfdht.png");
-            cydiaEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg")
+            cydiaEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
 
             msg.edit("**Searching cydia package...**").then(() => {
                 cydia.getAllInfo(cydiaQuery).then((pkginfo) => {
@@ -123,6 +126,57 @@ client.on("message", msg => {
                     msg.edit({
                         embed: cydiaEmbed
                     });
+                });
+            });
+        }
+
+        // OMDB Movie Search
+        if (omdbRegex.test(content)) {
+            let omdbEmbed = new Discord.RichEmbed();
+            let startMarks = content.indexOf("{{"); // Get the position of the opening {{
+            let endMarks = content.indexOf("}}"); // Get the position of the closing }}
+            let omdbQuery = msg.content.slice(startMarks + 2, endMarks); // Get the content between the {{ }}
+            omdbEmbed.setColor("#c61530");
+
+            // Set the footer of the embed including a custom formatted time stamp using MomentJS
+            omdbEmbed.setFooter(`A selfbot by Favna | ${moment(new Date()).format('MMMM Do YYYY HH:mm')}`, "https://i.imgur.com/Ylv4Hdz.jpg");
+
+            msg.channel.sendMessage('**Searching OMDb...**').then((omdbResultMessage) => {
+                omdb.get(omdbQuery, function (err, movie) {
+                    if (err) {
+                        // When an error occurs log it and cancel
+                        return console.error(err);
+                    }
+                    if (!movie) {
+                        // When no movie is found tell the user and cancel
+                        return omdbResultMessage.edit('No movie or serie found!');
+                    }
+
+                    // Sometimes there is no poster in which case the property is null.
+                    // If there is a poster we use it as image and as thumbnail for the author, otherwise just set the author with text only.
+                    movie.poster !== null ? omdbEmbed.setImage(movie.poster) && omdbEmbed.setAuthor(`${movie.title} info from OMDb`, movie.poster) : omdbEmbed.setAuthor(`${movie.title} info from OMDb`);
+
+                    omdbEmbed.addField("Title", movie.title, true);
+                    omdbEmbed.addField("First aired", moment(movie.released).format("MMMM Do YYYY"), true);
+                    omdbEmbed.addField("Rating", movie.rated, true);
+                    omdbEmbed.addField("Genre(s)", movie.genres.join(', '), true);
+                    omdbEmbed.addField("Type", movie.type, true);
+
+                    // If the director is null we write none
+                    movie.director !== null ? omdbEmbed.addField("Director", movie.director, true) : omdbEmbed.addField("Director", "none", true);
+                    omdbEmbed.addField("IMDB Rating", movie.imdb.rating, true);
+
+                    // Sometimes there is no rotten tomatoes rating, in which case we leave this out
+                    movie.tomato !== undefined ? omdbEmbed.addField("Rotten Tomatoes", movie.tomato, true) : omdbEmbed.addField("Rotten Tomatoes", "Not available on OMDb", true);
+
+                    // Sometimes there is no Metacritic rating, in which case we leave this out
+                    movie.metacritic !== null ? omdbEmbed.addField("Metacritic", movie.metacritic, true) : omdbEmbed.addField("Metacritic", "Not available on OMDb", true);
+
+                    omdbEmbed.addField("Plot", movie.plot, false);
+
+                    omdbResultMessage.edit({
+                        embed: omdbEmbed
+                    })
                 });
             });
         }
