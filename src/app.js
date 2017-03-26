@@ -43,6 +43,7 @@ client.on("message", msg => {
         var content = msg.content.toLowerCase();
 
         if (content.startsWith(delimiter + "valsofembed")) {
+
             var valsOfEmbed = new Discord.RichEmbed();
             valsOfEmbed.setAuthor("This is the author", "https://i.imgur.com/cgr5eSk.png");
             valsOfEmbed.setColor("#ffffff");
@@ -54,7 +55,7 @@ client.on("message", msg => {
             valsOfEmbed.setTitle("This is the title");
             valsOfEmbed.setURL("https://www.google.com");
             valsOfEmbed.addField("FieldName", "FieldValue", true)
-            msg.edit({
+            msg.edit(msg.content.slice(15), {
                 embed: valsOfEmbed
             });
         }
@@ -122,7 +123,7 @@ client.on("message", msg => {
                     cydiaEmbed.addField("Link", `[Click Here](http://cydia.saurik.com/package/${pkgName})`, true);
                     cydiaEmbed.addField("Repo", `[${pkgRepoName}](https://cydia.saurik.com/api/share#?source=${pkgRepoLink})`, true);
 
-                    msg.edit({
+                    msg.edit(msg.content.slice(0, startMarks) + msg.content.slice(endMarks + 3), {
                         embed: cydiaEmbed
                     });
                 });
@@ -140,7 +141,7 @@ client.on("message", msg => {
             // Set the footer of the embed including a custom formatted time stamp using MomentJS
             omdbEmbed.setFooter(`A selfbot by Favna | ${moment(new Date()).format('MMMM Do YYYY HH:mm')}`, "https://i.imgur.com/Ylv4Hdz.jpg");
 
-            msg.channel.sendMessage('**Searching OMDb...**').then((omdbResultMessage) => {
+            msg.channel.sendMessage('**Searching OMDb...**').then((msg) => {
                 omdb.get(omdbQuery, function (err, movie) {
                     if (err) {
                         // When an error occurs log it and cancel
@@ -148,7 +149,7 @@ client.on("message", msg => {
                     }
                     if (!movie) {
                         // When no movie is found tell the user and cancel
-                        return omdbResultMessage.edit('No movie or serie found!');
+                        return msg.edit('No movie or serie found!');
                     }
 
                     // Sometimes there is no poster in which case the property is null.
@@ -177,9 +178,9 @@ client.on("message", msg => {
 
                     omdbEmbed.addField("Plot", movie.plot, false);
 
-                    omdbResultMessage.edit({
+                    msg.edit(msg.content.slice(0, startMarks) + msg.content.slice(endMarks + 3), {
                         embed: omdbEmbed
-                    })
+                    });
                 });
             });
         }
@@ -219,7 +220,7 @@ client.on("message", msg => {
             helpEmbed.setColor("#c61530");
             helpEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
             helpEmbed.setAuthor("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
-            msg.edit({
+            msg.edit(msg.content.slice(8), {
                 embed: helpEmbed
             });
         }
@@ -377,7 +378,7 @@ client.on("message", msg => {
                     urbanEmbed.addField("Example", urbanExample, false);
                     urbanEmbed.addField("Permalink", urbanLink, false);
 
-                    msg.edit({
+                    msg.edit(msg.content.slice(9), {
                         embed: urbanEmbed
                     });
                 });
@@ -413,7 +414,7 @@ client.on("message", msg => {
                         defineEmbed.setColor("#6984C4");
                         defineEmbed.setDescription(final);
                         defineEmbed.setFooter("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
-                        msg.edit({
+                        msg.edit(msg.content.slice(10), {
                             embed: defineEmbed
                         });
                     })
@@ -473,7 +474,7 @@ client.on("message", msg => {
                         animeEmbed.addField("Status", status, true);
                         animeEmbed.addField("URL", animeUrl, true);
 
-                        msg.edit({
+                        msg.edit(msg.content.slice(9), {
                             embed: animeEmbed
                         });
                     })
@@ -503,7 +504,7 @@ client.on("message", msg => {
             plaiGuideEmbed.addField("\u200b", "https://3ds.guide");
             plaiGuideEmbed.setFooter("Nintendo 3DS Guide provided by Favna's selfbot", "http://i.imgur.com/4U9oMS0.png");
             plaiGuideEmbed.setThumbnail("https://s-media-cache-ak0.pinimg.com/736x/6d/75/88/6d7588481517a4c959bab8e3df39c92a.jpg")
-            msg.edit({
+            msg.edit(msg.content.slice(12), {
                 embed: plaiGuideEmbed
             });
         }
@@ -517,7 +518,7 @@ client.on("message", msg => {
             wiiuguideEmbed.addField("\u200b", "https://wiiu.guide");
             wiiuguideEmbed.setFooter("Nintendo WiiU Guide provided by Favna's selfbot", "http://i.imgur.com/4U9oMS0.png");
             wiiuguideEmbed.setThumbnail("http://i68.tinypic.com/2zizozn.png")
-            msg.edit({
+            msg.edit(msg.content.slice(13), {
                 embed: wiiuguideEmbed
             });
         }
