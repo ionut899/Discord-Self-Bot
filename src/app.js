@@ -13,7 +13,6 @@ const ordinal = require('ordinal').english;
 const countdown = require('countdown');
 const cydia = require('cydia-api-node');
 const omdb = require('omdb');
-const imgurUploader = require('imgur-uploader');
 
 // import the discord.js and npm modules
 const Discord = require("discord.js");
