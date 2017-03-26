@@ -21,7 +21,7 @@ const delimiter = settings.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
 const cydiaRegex = /\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\>\>/gi;
-const omdbRegex = /\{\{\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\}\}/gi;
+const omdbRegex = /\>\>\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\<\</gi;
 
 var deathCount = parseInt(30);
 
@@ -132,8 +132,8 @@ client.on("message", msg => {
         // OMDB Movie Search
         if (omdbRegex.test(content)) {
             let omdbEmbed = new Discord.RichEmbed();
-            let startMarks = content.indexOf("{{"); // Get the position of the opening {{
-            let endMarks = content.indexOf("}}"); // Get the position of the closing }}
+            let startMarks = content.indexOf(">>"); // Get the position of the opening {{
+            let endMarks = content.indexOf("<<"); // Get the position of the closing }}
             let omdbQuery = msg.content.slice(startMarks + 2, endMarks); // Get the content between the {{ }}
             omdbEmbed.setColor("#c61530");
 
