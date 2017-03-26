@@ -157,13 +157,17 @@ client.on("message", msg => {
 
                     omdbEmbed.addField("Title", movie.title, true);
                     omdbEmbed.addField("First aired", moment(movie.released).format("MMMM Do YYYY"), true);
-                    omdbEmbed.addField("Rating", movie.rated, true);
+
+                    // For future movies there may not yet be a rating
+                    movie.rated !== null ? omdbEmbed.addField("Rating", movie.rated, true) : omdbEmbed.addField("Rating", "Not yet rated", true);
                     omdbEmbed.addField("Genre(s)", movie.genres.join(', '), true);
                     omdbEmbed.addField("Type", movie.type, true);
 
                     // If the director is null we write none
                     movie.director !== null ? omdbEmbed.addField("Director", movie.director, true) : omdbEmbed.addField("Director", "none", true);
-                    omdbEmbed.addField("IMDB Rating", movie.imdb.rating, true);
+
+                    // For unreleased movies there is no IMDB rating
+                    movie.imdb.rating !== null ? omdbEmbed.addField("IMDB Rating", movie.imdb.rating, true) : omdbEmbed.addField("IMDB Rating", "No score yet", true);
 
                     // Sometimes there is no rotten tomatoes rating, in which case we leave this out
                     movie.tomato !== undefined ? omdbEmbed.addField("Rotten Tomatoes", movie.tomato, true) : omdbEmbed.addField("Rotten Tomatoes", "Not available on OMDb", true);
