@@ -102,7 +102,7 @@ client.on("message", msg => {
             msg.edit("**Searching cydia package...**").then(() => {
                 cydia.getAllInfo(cydiaQuery).then((pkginfo) => {
                     if (pkginfo === false) {
-                        msg.edit(`**Tweak/Theme \`${cydiaQuery}\` not found!**`);
+                        msg.edit(`**Tweak/Theme \`${cydiaQuery}\` not found!**\nOriginal Message: ${msg.content}`);
                         return;
                     }
                     let pkgPrice = pkginfo.price === 0 ? "Free" : pkginfo.price;
@@ -149,7 +149,7 @@ client.on("message", msg => {
                     }
                     if (!movie) {
                         // When no movie is found tell the user and cancel
-                        return msg.edit('No movie or serie found!');
+                        return msg.edit(`No movie or serie found!\nOriginal Message: ${msg.content}`);
                     }
 
                     // Sometimes there is no poster in which case the property is null.
@@ -359,7 +359,7 @@ client.on("message", msg => {
             msg.edit('**Opening Dictionary...**').then(() => {
                 urbanQuery.first(function (json) {
                     if (json == undefined) {
-                        msg.edit('**No Results Found!**');
+                        msg.edit(`**No Results Found!**\nOriginal Message: ${msg.content.slice(9)}`);
                         return;
                     }
                     var urbanEmbed = new Discord.RichEmbed;
@@ -400,7 +400,7 @@ client.on("message", msg => {
                     .then((res) => res.body)
                     .then((res) => {
                         if (res.tuc == undefined) {
-                            msg.edit('**No results found!**')
+                            msg.edit(`**No results found!**\nOriginal Message: ${msg.content.slice(10)}`)
                             return;
                         }
                         const final = [`**Definitions for __${defineQuery}__:**`];
@@ -420,7 +420,7 @@ client.on("message", msg => {
                     })
                     .catch((err) => {
                         console.error(err);
-                        msg.edit('**No results found!**');
+                        msg.edit(`**No results found!**\nOriginal Message: ${msg.content.slice(10)}`)
                     });
             });
         }
@@ -480,7 +480,7 @@ client.on("message", msg => {
                     })
                     .catch((err) => {
                         console.error(err);
-                        msg.edit("**No results found!**")
+                        msg.edit(`**No results found!**\nOriginal Message: ${msg.content.slice(9)}`)
                     });
             });
         }
