@@ -141,7 +141,7 @@ client.on("message", msg => {
             // Set the footer of the embed including a custom formatted time stamp using MomentJS
             omdbEmbed.setFooter(`A selfbot by Favna | ${moment(new Date()).format('MMMM Do YYYY HH:mm')}`, "https://i.imgur.com/Ylv4Hdz.jpg");
 
-            msg.channel.sendMessage('**Searching OMDb...**').then(() => {
+            msg.edit('**Searching OMDb...**').then(() => {
                 omdb.get(omdbQuery, function (err, movie) {
                     if (err) {
                         // When an error occurs log it and cancel
