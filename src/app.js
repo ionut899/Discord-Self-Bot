@@ -96,7 +96,7 @@ client.on("message", msg => {
             let cydiaQuery = msg.content.slice(startMarks + 2, endMarks);
 
             let preMarksText = msg.content.slice(0, startMarks);
-            let postMarksText = msg.content.slice(endMarks + 3);
+            let postMarksText = msg.content.slice(endMarks + 2);
 
             cydiaEmbed.setColor("#5D2E1F");
             cydiaEmbed.setAuthor("Tweak Info", "http://i.imgur.com/OPZfdht.png");
@@ -141,7 +141,7 @@ client.on("message", msg => {
             let omdbQuery = msg.content.slice(startMarks + 2, endMarks); // Get the content between the {{ }}
 
             let preMarksText = msg.content.slice(0, startMarks);
-            let postMarksText = msg.content.slice(endMarks + 3);
+            let postMarksText = msg.content.slice(endMarks + 2);
             omdbEmbed.setColor("#c61530");
 
             // Set the footer of the embed including a custom formatted time stamp using MomentJS
