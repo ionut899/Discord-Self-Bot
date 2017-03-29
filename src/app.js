@@ -126,7 +126,7 @@ client.on("message", msg => {
                     cydiaEmbed.addField("Link", `[Click Here](http://cydia.saurik.com/package/${pkgName})`, true);
                     cydiaEmbed.addField("Repo", `[${pkgRepoName}](https://cydia.saurik.com/api/share#?source=${pkgRepoLink})`, true);
 
-                    msg.edit(preMarksText + postMarksText, {
+                    msg.edit(preMarksText + cydiaQuery + postMarksText, {
                         embed: cydiaEmbed
                     });
                 });
@@ -184,7 +184,7 @@ client.on("message", msg => {
 
                     omdbEmbed.addField("Plot", movie.plot, false);
 
-                    msg.edit(preMarksText + postMarksText, {
+                    msg.edit(preMarksText + omdbQuery + postMarksText, {
                         embed: omdbEmbed
                     });
                 });
