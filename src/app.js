@@ -96,7 +96,7 @@ client.on("message", msg => {
             let cydiaQuery = msg.content.slice(startMarks + 2, endMarks);
 
             let preMarksText = msg.content.slice(0, startMarks);
-            let postMarksText = msg.content.slice(endMarks + 3);
+            let postMarksText = msg.content.slice(endMarks + 2);
 
             cydiaEmbed.setColor("#5D2E1F");
             cydiaEmbed.setAuthor("Tweak Info", "http://i.imgur.com/OPZfdht.png");
@@ -126,7 +126,7 @@ client.on("message", msg => {
                     cydiaEmbed.addField("Link", `[Click Here](http://cydia.saurik.com/package/${pkgName})`, true);
                     cydiaEmbed.addField("Repo", `[${pkgRepoName}](https://cydia.saurik.com/api/share#?source=${pkgRepoLink})`, true);
 
-                    msg.edit(preMarksText + postMarksText, {
+                    msg.edit(preMarksText + cydiaQuery + postMarksText, {
                         embed: cydiaEmbed
                     });
                 });
@@ -141,7 +141,7 @@ client.on("message", msg => {
             let omdbQuery = msg.content.slice(startMarks + 2, endMarks); // Get the content between the {{ }}
 
             let preMarksText = msg.content.slice(0, startMarks);
-            let postMarksText = msg.content.slice(endMarks + 3);
+            let postMarksText = msg.content.slice(endMarks + 2);
             omdbEmbed.setColor("#c61530");
 
             // Set the footer of the embed including a custom formatted time stamp using MomentJS
@@ -184,7 +184,7 @@ client.on("message", msg => {
 
                     omdbEmbed.addField("Plot", movie.plot, false);
 
-                    msg.edit(preMarksText + postMarksText, {
+                    msg.edit(preMarksText + omdbQuery + postMarksText, {
                         embed: omdbEmbed
                     });
                 });
