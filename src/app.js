@@ -322,7 +322,8 @@ client.on("message", msg => {
         // Youtube Search
         if (content.startsWith(delimiter + "youtube") || content.startsWith(delimiter + "yt")) {
             let youtubeQuery = content.slice(3, 5) === 'yt' ? msg.content.slice(6) : msg.content.slice(11);
-
+            var youtubeEmbed = new Discord.RichEmbed();
+            youtubeEmbed.setColor("#ff0000");
 
             msg.edit('**Searching while prioritizing videos..**').then(() => {
                 youtube.search(youtubeQuery, 50, function (error, result) {
@@ -334,21 +335,50 @@ client.on("message", msg => {
                         } else {
                             for (let i = 0; i < result.items.length; i++) {
                                 if (result.items[i].id.kind === 'youtube#video') {
-                                    msg.edit(`Video: https://www.youtube.com/watch?v=${result.items[i].id.videoId}`);
+                                    youtubeEmbed.setAuthor(`Youtube Search Result for: ${youtubeQuery}`, 'https://www.youtube.com/yts/img/favicon_144-vflWmzoXw.png');
+                                    youtubeEmbed.setImage(result.items[i].snippet.thumbnails.high.url);
+                                    youtubeEmbed.setURL(`https://www.youtube.com/watch?v=${result.items[i].id.videoId}`)
+                                    youtubeEmbed.addField('Title', result.items[i].snippet.title, true);
+                                    youtubeEmbed.addField('URL', `[Click Here](https://www.youtube.com/watch?v=${result.items[i].id.videoId})`, true)
+                                    youtubeEmbed.addField('Channel', `[${result.items[i].snippet.channelTitle}](https://www.youtube.com/channel/${result.items[i].snippet.channelId})`, true);
+                                    youtubeEmbed.addField('Published Date', moment(result.items[i].snippet.publishedAt).format('MMMM Do YYYY'), true);
+                                    youtubeEmbed.addField('Description', result.items[i].snippet.description, false);
+                                    msg.edit(`https://www.youtube.com/watch?v=${result.items[i].id.videoId}`, {
+                                        embed: youtubeEmbed
+                                    });
                                     return;
                                 }
                             }
 
                             for (let i = 0; i < result.items.length; i++) {
                                 if (result.items[i].id.kind === 'youtube#channel') {
-                                    msg.edit(`Channel: https://www.youtube.com/channel/${result.items[i].id.channelId}`);
+                                    youtubeEmbed.setAuthor(`Youtube Search Result for: ${youtubeQuery}`, 'https://www.youtube.com/yts/img/favicon_144-vflWmzoXw.png');
+                                    youtubeEmbed.setImage(result.items[i].snippet.thumbnails.high.url);
+                                    youtubeEmbed.setURL(`https://www.youtube.com/channel/${result.items[i].snippet.channelId}`);
+                                    youtubeEmbed.addField('Channel Name', result.items[i].snippet.title, true);
+                                    youtubeEmbed.addField('Channel Creation Date', moment(result.items[i].snippet.publishedAt).format('MMMM Do YYYY'), true);
+                                    youtubeEmbed.addField('Channel URL', `[Click Here](https://www.youtube.com/channel/${result.items[i].snippet.channelId})`, true);
+                                    youtubeEmbed.addField('Channel Description', result.items[i].snippet.description, false)
+                                    msg.edit(`https://www.youtube.com/channel/${result.items[i].snippet.channelId}`, {
+                                        embed: youtubeEmbed
+                                    });
                                     return;
                                 }
                             }
-
+                            
                             for (let i = 0; i < result.items.length; i++) {
                                 if (result.items[i].id.kind === 'youtube#playlist') {
-                                    msg.edit(`Playlist: https://www.youtube.com/playlist?list=${result.items[i].id.playlistId}`);
+                                    youtubeEmbed.setAuthor(`Youtube Search Result for: ${youtubeQuery}`, 'https://www.youtube.com/yts/img/favicon_144-vflWmzoXw.png');
+                                    youtubeEmbed.setImage(result.items[i].snippet.thumbnails.high.url);
+                                    youtubeEmbed.setURL(`https://www.youtube.com/playlist?list=${result.items[i].id.playlistId}`)
+                                    youtubeEmbed.addField('Title', result.items[i].snippet.title, true);
+                                    youtubeEmbed.addField('URL', `[Click Here](https://www.youtube.com/playlist?list=${result.items[i].id.playlistId})`, true)
+                                    youtubeEmbed.addField('Channel', `[${result.items[i].snippet.channelTitle}](https://www.youtube.com/channel/${result.items[i].snippet.channelId})`, true);
+                                    youtubeEmbed.addField('Published Date', moment(result.items[i].snippet.publishedAt).format('MMMM Do YYYY'), true);
+                                    youtubeEmbed.addField('Description', result.items[i].snippet.description, false);
+                                    msg.edit(`https://www.youtube.com/playlist?list=${result.items[i].id.playlistId}`, {
+                                        embed: youtubeEmbed
+                                    });
                                     return;
                                 }
                             }
