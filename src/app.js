@@ -365,7 +365,7 @@ client.on("message", msg => {
                                     return;
                                 }
                             }
-                            
+
                             for (let i = 0; i < result.items.length; i++) {
                                 if (result.items[i].id.kind === 'youtube#playlist') {
                                     youtubeEmbed.setAuthor(`Youtube Search Result for: ${youtubeQuery}`, 'https://www.youtube.com/yts/img/favicon_144-vflWmzoXw.png');
