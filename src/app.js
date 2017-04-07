@@ -60,7 +60,7 @@ client.on("message", msg => {
                 id: 1,
                 message: msg
             });
-        }
+        };
 
         if (content.startsWith(delimiter + "edit")) {
             messageStore.shift();
@@ -68,21 +68,27 @@ client.on("message", msg => {
 
             let indicator = msg.content.split(' ').slice(1, 2).toString();
             let newContent = msg.content.slice(10);
+            if (!indicator.match(/[0-9]+/)) {
+                return client.channels.get("299694375682703361").sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+            };
             messageStore[indicator.toString()].message.edit(newContent);
-        }
+        };
 
         if (content.startsWith(delimiter + "delete")) {
             messageStore.shift();
             msg.delete();
 
             let indicator = msg.content.split(' ').slice(1, 2).toString();
+            if (!indicator.match(/[0-9]+/)) {
+                return client.channels.get("299694375682703361").sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+            };
             messageStore[indicator].message.delete();
-        }
+        };
 
         if (content.startsWith(delimiter + "clear")) {
             msg.delete();
             messageStore = [];
-        }
+        };
 
         if (content.startsWith(delimiter + "check")) {
             messageStore.shift();
@@ -96,7 +102,7 @@ client.on("message", msg => {
             messageStore.length === 0 ? storeEmbed.addField('Location in store', '0', true) : storeEmbed.addField('Location in store', positionFormatter(messageStore.length), true);
             messageStore.length === 0 ? storeEmbed.addField('Content of message', 'none', true) : storeEmbed.addField('Content of message', messageStore.map(mcont => mcont.message.content), true);
             storeChannel.sendEmbed(storeEmbed);
-        }
+        };
 
         if (content.startsWith(delimiter + "valsofembed")) {
 
@@ -192,9 +198,9 @@ client.on("message", msg => {
         // OMDB Movie Search
         if (omdbRegex.test(content)) {
             let omdbEmbed = new Discord.RichEmbed();
-            let startMarks = content.indexOf(">>"); // Get the position of the opening {{
-            let endMarks = content.indexOf("<<"); // Get the position of the closing }}
-            let omdbQuery = msg.content.slice(startMarks + 2, endMarks); // Get the content between the {{ }}
+            let startMarks = content.indexOf(">>"); // Get the position of the opening >>
+            let endMarks = content.indexOf("<<"); // Get the position of the closing <<
+            let omdbQuery = msg.content.slice(startMarks + 2, endMarks).split(','); // Get the content between the>> <<
 
             let preMarksText = msg.content.slice(0, startMarks);
             let postMarksText = msg.content.slice(endMarks + 2);
@@ -202,9 +208,12 @@ client.on("message", msg => {
 
             // Set the footer of the embed including a custom formatted time stamp using MomentJS
             omdbEmbed.setFooter(`A selfbot by Favna | ${moment(new Date()).format('MMMM Do YYYY HH:mm')}`, "https://i.imgur.com/Ylv4Hdz.jpg");
-
+            console.log(omdbQuery);
             msg.edit('**Searching OMDb...**').then(() => {
-                omdb.get(omdbQuery, function (err, movie) {
+                omdb.get({
+                    title: omdbQuery[0],
+                    year: omdbQuery[1]
+                }, true, function (err, movie) {
                     if (err) {
                         // When an error occurs log it and cancel
                         return console.error(err);
@@ -213,7 +222,7 @@ client.on("message", msg => {
                         // When no movie is found tell the user and cancel
                         return msg.edit(`No movie or serie found!\nOriginal Message: ${msg.content}`);
                     }
-
+                    console.log(movie);
                     // Sometimes there is no poster in which case the property is null.
                     // If there is a poster we use it as image and as thumbnail for the author, otherwise just set the author with text only.
                     movie.poster !== null ? omdbEmbed.setImage(movie.poster) && omdbEmbed.setAuthor(`${movie.title} info from OMDb`, movie.poster) : omdbEmbed.setAuthor(`${movie.title} info from OMDb`);
