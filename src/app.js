@@ -624,12 +624,17 @@ client.on("message", msg => {
         }
 
         if (content.startsWith(delimiter + "opinion")) {
-            msg.channel.sendFile("./pyrrhabot/images/opinion.gif");
+            msg.channel.sendFile("./PyrrhaBot/images/opinion.gif");
             msg.delete();
         }
 
         if (content.startsWith(delimiter + "cp")) {
-            msg.channel.sendFile("./pyrrhabot/images/cp.jpg");
+            msg.channel.sendFile("./PyrrhaBot/images/cp.jpg");
+            msg.delete();
+        }
+
+        if (content.startsWith(delimiter + "pyrrhacry")) {
+            msg.channel.sendFile("./PyrrhaBot/images/pyrrha_cry.jpg");
             msg.delete();
         }
 
