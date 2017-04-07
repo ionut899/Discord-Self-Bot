@@ -24,6 +24,7 @@ const cydiaRegex = /\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\
 const omdbRegex = /\>\>\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\<\</gi;
 
 var deathCount = parseInt(30);
+var messageStore = [];
 
 // Getting keys
 client.login(settings.token);
@@ -38,9 +39,64 @@ client.on("ready", () => {
 
 client.on("message", msg => {
     if (msg.author.id !== "112001393140723712") return;
-
-    if (msg.author.id === "112001393140723712") {
+    if (msg.author.id === "112001393140723712" && msg.channel.id !== "299694375682703361") {
         var content = msg.content.toLowerCase();
+
+        let currentStoreSize = messageStore.length;
+        if (currentStoreSize === 10) {
+            messageStore.pop();
+            for (let ID in messageStore) {
+                messageStore[ID].id = messageStore[ID].id + 1
+            }
+            messageStore.unshift({
+                id: 1,
+                message: msg
+            });
+        } else {
+            for (let ID in messageStore) {
+                messageStore[ID].id = messageStore[ID].id + 1
+            }
+            messageStore.unshift({
+                id: 1,
+                message: msg
+            });
+        }
+
+        if (content.startsWith(delimiter + "edit")) {
+            messageStore.shift();
+            msg.delete();
+
+            let indicator = msg.content.split(' ').slice(1, 2).toString();
+            let newContent = msg.content.slice(10);
+            messageStore[indicator.toString()].message.edit(newContent);
+        }
+
+        if (content.startsWith(delimiter + "delete")) {
+            messageStore.shift();
+            msg.delete();
+
+            let indicator = msg.content.split(' ').slice(1, 2).toString();
+            messageStore[indicator].message.delete();
+        }
+
+        if (content.startsWith(delimiter + "clear")) {
+            msg.delete();
+            messageStore = [];
+        }
+
+        if (content.startsWith(delimiter + "check")) {
+            messageStore.shift();
+            msg.delete();
+
+            let storeChannel = client.channels.get("299694375682703361");
+            let storeEmbed = new Discord.RichEmbed();
+
+            storeEmbed.setColor('#FF0000');
+            storeEmbed.setFooter(`Store log from ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+            messageStore.length === 0 ? storeEmbed.addField('Location in store', '0', true) : storeEmbed.addField('Location in store', positionFormatter(messageStore.length), true);
+            messageStore.length === 0 ? storeEmbed.addField('Content of message', 'none', true) : storeEmbed.addField('Content of message', messageStore.map(mcont => mcont.message.content), true);
+            storeChannel.sendEmbed(storeEmbed);
+        }
 
         if (content.startsWith(delimiter + "valsofembed")) {
 
@@ -809,3 +865,11 @@ function userInfo(msg) {
         embed: userInfoEmbed
     });
 }
+
+function positionFormatter(length) {
+    let numbers = [];
+    for (let i = 0; i < length; i++) {
+        numbers.push(i)
+    }
+    return numbers;
+};
