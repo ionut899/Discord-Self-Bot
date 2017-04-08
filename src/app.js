@@ -42,6 +42,34 @@ client.on("message", msg => {
     if (msg.author.id === "112001393140723712" && msg.channel.id !== "299694375682703361") {
         var content = msg.content.toLowerCase();
 
+        if (content.startsWith(delimiter + "help")) {
+            let helpEmbed = new Discord.RichEmbed();
+
+            let searchQueries = [`${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}define <word>`, `${delimiter}anime <query>`, `>>MovieTitle,Year<<`, `<<CydiaPackage>>`];
+            let discordData = [`${delimiter}userinfo <@User>`, `${delimiter}avatar <@User>`, `${delimiter}debug <listchannels/listroles>`, `${delimiter}valsofembed`];
+            let webLinks = [`${delimiter}3dsguide`, `${delimiter}wiiuguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}botwmap`];
+            let imageReacts = [`${delimiter}opinion`, `${delimiter}cp`, `${delimiter}cry`];
+            let NSFWCommands = [`${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`];
+            let messageStoreCommands = [`${delimiter}edit`, `${delimiter}delete`, `${delimiter}clear`, `${delimiter}check`, ];
+            let specialCustom = [`${delimiter}calc`, `${delimiter}embed`, `${delimiter}quote <messageID>`];
+
+
+            helpEmbed.setTitle("--My commands--");
+            helpEmbed.addField("MessageStore Commands", messageStoreCommands, true);
+            helpEmbed.addField("Search Queries", searchQueries, true);
+            helpEmbed.addField("Website Links", webLinks, true);
+            helpEmbed.addField("Image Reactions", imageReacts, true);
+            helpEmbed.addField("Special  Custom", specialCustom, true);
+            helpEmbed.addField("NSFW Commands", NSFWCommands, true);
+            helpEmbed.addField("Discord Data", discordData, true);
+            helpEmbed.setColor("#c61530");
+            helpEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
+            helpEmbed.setAuthor("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
+            msg.edit(msg.content.slice(8), {
+                embed: helpEmbed
+            });
+        }
+
         let currentStoreSize = messageStore.length;
         if (currentStoreSize === 10) {
             messageStore.pop();
@@ -256,45 +284,25 @@ client.on("message", msg => {
             });
         }
 
-        if (content.startsWith(delimiter + "help")) {
-            var helpEmbed = new Discord.RichEmbed();
-
-            var cmdsPart1 = [`${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}userinfo <@User>`, `${delimiter}define <word>`, `${delimiter}anime <anime>`, `${delimiter}avatar <user>`,
-                "-----------------",
-                `${delimiter}3dsguide`, `${delimiter}wiiuguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}opinion`, `${delimiter}botwmap`, `${delimiter}death <reason>`
-            ];
-
-            let cmdsPart2 = [`${delimiter}cysource`, `${delimiter}cypkg`, `${delimiter}cyfind or $$name$$`,
-                "-----------------",
-                `${delimiter}calc`, `${delimiter}embed`, `${delimiter}debug <listchannels/listroles>`, `${delimiter}valsofembed`,
-                "-----------------",
-                `${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`
-            ];
-
-            var infoPart1 = ["Find something on google based on a query", "Find an image on google based on a query", "Find a video on youtube based on a query", "Define a word with Urban Dictionary", "Shows the userinfo of a mentioned user", "Gives definitions of a word", "Gives info of an anime", "Show the avatar of a user",
-                "-----------------",
-                "The 3DS hacking guide to follow", "The WiiU hacking guide to follow", "List of trusted 3DS hardmodders", "Shows how to block OTA updates", "Shows your opinion gif", "Interactive Breath of the Wild map", "Increase death count by 1 with a reason"
-            ];
-
-            let infoPart2 = ["Transforms a URL into a Cydia share URL", "Transforms a package name into a cydia share url", "Find a package on Cydia",
-                "-----------------",
-                "Make a calculation given required parameters", "Creates a customized richEmbed", "List all channels or roles and their IDs", "Shows the layout of rich embeds",
-                "-----------------",
-                "Find NSFW image on [rule34](https://rule34.xxx)", "Find NSFW image on [e621](https://e621.net)", "Find NSFW image on [gelbooru](https://gelbooru.com)", "Find NSFW image on [rule34-paheal](https://rule34.paheal.net)"
-            ];
-
-            helpEmbed.setTitle("--My commands--");
-            helpEmbed.addField("Command", cmdsPart1, true);
-            helpEmbed.addField("This does", infoPart1, true);
-            helpEmbed.addField("\u200b", cmdsPart2, true);
-            helpEmbed.addField("\u200b", infoPart2, true);
-            helpEmbed.setColor("#c61530");
-            helpEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
-            helpEmbed.setAuthor("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
-            msg.edit(msg.content.slice(8), {
-                embed: helpEmbed
+        if (content.startsWith(delimiter + 'quote')) {
+            let args = msg.content.split(' ').slice(1);
+            client.channels.get(msg.channel.id).fetchMessages({
+                limit: 1,
+                around: args[0]
+            }).then(msgs => {
+                const tmp = msgs.first();
+                const emb = new Discord.RichEmbed();
+                tmp.channel.type === 'text' ? emb.setAuthor(tmp.member.displayName, tmp.author.displayAvatarURL) : emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
+                emb.setFooter(`Message quoted at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                emb.addField('Message', tmp.content);
+                msg.channel.send(msg.content.slice(28), {
+                    embed: emb
+                });
+            }).catch(function (error) {
+                console.error(error);
+                msg.reply('Message not found.').then(msgs => msgs.delete(10000));
             });
-        }
+        };
 
         // Search Engines
         // Google Regular Search
@@ -642,7 +650,7 @@ client.on("message", msg => {
             msg.delete();
         }
 
-        if (content.startsWith(delimiter + "pyrrhacry")) {
+        if (content.startsWith(delimiter + "cry")) {
             msg.channel.sendFile("./PyrrhaBot/images/pyrrha_cry.jpg");
             msg.delete();
         }
