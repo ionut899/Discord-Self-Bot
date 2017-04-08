@@ -293,13 +293,11 @@ client.on("message", msg => {
                 const tmp = msgs.first();
                 const emb = new Discord.RichEmbed();
                 tmp.channel.type === 'text' ? emb.setAuthor(tmp.member.displayName, tmp.author.displayAvatarURL) : emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
-                emb.setFooter(`Message quoted at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
-                emb.addField('Message', tmp.content);
-                msg.channel.send(msg.content.slice(28), {
+                emb.setColor('#FF0000').setFooter(`Message quoted at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`).addField('Message', tmp.content);
+                msg.edit(msg.content.slice(28), {
                     embed: emb
                 });
             }).catch(function (error) {
-                console.error(error);
                 msg.reply('Message not found.').then(msgs => msgs.delete(10000));
             });
         };
