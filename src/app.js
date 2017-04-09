@@ -964,7 +964,7 @@ function gameSearch(msg) {
 
                             const gameEmbed = new Discord.RichEmbed();
                             gameEmbed.setColor('#FF0000').setAuthor(gameName, 'https://i.imgur.com/oHwE0nC.png').setImage(boxArt).setFooter(`Game info pulled from mobygames | ${moment(new Date).format('MMMM Do YYYY at HH:mm')}`, 'http://i.imgur.com/qPuIzb2.png');
-                            gameEmbed.addField('Game Name', gameName, true);
+                            gameEmbed.addField('Game Name', gameName, false);
                             gameEmbed.addField('Release Date', releaseDate, true);
                             gameEmbed.addField('Rating', rating, true);
                             gameEmbed.addField('Setting', setting, true);
