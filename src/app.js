@@ -876,7 +876,7 @@ function gameSearch(msg) {
                             const ESRBRating = $('#coreGameGenre > div > div:contains("ESRB Rating")').next().children().text() !== '' ? $('#coreGameGenre > div > div:contains("ESRB Rating")').next().children().text() : "No ESRB Rating specified";
                             const genre = ($('#coreGameGenre > div > div:contains("Genre")').next().text() + ',' + $('#coreGameGenre > div > div:contains("Gameplay")').next().text()).split(',').join(', ');
                             const setting = $('#coreGameGenre > div > div:contains("Setting")').next().children().text() !== '' ? $('#coreGameGenre > div > div:contains("Setting")').next().children().text() : "No setting specified";
-                            var rating = "";
+                            var rating = '';
                             if ($('.scoreHi:nth-child(1)').first().text() === '' && $('.scoreLow:nth-child(1)').first().text() === '') {
                                 rating = $('.scoreMed:nth-child(1)').first().text();
                             } else if ($('.scoreHi:nth-child(1)').first().text() === '' && $('.scoreMed:nth-child(1)').first().text() === '') {
@@ -909,17 +909,17 @@ function gameSearch(msg) {
                             description += descCombined.slice(0, 970);
 
                             const gameEmbed = new Discord.RichEmbed();
-                            gameEmbed.setColor('#FF0000').setAuthor(gameName, 'https://i.imgur.com/oHwE0nC.png').setImage(boxArt).setFooter(`Game info pulled from mobygames | ${moment(new Date).format('MMMM Do YYYY at HH:mm')}`, 'http://i.imgur.com/qPuIzb2.png');
+                            gameEmbed.setColor('#708CD0').setAuthor(gameName, 'https://i.imgur.com/oHwE0nC.png').setImage(boxArt).setFooter(`Game info pulled from mobygames | ${moment(new Date).format('MMMM Do YYYY at HH:mm')}`, 'https://i.imgur.com/xLtftbs.png');
                             gameEmbed.addField('Game Name', gameName, false);
                             gameEmbed.addField('Release Date', releaseDate, true);
-                            gameEmbed.addField('Rating', rating, true);
-                            gameEmbed.addField('Setting', setting, true);
+                            rating !== '' ? gameEmbed.addField('Rating', rating, true) : gameEmbed.addField('Rating', "No rating available", true);
+                            // gameEmbed.addField('Setting', setting, true);
                             gameEmbed.addField('Genre(s)', genre, true);
                             gameEmbed.addField('Platform(s)', platforms, true);
                             gameEmbed.addField('Developer', developer, true);
                             gameEmbed.addField('Publisher', publisher, true);
-                            gameEmbed.addField('ESRB Rating', ESRBRating, true);
-                            gameEmbed.addField('Description', description, false);
+                            // gameEmbed.addField('ESRB Rating', ESRBRating, true);
+                            // gameEmbed.addField('Description', description, false);
                             gameResponse.edit({
                                 embed: gameEmbed
                             });
@@ -963,7 +963,7 @@ function movieSearch(msg) {
                 // When no movie is found tell the user and cancel
                 return msg.edit(`No movie or serie found!\nOriginal Message: ${msg.content}`);
             }
-            
+
             omdbEmbed.setAuthor(`${movie.title} info from OMDb`, 'https://i.imgur.com/xhpROOr.png')
 
             // Sometimes there is no poster in which case the property is null. If there is a poster we use it as image
