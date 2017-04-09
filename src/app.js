@@ -236,7 +236,6 @@ client.on("message", msg => {
 
             // Set the footer of the embed including a custom formatted time stamp using MomentJS
             omdbEmbed.setFooter(`A selfbot by Favna | ${moment(new Date()).format('MMMM Do YYYY HH:mm')}`, "https://i.imgur.com/Ylv4Hdz.jpg");
-            console.log(omdbQuery);
             msg.edit('**Searching OMDb...**').then(() => {
                 omdb.get({
                     title: omdbQuery[0],
@@ -250,7 +249,6 @@ client.on("message", msg => {
                         // When no movie is found tell the user and cancel
                         return msg.edit(`No movie or serie found!\nOriginal Message: ${msg.content}`);
                     }
-                    console.log(movie);
                     // Sometimes there is no poster in which case the property is null.
                     // If there is a poster we use it as image and as thumbnail for the author, otherwise just set the author with text only.
                     movie.poster !== null ? omdbEmbed.setImage(movie.poster) && omdbEmbed.setAuthor(`${movie.title} info from OMDb`, movie.poster) : omdbEmbed.setAuthor(`${movie.title} info from OMDb`);
@@ -780,6 +778,10 @@ client.on("message", msg => {
                     };
                 });
         };
+
+        if (content.startsWith(delimiter + 'gs')) {
+            gameSearch(msg);
+        };
     };
 });
 
@@ -894,3 +896,98 @@ function positionFormatter(length) {
     }
     return numbers;
 };
+
+function gameSearch(msg) {
+    let query = msg.content.split(' ').slice(1).join('+');
+    let searchURL = `http://www.mobygames.com/search/quick?q=${query}`
+
+    msg.channel.sendMessage('***Looking for data about that game...***').then((gameResponse) => {
+        request({
+            uri: searchURL,
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'
+            }
+        }, function (err, resp, body) {
+            if (!err && resp.statusCode == 200) {
+                let $ = cheerio.load(body);
+                var pageLink = $('#searchResults > div > div:nth-child(2) > div > div.searchData > div.searchTitle > a').attr('href');
+                request({
+                        uri: `http://www.mobygames.com${pageLink}`,
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'
+                        }
+                    },
+                    function (err, resp, body) {
+                        if (!err && resp.statusCode == 200) {
+                            let $ = cheerio.load(body);
+                            const gameName = $('.niceHeaderTitle > a').text();
+                            var boxArt = `http://www.mobygames.com${$('#coreGameCover > a > img').attr('src')}`;
+                            const publisher = $('#coreGameRelease > div:contains("Published by")').next().children().text();
+                            const developer = $('#coreGameRelease > div:contains("Developed by")').next().children().text();
+                            const releaseDate = $('#coreGameRelease > div:contains("Released")').next().children().text();
+                            const platforms = $('#coreGameRelease > div:contains("Platforms")').next().children().text() === '' ? $('#coreGameRelease > div:contains("Platform")').next().children().text() : ($('#coreGameRelease > div:contains("Platforms")').next().text()).split(',').join(', ');
+
+                            const ESRBRating = $('#coreGameGenre > div > div:contains("ESRB Rating")').next().children().text() !== '' ? $('#coreGameGenre > div > div:contains("ESRB Rating")').next().children().text() : "No ESRB Rating specified";
+                            const genre = ($('#coreGameGenre > div > div:contains("Genre")').next().text() + ',' + $('#coreGameGenre > div > div:contains("Gameplay")').next().text()).split(',').join(', ');
+                            const setting = $('#coreGameGenre > div > div:contains("Setting")').next().children().text() !== '' ? $('#coreGameGenre > div > div:contains("Setting")').next().children().text() : "No setting specified";
+                            var rating = "";
+                            if ($('.scoreHi:nth-child(1)').first().text() === '' && $('.scoreLow:nth-child(1)').first().text() === '') {
+                                rating = $('.scoreMed:nth-child(1)').first().text();
+                            } else if ($('.scoreHi:nth-child(1)').first().text() === '' && $('.scoreMed:nth-child(1)').first().text() === '') {
+                                rating = $('.scoreLow:nth-child(1)').first().text();
+                            } else {
+                                rating = $('.scoreHi:nth-child(1)').first().text();
+                            }
+                            var description = "Potentially truncated due to maximum allowed length:\n";
+                            var descCombined = "";
+                            if ($('blockquote').length === 1) {
+                                descCombined = $('blockquote').children('p').text();
+                            } else {
+                                $('#ctrq').each(function () {
+                                    var $set = [];
+                                    var nxt = this.nextSibling;
+                                    while (nxt) {
+                                        if (!$(nxt).is('.sideBarLinks')) {
+                                            $set.push(nxt);
+                                            nxt = nxt.nextSibling;
+                                        } else break;
+                                    }
+
+                                    for (let i = 0; i < $set.length; i++) {
+                                        if ($set[i].data !== undefined) {
+                                            descCombined = descCombined + $set[i].data;
+                                        }
+                                    }
+                                });
+                            }
+                            description += descCombined.slice(0, 970);
+
+                            const gameEmbed = new Discord.RichEmbed();
+                            gameEmbed.setColor('#FF0000').setAuthor(gameName, 'https://i.imgur.com/oHwE0nC.png').setImage(boxArt).setFooter(`Game info pulled from mobygames | ${moment(new Date).format('MMMM Do YYYY at HH:mm')}`, 'http://i.imgur.com/qPuIzb2.png');
+                            gameEmbed.addField('Game Name', gameName, true);
+                            gameEmbed.addField('Release Date', releaseDate, true);
+                            gameEmbed.addField('Rating', rating, true);
+                            gameEmbed.addField('Setting', setting, true);
+                            gameEmbed.addField('Genre(s)', genre, true);
+                            gameEmbed.addField('Platform(s)', platforms, true);
+                            gameEmbed.addField('Developer', developer, true);
+                            gameEmbed.addField('Publisher', publisher, true);
+                            gameEmbed.addField('ESRB Rating', ESRBRating, true);
+                            gameEmbed.addField('Description', description, false);
+                            gameResponse.edit({
+                                embed: gameEmbed
+                            });
+                        } else {
+                            console.error(err);
+                            gameResponse.delete();
+                            return msg.reply('An error occured while getting the game\'s info')
+                        }
+                    });
+            } else {
+                console.error(err);
+                gameResponse.delete();
+                return msg.reply('An error occured while fetching search results');
+            }
+        });
+    });
+}
