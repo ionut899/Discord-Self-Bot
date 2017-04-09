@@ -225,61 +225,7 @@ client.on("message", msg => {
 
         // OMDB Movie Search
         if (omdbRegex.test(content)) {
-            let omdbEmbed = new Discord.RichEmbed();
-            let startMarks = content.indexOf(">>"); // Get the position of the opening >>
-            let endMarks = content.indexOf("<<"); // Get the position of the closing <<
-            let omdbQuery = msg.content.slice(startMarks + 2, endMarks).split(','); // Get the content between the>> <<
-
-            let preMarksText = msg.content.slice(0, startMarks);
-            let postMarksText = msg.content.slice(endMarks + 2);
-            omdbEmbed.setColor("#c61530");
-
-            // Set the footer of the embed including a custom formatted time stamp using MomentJS
-            omdbEmbed.setFooter(`A selfbot by Favna | ${moment(new Date()).format('MMMM Do YYYY HH:mm')}`, "https://i.imgur.com/Ylv4Hdz.jpg");
-            msg.edit('**Searching OMDb...**').then(() => {
-                omdb.get({
-                    title: omdbQuery[0],
-                    year: omdbQuery[1]
-                }, true, function (err, movie) {
-                    if (err) {
-                        // When an error occurs log it and cancel
-                        return console.error(err);
-                    }
-                    if (!movie) {
-                        // When no movie is found tell the user and cancel
-                        return msg.edit(`No movie or serie found!\nOriginal Message: ${msg.content}`);
-                    }
-                    // Sometimes there is no poster in which case the property is null.
-                    // If there is a poster we use it as image and as thumbnail for the author, otherwise just set the author with text only.
-                    movie.poster !== null ? omdbEmbed.setImage(movie.poster) && omdbEmbed.setAuthor(`${movie.title} info from OMDb`, movie.poster) : omdbEmbed.setAuthor(`${movie.title} info from OMDb`);
-
-                    omdbEmbed.addField("Title", movie.title, true);
-                    omdbEmbed.addField("First aired", moment(movie.released).format("MMMM Do YYYY"), true);
-
-                    // For future movies there may not yet be a rating
-                    movie.rated !== null ? omdbEmbed.addField("Rating", movie.rated, true) : omdbEmbed.addField("Rating", "Not yet rated", true);
-                    omdbEmbed.addField("Genre(s)", movie.genres.join(', '), true);
-                    omdbEmbed.addField("Type", movie.type, true);
-
-                    // If the director is null we write none
-                    movie.director !== null ? omdbEmbed.addField("Director", movie.director, true) : omdbEmbed.addField("Director", "none", true);
-
-                    // For unreleased movies there is no IMDB rating
-                    movie.imdb.rating !== null ? omdbEmbed.addField("IMDB Rating", movie.imdb.rating, true) : omdbEmbed.addField("IMDB Rating", "No score yet", true);
-
-                    // Sometimes there is no rotten tomatoes rating, in which case we leave this out
-                    movie.tomato !== undefined ? omdbEmbed.addField("Rotten Tomatoes", movie.tomato, true) : omdbEmbed.addField("Rotten Tomatoes", "Not available on OMDb", true);
-
-                    // Sometimes there is no Metacritic rating, in which case we leave this out
-                    movie.metacritic !== null ? omdbEmbed.addField("Metacritic", movie.metacritic, true) : omdbEmbed.addField("Metacritic", "Not available on OMDb", true);
-
-                    omdbEmbed.addField("Plot", movie.plot, false);
-
-                    msg.edit(preMarksText + omdbQuery + postMarksText, {
-                        embed: omdbEmbed
-                    });
-                });
-            });
+            movieSearch(msg);
         }
 
         if (content.startsWith(delimiter + 'quote')) {
@@ -591,6 +537,10 @@ client.on("message", msg => {
             });
         }
 
+        if (content.startsWith(delimiter + 'gs')) {
+            gameSearch(msg);
+        };
+
         if (content.startsWith(delimiter + "avatar")) {
             var mentionedUser = msg.mentions.users.first();
             if (!mentionedUser) {
@@ -777,10 +727,6 @@ client.on("message", msg => {
                         console.log(err);
                     };
                 });
-        };
-
-        if (content.startsWith(delimiter + 'gs')) {
-            gameSearch(msg);
         };
     };
 });
@@ -991,3 +937,63 @@ function gameSearch(msg) {
         });
     });
 }
+
+function movieSearch(msg) {
+    let omdbEmbed = new Discord.RichEmbed();
+    let startMarks = content.indexOf(">>"); // Get the position of the opening >>
+    let endMarks = content.indexOf("<<"); // Get the position of the closing <<
+    let omdbQuery = msg.content.slice(startMarks + 2, endMarks).split(','); // Get the content between the>> <<
+
+    let preMarksText = msg.content.slice(0, startMarks);
+    let postMarksText = msg.content.slice(endMarks + 2);
+    omdbEmbed.setColor("#c61530");
+
+    // Set the footer of the embed including a custom formatted time stamp using MomentJS
+    omdbEmbed.setFooter(`A selfbot by Favna | ${moment(new Date()).format('MMMM Do YYYY HH:mm')}`, "https://i.imgur.com/Ylv4Hdz.jpg");
+    msg.edit('**Searching OMDb...**').then(() => {
+        omdb.get({
+            title: omdbQuery[0],
+            year: omdbQuery[1]
+        }, true, function (err, movie) {
+            if (err) {
+                // When an error occurs log it and cancel
+                return console.error(err);
+            }
+            if (!movie) {
+                // When no movie is found tell the user and cancel
+                return msg.edit(`No movie or serie found!\nOriginal Message: ${msg.content}`);
+            }
+            
+            omdbEmbed.setAuthor(`${movie.title} info from OMDb`, 'https://i.imgur.com/xhpROOr.png')
+
+            // Sometimes there is no poster in which case the property is null. If there is a poster we use it as image
+            movie.poster !== null ? omdbEmbed.setImage(movie.poster) : null;
+
+            omdbEmbed.addField("Title", movie.title, true);
+            omdbEmbed.addField("First aired", moment(movie.released).format("MMMM Do YYYY"), true);
+
+            // For future movies there may not yet be a rating
+            movie.rated !== null ? omdbEmbed.addField("Rating", movie.rated, true) : omdbEmbed.addField("Rating", "Not yet rated", true);
+            omdbEmbed.addField("Genre(s)", movie.genres.join(', '), true);
+            omdbEmbed.addField("Type", movie.type, true);
+
+            // If the director is null we write none
+            movie.director !== null ? omdbEmbed.addField("Director", movie.director, true) : omdbEmbed.addField("Director", "none", true);
+
+            // For unreleased movies there is no IMDB rating
+            movie.imdb.rating !== null ? omdbEmbed.addField("IMDB Rating", movie.imdb.rating, true) : omdbEmbed.addField("IMDB Rating", "No score yet", true);
+
+            // Sometimes there is no rotten tomatoes rating, in which case we leave this out
+            movie.tomato !== undefined ? omdbEmbed.addField("Rotten Tomatoes", movie.tomato, true) : omdbEmbed.addField("Rotten Tomatoes", "Not available on OMDb", true);
+
+            // Sometimes there is no Metacritic rating, in which case we leave this out
+            movie.metacritic !== null ? omdbEmbed.addField("Metacritic", movie.metacritic, true) : omdbEmbed.addField("Metacritic", "Not available on OMDb", true);
+
+            omdbEmbed.addField("Plot", movie.plot, false);
+
+            msg.edit(preMarksText + omdbQuery + postMarksText, {
+                embed: omdbEmbed
+            });
+        });
+    });
+};
