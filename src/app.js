@@ -909,7 +909,7 @@ function gameSearch(msg) {
                             description += descCombined.slice(0, 970);
 
                             const gameEmbed = new Discord.RichEmbed();
-                            gameEmbed.setColor('#708CD0').setAuthor(gameName, 'https://i.imgur.com/oHwE0nC.png').setImage(boxArt).setFooter(`Game info pulled from mobygames | ${moment(new Date).format('MMMM Do Do YYYY | HH:mm')}`, 'http://i.imgur.com/qPuIzb2.png');
+                            gameEmbed.setColor('#FF0000').setAuthor(gameName, 'https://i.imgur.com/oHwE0nC.png').setImage(boxArt).setFooter(`Game info pulled from mobygames | ${moment(new Date).format('MMMM Do Do YYYY | HH:mm')}`, 'http://i.imgur.com/qPuIzb2.png');
                             gameEmbed.addField('Game Name', gameName, false);
                             gameEmbed.addField('Release Date', releaseDate, true);
                             rating !== '' ? gameEmbed.addField('Rating', rating, true) : gameEmbed.addField('Rating', "No rating available", true);
