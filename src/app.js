@@ -887,7 +887,7 @@ function gameSearch(msg) {
                             var description = "Potentially truncated due to maximum allowed length:\n";
                             var descCombined = "";
                             if ($('blockquote').length === 1) {
-                                descCombined = $('blockquote').children('p').text();
+                                descCombined = $('blockquote').text();
                             } else {
                                 $('#ctrq').each(function () {
                                     var $set = [];
@@ -913,13 +913,13 @@ function gameSearch(msg) {
                             gameEmbed.addField('Game Name', gameName, false);
                             gameEmbed.addField('Release Date', releaseDate, true);
                             rating !== '' ? gameEmbed.addField('Rating', rating, true) : gameEmbed.addField('Rating', "No rating available", true);
-                            // gameEmbed.addField('Setting', setting, true);
+                            gameEmbed.addField('Setting', setting, true);
                             gameEmbed.addField('Genre(s)', genre, true);
                             gameEmbed.addField('Platform(s)', platforms, true);
                             gameEmbed.addField('Developer', developer, true);
                             gameEmbed.addField('Publisher', publisher, true);
-                            // gameEmbed.addField('ESRB Rating', ESRBRating, true);
-                            // gameEmbed.addField('Description', description, false);
+                            gameEmbed.addField('ESRB Rating', ESRBRating, true);
+                            gameEmbed.addField('Description', description, false);
                             gameResponse.edit({
                                 embed: gameEmbed
                             });
