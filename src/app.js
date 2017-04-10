@@ -873,9 +873,9 @@ function gameSearch(msg) {
                             const releaseDate = $('#coreGameRelease > div:contains("Released")').next().children().text();
                             const platforms = $('#coreGameRelease > div:contains("Platforms")').next().children().text() === '' ? $('#coreGameRelease > div:contains("Platform")').next().children().text() : ($('#coreGameRelease > div:contains("Platforms")').next().text()).split(',').join(', ');
 
-                            const ESRBRating = $('#coreGameGenre > div > div:contains("ESRB Rating")').next().children().text() !== '' ? $('#coreGameGenre > div > div:contains("ESRB Rating")').next().children().text() : "No ESRB Rating specified";
+                            const ESRBRating = $('#coreGameGenre > div > div:contains("ESRB Rating")').next().children().text();
                             const genre = ($('#coreGameGenre > div > div:contains("Genre")').next().text() + ',' + $('#coreGameGenre > div > div:contains("Gameplay")').next().text()).split(',').join(', ');
-                            const setting = $('#coreGameGenre > div > div:contains("Setting")').next().children().text() !== '' ? $('#coreGameGenre > div > div:contains("Setting")').next().children().text() : "No setting specified";
+                            const setting = $('#coreGameGenre > div > div:contains("Setting")').next().children().text();
                             var rating = '';
                             if ($('.scoreHi:nth-child(1)').first().text() === '' && $('.scoreLow:nth-child(1)').first().text() === '') {
                                 rating = $('.scoreMed:nth-child(1)').first().text();
@@ -911,14 +911,14 @@ function gameSearch(msg) {
                             const gameEmbed = new Discord.RichEmbed();
                             gameEmbed.setColor('#FF0000').setAuthor(gameName, 'https://i.imgur.com/oHwE0nC.png').setImage(boxArt).setFooter(`Game info pulled from mobygames | ${moment(new Date).format('MMMM Do Do YYYY | HH:mm')}`, 'http://i.imgur.com/qPuIzb2.png');
                             gameEmbed.addField('Game Name', gameName, false);
-                            gameEmbed.addField('Release Date', releaseDate, true);
+                            releaseDate !== '' ? gameEmbed.addField('Release Date', releaseDate, true) : gameEmbed.addField('Release Date', 'Release Date unknown', true)
                             rating !== '' ? gameEmbed.addField('Rating', rating, true) : gameEmbed.addField('Rating', "No rating available", true);
-                            gameEmbed.addField('Setting', setting, true);
-                            gameEmbed.addField('Genre(s)', genre, true);
-                            gameEmbed.addField('Platform(s)', platforms, true);
-                            gameEmbed.addField('Developer', developer, true);
-                            gameEmbed.addField('Publisher', publisher, true);
-                            gameEmbed.addField('ESRB Rating', ESRBRating, true);
+                            setting !== '' ? gameEmbed.addField('Setting', setting, true) : gameEmbed.addField('Setting', 'No setting specified', true)
+                            genre !== '' ? gameEmbed.addField('Genre(s)', genre, true) : gameEmbed.addField('Genre(s)', 'Genre(s) unknown', true);
+                            platforms !== '' ? gameEmbed.addField('Platform(s)', platforms, true) : gameEmbed.addField('Platform(s)', 'Platforms unknown', true);
+                            developer !== '' ? gameEmbed.addField('Developer', developer, true) : gameEmbed.addField('Developer', 'Developer unknown', true);
+                            publisher !== '' ? gameEmbed.addField('Publisher', publisher, true) : gameEmbed.addField('Publisher', 'Publisher unknown', true);
+                            ESRBRating !== '' ? gameEmbed.addField('ESRB Rating', ESRBRating, true) : gameEmbed.addField('ESRB Rating', 'ESRB Rating unknown', true);
                             gameEmbed.addField('Description', description, false);
                             gameResponse.edit({
                                 embed: gameEmbed
