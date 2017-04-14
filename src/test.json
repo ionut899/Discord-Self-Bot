@@ -1,0 +1,12 @@
+Collection {
+  '302443851858313217' => MessageAttachment {
+  id: '302443851858313217',
+  filename: 'IMG_3162.JPG',
+  filesize: 174944,
+  url: 'https://cdn.discordapp.com/attachments/263326058751852554/302443851858313217/IMG_3162.JPG',
+  proxyURL: 'https://images.discordapp.net/eyJ1cmwiOiJodHRwczovL2Rpc2NvcmQuc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9hdHRhY2htZW50cy8yNjMzMjYwNTg3NTE4NTI1NTQvMzAyNDQzODUx
+ODU4MzEzMjE3L0lNR18zMTYyLkpQRyJ9._G9kVCr077yUfJueV6pdKWktuc0',
+  height: 2208,
+  width: 1242 },
+  _array: null,
+  _keyArray: null }

@@ -230,21 +230,42 @@ client.on("message", msg => {
 
         if (content.startsWith(delimiter + 'quote')) {
             let args = msg.content.split(' ').slice(1);
-            client.channels.get(msg.channel.id).fetchMessages({
-                limit: 1,
-                around: args[0]
-            }).then(msgs => {
-                const tmp = msgs.first();
-                const emb = new Discord.RichEmbed();
-                tmp.channel.type === 'text' ? emb.setAuthor(tmp.member.displayName, tmp.author.displayAvatarURL) : emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
-                emb.setColor('#FF0000').setFooter(`Message quoted at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
-                tmp.content === '' ? emb.addField('Message', 'Empty') : emb.addField('Message', tmp.content);
-                msg.edit(msg.content.slice(28), {
-                    embed: emb
+            if (args.length >= 2 && args[0].toString().match(/([0-9]{18})/) && args[1].toString().match(/([0-9]{18})/)) {
+                client.channels.get(args[0]).fetchMessages({
+                    limit: 1,
+                    around: args[1]
+                }).then(msgs => {
+                    let tmp = msgs.first();
+                    let emb = new Discord.RichEmbed();
+                    tmp.channel.type === 'text' ? emb.setAuthor(tmp.member.displayName, tmp.author.displayAvatarURL) : emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
+                    tmp.attachments.first() !== undefined ? emb.setImage(tmp.attachments.first().url) : null;
+                    emb.setColor('#FF0000').setFooter(`Message quoted from ${tmp.channel.name} at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                    tmp.content === '' ? emb.addField('Message', 'Empty') : emb.addField('Message', tmp.content);
+                    msg.edit(msg.content.slice(46), {
+                        embed: emb
+                    });
+                }).catch(function (error) {
+                    msg.reply('Message not found.').then(msgs => msgs.delete(10000));
                 });
-            }).catch(function (error) {
-                msg.reply('Message not found.').then(msgs => msgs.delete(10000));
-            });
+            } else {
+                client.channels.get(msg.channel.id).fetchMessages({
+                    limit: 1,
+                    around: args[0]
+                }).then(msgs => {
+                    let tmp = msgs.first();
+                    let emb = new Discord.RichEmbed();
+                    tmp.channel.type === 'text' ? emb.setAuthor(tmp.member.displayName, tmp.author.displayAvatarURL) : emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
+                    tmp.attachments.first() !== undefined ? emb.setImage(tmp.attachments.first().url) : null;
+                    emb.setColor('#FF0000').setFooter(`Message quoted from #${tmp.channel.name} at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                    tmp.content === '' ? emb.addField('Message', 'Empty') : emb.addField('Message', tmp.content);
+                    msg.edit(msg.content.slice(28), {
+                        embed: emb
+                    });
+                }).catch(function (error) {
+                    console.error(error);
+                    msg.reply('Message not found.').then(msgs => msgs.delete(10000));
+                });
+            };
         };
 
         // Search Engines
