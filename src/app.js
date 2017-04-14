@@ -237,14 +237,26 @@ client.on("message", msg => {
                 }).then(msgs => {
                     let tmp = msgs.first();
                     let emb = new Discord.RichEmbed();
-                    tmp.channel.type === 'text' ? emb.setAuthor(tmp.member.displayName, tmp.author.displayAvatarURL) : emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
+                    let channelName;
+                    if (tmp.channel.type === 'text') {
+                        emb.setAuthor(tmp.member.displayName, tmp.author.displayAvatarURL);
+                        channelName = `#${tmp.channel.name}`
+                    } else if (tmp.channel.type === 'dm') {
+                        emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
+                        channelName = `${tmp.channel.type.toUpperCase()} to ${tmp.channel.recipient.username}`
+                    } else if (tmp.channel.type === 'group') {
+                        emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
+                        let recipients = tmp.channel.recipients.map(recipuser => recipuser.username);
+                        channelName = `${tmp.channel.type} DM with ${recipients.slice(0,-1).join(', ')} and ${recipients.slice(recipients.length-1)}`
+                    }
                     tmp.attachments.first() !== undefined ? emb.setImage(tmp.attachments.first().url) : null;
-                    emb.setColor('#FF0000').setFooter(`Message quoted from ${tmp.channel.name} at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                    emb.setColor('#FF0000').setFooter(`Message quoted from ${channelName} at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
                     tmp.content === '' ? emb.addField('Message', 'Empty') : emb.addField('Message', tmp.content);
-                    msg.edit(msg.content.slice(46), {
+                    msg.edit(msg.content.slice(28), {
                         embed: emb
                     });
                 }).catch(function (error) {
+                    console.error(error);
                     msg.reply('Message not found.').then(msgs => msgs.delete(10000));
                 });
             } else {
@@ -254,9 +266,20 @@ client.on("message", msg => {
                 }).then(msgs => {
                     let tmp = msgs.first();
                     let emb = new Discord.RichEmbed();
-                    tmp.channel.type === 'text' ? emb.setAuthor(tmp.member.displayName, tmp.author.displayAvatarURL) : emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
+                    let channelName;
+                    if (tmp.channel.type === 'text') {
+                        emb.setAuthor(tmp.member.displayName, tmp.author.displayAvatarURL);
+                        channelName = `#${tmp.channel.name}`
+                    } else if (tmp.channel.type === 'dm') {
+                        emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
+                        channelName = `${tmp.channel.type.toUpperCase()} to ${tmp.channel.recipient.username}`
+                    } else if (tmp.channel.type === 'group') {
+                        emb.setAuthor(tmp.author.username, tmp.author.displayAvatarURL);
+                        let recipients = tmp.channel.recipients.map(recipuser => recipuser.username);
+                        channelName = `${tmp.channel.type} DM with ${recipients.slice(0,-1).join(', ')} and ${recipients.slice(recipients.length-1)}`
+                    }
                     tmp.attachments.first() !== undefined ? emb.setImage(tmp.attachments.first().url) : null;
-                    emb.setColor('#FF0000').setFooter(`Message quoted from #${tmp.channel.name} at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                    emb.setColor('#FF0000').setFooter(`Message quoted from ${channelName} at ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
                     tmp.content === '' ? emb.addField('Message', 'Empty') : emb.addField('Message', tmp.content);
                     msg.edit(msg.content.slice(28), {
                         embed: emb
