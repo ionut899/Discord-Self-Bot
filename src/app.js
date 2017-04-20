@@ -264,7 +264,7 @@ client.on("message", msg => {
         }
 
         if (content.startsWith(delimiter + 'quote')) {
-            quoter(msg);
+            quoter(msg, args);
         };
 
         // Search Engines
@@ -1031,7 +1031,7 @@ function movieSearch(msg) {
     });
 };
 
-function quoter(msg) {
+function quoter(msg, args) {
 
     if (args.length >= 2 && args[0].toString().match(/([0-9]{18})/) && args[1].toString().match(/([0-9]{18})/)) {
         client.channels.get(args[0]).fetchMessages({
@@ -1043,7 +1043,7 @@ function quoter(msg) {
             let quoteChannel;
             let quoteAuthor;
             let quoteAuthorAvatar;
-            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "None";
+            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "";
             let quoteContent = tmp.content !== '' ? tmp.content : "Empty";
             let quoteDateTime = moment(new Date).format('MMMM Do YYYY | HH:mm:ss')
             if (tmp.channel.type === 'text') {
@@ -1065,20 +1065,10 @@ function quoter(msg) {
             emb.setColor('#FF0000').setFooter(`Message quoted from ${quoteChannel} at ${quoteDateTime}`);
             emb.addField('Message', quoteContent);
 
-            if (msg.guild.id === '') {
-                msg.edit(`
-*Message from **${quoteAuthor}** in **${quoteChannel}***
-\`\`\`
-${quoteContent}
-\`\`\`Quote Attachment: ${quoteAttachment}
+            msg.edit(msg.content.slice(46), {
+                embed: emb
+            });
 
-${msg.content.slice(46)}
-`)
-            } else {
-                msg.edit(msg.content.slice(46), {
-                    embed: emb
-                });
-            }
         }).catch(function (error) {
             console.error(error);
             msg.reply('Message not found.').then(msgs => msgs.delete(10000));
@@ -1093,7 +1083,7 @@ ${msg.content.slice(46)}
             let quoteChannel;
             let quoteAuthor;
             let quoteAuthorAvatar;
-            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "None";
+            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "";
             let quoteContent = tmp.content !== '' ? tmp.content : "Empty";
             let quoteDateTime = moment(new Date).format('MMMM Do YYYY | HH:mm:ss')
             if (tmp.channel.type === 'text') {
@@ -1115,20 +1105,10 @@ ${msg.content.slice(46)}
             emb.setColor('#FF0000').setFooter(`Message quoted from ${quoteChannel} at ${quoteDateTime}`);
             emb.addField('Message', quoteContent);
 
-            if (msg.guild.id === '264537744930373635') {
-                msg.edit(`
-*Message from **${quoteAuthor}** in **${quoteChannel}***
-\`\`\`
-${quoteContent}
-\`\`\`Quote Attachment: ${quoteAttachment}
+            msg.edit(msg.content.slice(28), {
+                embed: emb
+            });
 
-${msg.content.slice(28)}
-`)
-            } else {
-                msg.edit(msg.content.slice(28), {
-                    embed: emb
-                });
-            }
         }).catch(function (error) {
             console.error(error);
             msg.reply('Message not found.').then(msgs => msgs.delete(10000));
