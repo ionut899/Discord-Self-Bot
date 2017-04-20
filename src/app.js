@@ -245,12 +245,18 @@ client.on("message", msg => {
                     emojisSetThree.push(`\`:${guildMojiNames[i]}:\` for ${guildMojis.find('name', guildMojiNames[i])}`)
                 }
             }
-            emojisEmbed.setColor('#FF0000').setFooter(`A Selfbot by Favna | Command issued at ${moment(new Date()).format('MMMM Do YYYY HH:mm:ss')}`, 'http://i.imgur.com/4U9oMS0.png').setDescription(`Emojis from the server \`${guildData.name}\``).addField('\u200b', emojisSetOne, true).addField('\u200b', emojisSetTwo, true).addField('\u200b', emojisSetThree, true);
+            emojisEmbed
+                .setColor('#FF0000')
+                .setFooter(`A Selfbot by Favna | Command issued at ${moment(new Date()).format('MMMM Do YYYY HH:mm:ss')}`, 'http://i.imgur.com/4U9oMS0.png')
+                .setDescription(`Emojis from the server \`${guildData.name}\``);
+            emojisSetOne.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetOne, true) : emojisEmbed.addField('This server has no custom emojis', 'Although they should totally get some', true);
+            emojisSetTwo.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetTwo, true) : null;
+            emojisSetThree.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetThree, true) : null;
             msg.edit(args.slice(1).join(' '), {
                 embed: emojisEmbed
             })
         }
-
+        // .addField('\u200b', emojisSetThree, true);
         // OMDB Movie Search
         if (omdbRegex.test(content)) {
             movieSearch(msg);
