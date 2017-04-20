@@ -22,6 +22,7 @@ const client = new Discord.Client();
 const youtube = new YouTube();
 const cydiaRegex = /\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\>\>/gi;
 const omdbRegex = /\>\>\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\<\</gi;
+const storeChannel = client.channels.get("299694375682703361");
 
 var deathCount = parseInt(30);
 var messageStore = [];
@@ -41,8 +42,9 @@ client.on("message", msg => {
     if (msg.author.id !== "112001393140723712") return;
     if (msg.author.id === "112001393140723712" && msg.channel.id !== "299694375682703361") {
         var content = msg.content.toLowerCase();
+        const args = msg.content.split(' ').slice(1);
 
-        if (content.startsWith(delimiter + "help") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "help")) {
             let helpEmbed = new Discord.RichEmbed();
 
             let searchQueries = [`${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}define <word>`, `${delimiter}anime <query>`, `>>MovieTitle,Year<<`, `<<CydiaPackage>>`];
@@ -95,8 +97,8 @@ client.on("message", msg => {
             messageStore.shift();
             msg.delete();
 
-            let indicator = msg.content.split(' ').slice(1, 2).toString();
-            let newContent = msg.content.slice(10);
+            let indicator = args.slice(0, 1).toString();
+            let newContent = args.slice(1).join(' ');
             if (!indicator.match(/[0-9]+/)) {
                 return client.channels.get("299694375682703361").sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
             };
@@ -107,7 +109,7 @@ client.on("message", msg => {
             messageStore.shift();
             msg.delete();
 
-            let indicator = msg.content.split(' ').slice(1, 2).toString();
+            let indicator = args.slice(0, 1).toString();
             if (!indicator.match(/[0-9]+/)) {
                 return client.channels.get("299694375682703361").sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
             };
@@ -123,7 +125,6 @@ client.on("message", msg => {
             messageStore.shift();
             msg.delete();
 
-            let storeChannel = client.channels.get("299694375682703361");
             let storeEmbed = new Discord.RichEmbed();
 
             storeEmbed.setColor('#FF0000');
@@ -133,7 +134,7 @@ client.on("message", msg => {
             storeChannel.sendEmbed(storeEmbed);
         };
 
-        if (content.startsWith(delimiter + "valsofembed") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "valsofembed")) {
             var valsOfEmbed = new Discord.RichEmbed();
             valsOfEmbed.setAuthor("This is the author", "https://i.imgur.com/cgr5eSk.png");
             valsOfEmbed.setColor("#ffffff");
@@ -152,7 +153,7 @@ client.on("message", msg => {
 
         }
 
-        if (content.startsWith(delimiter + "death") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "death")) {
             deathCount += 1;
             let deathCountEmbed = new Discord.RichEmbed();
             deathCountEmbed.setColor("#5f93e2");
@@ -172,18 +173,15 @@ client.on("message", msg => {
 
         // Transform URL to cydia share URL
         if (content.startsWith(delimiter + "cysource")) {
-            let cysource = msg.content.slice(12);
-            msg.edit(`To add this repo directly to cydia click the following URL: https://cydia.saurik.com/api/share#?source=${cysource}`);
-
+            msg.edit(`To add this repo directly to cydia click the following URL: https://cydia.saurik.com/api/share#?source=${args[0]}`);
         }
         // Transform source URL and package name to cydia share URL
         if (content.startsWith(delimiter + "cypkg")) {
-            let input = msg.content.split(' ').slice(1);
-            msg.edit(`To find this package on Cydia follow this URL: https://cydia.saurik.com/api/share#?source=${input[0]}/&package=${input[1]}`);
+            msg.edit(`To find this package on Cydia follow this URL: https://cydia.saurik.com/api/share#?source=${args[0]}/&package=${args[1]}`);
         }
 
         // Cydia Tweak Search
-        if (cydiaRegex.test(content) && msg.guild.id !== "264537744930373635") {
+        if (cydiaRegex.test(content)) {
             let cydiaEmbed = new Discord.RichEmbed();
             let startMarks = content.indexOf("<<");
             let endMarks = content.indexOf(">>");
@@ -227,6 +225,30 @@ client.on("message", msg => {
 
                 });
             });
+        }
+
+        if (content.startsWith(delimiter + 'emojis')) {
+            let guildData = client.guilds.get(args[0])
+            let guildMojis = guildData.emojis;
+            let guildMojiNames = guildMojis.map(gmoji => gmoji.name);
+            let emojisSetOne = [];
+            let emojisSetTwo = [];
+            let emojisSetThree = [];
+            let emojisEmbed = new Discord.RichEmbed();
+            for (i = 0; i < guildMojiNames.length; i++) {
+
+                if (emojisSetOne.toString().length <= 900) {
+                    emojisSetOne.push(`\`:${guildMojiNames[i]}:\` for ${guildMojis.find('name', guildMojiNames[i])}`)
+                } else if (emojisSetTwo.toString().length <= 900) {
+                    emojisSetTwo.push(`\`:${guildMojiNames[i]}:\` for ${guildMojis.find('name', guildMojiNames[i])}`)
+                } else {
+                    emojisSetThree.push(`\`:${guildMojiNames[i]}:\` for ${guildMojis.find('name', guildMojiNames[i])}`)
+                }
+            }
+            emojisEmbed.setColor('#FF0000').setFooter(`A Selfbot by Favna | Command issued at ${moment(new Date()).format('MMMM Do YYYY HH:mm:ss')}`, 'http://i.imgur.com/4U9oMS0.png').setDescription(`Emojis from the server \`${guildData.name}\``).addField('\u200b', emojisSetOne, true).addField('\u200b', emojisSetTwo, true).addField('\u200b', emojisSetThree, true);
+            msg.edit(args.slice(1).join(' '), {
+                embed: emojisEmbed
+            })
         }
 
         // OMDB Movie Search
@@ -351,7 +373,7 @@ client.on("message", msg => {
                                     youtubeEmbed.addField('Published Date', moment(result.items[i].snippet.publishedAt).format('MMMM Do YYYY'), true);
                                     youtubeEmbed.addField('Description', result.items[i].snippet.description, false);
 
-                                    if (msg.guild.id === "264537744930373635") {
+                                    if (msg.guild.id === "") {
                                         return msg.edit(`https://www.youtube.com/watch?v=${result.items[i].id.videoId}`);
                                     } else {
                                         return msg.edit(`https://www.youtube.com/watch?v=${result.items[i].id.videoId}`, {
@@ -371,7 +393,7 @@ client.on("message", msg => {
                                     youtubeEmbed.addField('Channel URL', `[Click Here](https://www.youtube.com/channel/${result.items[i].snippet.channelId})`, true);
                                     youtubeEmbed.addField('Channel Description', result.items[i].snippet.description, false)
 
-                                    if (msg.guild.id === "264537744930373635") {
+                                    if (msg.guild.id === "") {
                                         return msg.edit(`https://www.youtube.com/channel/${result.items[i].snippet.channelId}`);
                                     } else {
                                         return msg.edit(`https://www.youtube.com/channel/${result.items[i].snippet.channelId}`, {
@@ -392,7 +414,7 @@ client.on("message", msg => {
                                     youtubeEmbed.addField('Published Date', moment(result.items[i].snippet.publishedAt).format('MMMM Do YYYY'), true);
                                     youtubeEmbed.addField('Description', result.items[i].snippet.description, false);
 
-                                    if (msg.guild.id === "264537744930373635") {
+                                    if (msg.guild.id === "") {
                                         return msg.edit(`https://www.youtube.com/playlist?list=${result.items[i].id.playlistId}`);
                                     } else {
                                         return msg.edit(`https://www.youtube.com/playlist?list=${result.items[i].id.playlistId}`, {
@@ -408,7 +430,7 @@ client.on("message", msg => {
         }
 
         // Urban Dictionary search
-        if (content.startsWith(delimiter + "urban") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "urban")) {
             var urbanQuery = urban(msg.content.slice(7));
 
             msg.edit('**Opening Dictionary...**').then(() => {
@@ -441,12 +463,12 @@ client.on("message", msg => {
         }
 
         // Userinfo of a user
-        if (content.startsWith(delimiter + "userinfo") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "userinfo")) {
             userInfo(msg);
         }
 
         // Word define
-        if (content.startsWith(delimiter + "define") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "define")) {
             let defineQuery = msg.content.slice(10);
             let defineEmbed = new Discord.RichEmbed();
 
@@ -481,7 +503,7 @@ client.on("message", msg => {
         }
 
         // MyAnimeList Searching
-        if (content.startsWith(delimiter + "anime") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "anime")) {
             let animeQuery = msg.content.slice(7);
             let animeEmbed = new Discord.RichEmbed();
 
@@ -540,8 +562,8 @@ client.on("message", msg => {
             });
         }
 
-        if (content.startsWith(delimiter + 'gs') && msg.guild.id !== "264537744930373635") {
-            gameSearch(msg);
+        if (content.startsWith(delimiter + 'gs')) {
+            gameSearch(msg, args);
         };
 
         if (content.startsWith(delimiter + "avatar")) {
@@ -554,7 +576,7 @@ client.on("message", msg => {
 
 
         // Storage
-        if (content.startsWith(delimiter + "3dsguide") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "3dsguide")) {
             let plaiGuideEmbed = new Discord.RichEmbed();
 
             plaiGuideEmbed.setColor("#CF010E");
@@ -568,7 +590,7 @@ client.on("message", msg => {
             });
         }
 
-        if (content.startsWith(delimiter + "wiiuguide") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "wiiuguide")) {
             let wiiuguideEmbed = new Discord.RichEmbed();
 
             wiiuguideEmbed.setColor("#00ACCA");
@@ -606,7 +628,7 @@ client.on("message", msg => {
         }
 
         // Custom stuff
-        if (content.startsWith(delimiter + "embed") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "embed")) {
             embed(msg);
         }
 
@@ -619,19 +641,18 @@ client.on("message", msg => {
         }
 
         // Debugging
-        if (content.startsWith(delimiter + "debug") && msg.guild.id !== "264537744930373635") {
+        if (content.startsWith(delimiter + "debug")) {
             debug(msg);
         }
 
         // NSFW
         if (content.startsWith(delimiter + "r34")) {
-            let rule34Tags = msg.content.slice(7).split(" ");
-            if (rule34Tags[0] === '') {
+            if (args.length === 0) {
                 msg.edit("You forgot to supply tags");
                 return;
             };
 
-            booru.search("r34", rule34Tags, {
+            booru.search("r34", args, {
                     limit: 1,
                     random: true
                 })
@@ -652,13 +673,12 @@ client.on("message", msg => {
         }
 
         if (content.startsWith(delimiter + "e621")) {
-            let e621Tags = msg.content.slice(8).split(" ");
-            if (e621Tags[0] === '') {
+            if (args.length === 0) {
                 msg.edit("You forgot to supply tags");
                 return;
             };
 
-            booru.search("e621", e621Tags, {
+            booru.search("e621", args, {
                     limit: 1,
                     random: true
                 })
@@ -679,13 +699,12 @@ client.on("message", msg => {
         }
 
         if (content.startsWith(delimiter + "gelbooru")) {
-            let gelbooruTags = msg.content.slice(12).split(" ");
-            if (gelbooruTags[0] === '') {
+            if (args.length === 0) {
                 msg.edit("You forgot to supply tags");
                 return;
             };
 
-            booru.search("gelbooru", gelbooruTags, {
+            booru.search("gelbooru", args, {
                     limit: 1,
                     random: true
                 })
@@ -706,13 +725,12 @@ client.on("message", msg => {
         }
 
         if (content.startsWith(delimiter + "paheal")) {
-            let rule34paheal = msg.content.slice(10).split(" ");
-            if (rule34paheal[0] === '') {
+            if (args.length === 0) {
                 msg.edit("You forgot to supply tags");
                 return;
             };
 
-            booru.search("paheal", rule34paheal, {
+            booru.search("paheal", args, {
                     limit: 1,
                     random: true
                 })
@@ -749,13 +767,11 @@ function embed(msg) {
     customEmbed.setColor("#e52431");
     customEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
     customEmbed.setAuthor("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
-    if (msg.guild.id === "264537744930373635") {
-        msg.delete();
-    } else {
-        msg.edit({
-            embed: customEmbed
-        });
-    }
+
+    msg.edit({
+        embed: customEmbed
+    });
+
 }
 
 function debug(msg) {
@@ -853,9 +869,8 @@ function positionFormatter(length) {
     return numbers;
 };
 
-function gameSearch(msg) {
-    let query = msg.content.split(' ').slice(1).join('+');
-    let searchURL = `http://www.mobygames.com/search/quick?q=${query}`
+function gameSearch(msg, args) {
+    let searchURL = `http://www.mobygames.com/search/quick?q=${args.join('+')}`
 
     msg.channel.sendMessage('***Looking for data about that game...***').then((gameResponse) => {
         request({
@@ -951,8 +966,8 @@ function gameSearch(msg) {
 
 function movieSearch(msg) {
     let omdbEmbed = new Discord.RichEmbed();
-    let startMarks = content.indexOf(">>"); // Get the position of the opening >>
-    let endMarks = content.indexOf("<<"); // Get the position of the closing <<
+    let startMarks = msg.content.indexOf(">>"); // Get the position of the opening >>
+    let endMarks = msg.content.indexOf("<<"); // Get the position of the closing <<
     let omdbQuery = msg.content.slice(startMarks + 2, endMarks).split(','); // Get the content between the>> <<
 
     let preMarksText = msg.content.slice(0, startMarks);
@@ -1010,7 +1025,7 @@ function movieSearch(msg) {
 };
 
 function quoter(msg) {
-    let args = msg.content.split(' ').slice(1);
+
     if (args.length >= 2 && args[0].toString().match(/([0-9]{18})/) && args[1].toString().match(/([0-9]{18})/)) {
         client.channels.get(args[0]).fetchMessages({
             limit: 1,
@@ -1021,7 +1036,7 @@ function quoter(msg) {
             let quoteChannel;
             let quoteAuthor;
             let quoteAuthorAvatar;
-            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "";
+            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "None";
             let quoteContent = tmp.content !== '' ? tmp.content : "Empty";
             let quoteDateTime = moment(new Date).format('MMMM Do YYYY | HH:mm:ss')
             if (tmp.channel.type === 'text') {
@@ -1043,7 +1058,7 @@ function quoter(msg) {
             emb.setColor('#FF0000').setFooter(`Message quoted from ${quoteChannel} at ${quoteDateTime}`);
             emb.addField('Message', quoteContent);
 
-            if (msg.guild.id === '264537744930373635') {
+            if (msg.guild.id === '') {
                 msg.edit(`
 *Message from **${quoteAuthor}** in **${quoteChannel}***
 \`\`\`
@@ -1071,7 +1086,7 @@ ${msg.content.slice(46)}
             let quoteChannel;
             let quoteAuthor;
             let quoteAuthorAvatar;
-            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "";
+            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "None";
             let quoteContent = tmp.content !== '' ? tmp.content : "Empty";
             let quoteDateTime = moment(new Date).format('MMMM Do YYYY | HH:mm:ss')
             if (tmp.channel.type === 'text') {
