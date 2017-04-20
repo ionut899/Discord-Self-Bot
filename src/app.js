@@ -553,7 +553,7 @@ client.on("message", msg => {
                             animeEmbed.addField("Synposis", synopsis, false);
                         };
 
-                        animeEmbed.addField("Score", score, true);
+                        score !== "" ? animeEmbed.addField("Score", score, true) : animeEmbed.addField("Score", 'Score unknown', true)
                         animeEmbed.addField("Episodes", episodeCount, true);
                         animeEmbed.addField("Status", status, true);
                         animeEmbed.addField("URL", animeUrl, true);
