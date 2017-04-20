@@ -16,8 +16,8 @@ const omdb = require('omdb');
 
 // import the discord.js and npm modules
 const Discord = require("discord.js");
-const settings = require("./auth.json");
-const delimiter = settings.prefix;
+const auth = require("./auth.json");
+const delimiter = auth.prefix;
 const client = new Discord.Client();
 const youtube = new YouTube();
 const cydiaRegex = /\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\>\>/gi;
@@ -27,22 +27,25 @@ var deathCount = parseInt(30);
 var messageStore = [];
 
 // Getting keys
-client.login(settings.token);
-youtube.setKey(settings.googleapikey);
-googleapikey = settings.googleapikey;
-imageEngineKey = settings.imageEngineKey;
-searchEngineKey = settings.searchEngineKey;
+client.login(auth.token);
+youtube.setKey(auth.googleapikey);
+googleapikey = auth.googleapikey;
+imageEngineKey = auth.imageEngineKey;
+searchEngineKey = auth.searchEngineKey;
+youtube.addParam('type', 'video');
+const ownerID = auth.ownerID;
+const messageStoreChannelID = auth.storeChannel;
 
 client.on("ready", () => {
     console.log("Hello Again!");
 });
 
 client.on("message", msg => {
-    if (msg.author.id !== "112001393140723712") return;
-    if (msg.author.id === "112001393140723712" && msg.channel.id !== "299694375682703361") {
-        var content = msg.content.toLowerCase();
+    if (msg.author.id !== ownerID) return;
+    if (msg.author.id === ownerID && msg.channel.id !== messageStoreChannelID) {
+        const content = msg.content.toLowerCase();
         const args = msg.content.split(' ').slice(1);
-        const storeChannel = client.channels.get("299694375682703361");
+        const storeChannel = client.channels.get(messageStoreChannelID);
 
         if (content.startsWith(delimiter + "help")) {
             let helpEmbed = new Discord.RichEmbed();
@@ -70,7 +73,6 @@ client.on("message", msg => {
             msg.edit(msg.content.slice(8), {
                 embed: helpEmbed
             });
-
         }
 
         let currentStoreSize = messageStore.length;
@@ -100,7 +102,7 @@ client.on("message", msg => {
             let indicator = args.slice(0, 1).toString();
             let newContent = args.slice(1).join(' ');
             if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get("299694375682703361").sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                return client.channels.get(messageStoreChannelID).sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
             };
             messageStore[indicator.toString()].message.edit(newContent);
         };
@@ -111,7 +113,7 @@ client.on("message", msg => {
 
             let indicator = args.slice(0, 1).toString();
             if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get("299694375682703361").sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                return client.channels.get(messageStoreChannelID).sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
             };
             messageStore[indicator].message.delete();
         };
@@ -357,79 +359,29 @@ client.on("message", msg => {
 
         // Youtube Search
         if (content.startsWith(delimiter + "youtube") || content.startsWith(delimiter + "yt")) {
-            let youtubeQuery = content.slice(3, 5) === 'yt' ? msg.content.slice(6) : msg.content.slice(11);
             var youtubeEmbed = new Discord.RichEmbed();
             youtubeEmbed.setColor("#ff0000");
 
             msg.edit('**Searching while prioritizing videos..**').then(() => {
-                youtube.search(youtubeQuery, 50, function (error, result) {
+                youtube.search(args.join(' '), 1, function (error, result) {
                     if (error) {
                         msg.edit("An error occurred, please contact <@112001393140723712>");
                     } else {
                         if (!result || !result.items || result.items.length < 1) {
                             msg.edit("No Results found");
                         } else {
-                            for (let i = 0; i < result.items.length; i++) {
-                                if (result.items[i].id.kind === 'youtube#video') {
-                                    youtubeEmbed.setAuthor(`Youtube Search Result for: ${youtubeQuery}`, 'https://www.youtube.com/yts/img/favicon_144-vflWmzoXw.png');
-                                    youtubeEmbed.setImage(result.items[i].snippet.thumbnails.high.url);
-                                    youtubeEmbed.setURL(`https://www.youtube.com/watch?v=${result.items[i].id.videoId}`)
-                                    youtubeEmbed.addField('Title', result.items[i].snippet.title, true);
-                                    youtubeEmbed.addField('URL', `[Click Here](https://www.youtube.com/watch?v=${result.items[i].id.videoId})`, true)
-                                    youtubeEmbed.addField('Channel', `[${result.items[i].snippet.channelTitle}](https://www.youtube.com/channel/${result.items[i].snippet.channelId})`, true);
-                                    youtubeEmbed.addField('Published Date', moment(result.items[i].snippet.publishedAt).format('MMMM Do YYYY'), true);
-                                    youtubeEmbed.addField('Description', result.items[i].snippet.description, false);
+                            youtubeEmbed.setAuthor(`Youtube Search Result for: ${args.join(' ')}`, 'https://www.youtube.com/yts/img/favicon_144-vflWmzoXw.png');
+                            youtubeEmbed.setImage(result.items[0].snippet.thumbnails.high.url);
+                            youtubeEmbed.setURL(`https://www.youtube.com/watch?v=${result.items[0].id.videoId}`)
+                            youtubeEmbed.addField('Title', result.items[0].snippet.title, true);
+                            youtubeEmbed.addField('URL', `[Click Here](https://www.youtube.com/watch?v=${result.items[0].id.videoId})`, true)
+                            youtubeEmbed.addField('Channel', `[${result.items[0].snippet.channelTitle}](https://www.youtube.com/channel/${result.items[0].snippet.channelId})`, true);
+                            youtubeEmbed.addField('Published Date', moment(result.items[0].snippet.publishedAt).format('MMMM Do YYYY'), true);
+                            youtubeEmbed.addField('Description', result.items[0].snippet.description, false);
 
-                                    if (msg.guild.id === "") {
-                                        return msg.edit(`https://www.youtube.com/watch?v=${result.items[i].id.videoId}`);
-                                    } else {
-                                        return msg.edit(`https://www.youtube.com/watch?v=${result.items[i].id.videoId}`, {
-                                            embed: youtubeEmbed
-                                        });
-                                    }
-                                }
-                            }
-
-                            for (let i = 0; i < result.items.length; i++) {
-                                if (result.items[i].id.kind === 'youtube#channel') {
-                                    youtubeEmbed.setAuthor(`Youtube Search Result for: ${youtubeQuery}`, 'https://www.youtube.com/yts/img/favicon_144-vflWmzoXw.png');
-                                    youtubeEmbed.setImage(result.items[i].snippet.thumbnails.high.url);
-                                    youtubeEmbed.setURL(`https://www.youtube.com/channel/${result.items[i].snippet.channelId}`);
-                                    youtubeEmbed.addField('Channel Name', result.items[i].snippet.title, true);
-                                    youtubeEmbed.addField('Channel Creation Date', moment(result.items[i].snippet.publishedAt).format('MMMM Do YYYY'), true);
-                                    youtubeEmbed.addField('Channel URL', `[Click Here](https://www.youtube.com/channel/${result.items[i].snippet.channelId})`, true);
-                                    youtubeEmbed.addField('Channel Description', result.items[i].snippet.description, false)
-
-                                    if (msg.guild.id === "") {
-                                        return msg.edit(`https://www.youtube.com/channel/${result.items[i].snippet.channelId}`);
-                                    } else {
-                                        return msg.edit(`https://www.youtube.com/channel/${result.items[i].snippet.channelId}`, {
-                                            embed: youtubeEmbed
-                                        });
-                                    }
-                                }
-                            }
-
-                            for (let i = 0; i < result.items.length; i++) {
-                                if (result.items[i].id.kind === 'youtube#playlist') {
-                                    youtubeEmbed.setAuthor(`Youtube Search Result for: ${youtubeQuery}`, 'https://www.youtube.com/yts/img/favicon_144-vflWmzoXw.png');
-                                    youtubeEmbed.setImage(result.items[i].snippet.thumbnails.high.url);
-                                    youtubeEmbed.setURL(`https://www.youtube.com/playlist?list=${result.items[i].id.playlistId}`)
-                                    youtubeEmbed.addField('Title', result.items[i].snippet.title, true);
-                                    youtubeEmbed.addField('URL', `[Click Here](https://www.youtube.com/playlist?list=${result.items[i].id.playlistId})`, true)
-                                    youtubeEmbed.addField('Channel', `[${result.items[i].snippet.channelTitle}](https://www.youtube.com/channel/${result.items[i].snippet.channelId})`, true);
-                                    youtubeEmbed.addField('Published Date', moment(result.items[i].snippet.publishedAt).format('MMMM Do YYYY'), true);
-                                    youtubeEmbed.addField('Description', result.items[i].snippet.description, false);
-
-                                    if (msg.guild.id === "") {
-                                        return msg.edit(`https://www.youtube.com/playlist?list=${result.items[i].id.playlistId}`);
-                                    } else {
-                                        return msg.edit(`https://www.youtube.com/playlist?list=${result.items[i].id.playlistId}`, {
-                                            embed: youtubeEmbed
-                                        });
-                                    }
-                                }
-                            }
+                            return msg.edit(`https://www.youtube.com/watch?v=${result.items[0].id.videoId}`, {
+                                embed: youtubeEmbed
+                            });
                         }
                     }
                 });
@@ -878,7 +830,7 @@ function positionFormatter(length) {
 
 function gameSearch(msg, args) {
     let searchURL = `http://www.mobygames.com/search/quick?q=${args.join('+')}&p=-1&search=Go&sFilter=1&sG=on`;
-    
+
     msg.channel.sendMessage('***Looking for data about that game...***').then((gameResponse) => {
         request({
             uri: searchURL,
