@@ -33,6 +33,9 @@ googleapikey = auth.googleapikey;
 imageEngineKey = auth.imageEngineKey;
 searchEngineKey = auth.searchEngineKey;
 youtube.addParam('type', 'video');
+youtube.addParam('relevanceLanguage', 'en');
+youtube.addParam('safeSearch', 'moderate');
+youtube.addParam('regionCode', 'NL');
 const ownerID = auth.ownerID;
 const messageStoreChannelID = auth.storeChannel;
 
