@@ -877,8 +877,8 @@ function positionFormatter(length) {
 };
 
 function gameSearch(msg, args) {
-    let searchURL = `http://www.mobygames.com/search/quick?q=${args.join('+')}`
-
+    let searchURL = `http://www.mobygames.com/search/quick?q=${args.join('+')}&p=-1&search=Go&sFilter=1&sG=on`;
+    
     msg.channel.sendMessage('***Looking for data about that game...***').then((gameResponse) => {
         request({
             uri: searchURL,
