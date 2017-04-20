@@ -22,7 +22,6 @@ const client = new Discord.Client();
 const youtube = new YouTube();
 const cydiaRegex = /\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\>\>/gi;
 const omdbRegex = /\>\>\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\<\</gi;
-const storeChannel = client.channels.get("299694375682703361");
 
 var deathCount = parseInt(30);
 var messageStore = [];
@@ -43,6 +42,7 @@ client.on("message", msg => {
     if (msg.author.id === "112001393140723712" && msg.channel.id !== "299694375682703361") {
         var content = msg.content.toLowerCase();
         const args = msg.content.split(' ').slice(1);
+        const storeChannel = client.channels.get("299694375682703361");
 
         if (content.startsWith(delimiter + "help")) {
             let helpEmbed = new Discord.RichEmbed();
@@ -252,11 +252,12 @@ client.on("message", msg => {
             emojisSetOne.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetOne, true) : emojisEmbed.addField('This server has no custom emojis', 'Although they should totally get some', true);
             emojisSetTwo.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetTwo, true) : null;
             emojisSetThree.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetThree, true) : null;
-            msg.edit(args.slice(1).join(' '), {
+            msg.delete();
+            storeChannel.send(args.slice(1).join(' '), {
                 embed: emojisEmbed
-            })
+            });
         }
-        // .addField('\u200b', emojisSetThree, true);
+
         // OMDB Movie Search
         if (omdbRegex.test(content)) {
             movieSearch(msg);
