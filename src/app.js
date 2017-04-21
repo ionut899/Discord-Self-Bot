@@ -29,13 +29,13 @@ var messageStore = [];
 // Getting keys
 client.login(auth.token);
 youtube.setKey(auth.googleapikey);
-googleapikey = auth.googleapikey;
-imageEngineKey = auth.imageEngineKey;
-searchEngineKey = auth.searchEngineKey;
 youtube.addParam('type', 'video');
 youtube.addParam('relevanceLanguage', 'en');
 youtube.addParam('safeSearch', 'moderate');
 youtube.addParam('regionCode', 'NL');
+const googleapikey = auth.googleapikey;
+const imageEngineKey = auth.imageEngineKey;
+const searchEngineKey = auth.searchEngineKey;
 const ownerID = auth.ownerID;
 const messageStoreChannelID = auth.storeChannel;
 
@@ -380,7 +380,7 @@ client.on("message", msg => {
                             youtubeEmbed.addField('URL', `[Click Here](https://www.youtube.com/watch?v=${result.items[0].id.videoId})`, true)
                             youtubeEmbed.addField('Channel', `[${result.items[0].snippet.channelTitle}](https://www.youtube.com/channel/${result.items[0].snippet.channelId})`, true);
                             youtubeEmbed.addField('Published Date', moment(result.items[0].snippet.publishedAt).format('MMMM Do YYYY'), true);
-                            youtubeEmbed.addField('Description', result.items[0].snippet.description, false);
+                            result.items[0].snippet.description !== '' ? youtubeEmbed.addField('Description', result.items[0].snippet.description, false) : youtubeEmbed.addField('Description', 'No description', false);
 
                             return msg.edit(`https://www.youtube.com/watch?v=${result.items[0].id.videoId}`, {
                                 embed: youtubeEmbed
