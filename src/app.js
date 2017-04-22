@@ -789,7 +789,7 @@ function userInfo(msg) {
     if (msg.channel.type !== 'dm' && msg.channel.type !== 'group') {
         let userGuildMember = msg.guild.member(user);
         var userNickname = userGuildMember.nickname === null ? "No Nickname" : userGuildMember.nickname;
-        var userRoles = userGuildMember.roles.map(r => r.name).slice(1).length >= 1 ? userGuildMember.roles.map(r => r.name).slice(1) : "No Roles";
+        var userRoles = userGuildMember.roles.map(r => r.name).slice(1).length >= 1 ? userGuildMember.roles.map(r => r.name).slice(1) : null;
         var userRoleColor = userGuildMember.highestRole.hexColor;
         var userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY');
     };
@@ -805,7 +805,16 @@ function userInfo(msg) {
     userInfoEmbed.setAuthor(`${userName}` + "#" + `${userDiscriminator}`, `${userAvatar}`);
     userInfoEmbed.setColor("#d43939");
     userInfoEmbed.setImage(userAvatar);
-    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userRoles.toString().match(/([0-9])+/) ? userInfoEmbed.setFooter(`has ${userRoles.length} role(s)`, userAvatar) : userInfoEmbed.setFooter(`has 0 roles`, userAvatar) : userInfoEmbed.setFooter(`${userName}'s info requested by Favna`, userAvatar)
+
+    if (msg.channel.type !== 'dm' && msg.channel.type !== 'group') {
+        if (userRoles !== null) {
+            userInfoEmbed.setFooter(`has ${userRoles.length} role(s)`, userAvatar)
+        } else {
+            userInfoEmbed.setFooter(`has 0 roles`, userAvatar)
+        }
+    } else {
+        userInfoEmbed.setFooter(`${userName}'s info requested by Favna`, userAvatar)
+    }
 
     //First row
     userInfoEmbed.addField("ID", userID, true);
