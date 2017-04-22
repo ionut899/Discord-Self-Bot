@@ -259,7 +259,7 @@ client.on("message", msg => {
             emojisSetThree.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetThree, true) : null;
 
             if (args[1] === 'this') {
-                msg.edit(args.slice(1).join(' '), {
+                msg.edit(args.slice(2).join(' '), {
                     embed: emojisEmbed
                 });
             } else {
