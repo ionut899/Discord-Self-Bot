@@ -257,10 +257,17 @@ client.on("message", msg => {
             emojisSetOne.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetOne, true) : emojisEmbed.addField('This server has no custom emojis', 'Although they should totally get some', true);
             emojisSetTwo.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetTwo, true) : null;
             emojisSetThree.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetThree, true) : null;
-            msg.delete();
-            storeChannel.send(args.slice(1).join(' '), {
-                embed: emojisEmbed
-            });
+
+            if (agrs[1] === 'this') {
+                msg.edit(args.slice(1).join(' '), {
+                    embed: emojisEmbed
+                });
+            } else {
+                msg.delete();
+                storeChannel.send(args.slice(1).join(' '), {
+                    embed: emojisEmbed
+                });
+            }
         }
 
         // OMDB Movie Search
