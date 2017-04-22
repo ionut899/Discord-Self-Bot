@@ -258,7 +258,7 @@ client.on("message", msg => {
             emojisSetTwo.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetTwo, true) : null;
             emojisSetThree.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetThree, true) : null;
 
-            if (agrs[1] === 'this') {
+            if (args[1] === 'this') {
                 msg.edit(args.slice(1).join(' '), {
                     embed: emojisEmbed
                 });
