@@ -50,6 +50,10 @@ client.on("message", msg => {
         const args = msg.content.split(' ').slice(1);
         const storeChannel = client.channels.get(messageStoreChannelID);
 
+        if (content.startsWith(delimiter + 'ping')) {
+            msg.channel.sendMessage(`Pong! \`${Date.now() - msg.createdTimestamp} ms\``);
+        }
+
         if (content.startsWith(delimiter + "help")) {
             let helpEmbed = new Discord.RichEmbed();
 
@@ -59,7 +63,7 @@ client.on("message", msg => {
             let imageReacts = [`${delimiter}opinion`, `${delimiter}cp`, `${delimiter}cry`];
             let NSFWCommands = [`${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`];
             let messageStoreCommands = [`${delimiter}edit`, `${delimiter}delete`, `${delimiter}clear`, `${delimiter}check`, ];
-            let specialCustom = [`${delimiter}calc`, `${delimiter}embed`, `${delimiter}quote <messageID>`];
+            let specialCustom = [`${delimiter}calc`, `${delimiter}embed`, `${delimiter}quote <messageID>`, `${delimiter}ping`];
 
             helpEmbed.setTitle("--My commands--");
             helpEmbed.addField("MessageStore Commands", messageStoreCommands, true);
