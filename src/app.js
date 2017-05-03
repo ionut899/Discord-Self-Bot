@@ -51,7 +51,7 @@ client.on("message", msg => {
         const storeChannel = client.channels.get(messageStoreChannelID);
 
         if (content.startsWith(delimiter + 'ping')) {
-            msg.channel.sendMessage(`Pong! \`${Date.now() - msg.createdTimestamp} ms\``);
+            msg.channel.send(`Pong! \`${Date.now() - msg.createdTimestamp} ms\``);
         }
 
         if (content.startsWith(delimiter + "help")) {
@@ -109,7 +109,7 @@ client.on("message", msg => {
             let indicator = args.slice(0, 1).toString();
             let newContent = args.slice(1).join(' ');
             if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get(messageStoreChannelID).sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                return client.channels.get(messageStoreChannelID).send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
             };
             messageStore[indicator.toString()].message.edit(newContent);
         };
@@ -120,7 +120,7 @@ client.on("message", msg => {
 
             let indicator = args.slice(0, 1).toString();
             if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get(messageStoreChannelID).sendMessage(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                return client.channels.get(messageStoreChannelID).send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
             };
             messageStore[indicator].message.delete();
         };
@@ -140,7 +140,9 @@ client.on("message", msg => {
             storeEmbed.setFooter(`Store log from ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
             messageStore.length === 0 ? storeEmbed.addField('Location in store', '0', true) : storeEmbed.addField('Location in store', positionFormatter(messageStore.length), true);
             messageStore.length === 0 ? storeEmbed.addField('Content of message', 'none', true) : storeEmbed.addField('Content of message', messageStore.map(mcont => mcont.message.content), true);
-            storeChannel.sendEmbed(storeEmbed);
+            storeChannel.send({
+                embed: storeEmbed
+            });
         };
 
         if (content.startsWith(delimiter + "valsofembed")) {
@@ -509,7 +511,7 @@ client.on("message", msg => {
                             animeEmbed.addField("English name", engName, true);
                         } else {
                             animeEmbed.addField("English name", "None", true);
-                            animeEmbed.addField("\u200b", "\u200b", true);
+                            animeEmbed.addBlankField(true);
                         };
 
 
@@ -586,17 +588,23 @@ client.on("message", msg => {
         }
 
         if (content.startsWith(delimiter + "opinion")) {
-            msg.channel.sendFile("./PyrrhaBot/images/opinion.gif");
+            msg.channel.send({
+                file: "./pyrrha/images/opinion.gif"
+            });
             msg.delete();
         }
 
         if (content.startsWith(delimiter + "cp")) {
-            msg.channel.sendFile("./PyrrhaBot/images/cp.jpg");
+            msg.channel.send({
+                file: "./pyrrha/images/cp.jpg"
+            });
             msg.delete();
         }
 
         if (content.startsWith(delimiter + "cry")) {
-            msg.channel.sendFile("./PyrrhaBot/images/pyrrha_cry.jpg");
+            msg.channel.send({
+                file: "./pyrrha/images/pyrrha_cry.jpg"
+            });
             msg.delete();
         }
 
@@ -756,7 +764,7 @@ function debug(msg) {
         let channelIDs = msg.guild.channels.map(cid => cid.id);
         channelsDebugEmbed.setTitle("The channels on this server are as follows");
         channelsDebugEmbed.addField("Channel name", channelNames, true);
-        channelsDebugEmbed.addField("\u200b", "\u200b", true);
+        channelsDebugEmbed.addBlankField(true);
         channelsDebugEmbed.addField("channel ID", channelIDs, true);
         channelsDebugEmbed.setColor("#00e5ee");
 
@@ -774,7 +782,7 @@ function debug(msg) {
         roleNames.unshift("Everyone");
         rolesDebugEmbed.setTitle("The roles on this server are as follows");
         rolesDebugEmbed.addField("Role name", roleNames, true);
-        rolesDebugEmbed.addField("\u200b", "\u200b", true);
+        rolesDebugEmbed.addBlankField();
         rolesDebugEmbed.addField("Role ID", roleIDs, true);
         rolesDebugEmbed.setColor("#d82f2f");
         msg.edit({
@@ -794,7 +802,7 @@ function userInfo(msg) {
         let userGuildMember = msg.guild.member(user);
         var userNickname = userGuildMember.nickname === null ? "No Nickname" : userGuildMember.nickname;
         var userRoles = userGuildMember.roles.map(r => r.name).slice(1).length >= 1 ? userGuildMember.roles.map(r => r.name).slice(1) : null;
-        var userRoleColor = userGuildMember.highestRole.hexColor;
+        var userRoleColor = userGuildMember.displayHexColor;
         var userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY');
     };
 
@@ -854,7 +862,7 @@ function positionFormatter(length) {
 function gameSearch(msg, args) {
     let searchURL = `http://www.mobygames.com/search/quick?q=${args.join('+')}&p=-1&search=Go&sFilter=1&sG=on`;
 
-    msg.channel.sendMessage('***Looking for data about that game...***').then((gameResponse) => {
+    msg.channel.send('***Looking for data about that game...***').then((gameResponse) => {
         request({
             uri: searchURL,
             headers: {
@@ -1009,10 +1017,7 @@ function movieSearch(msg) {
 function quoter(msg, args) {
 
     if (args.length >= 2 && args[0].toString().match(/([0-9]{18})/) && args[1].toString().match(/([0-9]{18})/)) {
-        client.channels.get(args[0]).fetchMessages({
-            limit: 1,
-            around: args[1]
-        }).then(msgs => {
+        client.channels.get(args[0]).fetchMessage(args[1]).then(msgs => {
             let tmp = msgs.first();
             let emb = new Discord.RichEmbed();
             let quoteChannel;
@@ -1049,10 +1054,7 @@ function quoter(msg, args) {
             msg.reply('Message not found.').then(msgs => msgs.delete(10000));
         });
     } else {
-        client.channels.get(msg.channel.id).fetchMessages({
-            limit: 1,
-            around: args[0]
-        }).then(msgs => {
+        client.channels.get(msg.channel.id).fetchMessage(args[0]).then(msgs => {
             let tmp = msgs.first();
             let emb = new Discord.RichEmbed();
             let quoteChannel;
