@@ -410,31 +410,22 @@ client.on("message", msg => {
 
         // Urban Dictionary search
         if (content.startsWith(delimiter + "urban")) {
-            var urbanQuery = urban(msg.content.slice(7));
+            let urbanQuery = urban(args.join(' '));
+            let urbanEmbed = new Discord.RichEmbed;
 
             msg.edit('**Opening Dictionary...**').then(() => {
                 urbanQuery.first(function (json) {
                     if (json == undefined) {
-                        msg.edit(`**No Results Found!**\nOriginal Message: ${msg.content.slice(9)}`);
-                        return;
+                        return msg.edit(`**No Results Found!**\nOriginal Message: ${msg.content.slice(9)}`);
                     }
-                    var urbanEmbed = new Discord.RichEmbed;
-                    var urbanWord = json.word;
-                    var urbanDefiniton = json.definition;
-                    var urbanExample = json.example;
-                    var urbanLink = json.permalink;
 
-                    //Adding data to rich embed
-                    urbanEmbed.setAuthor(`Urban Search - ${urbanWord}`, `https://i.imgur.com/miYLsGw.jpg`);
-                    urbanEmbed.setColor("#E86121");
-                    urbanEmbed.setFooter(`${urbanWord} defined by PyrrhaBot`, "http://i.imgur.com/4U9oMS0.png");
 
-                    //Adding fields to rich embed
-                    urbanEmbed.addField("Definition", urbanDefiniton, false);
-                    urbanEmbed.addField("Example", urbanExample, false);
-                    urbanEmbed.addField("Permalink", urbanLink, false);
+                    urbanEmbed.setAuthor(`Urban Search - ${json.word}`, `https://i.imgur.com/miYLsGw.jpg`).setColor("#E86121").setFooter(`${json.word} defined by PyrrhaBot`, "http://i.imgur.com/4U9oMS0.png");
+                    urbanEmbed.addField("Definition", json.definition, false);
+                    urbanEmbed.addField("Example", json.example, false);
+                    urbanEmbed.addField("Permalink", json.permalink, false);
 
-                    msg.edit(msg.content.slice(9), {
+                    msg.edit(args.join(' '), {
                         embed: urbanEmbed
                     });
                 });
