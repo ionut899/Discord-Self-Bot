@@ -290,7 +290,7 @@ client.on("message", msg => {
         if (content.startsWith(delimiter + "google")) {
             let searchQuery = msg.content.slice(10);
             msg.edit('**Searching...**').then(() => {
-                const query = searchQuery //is basically the search sent by you
+                const query = args.join(' ') //is basically the search sent by you
                     .replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
                     .split(' ')
                     .map(x => encodeURIComponent(x))
@@ -347,7 +347,11 @@ client.on("message", msg => {
 
         // Google Image search
         if (content.startsWith(delimiter + "image")) {
-            let imageQuery = msg.content.slice(9);
+            const imageQuery = args.join(' ') //is basically the search sent by you
+                .replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+                .split(' ')
+                .map(x => encodeURIComponent(x))
+                .join('+');
             let safe = msg.channel.name.includes('hentai') ? 'off' : 'medium';
             let QUERY_PARAMS = {
                 searchType: 'image',
