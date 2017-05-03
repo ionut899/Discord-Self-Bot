@@ -364,7 +364,7 @@ client.on("message", msg => {
                         .then((res) => {
                             const $ = cheerio.load(res.text);
                             const result = $('.images_table').find('img').first().attr('src');
-                            return msg.edit(result);
+                            return result !== undefined ? botMessage.edit(result) : botMessage.edit('**Something went wrong with the result, perhaps only nsfw results were found outside of an nsfw channel**');
                         })
                     ).catch((err) => {
                         msg.edit('**No Results Found**');
