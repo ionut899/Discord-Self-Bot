@@ -755,40 +755,37 @@ function embed(msg) {
 
 }
 
-function debug(msg) {
-    var debugarg = msg.content.slice(9);
-    console.log(debugarg);
-    if (debugarg === "listchannels") {
-        let channelsDebugEmbed = new Discord.RichEmbed();
-        let channelNames = msg.guild.channels.map(cn => cn.name);
-        let channelIDs = msg.guild.channels.map(cid => cid.id);
-        channelsDebugEmbed.setTitle("The channels on this server are as follows");
-        channelsDebugEmbed.addField("Channel name", channelNames, true);
-        channelsDebugEmbed.addBlankField(true);
-        channelsDebugEmbed.addField("channel ID", channelIDs, true);
-        channelsDebugEmbed.setColor("#00e5ee");
+function debug(msg, args) {
+    let debugEmbed = new Discord.RichEmbed();
+    debugEmbed.setColor("#6984C4")
+    debugEmbed.setTitle(`The ${args[0].slice(4)} on this server are as follows`);
 
-        msg.edit({
-            embed: channelsDebugEmbed
-        });
+    if (args[0] === "listchannels") {
 
-    }
+        let channelNames = msg.guild.channels.filter(function (textFilter) {
+            return textFilter.type === 'text';
+        }).map(cn => cn.name);
+        let channelIDs = msg.guild.channels.filter(function (textFilter) {
+            return textFilter.type === 'text';
+        }).map(cid => cid.id);
 
-    if (debugarg === "listroles") {
-        let rolesDebugEmbed = new Discord.RichEmbed();
+        debugEmbed.addField("Channel name", channelNames, true);
+        debugEmbed.addBlankField(true);
+        debugEmbed.addField("channel ID", channelIDs, true);
+
+    } else if (args[0] === "listroles") {
         let roleIDs = msg.guild.roles.map(rid => rid.id);
-        let roleNames = msg.guild.roles.map(rn => rn.name)
-            .slice(1);
-        roleNames.unshift("Everyone");
-        rolesDebugEmbed.setTitle("The roles on this server are as follows");
-        rolesDebugEmbed.addField("Role name", roleNames, true);
-        rolesDebugEmbed.addBlankField();
-        rolesDebugEmbed.addField("Role ID", roleIDs, true);
-        rolesDebugEmbed.setColor("#d82f2f");
-        msg.edit({
-            embed: rolesDebugEmbed
-        });
+        let roleNames = msg.guild.roles.map(rn => rn.name).slice(1);
+
+        debugEmbed.addField("Role name", roleNames, true);
+        debugEmbed.addBlankField(true);
+        debugEmbed.addField("Role ID", roleIDs, true);
+    } else {
+        return msg.reply('That is not a valid debugger option. Either listchannels for channels, or listroles for roles.')
     }
+    msg.edit({
+        embed: debugEmbed
+    });
 }
 
 function userInfo(msg) {
