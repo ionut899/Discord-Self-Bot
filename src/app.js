@@ -1009,28 +1009,27 @@ function movieSearch(msg) {
 function quoter(msg, args) {
 
     if (args.length >= 2 && args[0].toString().match(/([0-9]{18})/) && args[1].toString().match(/([0-9]{18})/)) {
-        client.channels.get(args[0]).fetchMessage(args[1]).then(msgs => {
-            let tmp = msgs.first();
+        client.channels.get(args[0]).fetchMessage(args[1]).then(quotable => {
             let emb = new Discord.RichEmbed();
             let quoteChannel;
             let quoteAuthor;
             let quoteAuthorAvatar;
-            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "";
-            let quoteContent = tmp.content !== '' ? tmp.content : "Empty";
+            let quoteAttachment = quotable.attachments.first() !== undefined ? quotable.attachments.first().url : "";
+            let quoteContent = quotable.content !== '' ? quotable.content : "Empty";
             let quoteDateTime = moment(new Date).format('MMMM Do YYYY | HH:mm:ss')
-            if (tmp.channel.type === 'text') {
-                quoteChannel = `#${tmp.channel.name}`
-                quoteAuthor = tmp.member.displayName
-                quoteAuthorAvatar = tmp.author.displayAvatarURL;
-            } else if (tmp.channel.type === 'dm') {
-                quoteChannel = `${tmp.channel.type.toUpperCase()} to ${tmp.channel.recipient.username}`
-                quoteAuthor = tmp.author.username;
-                quoteAuthorAvatar = tmp.author.displayAvatarURL;
-            } else if (tmp.channel.type === 'group') {
-                let recipients = tmp.channel.recipients.map(recipuser => recipuser.username);
-                quoteChannel = `${tmp.channel.type} DM with ${recipients.slice(0,-1).join(', ')} and ${recipients.slice(recipients.length-1)}`
-                quoteAuthor = tmp.author.username;
-                quoteAuthorAvatar = tmp.author.displayAvatarURL;
+            if (quotable.channel.type === 'text') {
+                quoteChannel = `#${quotable.channel.name}`
+                quoteAuthor = quotable.member.displayName
+                quoteAuthorAvatar = quotable.author.displayAvatarURL;
+            } else if (quotable.channel.type === 'dm') {
+                quoteChannel = `${quotable.channel.type.toUpperCase()} to ${quotable.channel.recipient.username}`
+                quoteAuthor = quotable.author.username;
+                quoteAuthorAvatar = quotable.author.displayAvatarURL;
+            } else if (quotable.channel.type === 'group') {
+                let recipients = quotable.channel.recipients.map(recipuser => recipuser.username);
+                quoteChannel = `${quotable.channel.type} DM with ${recipients.slice(0,-1).join(', ')} and ${recipients.slice(recipients.length-1)}`
+                quoteAuthor = quotable.author.username;
+                quoteAuthorAvatar = quotable.author.displayAvatarURL;
             }
             emb.setAuthor(quoteAuthor, quoteAuthorAvatar);
             emb.setImage(quoteAttachment);
@@ -1046,28 +1045,27 @@ function quoter(msg, args) {
             msg.reply('Message not found.').then(msgs => msgs.delete(10000));
         });
     } else {
-        client.channels.get(msg.channel.id).fetchMessage(args[0]).then(msgs => {
-            let tmp = msgs.first();
+        client.channels.get(msg.channel.id).fetchMessage(args[0]).then(quotable => {
             let emb = new Discord.RichEmbed();
             let quoteChannel;
             let quoteAuthor;
             let quoteAuthorAvatar;
-            let quoteAttachment = tmp.attachments.first() !== undefined ? tmp.attachments.first().url : "";
-            let quoteContent = tmp.content !== '' ? tmp.content : "Empty";
+            let quoteAttachment = quotable.attachments.first() !== undefined ? quotable.attachments.first().url : "";
+            let quoteContent = quotable.content !== '' ? quotable.content : "Empty";
             let quoteDateTime = moment(new Date).format('MMMM Do YYYY | HH:mm:ss')
-            if (tmp.channel.type === 'text') {
-                quoteChannel = `#${tmp.channel.name}`
-                quoteAuthor = tmp.member.displayName
-                quoteAuthorAvatar = tmp.author.displayAvatarURL;
-            } else if (tmp.channel.type === 'dm') {
-                quoteChannel = `${tmp.channel.type.toUpperCase()} to ${tmp.channel.recipient.username}`
-                quoteAuthor = tmp.author.username;
-                quoteAuthorAvatar = tmp.author.displayAvatarURL;
-            } else if (tmp.channel.type === 'group') {
-                let recipients = tmp.channel.recipients.map(recipuser => recipuser.username);
-                quoteChannel = `${tmp.channel.type} DM with ${recipients.slice(0,-1).join(', ')} and ${recipients.slice(recipients.length-1)}`
-                quoteAuthor = tmp.author.username;
-                quoteAuthorAvatar = tmp.author.displayAvatarURL;
+            if (quotable.channel.type === 'text') {
+                quoteChannel = `#${quotable.channel.name}`
+                quoteAuthor = quotable.member.displayName
+                quoteAuthorAvatar = quotable.author.displayAvatarURL;
+            } else if (quotable.channel.type === 'dm') {
+                quoteChannel = `${quotable.channel.type.toUpperCase()} to ${quotable.channel.recipient.username}`
+                quoteAuthor = quotable.author.username;
+                quoteAuthorAvatar = quotable.author.displayAvatarURL;
+            } else if (quotable.channel.type === 'group') {
+                let recipients = quotable.channel.recipients.map(recipuser => recipuser.username);
+                quoteChannel = `${quotable.channel.type} DM with ${recipients.slice(0,-1).join(', ')} and ${recipients.slice(recipients.length-1)}`
+                quoteAuthor = quotable.author.username;
+                quoteAuthorAvatar = quotable.author.displayAvatarURL;
             }
             emb.setAuthor(quoteAuthor, quoteAuthorAvatar);
             emb.setImage(quoteAttachment);
