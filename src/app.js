@@ -618,7 +618,7 @@ client.on("message", msg => {
 
         // Debugging
         if (content.startsWith(delimiter + "debug")) {
-            debug(msg);
+            debug(msg, args);
         }
 
         // NSFW
@@ -752,9 +752,8 @@ function embed(msg) {
 
 function debug(msg, args) {
     let debugEmbed = new Discord.RichEmbed();
-    debugEmbed.setColor("#6984C4")
+    debugEmbed.setColor("#FF0000")
     debugEmbed.setTitle(`The ${args[0].slice(4)} on this server are as follows`);
-
     if (args[0] === "listchannels") {
 
         let channelNames = msg.guild.channels.filter(function (textFilter) {
@@ -771,7 +770,7 @@ function debug(msg, args) {
     } else if (args[0] === "listroles") {
         let roleIDs = msg.guild.roles.map(rid => rid.id);
         let roleNames = msg.guild.roles.map(rn => rn.name).slice(1);
-
+        roleNames.unshift("Everyone");
         debugEmbed.addField("Role name", roleNames, true);
         debugEmbed.addBlankField(true);
         debugEmbed.addField("Role ID", roleIDs, true);
