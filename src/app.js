@@ -390,7 +390,7 @@ client.on("message", msg => {
                         if (!result || !result.items || result.items.length < 1) {
                             msg.edit("No Results found");
                         } else {
-                            youtubeEmbed.setAuthor(`Youtube Search Result for: ${args.join(' ')}`, 'https://www.youtube.com/yts/img/favicon_144-vflWmzoXw.png');
+                            youtubeEmbed.setAuthor(`Youtube Search Result for: ${args.join(' ')}`, 'https://i.imgur.com/BPFqnxz.png');
                             youtubeEmbed.setImage(result.items[0].snippet.thumbnails.high.url);
                             youtubeEmbed.setURL(`https://www.youtube.com/watch?v=${result.items[0].id.videoId}`)
                             youtubeEmbed.addField('Title', result.items[0].snippet.title, true);
