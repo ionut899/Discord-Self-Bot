@@ -238,13 +238,14 @@ client.on("message", msg => {
             });
         }
 
-        if (content.startsWith(delimiter + 'emojis')) {
+        if (content.startsWith(delimiter + 'mojis')) {
             let guildData = client.guilds.get(args[0])
             let guildMojis = guildData.emojis;
             let guildMojiNames = guildMojis.map(gmoji => gmoji.name);
             let emojisSetOne = [];
             let emojisSetTwo = [];
             let emojisSetThree = [];
+            let emojisSetFour = [];
             let emojisEmbed = new Discord.RichEmbed();
             for (i = 0; i < guildMojiNames.length; i++) {
 
@@ -252,8 +253,10 @@ client.on("message", msg => {
                     emojisSetOne.push(`\`:${guildMojiNames[i]}:\` for ${guildMojis.find('name', guildMojiNames[i])}`)
                 } else if (emojisSetTwo.toString().length <= 900) {
                     emojisSetTwo.push(`\`:${guildMojiNames[i]}:\` for ${guildMojis.find('name', guildMojiNames[i])}`)
-                } else {
+                } else if (emojisSetThree.toString().length <= 900) {
                     emojisSetThree.push(`\`:${guildMojiNames[i]}:\` for ${guildMojis.find('name', guildMojiNames[i])}`)
+                } else {
+                    emojisSetFour.push(`\`:${guildMojiNames[i]}:\` for ${guildMojis.find('name', guildMojiNames[i])}`)
                 }
             }
             emojisEmbed
@@ -263,6 +266,7 @@ client.on("message", msg => {
             emojisSetOne.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetOne, true) : emojisEmbed.addField('This server has no custom emojis', 'Although they should totally get some', true);
             emojisSetTwo.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetTwo, true) : null;
             emojisSetThree.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetThree, true) : null;
+            emojisSetFour.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetFour, true) : null;
 
             if (args[1] === 'this') {
                 msg.edit(args.slice(2).join(' '), {
