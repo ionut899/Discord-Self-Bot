@@ -23,7 +23,6 @@ const youtube = new YouTube();
 const cydiaRegex = /\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\>\>/gi;
 const omdbRegex = /\>\>\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\<\</gi;
 
-var deathCount = parseInt(30);
 var messageStore = [];
 
 // Getting keys
@@ -39,48 +38,12 @@ const searchEngineKey = auth.searchEngineKey;
 const ownerID = auth.ownerID;
 const messageStoreChannelID = auth.storeChannel;
 
-client.on("ready", () => {
-    console.log("Hello Again!");
-});
-
 client.on("message", msg => {
     if (msg.author.id !== ownerID) return;
     if (msg.author.id === ownerID && msg.channel.id !== messageStoreChannelID) {
         const content = msg.content.toLowerCase();
         const args = msg.content.split(' ').slice(1);
         const storeChannel = client.channels.get(messageStoreChannelID);
-
-        if (content.startsWith(delimiter + 'ping')) {
-            msg.channel.send(`Pong! \`${Date.now() - msg.createdTimestamp} ms\``);
-        }
-
-        if (content.startsWith(delimiter + "help")) {
-            let helpEmbed = new Discord.RichEmbed();
-
-            let searchQueries = [`${delimiter}google <query>`, `${delimiter}image <query>`, `${delimiter}youtube <query>`, `${delimiter}urban <word>`, `${delimiter}define <word>`, `${delimiter}anime <query>`, `>>MovieTitle,Year<<`, `<<CydiaPackage>>`];
-            let discordData = [`${delimiter}userinfo <@User>`, `${delimiter}avatar <@User>`, `${delimiter}debug <listchannels/listroles>`, `${delimiter}valsofembed`];
-            let webLinks = [`${delimiter}3dsguide`, `${delimiter}wiiuguide`, `${delimiter}3dshardmodders`, `${delimiter}tvos`, `${delimiter}botwmap`];
-            let imageReacts = [`${delimiter}opinion`, `${delimiter}cp`, `${delimiter}cry`];
-            let NSFWCommands = [`${delimiter}r34`, `${delimiter}e621`, `${delimiter}gelbooru`, `${delimiter}paheal`];
-            let messageStoreCommands = [`${delimiter}edit`, `${delimiter}delete`, `${delimiter}clear`, `${delimiter}check`, ];
-            let specialCustom = [`${delimiter}calc`, `${delimiter}embed`, `${delimiter}quote <messageID>`, `${delimiter}ping`];
-
-            helpEmbed.setTitle("--My commands--");
-            helpEmbed.addField("MessageStore Commands", messageStoreCommands, true);
-            helpEmbed.addField("Search Queries", searchQueries, true);
-            helpEmbed.addField("Website Links", webLinks, true);
-            helpEmbed.addField("Image Reactions", imageReacts, true);
-            helpEmbed.addField("Special  Custom", specialCustom, true);
-            helpEmbed.addField("NSFW Commands", NSFWCommands, true);
-            helpEmbed.addField("Discord Data", discordData, true);
-            helpEmbed.setColor("#c61530");
-            helpEmbed.setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg");
-            helpEmbed.setAuthor("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
-
-            msg.edit(msg.content.slice(8), {
-                embed: helpEmbed
-            });
-        }
 
         let currentStoreSize = messageStore.length;
         if (currentStoreSize === 10) {
@@ -144,52 +107,6 @@ client.on("message", msg => {
                 embed: storeEmbed
             });
         };
-
-        if (content.startsWith(delimiter + "valsofembed")) {
-            var valsOfEmbed = new Discord.RichEmbed();
-            valsOfEmbed.setAuthor("This is the author", "https://i.imgur.com/cgr5eSk.png");
-            valsOfEmbed.setColor("#ffffff");
-            valsOfEmbed.setDescription("This is the description");
-            valsOfEmbed.setFooter("This is the footer", "https://i.imgur.com/kPNjOuJ.png");
-            valsOfEmbed.setImage("https://i.imgur.com/l32vg3M.png");
-            valsOfEmbed.setThumbnail("https://i.imgur.com/IQVvBcn.png")
-            valsOfEmbed.setTimestamp();
-            valsOfEmbed.setTitle("This is the title");
-            valsOfEmbed.setURL("https://www.google.com");
-            valsOfEmbed.addField("FieldName", "FieldValue", true)
-
-            msg.edit(msg.content.slice(15), {
-                embed: valsOfEmbed
-            });
-
-        }
-
-        if (content.startsWith(delimiter + "death")) {
-            deathCount += 1;
-            let deathCountEmbed = new Discord.RichEmbed();
-            deathCountEmbed.setColor("#5f93e2");
-            deathCountEmbed.addField("Breath of The Wild Deathcount:", `${deathCount} | ${msg.content.slice(9)}`)
-            deathCountEmbed.setFooter("We all know Favna is a total scrub", "https://i.imgur.com/eqxqyFp.png")
-
-            msg.edit({
-                embed: deathCountEmbed
-            });
-
-        }
-
-        // Breath of the Wild Interactive map
-        if (content.startsWith(delimiter + "botwmap")) {
-            msg.edit("For an interactive map for The Legend of Zelda: Breath of The Wild map follow this url: https://www.zeldadungeon.net/breath-of-the-wild-interactive-map/")
-        }
-
-        // Transform URL to cydia share URL
-        if (content.startsWith(delimiter + "cysource")) {
-            msg.edit(`To add this repo directly to cydia click the following URL: https://cydia.saurik.com/api/share#?source=${args[0]}`);
-        }
-        // Transform source URL and package name to cydia share URL
-        if (content.startsWith(delimiter + "cypkg")) {
-            msg.edit(`To find this package on Cydia follow this URL: https://cydia.saurik.com/api/share#?source=${args[0]}/&package=${args[1]}`);
-        }
 
         // Cydia Tweak Search
         if (cydiaRegex.test(content)) {
@@ -280,10 +197,6 @@ client.on("message", msg => {
         if (omdbRegex.test(content)) {
             movieSearch(msg);
         }
-
-        if (content.startsWith(delimiter + 'quote')) {
-            quoter(msg, args);
-        };
 
         // Search Engines
         // Google Regular Search
@@ -535,52 +448,7 @@ client.on("message", msg => {
         if (content.startsWith(delimiter + 'gs')) {
             gameSearch(msg, args);
         };
-
-        if (content.startsWith(delimiter + "avatar")) {
-            var mentionedUser = msg.mentions.users.first();
-            if (!mentionedUser) {
-                mentionedUser = msg.author;
-            }
-            msg.edit(mentionedUser.displayAvatarURL);
-        }
-
-
-        // Storage
-        if (content.startsWith(delimiter + "3dsguide")) {
-            let plaiGuideEmbed = new Discord.RichEmbed();
-
-            plaiGuideEmbed.setColor("#CF010E");
-            plaiGuideEmbed.setTitle("A one stop guide for (New) Nintendo 3DS (XL)");
-            plaiGuideEmbed.setDescription("Want to get Custom Firmware on your Nintendo 3DS? Need instructions on how to set up Arm9loaderhax, Luma3DS and other homebrew? Follow this guide");
-            plaiGuideEmbed.addField("\u200b", "https://3ds.guide");
-            plaiGuideEmbed.setFooter("Nintendo 3DS Guide provided by Favna's selfbot", "http://i.imgur.com/4U9oMS0.png");
-            plaiGuideEmbed.setThumbnail("https://s-media-cache-ak0.pinimg.com/736x/6d/75/88/6d7588481517a4c959bab8e3df39c92a.jpg")
-            msg.edit(msg.content.slice(12), {
-                embed: plaiGuideEmbed
-            });
-        }
-
-        if (content.startsWith(delimiter + "wiiuguide")) {
-            let wiiuguideEmbed = new Discord.RichEmbed();
-
-            wiiuguideEmbed.setColor("#00ACCA");
-            wiiuguideEmbed.setTitle("A one stop guide for Wii U");
-            wiiuguideEmbed.setDescription("Want to run game backups on your WiiU? Need instructions on how to set up haxchi, mocha and rednand? Follow this guide");
-            wiiuguideEmbed.addField("\u200b", "https://wiiu.guide");
-            wiiuguideEmbed.setFooter("Nintendo WiiU Guide provided by Favna's selfbot", "http://i.imgur.com/4U9oMS0.png");
-            wiiuguideEmbed.setThumbnail("http://i68.tinypic.com/2zizozn.png")
-            msg.edit(msg.content.slice(13), {
-                embed: wiiuguideEmbed
-            });
-        }
-
-        if (content.startsWith(delimiter + "3dshardmodders")) {
-            msg.edit("The 3DS scene has verified and trusted hardmodders globally! You can contact them through private messaging on GBAtemp. Find their names here: https://gbatemp.net/threads/list-of-hardmod-installers-by-region.414224/");
-        }
-
-        if (content.startsWith(delimiter + "tvos")) {
-            msg.edit("If you want to block getting OTA updates on your iOS device install the tvOS beta profile. To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig")
-        }
+ 
 
         if (content.startsWith(delimiter + "opinion")) {
             msg.channel.send({
@@ -614,11 +482,6 @@ client.on("message", msg => {
                 let result = scalc(toCalc);
                 msg.edit(`\`The answer to ${toCalc} is ${result}\``)
             });
-        }
-
-        // Debugging
-        if (content.startsWith(delimiter + "debug")) {
-            debug(msg, args);
         }
 
         // NSFW
@@ -749,99 +612,6 @@ function embed(msg) {
     });
 
 }
-
-function debug(msg, args) {
-    let debugEmbed = new Discord.RichEmbed();
-    debugEmbed.setColor("#FF0000")
-    debugEmbed.setTitle(`The ${args[0].slice(4)} on this server are as follows`);
-    if (args[0] === "listchannels") {
-
-        let channelNames = msg.guild.channels.filter(function (textFilter) {
-            return textFilter.type === 'text';
-        }).map(cn => cn.name);
-        let channelIDs = msg.guild.channels.filter(function (textFilter) {
-            return textFilter.type === 'text';
-        }).map(cid => cid.id);
-
-        debugEmbed.addField("Channel name", channelNames, true);
-        debugEmbed.addBlankField(true);
-        debugEmbed.addField("channel ID", channelIDs, true);
-
-    } else if (args[0] === "listroles") {
-        let roleIDs = msg.guild.roles.map(rid => rid.id);
-        let roleNames = msg.guild.roles.map(rn => rn.name).slice(1);
-        roleNames.unshift("Everyone");
-        debugEmbed.addField("Role name", roleNames, true);
-        debugEmbed.addBlankField(true);
-        debugEmbed.addField("Role ID", roleIDs, true);
-    } else {
-        return msg.reply('That is not a valid debugger option. Either listchannels for channels, or listroles for roles.')
-    }
-    msg.edit({
-        embed: debugEmbed
-    });
-}
-
-function userInfo(msg) {
-    let userInfoEmbed = new Discord.RichEmbed;
-    let user = msg.mentions.users.first();
-    if (!user) {
-        user = msg.author;
-    }
-    //Variables for the embed
-    if (msg.channel.type !== 'dm' && msg.channel.type !== 'group') {
-        let userGuildMember = msg.guild.member(user);
-        var userNickname = userGuildMember.nickname === null ? "No Nickname" : userGuildMember.nickname;
-        var userRoles = userGuildMember.roles.map(r => r.name).slice(1).length >= 1 ? userGuildMember.roles.map(r => r.name).slice(1) : null;
-        var userRoleColor = userGuildMember.displayHexColor;
-        var userJoinedDate = moment(userGuildMember.joinedAt).format('MMMM Do YYYY');
-    };
-
-    let userID = user.id;
-    let userName = user.username;
-    let userDiscriminator = user.discriminator;
-    let userAvatar = user.displayAvatarURL;
-    let userStatus = user.presence.status;
-    let userCreateDate = moment(user.createdAt).format('MMMM Do YYYY')
-
-    //Adding data to rich embed
-    userInfoEmbed.setAuthor(`${userName}` + "#" + `${userDiscriminator}`, `${userAvatar}`);
-    userInfoEmbed.setColor("#d43939");
-    userInfoEmbed.setImage(userAvatar);
-
-    if (msg.channel.type !== 'dm' && msg.channel.type !== 'group') {
-        if (userRoles !== null) {
-            userInfoEmbed.setFooter(`has ${userRoles.length} role(s)`, userAvatar)
-        } else {
-            userInfoEmbed.setFooter(`has 0 roles`, userAvatar)
-        }
-    } else {
-        userInfoEmbed.setFooter(`${userName}'s info requested by Favna`, userAvatar)
-    }
-
-    //First row
-    userInfoEmbed.addField("ID", userID, true);
-    userInfoEmbed.addField("Discriminator", userDiscriminator, true);
-    userInfoEmbed.addField("Status", userStatus, true);
-
-    //Second row
-    userInfoEmbed.addField("Name", userName, true);
-    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Color", userRoleColor, true) : null;
-
-    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Nickname", userNickname, true) : null;
-
-    //Third Row
-    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Roles", userRoles, true) : null
-
-    //Fourth row
-    userInfoEmbed.addField("Created at", userCreateDate, true);
-    msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Joined at", userJoinedDate, true) : null
-
-    msg.edit({
-        embed: userInfoEmbed
-    });
-}
-
 function positionFormatter(length) {
     let numbers = [];
     for (let i = 0; i < length; i++) {
@@ -1004,80 +774,3 @@ function movieSearch(msg) {
         });
     });
 };
-
-function quoter(msg, args) {
-
-    if (args.length >= 2 && args[0].toString().match(/([0-9]{18})/) && args[1].toString().match(/([0-9]{18})/)) {
-        client.channels.get(args[0]).fetchMessage(args[1]).then(quotable => {
-            let emb = new Discord.RichEmbed();
-            let quoteChannel;
-            let quoteAuthor;
-            let quoteAuthorAvatar;
-            let quoteAttachment = quotable.attachments.first() !== undefined ? quotable.attachments.first().url : "";
-            let quoteContent = quotable.content !== '' ? quotable.content : "Empty";
-            let quoteDateTime = moment(new Date).format('MMMM Do YYYY | HH:mm:ss')
-            if (quotable.channel.type === 'text') {
-                quoteChannel = `#${quotable.channel.name}`
-                quoteAuthor = quotable.member.displayName
-                quoteAuthorAvatar = quotable.author.displayAvatarURL;
-            } else if (quotable.channel.type === 'dm') {
-                quoteChannel = `${quotable.channel.type.toUpperCase()} to ${quotable.channel.recipient.username}`
-                quoteAuthor = quotable.author.username;
-                quoteAuthorAvatar = quotable.author.displayAvatarURL;
-            } else if (quotable.channel.type === 'group') {
-                let recipients = quotable.channel.recipients.map(recipuser => recipuser.username);
-                quoteChannel = `${quotable.channel.type} DM with ${recipients.slice(0,-1).join(', ')} and ${recipients.slice(recipients.length-1)}`
-                quoteAuthor = quotable.author.username;
-                quoteAuthorAvatar = quotable.author.displayAvatarURL;
-            }
-            emb.setAuthor(quoteAuthor, quoteAuthorAvatar);
-            emb.setImage(quoteAttachment);
-            emb.setColor('#FF0000').setFooter(`Message quoted from ${quoteChannel} at ${quoteDateTime}`);
-            emb.addField('Message', quoteContent);
-
-            msg.edit(msg.content.slice(46), {
-                embed: emb
-            });
-
-        }).catch(function (error) {
-            console.error(error);
-            msg.reply('Message not found.').then(msgs => msgs.delete(10000));
-        });
-    } else {
-        client.channels.get(msg.channel.id).fetchMessage(args[0]).then(quotable => {
-            let emb = new Discord.RichEmbed();
-            let quoteChannel;
-            let quoteAuthor;
-            let quoteAuthorAvatar;
-            let quoteAttachment = quotable.attachments.first() !== undefined ? quotable.attachments.first().url : "";
-            let quoteContent = quotable.content !== '' ? quotable.content : "Empty";
-            let quoteDateTime = moment(new Date).format('MMMM Do YYYY | HH:mm:ss')
-            if (quotable.channel.type === 'text') {
-                quoteChannel = `#${quotable.channel.name}`
-                quoteAuthor = quotable.member.displayName
-                quoteAuthorAvatar = quotable.author.displayAvatarURL;
-            } else if (quotable.channel.type === 'dm') {
-                quoteChannel = `${quotable.channel.type.toUpperCase()} to ${quotable.channel.recipient.username}`
-                quoteAuthor = quotable.author.username;
-                quoteAuthorAvatar = quotable.author.displayAvatarURL;
-            } else if (quotable.channel.type === 'group') {
-                let recipients = quotable.channel.recipients.map(recipuser => recipuser.username);
-                quoteChannel = `${quotable.channel.type} DM with ${recipients.slice(0,-1).join(', ')} and ${recipients.slice(recipients.length-1)}`
-                quoteAuthor = quotable.author.username;
-                quoteAuthorAvatar = quotable.author.displayAvatarURL;
-            }
-            emb.setAuthor(quoteAuthor, quoteAuthorAvatar);
-            emb.setImage(quoteAttachment);
-            emb.setColor('#FF0000').setFooter(`Message quoted from ${quoteChannel} at ${quoteDateTime}`);
-            emb.addField('Message', quoteContent);
-
-            msg.edit(msg.content.slice(28), {
-                embed: emb
-            });
-
-        }).catch(function (error) {
-            console.error(error);
-            msg.reply('Message not found.').then(msgs => msgs.delete(10000));
-        });
-    };
-}
