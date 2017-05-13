@@ -1,10 +1,10 @@
 const commando = require('discord.js-commando');
 
-module.exports = class CommandInfoCommand extends commando.Command {
+module.exports = class hardmoddersGuideCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: '3dshardmodders',
-            alias: ['hardmodders', '3dsmodders', '3dsmods'],
+            aliases: ['hardmodders', '3dsmodders', '3dsmods'],
             group: 'links',
             memberName: '3dshardmodders',
             description: 'A link to verified hardmodders for Nintendo 3DS',

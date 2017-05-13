@@ -1,11 +1,11 @@
 const commando = require('discord.js-commando');
 const Discord = require("discord.js");
 
-module.exports = class CommandInfoCommand extends commando.Command {
+module.exports = class threeDSguideCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: '3dsguide',
-            alias: ['plaiguide'],
+            aliases: ['plaiguide'],
             group: 'links',
             memberName: '3dsguide',
             description: 'A link to plailect\'s Nintendo 3DS Guide',

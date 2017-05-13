@@ -1,11 +1,11 @@
 const commando = require('discord.js-commando');
 const Discord = require("discord.js");
 
-module.exports = class CommandInfoCommand extends commando.Command {
+module.exports = class wiiUGuideCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'wiiuguide',
-            alias: ['rednand', 'mocha'],
+            aliases: ['rednand', 'mocha'],
             group: 'links',
             memberName: 'wiiuguide',
             description: 'A link to plailect\'s Nintendo WiiU Guide',

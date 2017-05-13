@@ -1,10 +1,10 @@
 const commando = require('discord.js-commando');
 
-module.exports = class CommandInfoCommand extends commando.Command {
+module.exports = class tvOSCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'tvos',
-            alias: ['blockupdates'],
+            aliases: ['blockupdates'],
             group: 'links',
             memberName: 'tvos',
             description: 'A link to download a tvos beta profile to block iOS updates',

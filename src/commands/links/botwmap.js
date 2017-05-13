@@ -1,10 +1,10 @@
 const commando = require('discord.js-commando');
 
-module.exports = class CommandInfoCommand extends commando.Command {
+module.exports = class breathOfTheWildMapCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'botwmap',
-            alias: ['zeldamap'],
+            aliases: ['zeldamap'],
             group: 'links',
             memberName: 'botwmap',
             description: 'A link to the interactive The Legend of Zelda: Breath of The Wild map',
