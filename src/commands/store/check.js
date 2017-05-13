@@ -5,7 +5,7 @@ module.exports = class clearCommand extends commando.Command {
             name: 'check',
             group: 'store',
             memberName: 'check',
-            description: 'Checks current message store - outputs to #private-bot-logs',
+            description: 'Checks current message store - outputs to <#299694375682703361>',
             guildOnly: false,
         });
     }
