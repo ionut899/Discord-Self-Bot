@@ -9,7 +9,7 @@ const messageStoreChannelID = auth.storeChannel;
 const ownerID = auth.ownerID;
 const client = new Commando.Client({
     owner: auth.ownerID,
-    commandPrefix: '~',
+    commandPrefix: '\\',
     selfbot: true
 });
 var messageStore = [];
