@@ -45,7 +45,7 @@ module.exports = class cydiaCommand extends commando.Command {
                 .addField("Section", res.section, true)
                 .addField("Price", pkgPrice, true)
                 .addField("Link", `[Click Here](http://cydia.saurik.com/package/${res.name})`, true)
-                .addField("Repo", `[${res.reponame}](https://cydia.saurik.com/api/share#?source=${res.repolink})`, true)
+                .addField("Repo", `[${res.repo.name}](https://cydia.saurik.com/api/share#?source=${res.repo.link})`, true)
 
             msg.embed(cydiaEmbed);
         });
