@@ -31,7 +31,7 @@ module.exports = class mathCommand extends commando.Command {
             .then(images => {
                 // Show juicy NSFW image
                 for (let image of images) {
-                    msg.edit(`Score: ${images[0].common.score}\nImage: ${images[0].common.file_url}`);
+                    msg.say(`Score: ${images[0].common.score}\nImage: ${images[0].common.file_url}`);
                 };
             }).catch(err => {
                 if (err.name === 'booruError') {

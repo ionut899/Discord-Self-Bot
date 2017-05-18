@@ -33,7 +33,7 @@ module.exports = class cydiaCommand extends commando.Command {
 
         cydia.getAllInfo(args.packageName).then((res) => {
             if (res === false) {
-                return msg.edit(`**Tweak/Theme \`${args.packageName}\` not found!**`);
+                return msg.say(`**Tweak/Theme \`${args.packageName}\` not found!**`);
             }
             let pkgPrice = res.price === 0 ? "Free" : res.price;
 

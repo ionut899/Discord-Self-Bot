@@ -24,7 +24,7 @@ module.exports = class urbanCommand extends commando.Command {
     async run(msg, args) {
         urban(args.query).first(async function (json) {
             if (json == undefined) {
-                await msg.edit(`**No Results Found!**\nOriginal Message: ${msg.content.slice(9)}`);
+                await msg.say(`**No Results Found!**`);
             }
             let urbanEmbed = new Discord.RichEmbed;
             urbanEmbed

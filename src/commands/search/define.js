@@ -27,15 +27,18 @@ module.exports = class defineCommand extends commando.Command {
             .then((res) => res.body)
             .then((res) => {
                 if (res.tuc == undefined) {
-                    msg.edit(`**No results found!**\nOriginal Message: ${msg.content.slice(10)}`)
-                    return;
+                    return msg.reply(`**No results found!**`)
                 }
                 const final = [`**Definitions for __${args.query}__:**`];
                 for (let [index, item] of Object.entries(res.tuc.filter(t => t.meanings)[0].meanings.slice(0, 5))) {
 
                     item = item.text
                         .replace(/\[(\w+)[^\]]*](.*?)\[\/\1]/g, '_')
-                        .replace(/<i>|<\/i>/g, '');
+                        .replace(/&quot;/g, '"')
+                        .replace(/&#39;/g, `'`)
+                        .replace(/<b>/g, '[')
+                        .replace(/<\/b>/g, ']')
+                        .replace(/<i>|<\/i>/g, '_');
                     final.push(`**${(parseInt(index) + 1)}:** ${item}`);
                 }
                 defineEmbed
@@ -46,7 +49,7 @@ module.exports = class defineCommand extends commando.Command {
             })
             .catch((err) => {
                 console.error(err);
-                msg.edit(`**No results found!**\nOriginal Message: ${args.query}`)
+                msg.reply(`**No results found!**`)
             });
 
     };

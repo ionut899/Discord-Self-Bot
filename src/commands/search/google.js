@@ -48,7 +48,7 @@ module.exports = class googleCommand extends commando.Command {
                 const title = `${result.name} ${types.length === 0 ? '' : `(${types.join(', ')})`}`;
                 const LEARN_MORE_URL = result.detailedDescription.url.replace(/\(/, '%28').replace(/\)/, '%29');
                 const description = `${result.detailedDescription.articleBody} [Learn More...](${LEARN_MORE_URL})`;
-                return msg.edit(result.detailedDescription.url, title, description);
+                return msg.say(result.detailedDescription.url, title, description);
             })
             .catch((knowledgeErr) => {
                 let safe = 'high';
@@ -61,7 +61,7 @@ module.exports = class googleCommand extends commando.Command {
                 return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}`)
                     .then((res) => {
                         if (res.body.queries.request[0].totalResults === '0') return Promise.reject(new Error('NO RESULTS'));
-                        return msg.edit(res.body.items[0].link);
+                        return msg.say(res.body.items[0].link);
                     })
                     .catch(() => {
                         const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(query)}`;
@@ -70,11 +70,11 @@ module.exports = class googleCommand extends commando.Command {
                             let href = $('.r').first().find('a').first().attr('href');
                             if (!href) return Promise.reject(new Error('NO RESULTS'));
                             href = querystring.parse(href.replace('/url?', ''));
-                            return msg.edit(href.q);
+                            return msg.say(href.q);
                         })
                     })
                     .catch((searchErr) => {
-                        msg.edit('**No Results Found!**');
+                        msg.say('**No Results Found!**');
                         console.error(`A regular search error occured!\n================================\n${searchErr}`);
                     });
             })

@@ -38,11 +38,11 @@ module.exports = class youtubeCommand extends commando.Command {
         youtube.search(args.query, 1, async function (error, result) {
             if (error) {
                 console.error(error);
-                msg.edit('An error occurred')
+                msg.say('An error occurred')
                 await msg.delete(1000);
             } else {
                 if (!result || !result.items || result.items.length < 1) {
-                    msg.edit("No Results found");
+                    msg.say("No Results found");
                     await msg.delete(1000);
                 } else {
                     youtubeEmbed.setAuthor(`Youtube Search Result for: ${args.query}`, 'https://i.imgur.com/BPFqnxz.png');

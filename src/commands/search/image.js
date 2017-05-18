@@ -39,16 +39,16 @@ module.exports = class imageCommand extends commando.Command {
             safe
         };
         return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(query)}`)
-            .then((res) => msg.edit(res.body.items[0].link))
+            .then((res) => msg.say(res.body.items[0].link))
             .catch(() =>
                 superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(query)}`)
                 .then((res) => {
                     const $ = cheerio.load(res.text);
                     const result = $('.images_table').find('img').first().attr('src');
-                    return result !== undefined ? msg.edit(result) : msg.edit('**Something went wrong with the result, perhaps only nsfw results were found outside of an nsfw channel**');
+                    return result !== undefined ? msg.say(result) : msg.say('**Something went wrong with the result, perhaps only nsfw results were found outside of an nsfw channel**');
                 })
             ).catch((err) => {
-                msg.edit('**No Results Found**');
+                msg.say('**No Results Found**');
                 console.error(err);
             });
     }

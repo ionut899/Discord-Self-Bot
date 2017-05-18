@@ -75,7 +75,7 @@ module.exports = class animeCommand extends commando.Command {
             })
             .catch((err) => {
                 console.error(err);
-                return msg.edit(`**No results found!**\nOriginal Message: ${args.query}`)
+                return msg.say(`**No results found!**`)
             });
 
     };
