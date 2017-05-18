@@ -91,7 +91,7 @@ client.on("message", msg => {
         const content = msg.content.toLowerCase();
         const args = msg.content.split(' ').slice(1);
         const storeChannel = client.channels.get(messageStoreChannelID);
-        let prefix = msg.guild.commandPrefix;
+        let prefix = msg.guild.commandPrefix !== null ? msg.guild.commandPrefix : '$'
 
         let currentStoreSize = messageStore.length;
         if (currentStoreSize === 10) {
