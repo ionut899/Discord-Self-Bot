@@ -26,8 +26,7 @@
   },
   "main": "src/app.js",
   "scripts": {
-    "preinstall": "ECHO If you get any build errors be sure to run this command in an administrative PowerShell or CMD.exe in order to prep Node-Gyp: npm install --global --production windows-build-tools && npm install -g node-gyp",
-    "postinstall": "ECHO If you get any build errors be sure to run this command in an administrative PowerShell or CMD.exe in order to prep Node-Gyp: npm install --global --production windows-build-tools",
+    "preinstall": "echo For windows environemtns: if you get any build errors be sure to run this command in an administrative PowerShell or CMD.exe in order to prep Node-Gyp: npm install --global --production windows-build-tools",
     "start": "node src/app.js"
   },
   "keywords": [
