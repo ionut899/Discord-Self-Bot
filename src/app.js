@@ -17,6 +17,7 @@ var messageStore = [];
 client
     .on('ready', () => {
         console.log(`Client ready; logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})`);
+        client.user.setAFK(); // Set bot to AFK to enable mobile notifications
     })
     .on('commandPrefixChange', (guild, prefix) => {
         console.log(oneLine `
