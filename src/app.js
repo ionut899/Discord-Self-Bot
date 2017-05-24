@@ -72,6 +72,7 @@ client.registry
         ['reactions', 'Image Reactions'],
         ['info', 'Discord Info'],
         ['misc', 'Miscellanious commands'],
+        ['status', 'Status setting commands'],
         ['nsfw', 'NSFW finding commands']
     ])
     .registerDefaultGroups()
