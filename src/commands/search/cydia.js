@@ -9,10 +9,9 @@ module.exports = class cydiaCommand extends commando.Command {
             name: 'cydia',
             group: 'search',
             aliases: ['cy'],
-            // patterns: [/\<\<\s*([\w\ `~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\{\}\\\|\;\:\'\"\,\<\.\>\/\?]+)\S*\s*\>\>/gi],
             memberName: 'cydia',
             description: 'Find cydia tweak info',
-            examples: ['cydia anemone', 'cy anemone' /*, '<<anemone>>'*/ ],
+            examples: ['cydia anemone', 'cy anemone'],
             guildOnly: false,
 
             args: [{
