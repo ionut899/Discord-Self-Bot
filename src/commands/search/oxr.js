@@ -31,6 +31,7 @@ module.exports = class moneyCommand extends commando.Command {
     async run(msg, args) {
         oxr.latest(function () {
             fx.rates = oxr.rates;
+            fx.rates.XBT = 0.00047;
             fx.base = oxr.base;
             let conversionQuery = args.input.split(' ');
 
@@ -40,9 +41,19 @@ module.exports = class moneyCommand extends commando.Command {
                 oxrEmbed
                     .setColor('#2558CF')
                     .setAuthor('🌐 Currency Converter')
-                    .addField(`:flag_${conversionQuery[1].slice(0,2).toLowerCase()}: Money in ${conversionQuery[1]}`,
-                        `${currencySymbol(conversionQuery[1])}${conversionQuery[0]}`, true)
-                    .addField(`:flag_${conversionQuery[2].slice(0,2).toLowerCase()}: Money in ${conversionQuery[2]}`, `${currencySymbol(conversionQuery[2])}${convertedMoney}`, true)
+                    .addField(conversionQuery[1] !== 'XBT' ?
+                        `:flag_${conversionQuery[1].slice(0,2).toLowerCase()}: Money in ${conversionQuery[1]}` :
+                        `💰 Money in Bitcoin`,
+                        conversionQuery[1] !== 'XBT' ?
+                        `${currencySymbol(conversionQuery[1])}${conversionQuery[0]}` :
+                        `${currencySymbol('BTC')}${conversionQuery[0]}`, true)
+
+                    .addField(conversionQuery[2] !== 'XBT' ?
+                        `:flag_${conversionQuery[2].slice(0,2).toLowerCase()}: Money in ${conversionQuery[2]}` :
+                        `💰 Money in Bitcoin`,
+                        conversionQuery[2] !== 'XBT' ?
+                        `${currencySymbol(conversionQuery[2])}${convertedMoney}` :
+                        `${currencySymbol('BTC')}${convertedMoney}`, true)
                     .setFooter(`Converted money from input using openexchangerates | converted on: ${moment(new Date()).format("MMMM Do YYYY | HH:mm:ss")}`);
                 msg.embed(oxrEmbed);
             } catch (e) {
