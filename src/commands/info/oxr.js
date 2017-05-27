@@ -13,7 +13,7 @@ module.exports = class moneyCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'money',
-            group: 'search',
+            group: 'info',
             aliases: ['oxr', 'rate', 'convert'],
             memberName: 'money',
             description: 'Currency converter - makes use of ISO 4217 standard currency codes',
@@ -22,7 +22,7 @@ module.exports = class moneyCommand extends commando.Command {
 
             args: [{
                 key: 'input',
-                prompt: 'Please supply amount and country codes',
+                prompt: 'Currency amount and country codes? (example format: `1 USD EUR`)',
                 type: 'string'
             }]
         });
