@@ -31,8 +31,8 @@ module.exports = class urbanCommand extends commando.Command {
                 .setAuthor(`Urban Search - ${json.word}`, `https://i.imgur.com/miYLsGw.jpg`)
                 .setColor("#E86121")
                 .setFooter(`${json.word} defined by PyrrhaBot`, "http://i.imgur.com/4U9oMS0.png")
-                .addField("Definition", json.definition, false)
-                .addField("Example", json.example, false)
+                .addField("Definition", json.definition.length <= 1024 ? json.definition : `Truncated due to exceeding maximum length\n${json.definition.slice(0,970)}`, false)
+                .addField("Example", json.example.length <= 1024 ? json.example : `Truncated due to exceeding maximum length\n${json.example.slice(0,970)}`, false)
                 .addField("Permalink", json.permalink, false)
             await msg.embed(urbanEmbed);
         });
