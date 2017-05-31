@@ -12,6 +12,9 @@ const client = new Commando.Client({
     commandPrefix: '$',
     selfbot: true
 });
+const hookClient = new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {
+    disableEveryone: true
+});
 var messageStore = [];
 
 client
@@ -95,16 +98,16 @@ client.on("message", msg => {
         let mentionEmbed = new Discord.RichEmbed();
 
         mentionEmbed
-            .setAuthor(msg.channel.type === 'text' ? `${msg.member.displayName} dropped your name in #${msg.channel.name} on the ${msg.guild.name} server` : `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL)
+            .setAuthor(msg.channel.type === 'text' ? `${msg.member.displayName} dropped your name in #${msg.channel.name} in ${msg.guild.name}` : `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL)
             .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
             .setColor(msg.channel.type === 'text' ? msg.member.displayHexColor : '#535B62')
             .setThumbnail(msg.author.displayAvatarURL)
             .addField('Message Content', msg.cleanContent)
             .addField('Message Attachments', msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? msg.attachments.map(au => au.url) : 'None');
-            
-        client.channels.get(messageStoreChannelID).send(`Someone named you <@${ownerID}>!`, {
-            embed: mentionEmbed
-        });
+
+        hookClient.send(`Stalkify away <@${ownerID}>`, {
+            embeds: [mentionEmbed]
+        }).catch(console.error);
     }
 
     // Log last 10 messages from clientUser in a message store for access through commands

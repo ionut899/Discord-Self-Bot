@@ -12,6 +12,10 @@ You have to create a file `auth.json` in the `src` folder. This file has to have
 
   - token: Your bot or user token
 
+  - webhooktoken: A token from a webhook for the notifier (last part of a webhook URL)
+
+  - webhookID: The ID of a webhook (also present in URL of a webhook)
+
   - googleapikey: A Google API Key. Enable Custom Search engine and Youtube Data API
 
   - imageEngineKey: Google Custom Search Engine key (can be the same as searchEngineKey but not recommended)
