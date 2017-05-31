@@ -10,14 +10,19 @@ First of all you need to install [node.js](https://nodejs.org/en/). You can [dow
 
 You have to create a file `auth.json` in the `src` folder. This file has to have a series of variables for the bot to function properly. The required variables are as follows. A template file has been included in the folder to base it on.
 
-  - token 
+  - token: Your bot or user token
 
-  - googleapikey
+  - googleapikey: A Google API Key. Enable Custom Search engine and Youtube Data API
 
-  - imageEngineKey
+  - imageEngineKey: Google Custom Search Engine key (can be the same as searchEngineKey but not recommended)
 
-  - searchEngineKey
+  - searchEngineKey: Google Custom Search Engine key (can be the same as imageEngineKey but not recommended)
 
-  - ownerID
+  - ownerID: Your user ID
 
-  - storeChannel
+  - storeChannel: A channel ID where you want to have the message store send stuff to
+
+  - oxrAppID: An API key created on Open-Exchange-Rates
+
+  - TheMovieDBV3ApiKey: Your API key created on The Movie DB
+  

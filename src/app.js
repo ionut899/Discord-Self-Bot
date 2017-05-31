@@ -89,6 +89,25 @@ client.registry
 client.login(auth.token);
 
 client.on("message", msg => {
+
+    // Log messages including clientUser's username
+    if (msg.author.id !== ownerID && msg.content.toLowerCase().indexOf(client.user.username) !== -1 && !msg.mentions.users.get(ownerID)) {
+        let mentionEmbed = new Discord.RichEmbed();
+
+        mentionEmbed
+            .setAuthor(msg.channel.type === 'text' ? `${msg.member.displayName} dropped your name in #${msg.channel.name} on the ${msg.guild.name} server` : `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL)
+            .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
+            .setColor(msg.channel.type === 'text' ? msg.member.displayHexColor : '#535B62')
+            .setThumbnail(msg.author.displayAvatarURL)
+            .addField('Message Content', msg.cleanContent)
+            .addField('Message Attachments', msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? msg.attachments.map(au => au.url) : 'None');
+
+        client.channels.get(messageStoreChannelID).send(`Someone named you <@${ownerID}>!`, {
+            embed: mentionEmbed
+        });
+    }
+
+    // Log last 10 messages from clientUser in a message store for access through commands
     if (msg.author.id === ownerID && msg.channel.id !== messageStoreChannelID) {
         const content = msg.content.toLowerCase();
         const args = msg.content.split(' ').slice(1);
@@ -160,6 +179,7 @@ client.on("message", msg => {
     }
 });
 
+// A function to get the proper position in an array
 function positionFormatter(length) {
     let numbers = [];
     for (let i = 0; i < length; i++) {
