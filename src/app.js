@@ -91,7 +91,7 @@ client.login(auth.token);
 client.on("message", msg => {
 
     // Log messages including clientUser's username
-    if (msg.author.id !== ownerID && msg.content.toLowerCase().indexOf(client.user.username) !== -1 && !msg.mentions.users.get(ownerID)) {
+    if (msg.author.id !== ownerID && msg.content.toLowerCase().indexOf(client.user.username.toLowerCase()) !== -1 && !msg.mentions.users.get(ownerID)) {
         let mentionEmbed = new Discord.RichEmbed();
 
         mentionEmbed
@@ -101,7 +101,7 @@ client.on("message", msg => {
             .setThumbnail(msg.author.displayAvatarURL)
             .addField('Message Content', msg.cleanContent)
             .addField('Message Attachments', msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? msg.attachments.map(au => au.url) : 'None');
-
+            
         client.channels.get(messageStoreChannelID).send(`Someone named you <@${ownerID}>!`, {
             embed: mentionEmbed
         });
