@@ -12,6 +12,6 @@ module.exports = class deleteCommand extends commando.Command {
 
     async run(msg) {
         msg.delete();
-        // Stubbed. This is only a dummy file to add the command to registry
+        // Purposedly left empty. This is only a dummy file to add the command to registry
     };
 };
