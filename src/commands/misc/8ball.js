@@ -2,7 +2,7 @@ const predict = require('eightball');
 const Discord = require("discord.js");
 const commando = require('discord.js-commando');
 
-module.exports = class moneyCommand extends commando.Command {
+module.exports = class eightBallCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: '8ball',

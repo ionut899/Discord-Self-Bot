@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const commando = require('discord.js-commando');
 const booru = require('booru');
 
-module.exports = class mathCommand extends commando.Command {
+module.exports = class rule34Command extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'rule34',

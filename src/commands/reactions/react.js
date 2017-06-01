@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const commando = require('discord.js-commando');
 const path = require('path');
 
-module.exports = class mathCommand extends commando.Command {
+module.exports = class reactCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'react',

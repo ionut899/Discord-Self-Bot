@@ -2,7 +2,7 @@ const commando = require('discord.js-commando');
 const Discord = require("discord.js");
 const moment = require('moment');
 
-module.exports = class UserInfoCommand extends commando.Command {
+module.exports = class userInfoCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'uinfo',
