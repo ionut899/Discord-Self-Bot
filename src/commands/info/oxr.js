@@ -29,13 +29,12 @@ module.exports = class moneyCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        oxr.latest(function () {
+        oxr.latest(async function () {
             fx.rates = oxr.rates;
             fx.base = oxr.base;
             let conversionQuery = args.input.split(' ');
 
-            try {
-                let convertedMoney = fx(conversionQuery[0]).from(conversionQuery[1]).to(conversionQuery[2])
+           await converter(conversionQuery).then((convertedMoney) => {
                 let oxrEmbed = new Discord.RichEmbed();
                 oxrEmbed
                     .setColor('#2558CF')
@@ -51,10 +50,17 @@ module.exports = class moneyCommand extends commando.Command {
                         `${currencySymbol(conversionQuery[2])}${convertedMoney}`, true)
                     .setFooter(`Converted money from input using openexchangerates | converted on: ${moment(new Date()).format("MMMM Do YYYY | HH:mm:ss")}`);
                 msg.embed(oxrEmbed);
-            } catch (e) {
+            }).catch((e) => {
                 console.error(e);
                 msg.reply('***An error occurred. Make sure you used correct ISO 4217 standard currency codes, see here for the list: <http://www.xe.com/iso4217.php>***')
-            }
-        })
+            });
+        });
     };
 };
+
+async function converter(conversionQuery) {
+    return fx.convert(conversionQuery[0], {
+        from: conversionQuery[1],
+        to: conversionQuery[2]
+    })
+}
