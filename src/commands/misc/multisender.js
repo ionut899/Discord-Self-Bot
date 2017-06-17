@@ -12,20 +12,25 @@ module.exports = class multiSenderCommand extends commando.Command {
             guildOnly: false,
 
             args: [{
-                key: 'input',
-                prompt: 'To what servers should we send the message (1 for Sky Tower, 2 for Populous Gaming and 3 for ChaosGamez)',
-                type: 'string'
-            }]
+                    key: 'servers',
+                    prompt: 'To what servers should we send the message (1 for Sky Tower, 2 for Populous Gaming and 3 for ChaosGamez)',
+                    type: 'string'
+                },
+                {
+                    key: 'body',
+                    prompt: 'Content of the message to send?',
+                    type: 'string'
+                }
+            ]
         });
     }
 
     async run(msg, args) {
-        let servers = args.input.slice(0, 3).split('');
-        let multiMessage = args.input.slice(4);
-        console.log(servers)
+        let servers = args.servers.split('');
+        let multiMessage = args.body
 
         for (let index in servers) {
-            multiMessage.slice(0, 4) !== 'http' ? multiMessage = `${args.input.slice(4, 5).toUpperCase()}${args.input.slice(5)}` : null
+            multiMessage.slice(0, 4) !== 'http' ? multiMessage = `${args.body.slice(0,1).toUpperCase()}${args.body.slice(1)}` : null
             msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? multiMessage += `\n${msg.attachments.first().url}` : null
             switch (servers[index]) {
                 case '1':
