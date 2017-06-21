@@ -14,7 +14,7 @@ module.exports = class debugCommand extends commando.Command {
 
             args: [{
                 key: 'buggerType',
-                prompt: 'Do you want to debug channels or roles?',
+                prompt: 'Do you want to debug `channels` or `roles`?',
                 type: 'string'
             }]
         });
@@ -47,8 +47,8 @@ module.exports = class debugCommand extends commando.Command {
             debugEmbed.addBlankField(true);
             debugEmbed.addField("Role ID", roleIDs, true);
         } else {
-            await msg.reply('That is not a valid debugger option. Either listchannels for channels, or listroles for roles.')
+            msg.reply('That is not a valid debugger option. Either `channels` or `roles`')
         };
-        await msg.embed(debugEmbed);
+        msg.embed(debugEmbed);
     };
 };
