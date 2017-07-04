@@ -5,9 +5,9 @@
   "author": "Favna",
   "license": "LGPL-3.0",
   "dependencies": {
-    "booru": "^0.2.0",
+    "booru": "^0.3.3",
     "bufferutil": "^3.0.1",
-    "cheerio": "^1.0.0-rc.1",
+    "cheerio": "^1.0.0-rc.2",
     "common-tags": "^1.4.0",
     "countdown": "^2.6.0",
     "currency-symbol-map": "^4.0.1",
@@ -16,7 +16,7 @@
     "discord.js-commando": "git://github.com/Gawdl3y/discord.js-commando.git#11.1",
     "eightball": "^1.0.1",
     "erlpack": "github:hammerandchisel/erlpack",
-    "libsodium-wrappers": "^0.5.1",
+    "libsodium-wrappers": "^0.5.2",
     "malapi": "0.0.3",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.13",
@@ -33,14 +33,13 @@
     "sqlite": "^2.7.0",
     "superagent": "^3.4.4",
     "urban": "^0.3.1",
-    "uws": "^0.14.5",
+    "uws": "^8.14.0",
     "yahoo-weather": "^2.2.2",
-    "youtube-node": "^1.3.0",
+    "youtube-node": "^1.3.2",
     "zalgotxt": "^0.1.0"
   },
   "main": "src/app.js",
   "scripts": {
-    "preinstall": "echo For windows environemtns: if you get any build errors be sure to run this command in an administrative PowerShell or CMD.exe in order to prep Node-Gyp: npm install --global --production windows-build-tools",
     "start": "node src/app.js"
   },
   "keywords": [
