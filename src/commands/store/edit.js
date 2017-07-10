@@ -1,5 +1,5 @@
 const commando = require('discord.js-commando');
-module.exports = class deleteCommand extends commando.Command {
+module.exports = class editCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'edit',
