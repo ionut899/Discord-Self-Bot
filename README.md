@@ -12,10 +12,6 @@ You have to create a file `auth.json` in the `src` folder. This file has to have
 
   - token: Your bot or user token
 
-  - webhooktoken: A token from a webhook for the notifier (last part of a webhook URL)
-
-  - webhookID: The ID of a webhook (also present in URL of a webhook)
-
   - googleapikey: A Google API Key. Enable Custom Search engine and Youtube Data API
 
   - imageEngineKey: Google Custom Search Engine key (can be the same as searchEngineKey but not recommended)
@@ -24,9 +20,10 @@ You have to create a file `auth.json` in the `src` folder. This file has to have
 
   - ownerID: Your user ID
 
-  - storeChannel: A channel ID where you want to have the message store send stuff to
-
   - oxrAppID: An API key created on Open-Exchange-Rates
 
   - TheMovieDBV3ApiKey: Your API key created on The Movie DB
-  
+
+  - webhooktoken: A token from a webhook for the notifier (last part of a webhook URL)
+
+  - webhookID: The ID of a webhook (also present in URL of a webhook)

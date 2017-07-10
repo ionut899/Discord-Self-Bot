@@ -5,7 +5,6 @@ const path = require('path');
 const oneLine = require('common-tags').oneLine;
 const sqlite = require('sqlite');
 const moment = require('moment');
-const messageStoreChannelID = auth.storeChannel;
 const ownerID = auth.ownerID;
 const client = new Commando.Client({
     owner: auth.ownerID,
@@ -111,10 +110,9 @@ client.on("message", msg => {
     }
 
     // Log last 10 messages from clientUser in a message store for access through commands
-    if (msg.author.id === ownerID && msg.channel.id !== messageStoreChannelID) {
+    if (msg.author.id === ownerID) {
         const content = msg.content.toLowerCase();
         const args = msg.content.split(' ').slice(1);
-        const storeChannel = client.channels.get(messageStoreChannelID);
         let prefix = msg.guild !== null ? msg.guild.commandPrefix : '$';
 
         let currentStoreSize = messageStore.length;
@@ -144,7 +142,7 @@ client.on("message", msg => {
             let indicator = args.slice(0, 1).toString();
             let newContent = args.slice(1).join(' ');
             if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get(messageStoreChannelID).send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                return client.channels.get('309470585027559425').send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
             };
             messageStore[indicator.toString()].message.edit(newContent);
         };
@@ -155,7 +153,7 @@ client.on("message", msg => {
 
             let indicator = args.slice(0, 1).toString();
             if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get(messageStoreChannelID).send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                return client.channels.get('309470585027559425').send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
             };
             messageStore[indicator].message.delete();
         };
@@ -169,15 +167,14 @@ client.on("message", msg => {
             messageStore.shift();
             msg.delete();
 
-            let storeEmbed = new Discord.RichEmbed();
+            var checkReply = '';
 
-            storeEmbed.setColor('#FF0000');
-            storeEmbed.setFooter(`Store log from ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
-            messageStore.length === 0 ? storeEmbed.addField('Location in store', '0', true) : storeEmbed.addField('Location in store', positionFormatter(messageStore.length), true);
-            messageStore.length === 0 ? storeEmbed.addField('Content of message', 'none', true) : storeEmbed.addField('Content of message', messageStore.map(mcont => mcont.message.content), true);
-            storeChannel.send({
-                embed: storeEmbed
-            });
+            for (let i in messageStore.map(mcont => mcont.message.content)) {
+                checkReply += `${i}: ${messageStore.map(mcont => mcont.message.content)[i]}\n`
+            }
+
+            hookClient.send(`<@112001393140723712> Here is your storage log\n${checkReply}`)
+                .catch(console.error);
         };
     }
 });
