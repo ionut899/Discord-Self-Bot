@@ -14,6 +14,6 @@ module.exports = class linkifyCommand extends commando.Command {
     }
 
     async run(msg) {
-    msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? msg.say(msg.attachments.first().url) : msg.delete()
+        msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? msg.say(msg.attachments.first().url) : msg.delete()
     };
 };
