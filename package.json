@@ -19,6 +19,7 @@
     "moment-timezone": "^0.5.13",
     "money": "^0.2.0",
     "moviedb": "^0.2.8",
+    "node-random": "^1.0.1",
     "open-exchange-rates": "^0.3.0",
     "ordinal": "1.0.2",
     "querystring": "^0.2.0",
