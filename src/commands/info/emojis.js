@@ -1,3 +1,21 @@
+// Copyright (C) 2017 Favna
+// 
+// This file is part of PyrrhaBot.
+// 
+// PyrrhaBot is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// PyrrhaBot is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with PyrrhaBot.  If not, see <http://www.gnu.org/licenses/>.
+// 
+
 const commando = require('discord.js-commando');
 const Discord = require("discord.js");
 const moment = require('moment');
@@ -42,7 +60,7 @@ module.exports = class emojisCommand extends commando.Command {
         }
         emojisEmbed
             .setColor('#FF0000')
-            .setFooter(`A Selfbot by Favna | Command issued at ${moment(new Date()).format('MMMM Do YYYY HH:mm:ss')}`, 'http://i.imgur.com/4U9oMS0.png')
+            .setFooter(`A Selfbot by Favna | Command issued at ${moment().format('MMMM Do YYYY HH:mm:ss')}`, 'http://i.imgur.com/4U9oMS0.png')
             .setDescription(`Emojis from the server \`${client.guilds.get(server).name}\``);
         emojisSetOne.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetOne, true) : emojisEmbed.addField('This server has no custom emojis', 'Although they should totally get some', true);
         emojisSetTwo.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetTwo, true) : null;
