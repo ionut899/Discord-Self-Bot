@@ -69,8 +69,7 @@ module.exports = class wikipediaCommand extends commando.Command {
                     .setColor("#FF0000")
                     .setFooter(`Wikipedia result pulled on ${moment().format('MMMM Do YYYY HH:mm:ss')}`)
                     .setURL(wikiData.url)
-                    .addField("Wiki Page Title", wikiData.pageTitle, false)
-                    .addField('Wiki Page Extract', wikiData.pageExtract, false);
+                    .setDescriptiont(wikiData.pageExtract);
                 msg.embed(wikiEmbed, wikiData.url);
             })
             .catch((err) => {
