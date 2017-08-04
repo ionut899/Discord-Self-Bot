@@ -49,11 +49,7 @@ module.exports = class embedCommand extends commando.Command {
             customEmbed.addField(header, values.join('\n'), true);
         });
 
-        customEmbed
-            .setColor("#e52431")
-            .setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg")
-            .setAuthor("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png");
-
+        customEmbed.setColor("#e52431")
         await msg.embed(customEmbed)
         await msg.delete()
     }
