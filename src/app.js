@@ -86,14 +86,15 @@ client.setProvider(
 
 client.registry
     .registerGroups([
-        ['store', 'Message Store commands'],
         ['search', 'Web Search commands'],
+        ['pokedex', 'Find data from the PokéDex'],
         ['links', 'Quick Website Links'],
         ['reactions', 'Image Reactions'],
         ['info', 'Discord Info'],
         ['misc', 'Miscellanious commands'],
         ['status', 'Status setting commands'],
-        ['nsfw', 'NSFW finding commands']
+        ['nsfw', 'NSFW finding commands'],
+        ['store', 'Message Store commands']
     ])
     .registerDefaultGroups()
     .registerDefaultTypes()
