@@ -43,7 +43,7 @@ module.exports = class embedCommand extends commando.Command {
 
         let fields = paramString.split(',');
         fields.forEach(field => {
-            let chunks = field.split(':');
+            let chunks = field.split('>');
             let header = chunks[0];
             let values = chunks[1].split(';');
             customEmbed.addField(header, values.join('\n'), true);
