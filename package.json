@@ -22,6 +22,7 @@
     "node-random": "^1.0.1",
     "open-exchange-rates": "^0.3.0",
     "ordinal": "1.0.2",
+    "pornsearch": "git+https://github.com/favna/Pornsearch.git",
     "querystring": "^0.2.0",
     "request": "^2.79.0",
     "scalc": "^2.0.1",
