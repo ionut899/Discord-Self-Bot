@@ -29,7 +29,7 @@ module.exports = class googleCommand extends commando.Command {
         super(client, {
             name: 'google',
             group: 'search',
-            aliases: ['search'],
+            aliases: ['search', 'g'],
             memberName: 'google',
             description: 'Find something on google',
             examples: ['google Pyrrha Nikos'],
