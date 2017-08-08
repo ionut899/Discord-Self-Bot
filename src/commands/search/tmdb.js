@@ -45,9 +45,17 @@ module.exports = class movieCommand extends commando.Command {
         tmdb.searchMovie({
             query: args.name
         }, async(nameErr, nameRes) => {
-            if (nameErr) return console.error(nameErr);
+            if (nameErr) {
+                console.error(nameErr);
+                return msg.reply('An error occured')
+            }
 
-            var movieID = nameRes.results[0].id;
+            if (nameRes.results.length !== 0) {
+                var movieID = nameRes.results[0].id
+            } else {
+                return msg.reply('No result found')
+            }
+
             tmdb.movieInfo({
                 id: movieID
             }, (idErr, idRes) => {
