@@ -21,6 +21,7 @@ const commando = require('discord.js-commando');
 const superagent = require('superagent');
 const querystring = require('querystring');
 const auth = require('../../auth.json');
+const cheerio = require('cheerio')
 const googleapikey = auth.googleapikey;
 const imageEngineKey = auth.imageEngineKey;
 
