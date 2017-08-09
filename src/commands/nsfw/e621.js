@@ -52,9 +52,11 @@ module.exports = class e621Command extends commando.Command {
                 };
             }).catch(err => {
                 if (err.name === 'booruError') {
-                    return console.error(err.message);
+                    console.error(err.message);
+                    return msg.reply('No juicy images found 😦')
                 } else {
-                    return console.error(err);
+                    console.error(err);
+                    return msg.reply('An error occured 😦. This message has notified Favna')
                 };
             });
     }
