@@ -21,9 +21,9 @@ const commando = require('discord.js-commando');
 module.exports = class multiSenderCommand extends commando.Command {
     constructor(client) {
         super(client, {
-            name: 'multi',
+            name: 'multisender',
             group: 'misc',
-            aliases: ['sender'],
+            aliases: ['sender', 'multi'],
             memberName: 'multisender',
             description: 'Send a message to multiple servers',
             examples: ['multi 123 This is my message', 'sender 12 this is my message'],

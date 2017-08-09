@@ -30,10 +30,10 @@ oxr.set({
 module.exports = class moneyCommand extends commando.Command {
     constructor(client) {
         super(client, {
-            name: 'money',
+            name: 'oxr',
             group: 'info',
-            aliases: ['oxr', 'rate', 'convert'],
-            memberName: 'money',
+            aliases: ['money', 'rate', 'convert'],
+            memberName: 'oxr',
             description: 'Currency converter - makes use of ISO 4217 standard currency codes',
             examples: ['oxr 50 USD EUR', 'convert 50 GBP NOK'],
             guildOnly: false,

@@ -23,10 +23,10 @@ const moment = require('moment');
 module.exports = class userInfoCommand extends commando.Command {
     constructor(client) {
         super(client, {
-            name: 'uinfo',
-            aliases: ['user'],
+            name: 'userinfo',
+            aliases: ['user', 'uinfo'],
             group: 'info',
-            memberName: 'uinfo',
+            memberName: 'userinfo',
             description: 'Gets information about a user.',
             examples: ['uinfo @Favna#2846', 'uinfo Favna'],
             guildOnly: true,

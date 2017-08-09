@@ -22,10 +22,10 @@ const Discord = require("discord.js");
 module.exports = class embedValsCommand extends commando.Command {
     constructor(client) {
         super(client, {
-            name: 'valsofembed',
-            aliases: ['embedvals', 'vals'],
+            name: 'embedvals',
+            aliases: ['valsofembed', 'vals'],
             group: 'info',
-            memberName: 'valsofembed',
+            memberName: 'embedvals',
             description: 'For showing how a RichEmbed is build up',
             guildOnly: false
         });

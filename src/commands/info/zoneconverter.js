@@ -22,10 +22,10 @@ const moment = require('moment-timezone');
 module.exports = class zoneConvCommand extends commando.Command {
     constructor(client) {
         super(client, {
-            name: 'timeconv',
-            aliases: ['time', 'conv', 'zone'],
+            name: 'zoneconverter',
+            aliases: ['time', 'conv', 'zone', 'timeconv'],
             group: 'info',
-            memberName: 'timeconv',
+            memberName: 'zoneconverter',
             description: 'Converts current time to specified timezone',
             examples: ['timeconv 18:00 America/New_York', 'conv 18:00 Europe/Lisbon'],
             guildOnly: false,
