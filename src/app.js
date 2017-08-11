@@ -93,6 +93,7 @@ client.registry
         ['info', 'Discord Info'],
         ['misc', 'Miscellanious commands'],
         ['status', 'Status setting commands'],
+        ['themeplaza', 'Various commands to browse ThemePlaza'],
         ['nsfw', 'NSFW finding commands'],
         ['store', 'Message Store commands']
     ])
