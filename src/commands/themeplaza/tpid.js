@@ -29,7 +29,7 @@ module.exports = class themeIDCommand extends commando.Command {
         super(client, {
             name: 'tpid',
             group: 'themeplaza',
-            aliases: ['id', 'themeid'],
+            aliases: ['id', 'themeid', 'tid'],
             memberName: 'tpid',
             description: 'Get info from a theme on themeplaza based on ID',
             examples: ['tpid 215', 'themeid 215'],
