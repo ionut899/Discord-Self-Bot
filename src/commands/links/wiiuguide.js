@@ -35,12 +35,11 @@ module.exports = class wiiUGuideCommand extends commando.Command {
         let wiiuguideEmbed = new Discord.RichEmbed();
 
         wiiuguideEmbed
-            .setColor("#00ACCA")
+            .setColor("#FF0000")
             .setTitle("A one stop guide for Wii U")
-            .setDescription("Want to run game backups on your WiiU? Need instructions on how to set up haxchi, mocha and rednand? Follow this guide")
+            .setDescription("Want to run game backups on your WiiU? Need instructions on how to set up Haxchi, Mocha and RedNAND? Follow this guide")
             .addField("\u200b", "https://wiiu.guide")
-            .setFooter("Nintendo WiiU Guide provided by Favna's selfbot", "http://i.imgur.com/4U9oMS0.png")
-            .setThumbnail("http://i68.tinypic.com/2zizozn.png")
-        await msg.embed(wiiuguideEmbed)
+            .setThumbnail("https://favna.s-ul.eu/dy0mg0XC.png")
+        await msg.embed(wiiuguideEmbed, 'https://wiiu.guide')
     };
 };
