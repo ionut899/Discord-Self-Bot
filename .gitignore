@@ -2,4 +2,3 @@ node_modules/
 .vscode/
 src/auth.json
 *.log
-src/commands/misc/tester.js
