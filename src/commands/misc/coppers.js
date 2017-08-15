@@ -31,6 +31,7 @@ module.exports = class coppersCommand extends commando.Command {
     }
 
     async run(msg) {
+        await msg.delete();
         await msg.say(':rotating_light: :rotating_light: WEE WOO WEE WOO - PUT YOUR HANDS IN THE AIR, YOU ARE SURROUNDED :rotating_light: :rotating_light:\n\n:oncoming_police_car:  <:police:346089253572313088> <:police:346089253572313088> <:police:346089253572313088>  :oncoming_police_car:');
     }
 };
