@@ -59,7 +59,7 @@ module.exports = class animeCommand extends commando.Command {
                     .setAuthor(args.query, "https://myanimelist.cdn-dena.com/img/sp/icon/apple-touch-icon-256.png")
                     .setColor("#FF0000")
                     .setImage(image)
-                    .setFooter(`Anime info by PyrrhaBot | ${moment(new Date()).format('MMMM Do YYYY')}`, "http://i.imgur.com/4U9oMS0.png")
+                    .setFooter(`Anime info by PyrrhaBot | ${moment().format('MMMM Do YYYY')}`, "http://i.imgur.com/4U9oMS0.png")
                     .setURL(animeUrl);
 
                 if (japName != null) {

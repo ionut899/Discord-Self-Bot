@@ -66,7 +66,7 @@ module.exports = class moneyCommand extends commando.Command {
                         `:flag_${conversionQuery[2].slice(0,2).toLowerCase()}: Money in ${conversionQuery[2]}` :
                         `💰 Money in Bitcoin`,
                         `${currencySymbol(conversionQuery[2])}${convertedMoney}`, true)
-                    .setFooter(`Converted money from input using openexchangerates | converted on: ${moment(new Date()).format("MMMM Do YYYY | HH:mm:ss")}`);
+                    .setFooter(`Converted money from input using openexchangerates | converted on: ${moment().format("MMMM Do YYYY | HH:mm:ss")}`);
                 msg.embed(oxrEmbed);
             }).catch((e) => {
                 console.error(e);

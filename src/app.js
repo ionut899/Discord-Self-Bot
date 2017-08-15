@@ -162,7 +162,7 @@ client.on("message", msg => {
             let indicator = args.slice(0, 1).toString();
             let newContent = args.slice(1).join(' ');
             if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get('309470585027559425').send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                return client.channels.get('309470585027559425').send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment().format('MMMM Do YYYY | HH:mm:ss')}`);
             };
             messageStore[indicator.toString()].message.edit(newContent);
         };
@@ -173,7 +173,7 @@ client.on("message", msg => {
 
             let indicator = args.slice(0, 1).toString();
             if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get('309470585027559425').send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment(new Date).format('MMMM Do YYYY | HH:mm:ss')}`);
+                return client.channels.get('309470585027559425').send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment().format('MMMM Do YYYY | HH:mm:ss')}`);
             };
             messageStore[indicator].message.delete();
         };
