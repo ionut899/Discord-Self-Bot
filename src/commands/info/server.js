@@ -33,7 +33,7 @@ module.exports = class serverInfoCommand extends commando.Command {
         });
     }
 
-    run(msg) {
+    async run(msg) {
         const serverEmbed = new Discord.RichEmbed();
         const guild = msg.guild;
         const presences = guild.presences.map(st => st.status)
