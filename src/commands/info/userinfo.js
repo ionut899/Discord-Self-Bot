@@ -92,8 +92,6 @@ module.exports = class userInfoCommand extends commando.Command {
         userInfoEmbed.addField("Created at", userCreateDate, true);
         msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Joined at", userJoinedDate, true) : null
 
-user.presence.game !== null ? userInfoEmbed.addField(“Playing...”, user.presence.status, false) : null
-
         await msg.embed(userInfoEmbed);
     }
 };
