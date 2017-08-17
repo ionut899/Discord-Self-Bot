@@ -43,7 +43,7 @@ module.exports = class gameSetCommand extends commando.Command {
         });
     }
 
-    async run(msg) {
+    async run(msg, args) {
         msg.client.user.setPresence({
             game: {
                 name: args.name,
