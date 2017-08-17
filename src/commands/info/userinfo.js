@@ -53,7 +53,7 @@ module.exports = class userInfoCommand extends commando.Command {
             .addField('Name', user.username, true)
             .addField('Nickname', member.nickname !== null ? member.nickname : 'No Nickname', true)
             .addField('Status', user.presence.status, true)
-            .addField('Playing', user.presence.game !== null ? user.presence.game : 'Nothing', true)
+            .addField('Playing', user.presence.game !== null ? user.presence.game.name : 'Nothing', true)
             .addField('Display Color', member.displayHexColor, true)
             .addField('Account created at', moment(user.createdAt).format('MMMM Do YYYY'), true)
             .addField('Joined server at', moment(member.joinedAt).format('MMMM Do YYYY'), true)
