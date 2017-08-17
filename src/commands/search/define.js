@@ -62,7 +62,6 @@ module.exports = class defineCommand extends commando.Command {
                 defineEmbed
                     .setColor("#FF0000")
                     .setDescription(final)
-                    .setFooter("PyrrhaBot", "http://i.imgur.com/4U9oMS0.png")
                 msg.embed(defineEmbed);
             })
             .catch((err) => {

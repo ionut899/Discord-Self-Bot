@@ -46,7 +46,6 @@ module.exports = class cydiaCommand extends commando.Command {
         cydiaEmbed
             .setColor("#5D2E1F")
             .setAuthor("Tweak Info", "http://i.imgur.com/OPZfdht.png")
-            .setFooter("A selfbot by Favna", "https://i.imgur.com/Ylv4Hdz.jpg")
 
         cydia.getAllInfo(args.packageName).then((res) => {
             if (res === false) {

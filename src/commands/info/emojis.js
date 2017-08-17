@@ -60,7 +60,7 @@ module.exports = class emojisCommand extends commando.Command {
         }
         emojisEmbed
             .setColor('#FF0000')
-            .setFooter(`A Selfbot by Favna | Command issued at ${moment().format('MMMM Do YYYY HH:mm:ss')}`, 'http://i.imgur.com/4U9oMS0.png')
+            .setFooter(`Command issued at ${moment().format('MMMM Do YYYY HH:mm:ss')}`)
             .setDescription(`Emojis from the server \`${client.guilds.get(server).name}\``);
         emojisSetOne.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetOne, true) : emojisEmbed.addField('This server has no custom emojis', 'Although they should totally get some', true);
         emojisSetTwo.length !== 0 ? emojisEmbed.addField('\u200b', emojisSetTwo, true) : null;
