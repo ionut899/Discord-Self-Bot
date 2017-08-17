@@ -43,55 +43,23 @@ module.exports = class userInfoCommand extends commando.Command {
     async run(msg, args) {
         const member = args.member;
         const user = member.user;
-        let userInfoEmbed = new Discord.RichEmbed();
-        //Variables for the embed
-        if (msg.channel.type !== 'dm' && msg.channel.type !== 'group') {
-            var userNickname = member.nickname === null ? "No Nickname" : member.nickname;
-            var userRoles = member.roles.map(r => r.name).slice(1).length >= 1 ? member.roles.map(r => r.name).slice(1) : null;
-            var userRoleColor = member.displayHexColor;
-            var userJoinedDate = moment(member.joinedAt).format('MMMM Do YYYY');
-        };
+        const uinfoEmbed = new Discord.RichEmbed();
 
-        let userID = user.id;
-        let userName = user.username;
-        let userDiscriminator = user.discriminator;
-        let userAvatar = user.displayAvatarURL;
-        let userStatus = user.presence.status;
-        let userCreateDate = moment(user.createdAt).format('MMMM Do YYYY')
+        uinfoEmbed
+            .setAuthor(user.tag)
+            .setImage(user.displayAvatarURL)
+            .setColor(member.displayHexColor)
+            .addField('ID', user.id, true)
+            .addField('Name', user.username, true)
+            .addField('Nickname', member.nickname !== null ? member.nickname : 'No Nickname', true)
+            .addField('Status', user.presence.status, true)
+            .addField('Playing', user.presence.game !== null ? user.presence.game : 'Nothing', true)
+            .addField('Display Color', member.displayHexColor, true)
+            .addField('Account created at', moment(user.createdAt).format('MMMM Do YYYY'), true)
+            .addField('Joined server at', moment(member.joinedAt).format('MMMM Do YYYY'), true)
+            .addField('Roles', member.roles.size > 1 ? member.roles.map(r => r.name).slice(1) : 'None', true);
+        member.roles.size >= 1 ? uinfoEmbed.setFooter(`has ${member.roles.size - 1} role(s)`) : uinfoEmbed.setFooter(`has 0 roles`)
 
-        //Adding data to rich embed
-        userInfoEmbed.setAuthor(`${userName}` + "#" + `${userDiscriminator}`, `${userAvatar}`);
-        userInfoEmbed.setColor("#d43939");
-        userInfoEmbed.setImage(userAvatar);
-
-        if (msg.channel.type !== 'dm' && msg.channel.type !== 'group') {
-            if (userRoles !== null) {
-                userInfoEmbed.setFooter(`has ${userRoles.length} role(s)`, userAvatar)
-            } else {
-                userInfoEmbed.setFooter(`has 0 roles`, userAvatar)
-            }
-        } else {
-            userInfoEmbed.setFooter(`${userName}'s info requested by Favna`, userAvatar)
-        }
-
-        //First row
-        userInfoEmbed.addField("ID", userID, true);
-        userInfoEmbed.addField("Discriminator", userDiscriminator, true);
-        userInfoEmbed.addField("Status", userStatus, true);
-
-        //Second row
-        userInfoEmbed.addField("Name", userName, true);
-        msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Color", userRoleColor, true) : null;
-
-        msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Nickname", userNickname, true) : null;
-
-        //Third Row
-        msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Roles", userRoles, true) : null
-
-        //Fourth row
-        userInfoEmbed.addField("Created at", userCreateDate, true);
-        msg.channel.type !== 'dm' && msg.channel.type !== 'group' ? userInfoEmbed.addField("Joined at", userJoinedDate, true) : null
-
-        await msg.embed(userInfoEmbed);
+        await msg.embed(uinfoEmbed);
     }
 };
