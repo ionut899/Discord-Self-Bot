@@ -121,7 +121,7 @@ client.on("message", msg => {
             .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
             .setColor(msg.channel.type === 'text' ? msg.member.displayHexColor : '#535B62')
             .setThumbnail(msg.author.displayAvatarURL)
-            .addField('Message Content', msg.cleanContent)
+            .addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0,1024) : msg.cleanContent)
             .addField('Message Attachments', msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? msg.attachments.map(au => au.url) : 'None');
 
         hookClient.send(`Stalkify away <@${ownerID}>`, {
