@@ -94,8 +94,7 @@ client.registry
         ['misc', 'Miscellanious commands'],
         ['status', 'Status setting commands'],
         ['themeplaza', 'Various commands to browse ThemePlaza'],
-        ['nsfw', 'NSFW finding commands'],
-        ['store', 'Message Store commands']
+        ['nsfw', 'NSFW finding commands']
     ])
     .registerDefaultGroups()
     .registerDefaultTypes()
@@ -112,7 +111,7 @@ client.login(auth.token);
 
 client.on("message", msg => {
 
-    // Log messages including clientUser's username
+    // Notifies user when someone drops their name without a mention
     if (msg.author.id !== ownerID && msg.content.toLowerCase().indexOf(client.user.username.toLowerCase()) !== -1 && !msg.mentions.users.get(ownerID)) {
         let mentionEmbed = new Discord.RichEmbed();
 
@@ -128,82 +127,4 @@ client.on("message", msg => {
             embeds: [mentionEmbed]
         }).catch(console.error);
     }
-
-    // Log last 10 messages from clientUser in a message store for access through commands
-    if (msg.author.id === ownerID) {
-        const content = msg.content.toLowerCase();
-        const args = msg.content.split(' ').slice(1);
-        let prefix = msg.guild !== null ? msg.guild.commandPrefix : '$';
-
-        let currentStoreSize = messageStore.length;
-        if (currentStoreSize === 10) {
-            messageStore.pop();
-            for (let ID in messageStore) {
-                messageStore[ID].id = messageStore[ID].id + 1
-            }
-            messageStore.unshift({
-                id: 1,
-                message: msg
-            });
-        } else {
-            for (let ID in messageStore) {
-                messageStore[ID].id = messageStore[ID].id + 1
-            }
-            messageStore.unshift({
-                id: 1,
-                message: msg
-            });
-        };
-
-        if (content.startsWith(prefix + "edit")) {
-            messageStore.shift();
-            msg.delete();
-
-            let indicator = args.slice(0, 1).toString();
-            let newContent = args.slice(1).join(' ');
-            if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get('309470585027559425').send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment().format('MMMM Do YYYY | HH:mm:ss')}`);
-            };
-            messageStore[indicator.toString()].message.edit(newContent);
-        };
-
-        if (content.startsWith(prefix + "delete")) {
-            messageStore.shift();
-            msg.delete();
-
-            let indicator = args.slice(0, 1).toString();
-            if (!indicator.match(/[0-9]+/)) {
-                return client.channels.get('309470585027559425').send(`You forgot an indicator ID\nContent of message: ${msg.content}\nTime of command: ${moment().format('MMMM Do YYYY | HH:mm:ss')}`);
-            };
-            messageStore[indicator].message.delete();
-        };
-
-        if (content.startsWith(prefix + "clear")) {
-            msg.delete();
-            messageStore = [];
-        };
-
-        if (content.startsWith(prefix + "check")) {
-            messageStore.shift();
-            msg.delete();
-
-            var checkReply = '';
-
-            for (let i in messageStore.map(mcont => mcont.message.content)) {
-                checkReply += `${i}: ${messageStore.map(mcont => mcont.message.content)[i]}\n`
-            }
-
-            hookClient.send(`<@112001393140723712> Here is your storage log\n${checkReply}`)
-                .catch(console.error);
-        };
-    }
 });
-
-// A function to get the proper position in an array
-function positionFormatter(length) {
-    let numbers = [];
-    for (let i = 0; i < length; i++) {
-        numbers.push(i)
-    }
-    return numbers;
-};
