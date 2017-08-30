@@ -19,7 +19,7 @@
 const zalgo = require('zalgotxt');
 const commando = require('discord.js-commando');
 
-module.exports = class eightBallCommand extends commando.Command {
+module.exports = class zalgoCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'zalgo',
