@@ -38,6 +38,27 @@ client
     .on('ready', () => {
         console.log(`Client ready; logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})`);
         client.user.setAFK(true); // Set bot to AFK to enable mobile notifications
+        client.user.setPresence({
+            game: {
+                name: 'Assassin\'s Creed Unity',
+                type: 1,
+                details: 'getting to 100% sync',
+                state: 'with Pyrrha Nikos',
+                startTimestamp: Date.now(),
+                endTimestamp: Date.parse('2017-08-27T00:00:00+02:00'),
+                partySize: 1,
+                partyMax: 4,
+                spectateSecret: 'e7eb30d2ee025ed05c71ea495f770b76454ee4e0',
+                instance: 1,
+                assets: {
+                    large_image: '352512111177498644',
+                    large_text: 'Pyrrha Nikos',
+                    small_image: '352517502124818432'
+                },
+                application_id: '352511502210695168',
+                url: 'https://twitch.tv/Favna'
+            }
+        });
     })
     .on('commandPrefixChange', (guild, prefix) => {
         console.log(oneLine `
@@ -120,7 +141,7 @@ client.on("message", msg => {
             .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
             .setColor(msg.channel.type === 'text' ? msg.member.displayHexColor : '#535B62')
             .setThumbnail(msg.author.displayAvatarURL)
-            .addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0,1024) : msg.cleanContent)
+            .addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
             .addField('Message Attachments', msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? msg.attachments.map(au => au.url) : 'None');
 
         hookClient.send(`Stalkify away <@${ownerID}>`, {

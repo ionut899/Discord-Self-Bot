@@ -35,6 +35,11 @@ module.exports = class gameSetCommand extends commando.Command {
                     type: 'string'
                 },
                 {
+                    key: 'details',
+                    prompt: 'Details of game status?',
+                    type: 'string'
+                },
+                {
                     key: 'url',
                     prompt: 'URL of your stream?',
                     type: 'string'
@@ -51,5 +56,27 @@ module.exports = class gameSetCommand extends commando.Command {
                 url: args.url
             }
         })
+
+
+        client.user.setPresence({
+            game: {
+                name: args.name,
+                type: 1,
+                details: args.details,
+                state: 'with Pyrrha Nikos',
+                startTimestamp: 1504117412,
+                endTimestamp: 1509062400,
+                partySize: 1,
+                partyMax: 4,
+                assets: {
+                    large_image: '352512111177498644',
+                    large_text: 'Pyrrha Nikos',
+                    small_image: '352517502124818432',
+                    small_text: 'IDK',
+                },
+                application_id: '352511502210695168',
+                url: args.url
+            }
+        });
     };
 };
