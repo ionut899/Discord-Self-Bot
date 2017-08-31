@@ -106,6 +106,7 @@ client.registry
         ['reactions', 'Image Reactions'],
         ['info', 'Discord Info'],
         ['misc', 'Miscellanious commands'],
+        ['fun', 'Fun commands'],
         ['status', 'Status setting commands'],
         ['themeplaza', 'Various commands to browse ThemePlaza'],
         ['nsfw', 'NSFW finding commands']

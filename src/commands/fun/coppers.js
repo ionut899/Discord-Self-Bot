@@ -23,7 +23,7 @@ module.exports = class coppersCommand extends commando.Command {
         super(client, {
             name: 'coppers',
             aliases: ['police', 'lolialert', 'cops'],
-            group: 'misc',
+            group: 'fun',
             memberName: 'coppers',
             description: 'WEE WOO WEE WOO',
             guildOnly: false

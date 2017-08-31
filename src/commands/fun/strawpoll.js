@@ -24,7 +24,7 @@ module.exports = class strawpollCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'strawpoll',
-            group: 'misc',
+            group: 'fun',
             aliases: ['poll', 'straw'],
             memberName: 'strawpoll',
             description: 'Strawpoll something',

@@ -24,7 +24,7 @@ module.exports = class eightBallCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: '8ball',
-            group: 'misc',
+            group: 'fun',
             aliases: ['eightball'],
             memberName: '8ball',
             description: 'Roll a magic 8ball',

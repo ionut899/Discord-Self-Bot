@@ -25,7 +25,7 @@ module.exports = class fightCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'fight',
-            group: 'misc',
+            group: 'fun',
             aliases: ['combat'],
             memberName: 'fight',
             description: 'Pit two things/members against each other',
