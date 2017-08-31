@@ -43,12 +43,6 @@ client
                 type: 1,
                 details: 'getting to 100% sync',
                 state: 'with Pyrrha Nikos',
-                startTimestamp: Date.now(),
-                endTimestamp: Date.parse('2017-08-27T00:00:00+02:00'),
-                partySize: 1,
-                partyMax: 4,
-                spectateSecret: 'e7eb30d2ee025ed05c71ea495f770b76454ee4e0',
-                instance: 1,
                 assets: {
                     large_image: '352512111177498644',
                     large_text: 'Pyrrha Nikos',
