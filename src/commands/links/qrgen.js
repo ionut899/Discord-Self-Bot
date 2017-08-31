@@ -46,7 +46,7 @@ module.exports = class qrgenCommand extends commando.Command {
             if (err) throw err;
             imgur.uploadBase64(url.slice(22))
                 .then(function (json) {
-                    msg.edit(`QR Code for this file: ${json.data.link}`)
+                    msg.say(`QR Code for this file: ${json.data.link}`)
                 })
                 .catch(function (err) {
                     console.error(err.message);
