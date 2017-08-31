@@ -32,7 +32,6 @@ const client = new Commando.Client({
 const hookClient = new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {
     disableEveryone: true
 });
-var messageStore = [];
 
 client
     .on('ready', () => {
