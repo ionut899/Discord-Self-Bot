@@ -18,11 +18,12 @@
 
 const Commando = require('discord.js-commando');
 const Discord = require("discord.js");
-const auth = require("./auth.json");
 const path = require('path');
 const oneLine = require('common-tags').oneLine;
 const sqlite = require('sqlite');
 const moment = require('moment');
+const auth = require(path.join(__dirname + '/auth.json'));
+const data = require(path.join(__dirname + '/data.json'));
 const ownerID = auth.ownerID;
 const client = new Commando.Client({
     owner: auth.ownerID,
@@ -37,22 +38,22 @@ client
     .on('ready', () => {
         console.log(`Client ready; logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})`);
         client.user.setAFK(true); // Set bot to AFK to enable mobile notifications
-        client.user.setPresence({
+        client.user.setPresence({ // RichPresence data for when people click your user icon. Set data in data.json
             game: {
-                name: 'Assassin\'s Creed Unity',
+                name: data.richpresences.name,
                 type: 1,
-                details: 'getting to 100% sync',
-                state: 'with Pyrrha Nikos',
+                details: data.richpresences.details,
+                state: data.richpresences.state,
                 timestamps: {
-                    end: 1504454400,
+                    end: data.richpresences.endTimestamp,
                 },
                 assets: {
-                    large_image: '352512111177498644',
-                    large_text: 'Pyrrha Nikos',
-                    small_image: '352517502124818432'
+                    large_image: data.richpresences.largeImageID,
+                    large_text: data.richpresences.largeText,
+                    small_image: data.richpresences.smallImageID
                 },
-                application_id: '352511502210695168',
-                url: 'https://twitch.tv/Favna'
+                application_id: data.richpresences.application_id,
+                url: data.richpresences.url
             }
         });
     })

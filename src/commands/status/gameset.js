@@ -17,6 +17,7 @@
 // 
 
 const commando = require('discord.js-commando');
+const data = require('../../data.json');
 
 module.exports = class gameSetCommand extends commando.Command {
     constructor(client) {
@@ -53,30 +54,17 @@ module.exports = class gameSetCommand extends commando.Command {
             game: {
                 name: args.name,
                 type: 1,
-                url: args.url
-            }
-        })
-
-
-        client.user.setPresence({
-            game: {
-                name: args.name,
-                type: 1,
                 details: args.details,
-                state: 'with Pyrrha Nikos',
+                state: data.richpresences.state,
                 timestamps: {
-                    start: 1504364951,
-                },
-                party: {
-                    id: 1,
-                    size: 2,
+                    start: data.richpresences.endTimestamp,
                 },
                 assets: {
-                    large_image: '352512111177498644',
-                    large_text: 'Pyrrha Nikos',
-                    small_image: '352517502124818432',
+                    large_image: data.richpresences.largeImageID,
+                    large_text: data.richpresences.largeText,
+                    small_image: data.richpresences.smallImageID,
                 },
-                application_id: '352511502210695168',
+                application_id: data.richpresences.application_id,
                 url: args.url
             }
         });

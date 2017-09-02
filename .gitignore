@@ -1,4 +1,5 @@
 node_modules/
 .vscode/
 src/auth.json
+src/data.json
 *.log

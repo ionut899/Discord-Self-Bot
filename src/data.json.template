@@ -1,0 +1,13 @@
+{
+    "richpresences": {
+        "name": "",
+        "details": "",
+        "state": "",
+        "endTimestamp": ,
+        "largeImageID": "",
+        "smallImageID": "",
+        "largeText": "",
+        "application_id": "",
+        "url": ""
+    }
+}
