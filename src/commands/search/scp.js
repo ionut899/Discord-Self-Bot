@@ -59,10 +59,10 @@ module.exports = class embedCommand extends commando.Command {
             async function (err, resp, body) {
                 if (!err && resp.statusCode == 200) {
                     let $ = cheerio.load(body);
-                    
+
                     scpEmbed
                         .addField('Object Class', $('strong:contains("Object Class:")').parent().text().slice(14), false)
-                        .addField('Special Containment Procedures', $('strong:contains("Special Containment Procedures:")').parent().text().slice(32), false)
+                        .addField('Special Containment Procedures', $('strong:contains("Special Containment Procedures:")').parent().text().slice(32,332), false)
                         .addField('Description', `${$('strong:contains("Description:")').parent().text().slice(13,313)}... [Read more](http://www.scp-wiki.net/scp-${args.scparticle})`, false)
                 } else {
                     console.error(err);
