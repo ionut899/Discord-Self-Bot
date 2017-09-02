@@ -72,28 +72,29 @@ module.exports = class themeNameCommand extends commando.Command {
                                 themeEmbed
                                     .setColor('#FF0000')
                                     .setTitle(themeData.title)
-                                    .setURL(`https://themeplaza.eu/item/${themeID}`)
-                                    .setThumbnail(`https://themeplaza.eu/download/${themeID}/qr`)
+                                    .setURL(`https://themeplaza.eu/item/${args.themeID}`)
+                                    .setThumbnail(`https://themeplaza.eu/download/${args.themeID}/qr`)
                                     .setDescription(themeData.description)
                                     .addField('Uploader', themeData.author, true)
                                     .addField('Upload Date', moment(themeData.upload_data).format('MMMM Do YYYY'), true)
                                     .addField('Amount of downloads', `${themeData.download_count}`, true)
                                     .addField('Amount of likes', `${themeData.likes}`, true)
                                     .addField('NSFW Level', mdobj.nsfw[themeData.nsfw], true)
-                                    .addField('Custom BGM', mdobj.bgm[themeData.metadata.enable_bgm], true)
+                                    .addField('Custom BGM', mdobj.bgm[themeData.metadata.enable_bgm] !== undefined ? mdobj.bgm[themeData.metadata.enable_bgm] : mdobj.bgm[2], true)
                                     .addField('Top Screen Draw Type', mdobj.top_draw_type[themeData.metadata.top_draw_type], true)
-                                    .addField('Top Scroll', mdobj.top_frame_type[themeData.metadata.top_frame_type], true)
+                                    .addField('Top Scroll', mdobj.top_frame_type[themeData.metadata.top_frame_type] !== undefined ? mdobj.top_frame_type[themeData.metadata.top_frame_type] : mdobj.top_frame_type[1], true)
                                     .addField('Bottom Screen Draw Type', mdobj.bottom_draw_type[themeData.metadata.bottom_draw_type], true)
-                                    .addField('Bottom Scroll', mdobj.bottom_frame_type[themeData.metadata.bottom_frame_type], true)
+                                    .addField('Bottom Scroll', mdobj.bottom_frame_type[themeData.metadata.bottom_frame_type] ? mdobj.bottom_frame_type[themeData.metadata.bottom_frame_type] : mdobj.bottom_frame_type[1], true)
                                     .addField('Custom Cursor', mdobj.custom_cursor[themeData.metadata.custom_cursor], true)
                                     .addField('Custom Folder Icon', mdobj.custom_folder[themeData.metadata.custom_folder], true)
                                     .addField('Custom  Cart Icon', mdobj.custom_cart[themeData.metadata.custom_cart], true)
-                                    .addField('Custom SFX', mdobj.custom_sfx[themeData.metadata.custom_sfx], true);
+                                    .addField('Custom SFX', mdobj.custom_sfx[themeData.metadata.custom_sfx], true)
+                                    .addField('Custom BGM', themeData.metadata.enable_bgm === 1 ? themeData.metadata.bgm_info : 'None', false)
+                                    .addField('Tags', themeData.tags.join(', '), false);
 
-                                themeData.metadata.enable_bgm === 1 ? themeEmbed.addField('Custom BGM', themeData.metadata.bgm_info, false) : null;
-                                themeData.nsfw === '0' ? themeEmbed.setImage(`https://themeplaza.eu/download/${themeID}/preview`) : null
-                                themeEmbed.addField('Tags', themeData.tags.join(', '), false)
-
+                                themeData.nsfw === '0' ? themeEmbed.setImage(`https://themeplaza.eu/download/${args.themeID}/preview`) : null
+                                msg.channel.nsfw ? themeEmbed.setImage(`https://themeplaza.eu/download/${args.themeID}/preview`) : null
+                                
                                 await msg.embed(themeEmbed, `https://themeplaza.eu/item/${themeID}`);
                             } else {
                                 console.error(err);
