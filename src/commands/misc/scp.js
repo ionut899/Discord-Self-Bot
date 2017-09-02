@@ -44,7 +44,7 @@ module.exports = class embedCommand extends commando.Command {
 
 	scpEmbed
 		.setTitle("SCP-"+scpNo)
-		.setFooter("SCP Foundation","http://scp-wiki.wdfiles.com/local--files/component%3Atheme/logo.png")
+		.setFooter("SCP Foundation","https://ev1l0rd.s-ul.eu/uVu89Guq")
 		.setDescription("http://www.scp-wiki.net/scp-"+scpNo)
 
 	await msg.embed(scpEmbed)
