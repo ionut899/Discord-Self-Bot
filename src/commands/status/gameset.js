@@ -64,6 +64,13 @@ module.exports = class gameSetCommand extends commando.Command {
                 type: 1,
                 details: args.details,
                 state: 'with Pyrrha Nikos',
+                timestamps: {
+                    start: 1504364951,
+                },
+                party: {
+                    id: 1,
+                    size: 2,
+                },
                 assets: {
                     large_image: '352512111177498644',
                     large_text: 'Pyrrha Nikos',
