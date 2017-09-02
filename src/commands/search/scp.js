@@ -23,7 +23,7 @@ module.exports = class embedCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'scp',
-            group: 'misc',
+            group: 'search',
             memberName: 'scp',
             description: 'Get an SCP from the SCP foundation website',
             examples: ['scp 173', 'scp 000-j'],
@@ -38,15 +38,15 @@ module.exports = class embedCommand extends commando.Command {
     }
 
     async run(msg, args) {
-	let scpNo = args.scparticle
-	msg.delete();
-	let scpEmbed = new Discord.RichEmbed();
+        let scpNo = args.scparticle
+        msg.delete();
+        let scpEmbed = new Discord.RichEmbed();
 
-	scpEmbed
-		.setTitle("SCP-"+scpNo)
-		.setFooter("SCP Foundation","https://ev1l0rd.s-ul.eu/uVu89Guq")
-		.setDescription("http://www.scp-wiki.net/scp-"+scpNo)
+        scpEmbed
+            .setTitle("SCP-" + scpNo)
+            .setFooter("SCP Foundation", "https://ev1l0rd.s-ul.eu/uVu89Guq")
+            .setDescription("http://www.scp-wiki.net/scp-" + scpNo)
 
-	await msg.embed(scpEmbed)
+        await msg.embed(scpEmbed)
     }
 };
