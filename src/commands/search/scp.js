@@ -18,6 +18,8 @@
 
 const Discord = require("discord.js");
 const commando = require('discord.js-commando');
+const request = require('request');
+const cheerio = require('cheerio');
 
 module.exports = class embedCommand extends commando.Command {
     constructor(client) {
@@ -38,15 +40,35 @@ module.exports = class embedCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        let scpNo = args.scparticle
         msg.delete();
-        let scpEmbed = new Discord.RichEmbed();
+        const scpEmbed = new Discord.RichEmbed();
 
         scpEmbed
-            .setTitle("SCP-" + scpNo)
+            .setTitle(`SCP-${args.scparticle}`)
             .setFooter("SCP Foundation", "https://ev1l0rd.s-ul.eu/uVu89Guq")
-            .setDescription("http://www.scp-wiki.net/scp-" + scpNo)
+            .setURL(`http://www.scp-wiki.net/scp-${args.scparticle}`)
+            .setColor('#362727')
+        let searchURL = `http://www.scp-wiki.net/scp-${args.scparticle}`;
 
-        await msg.embed(scpEmbed)
+        request({
+                uri: searchURL,
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'
+                }
+            },
+            async function (err, resp, body) {
+                if (!err && resp.statusCode == 200) {
+                    let $ = cheerio.load(body);
+                    scpEmbed
+                        .addField('Object Class', $('strong:contains("Object Class:")').parent().text().slice(14), false)
+                        .addField('Special Containment Procedures', $('strong:contains("Special Containment Procedures:")').parent().text().slice(32), false)
+                        .addField('Description', `${$('strong:contains("Description:")').parent().text().slice(300)}... [Read more](http://www.scp-wiki.net/scp-${args.scparticle})`, false)
+                } else {
+                    console.error(err);
+                    console.error(`\n============\n============\nresponse status code: ${resp.statuscode}`)
+                    await msg.reply('Request error occured and couldn\'t fill in article data');
+                }
+                msg.embed(scpEmbed, `http://www.scp-wiki.net/scp-${args.scparticle}`);
+            });
     }
 };
