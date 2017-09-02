@@ -44,12 +44,7 @@ client
                 details: 'getting to 100% sync',
                 state: 'with Pyrrha Nikos',
                 timestamps: {
-                    start: 1504374736,
-                    end: 1504389600,
-                },
-                party: {
-                    id: 2,
-                    size: 2,
+                    end: 1509055200,
                 },
                 assets: {
                     large_image: '352512111177498644',
