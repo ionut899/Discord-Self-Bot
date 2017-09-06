@@ -67,9 +67,16 @@ module.exports = class quoteCommand extends commando.Command {
             .then(quote => {
 
                 const quoteEmbed = new Discord.RichEmbed();
+                if (quote.member === null) {
+                    quoteEmbed
+                        .setAuthor(`Quoting ${quote.author.username}`, quote.author.displayAvatarURL)
+                        .setColor('#FF0000')
+                } else {
+                    quoteEmbed
+                        .setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL)
+                        .setColor(msg.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000')
+                }
                 quoteEmbed
-                    .setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL)
-                    .setColor(msg.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000')
                     .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
                     .setDescription(quote.cleanContent)
 
