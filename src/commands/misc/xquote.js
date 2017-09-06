@@ -71,9 +71,7 @@ module.exports = class quoteCommand extends commando.Command {
                     .setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL)
                     .setColor(msg.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000')
                     .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
-                    .addField('Message Content', quote.cleanContent, false)
-                    .addField('Channel', args.guild.channels.get(args.channel).name, false)
-                    .addField('Attachements', quote.attachments.first() !== undefined && quote.attachments.first().url !== undefined ? quote.attachments.map(qu => qu.url) : 'None', false);
+                    .setDescription(quote.cleanContent)
 
                 msg.embed(quoteEmbed, args.content);
                 msg.delete();
