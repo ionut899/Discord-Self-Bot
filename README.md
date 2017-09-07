@@ -32,3 +32,17 @@ You have to create a file `auth.json` in the `src` folder. This file has to have
   - webhooktoken: A token from a webhook for the notifier (last part of a webhook URL)
 
   - webhookID: The ID of a webhook (also present in URL of a webhook)
+  
+## Special Thanks ##
+
+- Hydrabolt for the DiscordJS library
+
+- Gawdl3y for the DiscordJS-Commando framework
+
+- York, the creator of [AnIdiotsGuide](https://anidiots.guide/) for getting me started
+
+- Everyone on [the DiscordJS server](https://discord.gg/bRCvFy9) for answering various questions
+
+- Various people on Discord who gave me ideas for new functions or improvements to existing ones
+
+- All the creators of the node packages used in this bot
