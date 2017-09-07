@@ -104,13 +104,13 @@ client.setProvider(
 
 client.registry
     .registerGroups([
-        ['search', 'Web Search commands'],
+        ['info', 'Information Commands'],
+        ['search', 'Web Searching Commands'],
+        ['misc', 'Miscellanious commands'],
+        ['fun', 'Fun commands'],
         ['pokedex', 'Find data from the PokéDex'],
         ['links', 'Quick Website Links'],
         ['reactions', 'Image Reactions'],
-        ['info', 'Discord Info'],
-        ['misc', 'Miscellanious commands'],
-        ['fun', 'Fun commands'],
         ['status', 'Status setting commands'],
         ['themeplaza', 'Various commands to browse ThemePlaza'],
         ['nsfw', 'NSFW finding commands']

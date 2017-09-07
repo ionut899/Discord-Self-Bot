@@ -30,10 +30,10 @@ module.exports = class imageCommand extends commando.Command {
         super(client, {
             name: 'image',
             group: 'search',
-            aliases: ['img'],
+            aliases: ['img', 'i'],
             memberName: 'image',
-            description: 'Find something through Google Images',
-            examples: ['img Pyrrha Nikos', 'image Pyrrha Nikos'],
+            description: 'Finds an image through google',
+            examples: ['image {imageQuery}', 'image Pyrrha Nikos'],
             guildOnly: false,
 
             args: [{

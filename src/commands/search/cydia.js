@@ -28,7 +28,7 @@ module.exports = class cydiaCommand extends commando.Command {
             group: 'search',
             aliases: ['cy'],
             memberName: 'cydia',
-            description: 'Find cydia tweak info',
+            description: 'Finds info on a Cydia package',
             examples: ['cydia anemone', 'cy anemone'],
             guildOnly: false,
 

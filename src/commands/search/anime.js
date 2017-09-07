@@ -28,8 +28,8 @@ module.exports = class animeCommand extends commando.Command {
             group: 'search',
             aliases: ['ani', 'mal'],
             memberName: 'anime',
-            description: 'Find anime',
-            examples: ['anime Yu-Gi-Oh', 'ani Yu-Gi-Oh', 'mal Yu-Gi-Oh'],
+            description: 'Find anime on MyAnimeList',
+            examples: ['anime {animeName}', 'anime Yu-Gi-Oh'],
             guildOnly: false,
 
             args: [{

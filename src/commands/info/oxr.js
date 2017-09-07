@@ -35,7 +35,7 @@ module.exports = class moneyCommand extends commando.Command {
             aliases: ['money', 'rate', 'convert'],
             memberName: 'oxr',
             description: 'Currency converter - makes use of ISO 4217 standard currency codes',
-            examples: ['oxr 50 USD EUR', 'convert 50 GBP NOK'],
+            examples: ['oxr {amount} {currency_1} {currency_2}', 'convert 50 USD EUR'],
             guildOnly: false,
 
             args: [{

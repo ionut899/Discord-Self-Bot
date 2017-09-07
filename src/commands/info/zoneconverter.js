@@ -27,7 +27,7 @@ module.exports = class zoneConvCommand extends commando.Command {
             group: 'info',
             memberName: 'zoneconverter',
             description: 'Converts current time to specified timezone',
-            examples: ['timeconv 18:00 America/New_York', 'conv 18:00 Europe/Lisbon'],
+            examples: ['zoneconverter {Time in 24hourformat}  {Timezone in TZ}', 'zoneconverter 18:00 America/New_York'],
             guildOnly: false,
 
             args: [{

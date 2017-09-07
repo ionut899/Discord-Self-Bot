@@ -27,8 +27,8 @@ module.exports = class avatarCommand extends commando.Command {
             group: 'info',
             memberName: 'avatar',
             description: 'Gets the avatar from a user',
-            examples: ['avatar @Favna#2846', 'avatar Favna'],
-            guildOnly: false,
+            examples: ['avatar {user}', 'avatar Favna'],
+            guildOnly: true,
 
             args: [{
                 key: 'member',

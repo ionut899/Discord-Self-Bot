@@ -27,8 +27,8 @@ module.exports = class emojisCommand extends commando.Command {
             aliases: ['moji', 'mojis', 'emoji'],
             group: 'info',
             memberName: 'emojis',
-            description: 'Gets emojis from a server given its ID',
-            examples: ['emojis 246821351585742851', 'moji 246821351585742851'],
+            description: 'Gets all available custom emojis from a server',
+            examples: ['emojis {server}', 'emojis Favna\'s Self Bot Server'],
             guildOnly: false,
 
             args: [{

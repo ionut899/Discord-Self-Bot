@@ -26,8 +26,8 @@ module.exports = class debugCommand extends commando.Command {
             aliases: ['bug'],
             group: 'info',
             memberName: 'debug',
-            description: 'Gets channel or rolenames and their IDs',
-            examples: ['debug listchannels', 'debug lisroles'],
+            description: 'Gets the channel or role names and their matching IDs on a server',
+            examples: ['debug {bugType}', 'debug roles'],
             guildOnly: true,
 
             args: [{

@@ -27,10 +27,10 @@ module.exports = class gameCommand extends commando.Command {
         super(client, {
             name: 'games',
             group: 'search',
-            aliases: ['moby'],
+            aliases: ['game', 'moby'],
             memberName: 'games',
-            description: 'Find game info on mobygames',
-            examples: ['game Tales of Berseria', 'moby Tales of Berseria'],
+            description: 'Finds info on a game on Mobygames',
+            examples: ['games {gameName}', 'games Tales of Berseria'],
             guildOnly: false,
 
             args: [{

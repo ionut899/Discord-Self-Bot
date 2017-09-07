@@ -29,7 +29,7 @@ module.exports = class weatherCommand extends commando.Command {
             aliases: ['temp'],
             memberName: 'weather',
             description: 'Get the weather in a city',
-            examples: ['weather amsterdam', 'temp new york'],
+            examples: ['weather {city}', 'weather amsterdam'],
             guildOnly: false,
 
             args: [{

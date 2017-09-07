@@ -26,7 +26,7 @@ module.exports = class embedValsCommand extends commando.Command {
             aliases: ['valsofembed', 'vals'],
             group: 'info',
             memberName: 'embedvals',
-            description: 'For showing how a RichEmbed is build up',
+            description: 'Shows how a Discord RichEmbed is build up',
             guildOnly: false
         });
     }

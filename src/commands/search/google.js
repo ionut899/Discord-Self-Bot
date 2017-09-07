@@ -32,8 +32,8 @@ module.exports = class googleCommand extends commando.Command {
             group: 'search',
             aliases: ['search', 'g'],
             memberName: 'google',
-            description: 'Find something on google',
-            examples: ['google Pyrrha Nikos'],
+            description: 'Finds anything on google',
+            examples: ['google {searchQuery}','google Pyrrha Nikos'],
             guildOnly: false,
 
             args: [{

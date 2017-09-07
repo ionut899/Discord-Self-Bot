@@ -27,8 +27,8 @@ module.exports = class defineCommand extends commando.Command {
             group: 'search',
             aliases: ['def'],
             memberName: 'define',
-            description: 'Find definitions on glosbe',
-            examples: ['define pixel', 'def pixel'],
+            description: 'Gets the definition on a word on glosbe',
+            examples: ['define {word}', 'define pixel'],
             guildOnly: false,
 
             args: [{
