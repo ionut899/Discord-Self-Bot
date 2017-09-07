@@ -4,13 +4,14 @@ os: linux
 language: node_js
 node_js:
 - '8'
+cache:
+ directories:
+ - node_modules
 before_install:
+- cp ex_config.json config.json
 - npm install -g node-pre-gyp node-gyp 
 - sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 before_script:
 - npm install
-script:
-- npm start
-cache:
- directories:
- - "node_modules"
+notifications:
+  email: false
