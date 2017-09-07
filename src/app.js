@@ -38,12 +38,14 @@ client
     .on('ready', () => {
         console.log(`Client ready; logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})`);
         client.user.setAFK(true); // Set bot to AFK to enable mobile notifications
+
         client.user.setPresence({ // RichPresence data for when people click your user icon. Set data in data.json
             game: {
                 name: data.richpresences.name,
-                type: 1,
+                type: data.richpresences.type,
                 details: data.richpresences.details,
                 state: data.richpresences.state,
+                // url: data.richpresences.url,
                 timestamps: {
                     end: data.richpresences.endTimestamp,
                 },
@@ -52,8 +54,8 @@ client
                     large_text: data.richpresences.largeText,
                     small_image: data.richpresences.smallImageID
                 },
-                application_id: data.richpresences.application_id,
-                url: data.richpresences.url
+                application_id: data.richpresences.application_id
+
             }
         });
     })
