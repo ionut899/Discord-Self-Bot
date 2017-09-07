@@ -1,11 +1,12 @@
+sudo: required
 language: node_js
 node_js:
-  - '8'
+    - '8'
 before_script:
- - npm install -g node-gyp
- - npm install
+    - npm install -g node-gyp
+    - npm install
 script:
- - node src/app.js
+    - npm start
  cache:
   directories:
     - "node_modules"
