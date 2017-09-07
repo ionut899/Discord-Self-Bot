@@ -24,7 +24,7 @@ module.exports = class gameSetCommand extends commando.Command {
         super(client, {
             name: 'gameset',
             group: 'status',
-            aliases: ['game', 'gs'],
+            aliases: ['gs'],
             memberName: 'gameset',
             description: 'Set a fancy game status. Recommend to use 1 arg per reply to bot so you can use spaces. Can be used in pms.',
             examples: ['gameset'],
