@@ -26,7 +26,7 @@ module.exports = class dndCommand extends commando.Command {
             aliases: ['busy', 'red'],
             memberName: 'dnd',
             description: 'Set your status to Do Not Disturb',
-            examples: ['dnd', 'busy'],
+            examples: ['dnd'],
             guildOnly: false
         });
     }

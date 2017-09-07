@@ -29,7 +29,7 @@ module.exports = class cydiaCommand extends commando.Command {
             aliases: ['cy'],
             memberName: 'cydia',
             description: 'Finds info on a Cydia package',
-            examples: ['cydia anemone', 'cy anemone'],
+            examples: ['cydia {packageName}', 'cydia anemone'],
             guildOnly: false,
 
             args: [{

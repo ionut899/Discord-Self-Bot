@@ -26,7 +26,7 @@ module.exports = class dndCommand extends commando.Command {
             aliases: ['here', 'green'],
             memberName: 'online',
             description: 'Set your status to online',
-            examples: ['online', 'here'],
+            examples: ['online'],
             guildOnly: false
         });
     }

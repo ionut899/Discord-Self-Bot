@@ -26,8 +26,8 @@ module.exports = class gameSetCommand extends commando.Command {
             group: 'status',
             aliases: ['gs'],
             memberName: 'gameset',
-            description: 'Set a fancy game status. Recommend to use 1 arg per reply to bot so you can use spaces. Can be used in pms.',
-            examples: ['gameset'],
+            description: 'Sets your RichPresence',
+            examples: ['gameset {GameName} {GameDetails} {GameURL}'],
             guildOnly: false,
 
             args: [{

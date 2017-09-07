@@ -28,7 +28,7 @@ module.exports = class strawpollCommand extends commando.Command {
             aliases: ['poll', 'straw'],
             memberName: 'strawpoll',
             description: 'Strawpoll something',
-            examples: ['poll Title Option1 Option2 .... OptionX'],
+            examples: ['strawpoll {Title} {Option1 Option2 .... OptionX}', 'strawpoll Best_Anime_Waifu? Pyrrha_Nikos Asuna Saber'],
             guildOnly: false,
 
             args: [{

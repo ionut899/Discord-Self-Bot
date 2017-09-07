@@ -28,8 +28,8 @@ module.exports = class wikipediaCommand extends commando.Command {
             group: 'search',
             aliases: ['wen', 'wiki', 'ws'],
             memberName: 'wikipedia',
-            description: 'Get the info from a wikipedia page',
-            examples: ['wikipedia Discord'],
+            description: 'Get info from a wikipedia page',
+            examples: ['wikipedia {thing}', 'wikipedia Discord'],
             guildOnly: false,
 
             args: [{

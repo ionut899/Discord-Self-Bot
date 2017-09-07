@@ -27,7 +27,7 @@ module.exports = class reactCommand extends commando.Command {
             group: 'reactions',
             memberName: 'react',
             description: 'React with an image',
-            examples: ['react cry'],
+            examples: ['react {imageName}', 'react cry'],
             guildOnly: false,
 
             args: [{

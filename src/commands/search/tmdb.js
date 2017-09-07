@@ -29,8 +29,8 @@ module.exports = class movieCommand extends commando.Command {
             group: 'search',
             aliases: ['movie'],
             memberName: 'tmdb',
-            description: 'Find movie info on omdb',
-            examples: ['movie Ocean\'s Eleven 2001', 'tmdb Ocean\'s Eleven 2001'],
+            description: 'Finds movies and TV shows on TheMovieDB',
+            examples: ['tmdb {movie/tv show name}','tmdb Ocean\'s Eleven 2001'],
             guildOnly: false,
 
             args: [{

@@ -27,8 +27,8 @@ module.exports = class itemCommand extends commando.Command {
             group: 'pokedex',
             aliases: ['it', 'bag'],
             memberName: 'item',
-            description: 'Get the info on an item',
-            examples: ['item Life Orb'],
+            description: 'Get the info on an item in Pokémon',
+            examples: ['item {Item Name}', 'item Life Orb'],
             guildOnly: false,
 
             args: [{

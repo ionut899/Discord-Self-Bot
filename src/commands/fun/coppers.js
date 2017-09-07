@@ -22,10 +22,11 @@ module.exports = class coppersCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'coppers',
-            aliases: ['police', 'lolialert', 'cops'],
+            aliases: ['police', 'cops'],
             group: 'fun',
             memberName: 'coppers',
-            description: 'WEE WOO WEE WOO',
+            description: 'Sends a "Police you are surrounded" message',
+            examples: ['coppers'],
             guildOnly: false
         });
     }

@@ -32,7 +32,7 @@ module.exports = class themeIDCommand extends commando.Command {
             aliases: ['id', 'themeid', 'tid'],
             memberName: 'tpid',
             description: 'Get info from a theme on themeplaza based on ID',
-            examples: ['tpid 215', 'themeid 215'],
+            examples: ['tpid {ThemeID}', 'tpid 215'],
             guildOnly: false,
 
             args: [{

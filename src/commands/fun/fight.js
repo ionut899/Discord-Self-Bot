@@ -28,9 +28,9 @@ module.exports = class fightCommand extends commando.Command {
             group: 'fun',
             aliases: ['combat'],
             memberName: 'fight',
-            description: 'Pit two things/members against each other',
-            examples: ['fight Favna Chuck Norris'],
-            guildOnly: true,
+            description: 'Pit two things against each other in a fight to the death',
+            examples: ['fight {fighterOne} {fighterTwo}','fight Favna Chuck Norris'],
+            guildOnly: false,
 
             args: [{
                     key: 'fighterOne',

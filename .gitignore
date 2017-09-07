@@ -3,3 +3,4 @@ node_modules/
 src/auth.json
 src/data.json
 *.log
+src/commands/misc/multisender.js

@@ -27,7 +27,7 @@ module.exports = class cydiaSourceCommand extends commando.Command {
             group: 'links',
             memberName: 'cysource',
             description: 'Gets the link to a cydia source using the Cydia Share URL API',
-            examples: ['cysource <repo_url>'],
+            examples: ['cysource {repo_url}', 'cypkg http://apt.thebigboss.org/repofiles/cydia/'],
             guildOnly: false,
 
             args: [{

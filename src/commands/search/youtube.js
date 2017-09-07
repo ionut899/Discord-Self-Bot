@@ -37,7 +37,7 @@ module.exports = class youtubeCommand extends commando.Command {
             aliases: ['yt', 'tube'],
             memberName: 'youtube',
             description: 'Find videos on youtube',
-            examples: ['youtube RWBY volume 4', 'yt RWBY Volume 4'],
+            examples: ['youtube {videoName}', 'youtube RWBY Volume 4'],
             guildOnly: false,
 
             args: [{

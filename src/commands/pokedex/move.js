@@ -28,7 +28,7 @@ module.exports = class moveCommand extends commando.Command {
             aliases: ['attack'],
             memberName: 'move',
             description: 'Get the info on a Pokémon move',
-            examples: ['move Dragon Dance'],
+            examples: ['move {Pokémon Move Name}', 'move Dragon Dance'],
             guildOnly: false,
 
             args: [{

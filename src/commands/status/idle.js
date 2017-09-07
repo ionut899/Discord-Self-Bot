@@ -25,8 +25,8 @@ module.exports = class idleCommand extends commando.Command {
             group: 'status',
             aliases: ['away', 'orange'],
             memberName: 'idle',
-            description: 'Set your status to idle',
-            examples: ['idle', 'away'],
+            description: 'Set your status to Idle',
+            examples: ['idle'],
             guildOnly: false
         });
     }

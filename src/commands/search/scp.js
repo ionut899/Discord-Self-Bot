@@ -28,7 +28,7 @@ module.exports = class embedCommand extends commando.Command {
             group: 'search',
             memberName: 'scp',
             description: 'Get an SCP from the SCP foundation website',
-            examples: ['scp 173', 'scp 000-j'],
+            examples: ['scp {article-id}', 'scp 173'],
             guildOnly: false,
 
             args: [{

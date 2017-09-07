@@ -28,7 +28,7 @@ module.exports = class qrgenCommand extends commando.Command {
             group: 'links',
             memberName: 'qrgen',
             description: 'Generates a QR code from a given string',
-            examples: ['qr https://www.google.com'],
+            examples: ['qrgen {url}', 'qrgen https://github.com/Favna/Discord-Self-Bot/'],
             guildOnly: false,
 
             args: [{

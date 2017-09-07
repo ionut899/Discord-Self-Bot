@@ -27,7 +27,7 @@ module.exports = class cydiaPackageCommand extends commando.Command {
             group: 'links',
             memberName: 'cypkg',
             description: 'Gets the link to a cydia package using the Cydia Share URL API',
-            examples: ['cypkg <repo_url> <package_name>'],
+            examples: ['cypkg {repo_url} {package_name}', 'cypkg http://apt.thebigboss.org/repofiles/cydia/ com.anemonetheming.anemone'],
             guildOnly: false,
 
             args: [{

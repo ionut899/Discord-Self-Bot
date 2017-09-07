@@ -29,7 +29,7 @@ module.exports = class pornvidsCommand extends commando.Command {
             aliases: ['porn', 'nsfwvids'],
             memberName: 'pornvids',
             description: 'Search porn videos',
-            examples: ['pornvids teen', 'pornvids babe'],
+            examples: ['pornvids {pornography query}', 'pornvids babe'],
             guildOnly: false,
 
             args: [{

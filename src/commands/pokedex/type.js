@@ -27,8 +27,8 @@ module.exports = class typeCommand extends commando.Command {
             group: 'pokedex',
             aliases: ['matchup', 'weakness', 'advantage'],
             memberName: 'type',
-            description: 'Get type matchup for a given type',
-            examples: ['type Dragon'],
+            description: 'Get type matchup for a given type or type combination',
+            examples: ['type {type1} {type2}', 'type Dragon Flying'],
             guildOnly: false,
 
             args: [{

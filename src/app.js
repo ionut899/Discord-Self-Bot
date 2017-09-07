@@ -45,7 +45,7 @@ client
                 type: data.richpresences.type,
                 details: data.richpresences.details,
                 state: data.richpresences.state,
-                // url: data.richpresences.url,
+                url: data.richpresences.url,
                 timestamps: {
                     end: data.richpresences.endTimestamp,
                 },
@@ -108,9 +108,9 @@ client.registry
     .registerGroups([
         ['info', 'Information Commands'],
         ['search', 'Web Searching Commands'],
-        ['misc', 'Miscellanious commands'],
-        ['fun', 'Fun commands'],
-        ['pokedex', 'Find data from the PokéDex'],
+        ['fun', 'Fun and Games Commands'],
+        ['misc', 'Miscellanious Commands'],
+        ['pokedex', 'PokéDex Lookup Commands'],
         ['links', 'Quick Website Links'],
         ['reactions', 'Image Reactions'],
         ['status', 'Status setting commands'],

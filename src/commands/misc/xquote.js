@@ -28,7 +28,7 @@ module.exports = class quoteCommand extends commando.Command {
             aliases: ['xq'],
             memberName: 'xquote',
             description: 'Quote someone else\'s message into a RichEmbed. Allows for cross server quoting but IDs are required',
-            examples: ['quote server channelID messageID exta_content'],
+            examples: ['quote {server name or ID} {channelID} {messageID} {content you want to send along with the embed}'],
             guildOnly: false,
 
             args: [{

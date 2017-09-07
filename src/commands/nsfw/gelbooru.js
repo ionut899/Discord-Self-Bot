@@ -28,7 +28,7 @@ module.exports = class gelbooruCommand extends commando.Command {
             aliases: ['gel', 'booru'],
             memberName: 'gelbooru',
             description: 'Find NSFW Content on gelbooru',
-            examples: ['gelbooru Pyrrha Nikos'],
+            examples: ['gelbooru {NSFW Query}', 'gelbooru Pyrrha Nikos'],
             guildOnly: false,
 
             args: [{

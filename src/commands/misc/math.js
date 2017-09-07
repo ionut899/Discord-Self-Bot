@@ -26,8 +26,8 @@ module.exports = class mathCommand extends commando.Command {
             aliases: ['calc'],
             group: 'misc',
             memberName: 'math',
-            description: 'Calculate anything with scalc',
-            examples: ['math -1 + -5 = -6', 'math -10 - abs(-3) + 2^5 = 18'],
+            description: 'Calculate anything',
+            examples: ['math {equation to solve}', 'math -10 - abs(-3) + 2^5'],
             guildOnly: false,
 
             args: [{

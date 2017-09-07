@@ -26,7 +26,7 @@ module.exports = class lmgtfyCommand extends commando.Command {
             aliases: ['dumb'],
             memberName: 'lmgtfy',
             description: 'Produce a lmgtfy (let me google that for you) URL',
-            examples: ['lmgtfy is 1 minute the same as 60 seconds?', 'lmgtfy can I safely look at pictures of the sun?', 'lmgtfy is it legal to kill an ant???', 'lmgtfy are there birds in canada?'],
+            examples: ['lmgtfy {query}', 'lmgtfy is it legal to kill an ant???', 'lmgtfy are there birds in canada?'],
             guildOnly: false,
 
             args: [{

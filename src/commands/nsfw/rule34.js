@@ -28,7 +28,7 @@ module.exports = class rule34Command extends commando.Command {
             aliases: ['r34'],
             memberName: 'rule34',
             description: 'Find NSFW Content on Rule34',
-            examples: ['rule34 Pyrrha Nikos'],
+            examples: ['rule34 {NSFW Query}', 'rule34 Pyrrha Nikos'],
             guildOnly: false,
 
             args: [{

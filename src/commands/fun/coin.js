@@ -27,7 +27,7 @@ module.exports = class coinCommand extends commando.Command {
             group: 'fun',
             aliases: ['flip'],
             memberName: 'coin',
-            description: 'Flip a coin',
+            description: 'Flips a coin',
             examples: ['flip'],
             guildOnly: false,
         });

@@ -24,9 +24,10 @@ module.exports = class embedCommand extends commando.Command {
         super(client, {
             name: 'embed',
             group: 'misc',
+            aliases: ['emb'],
             memberName: 'embed',
             description: 'Create custom RichEmbeds on the fly',
-            examples: ['embed FieldName>Value1;Value2<FieldName2>Value1;Value2'],
+            examples: ['embed {FieldName>Value1;Value2<FieldName2>Value1;Value2... etc}', 'embed What goes up but never comes down?>Your Age'],
             guildOnly: false,
 
             args: [{

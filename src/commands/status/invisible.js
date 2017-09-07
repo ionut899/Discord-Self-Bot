@@ -26,7 +26,7 @@ module.exports = class dndCommand extends commando.Command {
             aliases: ['invis', 'offline', 'grey', 'gray'],
             memberName: 'invisible',
             description: 'Set your status to invisible',
-            examples: ['invis', 'invisible'],
+            examples: ['invisible'],
             guildOnly: false
         });
     }

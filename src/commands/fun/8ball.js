@@ -28,7 +28,7 @@ module.exports = class eightBallCommand extends commando.Command {
             aliases: ['eightball'],
             memberName: '8ball',
             description: 'Roll a magic 8ball',
-            examples: ['8ball Is Favna a genius coder?', 'eightball Is Pyrrha best waifu?'],
+            examples: ['8ball {question}', '8ball is Favna a genius coder?'],
             guildOnly: false,
 
             args: [{

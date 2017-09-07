@@ -43,7 +43,7 @@ module.exports = class dexCommand extends commando.Command {
             aliases: ['pokedex', 'dexfind'],
             memberName: 'dex',
             description: 'Get the info on a Pokémon',
-            examples: ['dex Dragonite'],
+            examples: ['dex {Pokemon Name}', 'dex Dragonite'],
             guildOnly: false,
 
             args: [{

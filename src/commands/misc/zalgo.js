@@ -24,10 +24,9 @@ module.exports = class zalgoCommand extends commando.Command {
         super(client, {
             name: 'zalgo',
             group: 'misc',
-            aliases: ['fukup'],
             memberName: 'zalgo',
-            description: 'Fuck up text using Zalgo',
-            examples: ['zalgo HE COMES'],
+            description: 'F*ck up text using Zalgo',
+            examples: ['zalgo {message}','zalgo HE COMES'],
             guildOnly: false,
 
             args: [{

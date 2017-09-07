@@ -28,7 +28,7 @@ module.exports = class urbanCommand extends commando.Command {
             aliases: ['ub', 'ud'],
             memberName: 'urban',
             description: 'Find definitions on urban dictionary',
-            examples: ['urban everclear', 'ub everclear', 'ud everclear'],
+            examples: ['urban {word}', 'urban ugt'],
             guildOnly: false,
 
             args: [{
@@ -38,7 +38,7 @@ module.exports = class urbanCommand extends commando.Command {
             }]
         });
     }
-
+    
     async run(msg, args) {
         urban(args.query).first(async function (json) {
             if (json == undefined) {
