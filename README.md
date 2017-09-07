@@ -9,8 +9,6 @@ This it the source for Favna's Discord-Self-Bot. Come join the dedicated server 
 
 ### [**Install guide + list of all commands.**](https://github.com/Favna/Discord-Self-Bot/wiki)
 
-![](https://cdn.rawgit.com/Favna/Discord-Self-Bot/61bc46fa/readme.gif)
-
 ## Features
 
 - Many web searches, such as google, google image, myanimelist and youtube
