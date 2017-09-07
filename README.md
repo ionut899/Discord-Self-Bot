@@ -1,39 +1,35 @@
-# Discord-Self-Bot #
+# Discord-Self-Bot
 
-This it the source for Favna's Discord-Self-Bot. The owner of this bot is Favna. This code of this bot has been made publicly available under the GNU Licence.
+[![Donate](https://img.shields.io/badge/Donate-PayPal-547ab7.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GY3CFCL25HQNJ) [![License](https://img.shields.io/badge/License-GNU%20General%20Public%20License%20v3.0-007EC6.svg?style=flat-square)](https://github.com/appu1232/Discord-Selfbot/blob/master/LICENSE) [![Discord](https://img.shields.io/discord/102860784329052160.svg?style=flat-square)](https://discord.gg/zdt5yQt) [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/Favna_)
 
-## NOTE: The information below is outdated and using these will require pre-existing NodeJS knowledge to run it. I am working on getting the wiki on this repository set up for proper noob friendly installation instructions.
-
----
+This it the source for Favna's Discord-Self-Bot. Come join the dedicated server if you have any questions, concerns or other talk about to bot.
 
 
-### Getting started ###
+[<img src="https://canary.discordapp.com/api/guilds/246821351585742851/widget.png?style=banner3">](https://discord.gg/zdt5yQt)
 
-First of all you need to install [node.js](https://nodejs.org/en/). You can [download it here](https://nodejs.org/en/download/). Once you have node.js set up clone this repository with `git clone`. After cloning this repository run `npm install` in the project root to install all dependancies.
+### [**Install guide + list of all commands.**](https://github.com/Favna/Discord-Self-Bot/wiki)
 
-### Requirements for hosting this code ###
+## Features
 
-You have to create a file `auth.json` in the `src` folder. This file has to have a series of variables for the bot to function properly. The required variables are as follows. A template file has been included in the folder to base it on.
+- Many web searches, such as google, google image, myanimelist and youtube
 
-  - token: Your bot or user token
+- Setting a RichPresence status
 
-  - googleapikey: A Google API Key. Enable Custom Search engine and Youtube Data API
+- Custom Embeds
 
-  - imageEngineKey: Google Custom Search Engine key (can be the same as searchEngineKey but not recommended)
+- Quoting messages
 
-  - searchEngineKey: Google Custom Search Engine key (can be the same as imageEngineKey but not recommended)
+- Looking up data in the PokéDex
 
-  - ownerID: Your user ID
+- Playing games such as magic 8ball and flipping coins
 
-  - oxrAppID: An API key created on Open-Exchange-Rates
+- Getting info on users and servers
 
-  - TheMovieDBV3ApiKey: Your API key created on The Movie DB
+- Status control
 
-  - webhooktoken: A token from a webhook for the notifier (last part of a webhook URL)
+- Many other commands. See [All Commands on the Wiki](https://github.com/Favna/Discord-Self-Bot/wiki/All-Commands) for the full list
 
-  - webhookID: The ID of a webhook (also present in URL of a webhook)
-  
-## Special Thanks ##
+## Special Thanks
 
 - Hydrabolt for the DiscordJS library
 
@@ -46,3 +42,9 @@ You have to create a file `auth.json` in the `src` folder. This file has to have
 - Various people on Discord who gave me ideas for new functions or improvements to existing ones
 
 - All the creators of the node packages used in this bot
+
+## Buy me a donut
+
+This bot is open source and always will be, even if I don't get donations. That said, I know there are people out there that may still want to donate just to show their appreciation so this is for you guys. Thanks in advance!
+
+[![paypal](https://favna.s-ul.eu/X63BsACU.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GY3CFCL25HQNJ)
