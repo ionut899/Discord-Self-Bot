@@ -4,12 +4,14 @@ os: linux
 language: node_js
 node_js:
 - '8'
+python:
+ - "3.6"
 cache:
  directories:
  - node_modules
 before_install:
 - sudo apt-get update -y
-- sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ python3.6
+- sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 - npm install -g node-pre-gyp node-gyp
 - echo "alias python=python3" >> .bashrc
 - source .bashrc
