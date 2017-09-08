@@ -39,7 +39,7 @@ client
         console.log(`Client ready; logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})`);
         client.user.setAFK(true); // Set bot to AFK to enable mobile notifications
 
-        client.user.setPresence({ // RichPresence data for when people click your user icon. Set data in data.json
+     /*   client.user.setPresence({ // RichPresence data for when people click your user icon. Set data in data.json
             game: {
                 name: data.richpresences.name,
                 type: data.richpresences.type,
@@ -57,7 +57,7 @@ client
                 application_id: data.richpresences.application_id
 
             }
-        });
+        });*/
     })
     .on('commandPrefixChange', (guild, prefix) => {
         console.log(oneLine `
