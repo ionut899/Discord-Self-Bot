@@ -4,6 +4,9 @@ os: linux
 language: node_js
 node_js:
 - '8'
+cache:
+ directories:
+ - node_modules
 before_install:
 - npm install -g node-pre-gyp node-gyp 
 - sudo apt-get update -y
@@ -13,8 +16,5 @@ before_install:
 - sudo apt-get upgrade -y
 before_script:
 - npm install
-script:
-- npm start
-cache:
- directories:
- - "node_modules"
+notifications:
+  email: false
