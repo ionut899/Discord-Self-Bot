@@ -6,7 +6,11 @@ node_js:
 - '8'
 before_install:
 - npm install -g node-pre-gyp node-gyp 
-- sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+- sudo apt-get update -y
+- sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ python3.6
+- echo "alias python=python3" >> .bashrc
+- source .bashrc
+- sudo apt-get upgrade -y
 before_script:
 - npm install
 script:
