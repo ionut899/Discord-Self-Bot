@@ -15,7 +15,6 @@ before_install:
 - npm install -g node-pre-gyp node-gyp
 - echo "alias python=python3" >> .bashrc
 - source .bashrc
-- sudo apt-get upgrade -y
 before_script:
 - npm install
 notifications:
