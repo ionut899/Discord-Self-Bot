@@ -4,3 +4,4 @@ src/auth.json
 src/data.json
 *.log
 src/commands/misc/multisender.js
+src/commands/status/gameset.js
