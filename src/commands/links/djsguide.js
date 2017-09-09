@@ -30,19 +30,21 @@ module.exports = class djsguideCommand extends commando.Command {
             guildOnly: false,
 
             args: [{
-                key: 'class',
-                prompt: 'Discord.JS class?',
-                type: 'string'
-            }, {
-                key: 'section',
-                prompt: 'Class section?',
-                type: 'string',
-                default: null
-            }]
+                    key: 'class',
+                    prompt: 'Discord.JS class?',
+                    type: 'string'
+                },
+                {
+                    key: 'section',
+                    prompt: 'Class section?',
+                    type: 'string',
+                    default: ""
+                }
+            ]
         });
     }
 
-    async run(msg) {
+    async run(msg, args) {
         await msg.say(`https://discord.js.org/#/docs/main/stable/class/${args.class}?scrollTo=${args.section}`)
     };
 };
