@@ -29,13 +29,20 @@ module.exports = class serverInfoCommand extends commando.Command {
             memberName: 'server',
             description: 'Gets information about the server.',
             examples: ['server'],
-            guildOnly: true
+            guildOnly: false,
+
+            args: [{
+                key: 'server',
+                prompt: 'Get info from which server?',
+                type: 'guild',
+                default: 'current'
+            }]
         });
     }
 
-    async run(msg) {
+    async run(msg, args) {
         const serverEmbed = new Discord.RichEmbed();
-        const guild = msg.guild;
+        const guild = args.server === 'current' ? msg.guild : args.server
         const presences = guild.presences.map(st => st.status)
         const channels = guild.channels.map(ty => ty.type);
         var onlineMembers = 0;

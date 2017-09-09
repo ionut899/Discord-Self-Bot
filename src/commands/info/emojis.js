@@ -33,15 +33,14 @@ module.exports = class emojisCommand extends commando.Command {
 
             args: [{
                 key: 'server',
-                label: 'ID',
                 prompt: 'What server would you like the emojis from?',
-                type: 'string'
+                type: 'guild'
             }]
         });
     }
 
     async run(msg, args) {
-        const server = args.server;
+        const server = args.server.id;
         let client = msg.member.user.client;
         let guildMojiNames = client.guilds.get(server).emojis.map(gmoji => gmoji.name);
         let emojisSetOne = [];
