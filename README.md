@@ -1,6 +1,6 @@
 # Discord-Self-Bot
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-547ab7.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GY3CFCL25HQNJ) [![License](https://img.shields.io/badge/License-GNU%20General%20Public%20License%20v3.0-007EC6.svg?style=flat-square)](https://github.com/Favna/Discord-Self-Bot/blob/master/LICENCE.md) <!-- [![Build Status](https://img.shields.io/travis/Favna/Discord-Self-Bot.svg?style=flat-square)](https://travis-ci.org/Favna/Discord-Self-Bot/jobs/273071731)--> [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/Favna_)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-547ab7.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GY3CFCL25HQNJ) [![License](https://img.shields.io/badge/License-GNU%20General%20Public%20License%20v3.0-007EC6.svg?style=flat-square)](https://github.com/Favna/Discord-Self-Bot/blob/master/LICENCE.md)  [![Build Status](https://img.shields.io/travis/Favna/Discord-Self-Bot.svg?style=flat-square)](https://travis-ci.org/Favna/Discord-Self-Bot/jobs/273071731) [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/Favna_)
 
 This it the source for Favna's Discord-Self-Bot. Come join the dedicated server if you have any questions, concerns or other talk about to bot.
 
