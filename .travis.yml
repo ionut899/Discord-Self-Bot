@@ -22,6 +22,8 @@ before_script:
 - npm install sqlite --save
 install:
 - npm install
+script:
+- npm test
 notifications:
   email: false
 env:
