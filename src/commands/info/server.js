@@ -28,7 +28,7 @@ module.exports = class serverInfoCommand extends commando.Command {
             group: 'info',
             memberName: 'server',
             description: 'Gets information about the server.',
-            examples: ['server'],
+            examples: ['server {serverName ID (partial or full)}', `server Favna's Selfbot`],
             guildOnly: false,
 
             args: [{
