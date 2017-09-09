@@ -41,6 +41,8 @@ module.exports = class serverInfoCommand extends commando.Command {
     }
 
     async run(msg, args) {
+        if (msg.channel.type !== 'text' && args.server === 'current') return msg.reply('An argument of server name (partial or full) or server ID is required when talking outside of a server')
+
         const serverEmbed = new Discord.RichEmbed();
         const guild = args.server === 'current' ? msg.guild : args.server
         const presences = guild.presences.map(st => st.status)
