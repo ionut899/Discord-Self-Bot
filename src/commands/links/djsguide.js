@@ -22,7 +22,7 @@ module.exports = class djsguideCommand extends commando.Command {
     constructor(client) {
         super(client, {
             name: 'djsguide',
-            aliases: ['guide', 'djs'],
+            aliases: ['guide', 'djs', 'docs'],
             group: 'links',
             memberName: 'djsguide',
             description: 'Gets the link to a specific Discord.JS class page and optionally section on that page',
