@@ -10,9 +10,10 @@ cache:
   directories:
   - node_modules
 before_install:
-- openssl aes-256-cbc -K $encrypted_bcb16124b8a4_key -iv $encrypted_bcb16124b8a4_iv -in auth.json.enc -out src/auth.json -d
+- echo $authfile | gpg --passphrase-fd 0 src/auth.json.gpg
 - sudo apt-get update -y
-- sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ python3.4
+- sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential
+  g++ python3.4
 - npm install -g node-pre-gyp node-gyp
 - echo "alias python=python3" >> .bashrc
 - source .bashrc
@@ -22,3 +23,6 @@ script:
 - npm start
 notifications:
   email: false
+env:
+  global:
+    secure: KhVcex5Q/w5SMKkiMnAFMuAso6fd60CoGzUpebFcSckijp0VhC2PTXxPyj2iZ4uYI/1R0h1XTyeB5E3XZFRCxVLihn36I5w8rhq92R0h88RdXl4+PiamoQFsqkLFbzUoGelv2F6T3qChDNy3ggLvOaWOOCYs3nEmKsM4149hHi24X7e0HkWdUnXfyMRKBkqWaPj14e4bnlKxYaYZowRB3OsTctyDmDXH2gkzs3kRKpPXyXPSTV0r3d/cjBkLq4pPYrT+7WrLpAscyijIg1jsc7AaYrzrOUxielSAtqZlusF/KUzhiwpAM/VUiuOgQ+ZPeqkEkcGIBf9jeirbY5JJ65OnxfvxZNdr2xqeFcWR+3dLTwUo05AO2Yj9xX3+hvlOk6qwKdISe8gkZoe+QkTwDXiqOVnnsPg5nUnjBUCFcO9KSy6eD5eVnTAFLoNqQOkJJCKpyk94kA2gAYhgh5/Td0RK4XNS78bDLaB3EN5c7UuuMQVLMTnVullCv0Yp0VqT/ujrAlQXq4ltpt7mE1aE8J26zhpaJCBTgM1Vh1kknawzXVH/x2lK3xgjnfh0bzf2VGYuxjfN0eeDoXis0l4jED072DI+GAaE+Q94AxhqAS1RUIJWa5kxKqCfFOrFceQuLVLiSKBZcc0Ou+zCo8SYNLdUG2jffx1xzYbTxoamdrM=
