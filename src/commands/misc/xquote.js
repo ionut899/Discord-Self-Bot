@@ -53,6 +53,7 @@ module.exports = class quoteCommand extends commando.Command {
                     key: 'content',
                     prompt: 'What content would you like to send along with the quote?',
                     type: 'string',
+                    default: "",
                     wait: 60
                 }
             ]
