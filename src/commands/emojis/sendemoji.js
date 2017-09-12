@@ -35,12 +35,17 @@ module.exports = class sendEmojiCommand extends commando.Command {
                 key: 'emojiName',
                 prompt: 'What emoji do you want send?',
                 type: 'string'
+            }, {
+                key: 'message',
+                prompt: 'Content to send along with the emoji?',
+                type: 'string',
+                default: ""
             }]
         });
     }
 
     async run(msg, args) {
-        await msg.channel.send({
+        await msg.channel.send(args.message, {
             file: path.join(__dirname, `/images/${args.emojiName.toLowerCase()}.png`)
         });
         await msg.delete();
