@@ -82,7 +82,7 @@ module.exports = class quoteCommand extends commando.Command {
                     .setDescription(quote.cleanContent)
 
                 let undefCheck = quote.attachments.first() !== undefined
-                let extCheck = quote.attachments.first().url.slice(-3)
+                let extCheck = undefCheck == true ? quote.attachments.first().url.slice(-3) : null
                 if (undefCheck && extCheck === 'peg' || undefCheck && extCheck === 'jpg' || undefCheck && extCheck === 'png' || undefCheck && extCheck === 'gif') {
                     quoteEmbed.setImage(quote.attachments.first().url)
                 }

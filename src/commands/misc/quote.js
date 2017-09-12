@@ -70,19 +70,19 @@ module.exports = class quoteCommand extends commando.Command {
                 quoteEmbed
                     .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
                     .setDescription(quote.cleanContent)
-       
-                    let undefCheck = quote.attachments.first() !== undefined
-                    let extCheck = quote.attachments.first().url.slice(-3)
-                    if (undefCheck && extCheck === 'peg' || undefCheck && extCheck === 'jpg' || undefCheck && extCheck === 'png' || undefCheck && extCheck === 'gif') {
-                        quoteEmbed.setImage(quote.attachments.first().url)
-                    }
+
+                let undefCheck = quote.attachments.first() !== undefined
+                let extCheck = undefCheck == true ? quote.attachments.first().url.slice(-3) : null
+                if (undefCheck && extCheck === 'peg' || undefCheck && extCheck === 'jpg' || undefCheck && extCheck === 'png' || undefCheck && extCheck === 'gif') {
+                    quoteEmbed.setImage(quote.attachments.first().url)
+                }
 
                 msg.embed(quoteEmbed, args.content);
                 msg.delete();
             })
             .catch(err => {
                 console.error(err)
-                return msg.reply('Something went wrong. Perhaps the ')
+                return msg.reply('Something went wrong')
             })
     };
 };
