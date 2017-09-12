@@ -20,28 +20,28 @@ const Discord = require("discord.js");
 const commando = require('discord.js-commando');
 const path = require('path');
 
-module.exports = class reactCommand extends commando.Command {
+module.exports = class sendEmojiCommand extends commando.Command {
     constructor(client) {
         super(client, {
-            name: 'react',
-            group: 'reactions',
-            memberName: 'react',
-            description: 'React with an image',
-            examples: ['react {imageName}', 'react cry'],
+            name: 'sendemoji',
+            aliases: ['emoji', 'emo', 'sendemo', 'emosend'],
+            group: 'emojis',
+            memberName: 'sendemoji',
+            description: 'Send an emoji',
+            examples: ['sendemoji {imageName}', 'sendemoji thonk'],
             guildOnly: false,
 
             args: [{
-                key: 'image',
-                prompt: 'What image do you want to react with?',
+                key: 'emojiName',
+                prompt: 'What emoji do you want send?',
                 type: 'string'
             }]
         });
     }
 
     async run(msg, args) {
-        const image = args.image;
         await msg.channel.send({
-            file: path.join(__dirname, `/images/${image}.jpg`)
+            file: path.join(__dirname, `/images/${args.emojiName.toLowerCase()}.png`)
         });
         await msg.delete();
     }

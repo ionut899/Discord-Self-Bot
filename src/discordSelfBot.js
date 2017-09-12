@@ -187,9 +187,10 @@ class discordSelfBot {
                 ['misc', 'Miscellanious Commands'],
                 ['pokedex', 'PokéDex Lookup Commands'],
                 ['links', 'Quick Website Links'],
-                ['reactions', 'Image Reactions'],
+                ['memes', 'React with meme images'],
                 ['status', 'Status setting commands'],
                 ['themeplaza', 'Various commands to browse ThemePlaza'],
+                ['emojis', '"Global" emojis as images'],
                 ['nsfw', 'NSFW finding commands']
             ])
             .registerDefaultGroups()

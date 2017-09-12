@@ -20,13 +20,13 @@ const commando = require('discord.js-commando');
 const Discord = require("discord.js");
 const moment = require('moment');
 
-module.exports = class emojisCommand extends commando.Command {
+module.exports = class listEmojisCommand extends commando.Command {
     constructor(client) {
         super(client, {
-            name: 'emojis',
-            aliases: ['moji', 'mojis', 'emoji'],
-            group: 'info',
-            memberName: 'emojis',
+            name: 'listemojis',
+            aliases: ['listemo', 'emolist'],
+            group: 'emojis',
+            memberName: 'listemojis',
             description: 'Gets all available custom emojis from a server',
             examples: ['emojis {serverName or ID (partial or full)}', 'emojis Favna\'s Selfbot'],
             guildOnly: false,
