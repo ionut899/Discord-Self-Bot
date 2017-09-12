@@ -28,7 +28,7 @@ module.exports = class quoteCommand extends commando.Command {
             aliases: ['quoter', 'q'],
             memberName: 'quote',
             description: 'Quote someone else\'s message into a RichEmbed. Limited to same server, see xquote for cross server.',
-            examples: ['quote {channel name or ID} {messageID} {content you want to send along with the embed}','quote base 355275528002994176 Oh so that was the first message on the channel!'],
+            examples: ['quote {channel name or ID} {messageID} {content you want to send along with the embed}', 'quote base 355275528002994176 Oh so that was the first message on the channel!'],
             guildOnly: false,
 
             args: [{
@@ -53,7 +53,6 @@ module.exports = class quoteCommand extends commando.Command {
 
     async run(msg, args) {
 
-
         msg.guild.channels.get(args.channel.id)
             .fetchMessage(args.message)
             .then(quote => {
@@ -71,6 +70,12 @@ module.exports = class quoteCommand extends commando.Command {
                 quoteEmbed
                     .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
                     .setDescription(quote.cleanContent)
+       
+                    let undefCheck = quote.attachments.first() !== undefined
+                    let extCheck = quote.attachments.first().url.slice(-3)
+                    if (undefCheck && extCheck === 'peg' || undefCheck && extCheck === 'jpg' || undefCheck && extCheck === 'png' || undefCheck && extCheck === 'gif') {
+                        quoteEmbed.setImage(quote.attachments.first().url)
+                    }
 
                 msg.embed(quoteEmbed, args.content);
                 msg.delete();
@@ -79,11 +84,5 @@ module.exports = class quoteCommand extends commando.Command {
                 console.error(err)
                 return msg.reply('Something went wrong. Perhaps the ')
             })
-
-
-        // msg.client.guilds.get(args.guild.id).channels.get(args.channel)
-        //     .fetchMessage(args.message)
-        //     .then(quote => console.log(quote.content))
-        //     .catch(err => console.error(err))
     };
 };
