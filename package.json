@@ -1,7 +1,7 @@
 {
-  "name": "selfbot",
-  "version": "4.0.0",
-  "description": "A selfbot for Favna#2846",
+  "name": "discord-self-bot",
+  "version": "4.1.0",
+  "description": "Favna#2846's Discord-Self-Bot for anyone to grant extreme power to their Discord usage",
   "author": "Favna",
   "license": "LGPL-3.0",
   "dependencies": {
@@ -62,7 +62,7 @@
   },
   "homepage": "https://github.com/Favna/PyrrhaBot#readme",
   "engines": {
-    "node": "7.10.0"
+    "node": "8.5.0"
   },
   "false": {}
 }
