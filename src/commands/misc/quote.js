@@ -65,10 +65,10 @@ module.exports = class quoteCommand extends commando.Command {
                 } else {
                     quoteEmbed
                         .setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL)
-                        .setColor(msg.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000')
+                        .setColor(quote.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000')
                 }
                 quoteEmbed
-                    .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
+                    .setFooter(`Message dates from ${moment(quote.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
                     .setDescription(quote.cleanContent)
 
                 let undefCheck = quote.attachments.first() !== undefined
