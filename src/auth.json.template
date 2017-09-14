@@ -6,6 +6,7 @@
   "searchEngineKey": "Google Custom Search Engine key (can be the same as imageEngineKey but not recommended)",
   "oxrAppID": "An API key created on Open-Exchange-Rates",
   "TheMovieDBV3ApiKey": "Your API key created on The Movie DB",
+  "steamAPIKey": "Your Steam API key here",
   "webhookID": "The ID of a webhook",
   "webhooktoken": "The token of a webhook"
 }
