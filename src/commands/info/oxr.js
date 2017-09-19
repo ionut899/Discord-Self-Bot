@@ -34,15 +34,26 @@ module.exports = class moneyCommand extends commando.Command {
             group: 'info',
             aliases: ['money', 'rate', 'convert'],
             memberName: 'oxr',
-            description: 'Currency converter - makes use of ISO 4217 standard currency codes',
+            description: 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
             examples: ['oxr {amount} {currency_1} {currency_2}', 'convert 50 USD EUR'],
             guildOnly: false,
 
             args: [{
-                key: 'input',
-                prompt: 'Currency amount and country codes? (example format: `1 USD EUR`)',
-                type: 'string'
-            }]
+                    key: 'value',
+                    prompt: 'Amount of money?',
+                    type: 'string'
+                },
+                {
+                    key: 'curOne',
+                    prompt: 'What is the currency you want to convert **from**?',
+                    type: 'string'
+                },
+                {
+                    key: 'curTwo',
+                    prompt: 'What is the currency you want to convert **to**?',
+                    type: 'string'
+                }
+            ]
         });
     }
 
@@ -50,35 +61,40 @@ module.exports = class moneyCommand extends commando.Command {
         oxr.latest(async function () {
             fx.rates = oxr.rates;
             fx.base = oxr.base;
-            let conversionQuery = args.input.split(' ');
 
-           await converter(conversionQuery).then((convertedMoney) => {
+console.log(oxr.rates);
+
+            await converter(replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo).then((convertedMoney) => {
                 let oxrEmbed = new Discord.RichEmbed();
                 oxrEmbed
                     .setColor('#2558CF')
                     .setAuthor('🌐 Currency Converter')
-                    .addField(conversionQuery[1] !== 'BTC' ?
-                        `:flag_${conversionQuery[1].slice(0,2).toLowerCase()}: Money in ${conversionQuery[1]}` :
+                    .addField(args.curOne !== 'BTC' ?
+                        `:flag_${args.curOne.slice(0,2).toLowerCase()}: Money in ${args.curOne}` :
                         `💰 Money in Bitcoin`,
-                        `${currencySymbol(conversionQuery[1])}${conversionQuery[0]}`, true)
+                        `${currencySymbol(args.curOne)}${replaceAll(args.value, /,/, '.')}`, true)
 
-                    .addField(conversionQuery[2] !== 'BTC' ?
-                        `:flag_${conversionQuery[2].slice(0,2).toLowerCase()}: Money in ${conversionQuery[2]}` :
+                    .addField(args.curTwo !== 'BTC' ?
+                        `:flag_${args.curTwo.slice(0,2).toLowerCase()}: Money in ${args.curTwo}` :
                         `💰 Money in Bitcoin`,
-                        `${currencySymbol(conversionQuery[2])}${convertedMoney}`, true)
+                        `${currencySymbol(args.curTwo)}${convertedMoney}`, true)
                     .setFooter(`Converted money from input using openexchangerates | converted on: ${moment().format("MMMM Do YYYY | HH:mm:ss")}`);
                 msg.embed(oxrEmbed);
             }).catch((e) => {
                 console.error(e);
-                msg.reply('***An error occurred. Make sure you used correct ISO 4217 standard currency codes, see here for the list: <http://www.xe.com/iso4217.php>***')
+                msg.reply('***An error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>***')
             });
         });
     };
 };
 
-async function converter(conversionQuery) {
-    return fx.convert(conversionQuery[0], {
-        from: conversionQuery[1],
-        to: conversionQuery[2]
+async function converter(value, curOne, curTwo) {
+    return fx.convert(value, {
+        from: curOne,
+        to: curTwo
     })
+}
+
+function replaceAll(string, pattern, replacement) {
+    return string.replace(new RegExp(pattern, "g"), replacement);
 }
