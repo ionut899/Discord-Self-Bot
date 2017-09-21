@@ -16,9 +16,11 @@
 // For source to Beheeyem see: https://github.com/110Percent
 
 const path = require('path');
+const Matcher = require('did-you-mean');
 const moves = require(path.join(__dirname, 'data/moves.js')).BattleMovedex;
 const commando = require('discord.js-commando');
 const Discord = require("discord.js");
+const match = new Matcher(Object.keys(moves).join(' '));
 
 module.exports = class moveCommand extends commando.Command {
     constructor(client) {
@@ -60,95 +62,32 @@ module.exports = class moveCommand extends commando.Command {
             }
         }
         if (move) {
-            moveName = move.name;
-            var descString;
-            if (move.desc) {
-                descString = move.desc;
-            } else {
-                descString = move.shortDesc;
-            }
-            var accuracyString;
-            if (move.accuracy == true) {
-                accuracyString = "Certain Success";
-            } else {
-                accuracyString = move.accuracy;
-            }
-            var viableString;
-            if (move.isViable) {
-                viableString = "Yes";
-            } else {
-                viableString = "No";
-            }
-            var targetString;
-            if (move.target == "normal") {
-                targetString = "One Enemy";
-            } else {
-                targetString = capitalizeFirstLetter(move.target.replace(/([A-Z])/g, ' $1'));
-            }
-            var crystalString;
-            if (move.isZ) {
-                crystalString = `${capitalizeFirstLetter(move.isZ.substring(0, move.isZ.length - 1))}Z`;
-            } else {
-                crystalString = "None";
-            }
-            var embedObject = {
-                color: 16711680,
-                fields: [{
-                        name: "Description",
-                        value: descString
-                    },
-                    {
-                        name: "Type",
-                        value: move.type,
-                        inline: true
-                    },
-                    {
-                        name: "Base Power",
-                        value: move.basePower,
-                        inline: true
-                    },
-                    {
-                        name: "PP",
-                        value: move.pp,
-                        inline: true
-                    },
-                    {
-                        name: "Category",
-                        value: move.category,
-                        inline: true
-                    },
-                    {
-                        name: "Accuracy",
-                        value: accuracyString,
-                        inline: true
-                    },
-                    {
-                        name: "Viable?",
-                        value: viableString,
-                        inline: true
-                    },
-                    {
-                        name: "Priority",
-                        value: move.priority,
-                        inline: true
-                    },
-                    {
-                        name: "Target",
-                        value: targetString,
-                        inline: true
-                    },
-                    {
-                        name: "Z-Crystal",
-                        value: crystalString,
-                        inline: true
-                    },
-                    {
-                        name: "External Resources",
-                        value: `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${move.name.replace(" ", "_")}_(move\\))  |  [Smogon](http://www.smogon.com/dex/sm/moves/${move.name.replace(" ", "_")})  |  [PokémonDB](http://pokemondb.net/move/${move.name.replace(" ", "-")})`
-                    }
-                ],
-            };
-            msg.embed(embedObject, `**${capitalizeFirstLetter(move.name)}**`)
+
+            let descString = move.desc ? move.desc : move.shortDesc;
+            let accuracyString = move.accuracy ? "Certain Success" : move.accuracy;
+            let viableString = move.isViable ? "Yes" : "No";
+            let targetString = move.target == 'normal' ? 'One Enemy' : capitalizeFirstLetter(move.target.replace(/([A-Z])/g, ' $1'))
+            let crystalString = move.isZ ? `${capitalizeFirstLetter(move.isZ.substring(0, move.isZ.length - 1))}Z` : "None";
+            const moveEmbed = new Discord.RichEmbed();
+
+            moveEmbed
+                .setColor('#FF0000')
+                .addField('Description', descString)
+                .addField('Type', move.type, true)
+                .addField('Base Power', move.basePower, true)
+                .addField('PP', move.pp, true)
+                .addField('Category', move.category, true)
+                .addField('Accuracy', move.accuracy, true)
+                .addField('Competitively viable', viableString, true)
+                .addField('Priority', move.priority, true)
+                .addField('Target', targetString, true)
+                .addField('Z-Crystal', crystalString, true)
+                .addField('External Resources', `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${move.name.replace(" ", "_")}_(move\\))  |  [Smogon](http://www.smogon.com/dex/sm/moves/${move.name.replace(" ", "_")})  |  [PokémonDB](http://pokemondb.net/move/${move.name.replace(" ", "-")})`);
+            msg.embed(moveEmbed, `**${capitalizeFirstLetter(move.name)}**`)
+        } else {
+            let dym = match.get(args.move);
+            let dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the move name?';
+            msg.channel.send("⚠ Move not found! " + dymString);
         }
     };
 };

@@ -16,9 +16,11 @@
 // For source to Beheeyem see: https://github.com/110Percent
 
 const path = require('path');
+const Matcher = require('did-you-mean');
 const items = require(path.join(__dirname, 'data/items.js')).BattleItems;
 const commando = require('discord.js-commando');
 const Discord = require("discord.js");
+const match = new Matcher(Object.keys(items).join(' '));
 
 module.exports = class itemCommand extends commando.Command {
     constructor(client) {
@@ -57,6 +59,10 @@ module.exports = class itemCommand extends commando.Command {
                 .addField('External Resources', `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(item.name.replace(" ", "_").replace("'", ""))})  |  [Smogon](http://www.smogon.com/dex/sm/items/${item.name.toLowerCase().replace(" ", "_").replace("'", "")})  |  [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(" ", "-").replace("'", "")})`)
                 .setThumbnail(`https://play.pokemonshowdown.com/sprites/itemicons/${item.name.toLowerCase().replace(" ", "-")}.png`)
             msg.embed(itemEmbed, `**${capitalizeFirstLetter(item.name)}**`);
+        } else {
+            let dym = match.get(args.item);
+            let dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the item name?';
+            msg.channel.send("⚠ Item not found! " + dymString);
         }
     };
 };

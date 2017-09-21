@@ -16,11 +16,13 @@
 // For source to Beheeyem see: https://github.com/110Percent
 
 const path = require('path');
+const Matcher = require('did-you-mean');
 const dex = require(path.join(__dirname, 'data/pokedex.js')).BattlePokedex;
 const dexEntries = require(path.join(__dirname, 'data/flavorText.json'));
 const abilities = require(path.join(__dirname, 'data/abilities.js')).BattleAbilities;
 const commando = require('discord.js-commando');
 const Discord = require("discord.js");
+const match = new Matcher(Object.keys(dex).join(' '));
 
 const embedColours = {
     Red: 16724530,
@@ -55,6 +57,7 @@ module.exports = class dexCommand extends commando.Command {
     }
 
     async run(msg, args) {
+        
         var poke = args.pokemon.toLowerCase();
         if (poke.split(" ")[0] == "mega") {
             poke = poke.substring(poke.split(" ")[0].length + 1) + "mega";
@@ -115,23 +118,15 @@ module.exports = class dexCommand extends commando.Command {
                     abilityString = abilityString + ", " + pokeEntry.abilities[i];
                 }
             }
-            var imagefetch = pokeEntry.num;
-            if (imagefetch < 100) {
-                imagefetch = "0" + imagefetch;
-            }
-            if (imagefetch < 10) {
-                imagefetch = "0" + imagefetch;
-            }
-            imagefetch = imagefetch + capitalizeFirstLetter(poke) + ".png";
 
             for (var i = 0; i < dexEntries.length; i++) {
-                if (dexEntries[i].version_id == 25 && dexEntries[i].species_id == pokeEntry.num && dexEntries[i].language_id == 9) {
+                if (dexEntries[i].species_id == pokeEntry.num) {
                     var pokedexEntry = "*" + dexEntries[i].flavor_text + "*";
                     break;
                 }
             }
             if (!pokedexEntry) {
-                var pokedexEntry = "*This Pokémon was not featured in Pokémon Omega Ruby.*";
+                var pokedexEntry = "*PokéDex data not found for this Pokémon*";
             }
 
             const dexEmbed = new Discord.RichEmbed();
@@ -140,18 +135,22 @@ module.exports = class dexCommand extends commando.Command {
                 .setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`, `https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(" ", "_").toLowerCase()}.png`)
                 .addField(typestring, pokeEntry.types.join(", "), true)
                 .addField('Abilities', abilityString, true)
-                .addField('Evolutionary Line', evoLine, false)
-                .addField('Base Stats', Object.keys(pokeEntry.baseStats).map(i => i.toUpperCase() + ": **" + pokeEntry.baseStats[i] + "**").join(", "))
                 .addField('Height', `${pokeEntry.heightm}m`, true)
                 .addField('Weight', `${pokeEntry.weightkg}kg`, true)
-                .addField('Egg Groups', pokeEntry.eggGroups.join(', '))
-                .addField('Dex Entry (OR)', pokedexEntry)
+                .addField('Egg Groups', pokeEntry.eggGroups.join(', '), true)
+            pokeEntry.otherFormes !== undefined ? dexEmbed.addField('Other Formes', pokeEntry.otherFormes.join(', '), true) : null;
+            dexEmbed
+                .addField('Evolutionary Line', evoLine, false)
+                .addField('Base Stats', Object.keys(pokeEntry.baseStats).map(i => i.toUpperCase() + ": **" + pokeEntry.baseStats[i] + "**").join(", "))
+                .addField('PokéDex Data', pokedexEntry)
                 .addField('External Resource', `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(poke).replace(" ", "_")}_(Pokémon\\))  |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.replace(" ", "_")})  |  [PokémonDB](http://pokemondb.net/pokedex/${poke.replace(" ", "-")})`)
-                .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(" ", "_")}.gif`)
+                .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(" ", "")}.gif`)
 
             msg.embed(dexEmbed)
         } else {
-            msg.reply("⚠ Dex entry not found! Maybe you misspelt the Pokémon's name?");
+            let dym = match.get(args.pokemon);
+            let dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
+            msg.reply(`⚠ Dex entry not found! ${dymString}`);
         }
     };
 };

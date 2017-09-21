@@ -16,8 +16,11 @@
 // For source to Beheeyem see: https://github.com/110Percent
 
 const path = require('path');
+const Matcher = require('did-you-mean');
 const abilities = require(path.join(__dirname, 'data/abilities.js')).BattleAbilities;
 const commando = require('discord.js-commando');
+const Discord = require("discord.js");
+const match = new Matcher(Object.keys(abilities).join(' '));
 
 module.exports = class abilityCommand extends commando.Command {
     constructor(client) {
@@ -44,29 +47,24 @@ module.exports = class abilityCommand extends commando.Command {
                 var ability = abilities[Object.keys(abilities)[i]];
                 break;
             }
-        }
-        var abilityDesc = ability.desc;
-        if (!abilityDesc) {
-            abilityDesc = ability.shortDesc;
-        }
+        };
+
+        let abilityDesc = ability.desc !== undefined ? ability.desc : ability.shortDesc
 
         if (ability) {
-            msg.say(`**${capitalizeFirstLetter(ability.name)}**`, {
-                embed: {
-                    color: 35071,
-                    fields: [{
-                            name: "Description",
-                            value: abilityDesc
-                        },
-                        {
-                            name: "External Resources",
-                            value: "[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/" + capitalizeFirstLetter(ability.name.replace(" ", "_")) + "_(Ability\\))  |  [Smogon](http://www.smogon.com/dex/sm/abilities/" + ability.name.toLowerCase().replace(" ", "_") + ")  |  [PokémonDB](http://pokemondb.net/ability/" + ability.name.toLowerCase().replace(" ", "-") + ")"
-                        }
-                    ]
-                }
-            });
-        }
+            const abilityEmbed = new Discord.RichEmbed();
 
+            abilityEmbed
+                .setColor('#0088FF')
+                .addField('Description', abilityDesc)
+                .addField('External Resource', `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(" ", "_"))}_(Ability\\))  |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(" ", "_")})  |  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(" ", "-")})`);
+
+            msg.embed(abilityEmbed, `**${capitalizeFirstLetter(ability.name)}**`);
+        } else {
+            let dym = match.get(args.ability);
+            let dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
+            msg.channel.send("⚠ Ability not found! " + dymString);
+        }
     };
 };
 
