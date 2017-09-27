@@ -20,7 +20,7 @@
 exports.BattleMovedex = {
     "10000000voltthunderbolt": {
         num: 719,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 195,
         category: "Special",
         desc: "Has a very high chance for a critical hit.",
@@ -100,7 +100,7 @@ exports.BattleMovedex = {
     },
     "acidarmor": {
         num: 151,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense by 2 stages.",
@@ -121,7 +121,7 @@ exports.BattleMovedex = {
     },
     "aciddownpour": {
         num: 628,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -189,7 +189,7 @@ exports.BattleMovedex = {
     },
     "acupressure": {
         num: 367,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises a random stat by 2 stages as long as the stat is not already at stage 6. The user can choose to use this move on itself or an adjacent ally. Fails if no stat stage can be raised or if used on an ally with a substitute.",
@@ -223,7 +223,7 @@ exports.BattleMovedex = {
     },
     "aerialace": {
         num: 332,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 60,
         category: "Physical",
         desc: "This move does not check accuracy.",
@@ -262,7 +262,7 @@ exports.BattleMovedex = {
     },
     "afteryou": {
         num: 495,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The target makes its move immediately after the user this turn, no matter the priority of its selected move. Fails if the target would have moved next anyway, or if the target already moved this turn.",
@@ -291,7 +291,7 @@ exports.BattleMovedex = {
     },
     "agility": {
         num: 97,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Speed by 2 stages.",
@@ -354,7 +354,7 @@ exports.BattleMovedex = {
     },
     "alloutpummeling": {
         num: 624,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -372,7 +372,7 @@ exports.BattleMovedex = {
     },
     "allyswitch": {
         num: 502,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user swaps positions with its ally. Fails if the user is the only Pokemon on its side.",
@@ -400,7 +400,7 @@ exports.BattleMovedex = {
     },
     "amnesia": {
         num: 133,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Special Defense by 2 stages.",
@@ -492,7 +492,7 @@ exports.BattleMovedex = {
     },
     "aquaring": {
         num: 392,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user has 1/16 of its maximum HP, rounded down, restored at the end of each turn while it remains active. If the user uses Baton Pass, the replacement will receive the healing effect.",
@@ -558,7 +558,7 @@ exports.BattleMovedex = {
     },
     "aromatherapy": {
         num: 312,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Every Pokemon in the user's party is cured of its major status condition. Active Pokemon with the Ability Sap Sipper are not cured, unless they are the user.",
@@ -587,7 +587,7 @@ exports.BattleMovedex = {
     },
     "aromaticmist": {
         num: 597,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the target's Special Defense by 1 stage. Fails if there is no ally adjacent to the user.",
@@ -608,7 +608,7 @@ exports.BattleMovedex = {
     },
     "assist": {
         num: 274,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "A random move among those known by the user's party members is selected for use. Does not select Assist, Belch, Bestow, Bounce, Chatter, Circle Throw, Copycat, Counter, Covet, Destiny Bond, Detect, Dig, Dive, Dragon Tail, Endure, Feint, Fly, Focus Punch, Follow Me, Helping Hand, Hold Hands, King's Shield, Mat Block, Me First, Metronome, Mimic, Mirror Coat, Mirror Move, Nature Power, Phantom Force, Protect, Rage Powder, Roar, Shadow Force, Sketch, Sky Drop, Sleep Talk, Snatch, Spiky Shield, Struggle, Switcheroo, Thief, Transform, Trick, or Whirlwind.",
@@ -831,7 +831,7 @@ exports.BattleMovedex = {
     },
     "aurasphere": {
         num: 396,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 80,
         category: "Special",
         desc: "This move does not check accuracy.",
@@ -873,7 +873,7 @@ exports.BattleMovedex = {
     },
     "auroraveil": {
         num: 694,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the user and its party members take 0.5x damage from physical and special attacks, or 0.66x damage if in a Double Battle. Critical hits ignore this protection. It is removed from the user's side if the user or an ally is successfully hit by Brick Break, Psychic Fangs, or Defog. Lasts for 8 turns if the user is holding Light Clay. Fails unless the weather is Hail.",
@@ -921,7 +921,7 @@ exports.BattleMovedex = {
     },
     "autotomize": {
         num: 475,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Speed by 2 stages. If the user's Speed was changed, the user's weight is reduced by 100kg as long as it remains active. This effect is stackable but cannot reduce the user's weight to less than 0.1kg.",
@@ -1020,7 +1020,7 @@ exports.BattleMovedex = {
     },
     "banefulbunker": {
         num: 661,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user is protected from most attacks made by other Pokemon during this turn, and Pokemon making contact with the user become poisoned. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Baneful Bunker, Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
@@ -1088,7 +1088,7 @@ exports.BattleMovedex = {
     },
     "barrier": {
         num: 112,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense by 2 stages.",
@@ -1109,7 +1109,7 @@ exports.BattleMovedex = {
     },
     "batonpass": {
         num: 226,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user is replaced with another Pokemon in its party. The selected Pokemon has the user's stat stage changes, confusion, and certain move effects transferred to it.",
@@ -1232,7 +1232,7 @@ exports.BattleMovedex = {
     },
     "bellydrum": {
         num: 187,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack by 12 stages in exchange for the user losing 1/2 of its maximum HP, rounded down. Fails if the user would faint or if its Attack stat stage is 6.",
@@ -1257,7 +1257,7 @@ exports.BattleMovedex = {
     },
     "bestow": {
         num: 516,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The target receives the user's held item. Fails if the user has no item or is holding a Mail, if the target is already holding an item, if the user is a Kyogre holding a Blue Orb, a Groudon holding a Red Orb, a Giratina holding a Griseous Orb, an Arceus holding a Plate, a Genesect holding a Drive, a Pokemon that can Mega Evolve holding the Mega Stone for its species, or if the target is one of those Pokemon and the user is holding the respective item.",
@@ -1288,7 +1288,7 @@ exports.BattleMovedex = {
     },
     "bide": {
         num: 117,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Physical",
         desc: "The user spends two turns locked into this move and then, on the second turn after using this move, the user attacks the last Pokemon that hit it, inflicting double the damage in HP it lost during the two turns. If the last Pokemon that hit it is no longer on the field, the user attacks a random foe instead. If the user is prevented from moving during this move's use, the effect ends. This move does not check accuracy.",
@@ -1333,7 +1333,7 @@ exports.BattleMovedex = {
                     let moveData = {
                         id: 'bide',
                         name: "Bide",
-                        accuracy: true,
+                        accuracy: 'Never Misses',
                         damage: this.effectData.totalDamage * 2,
                         category: "Physical",
                         priority: 1,
@@ -1401,7 +1401,7 @@ exports.BattleMovedex = {
     },
     "blackholeeclipse": {
         num: 654,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -1488,7 +1488,7 @@ exports.BattleMovedex = {
     },
     "block": {
         num: 335,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Prevents the target from switching out. The target can still switch out if it is holding Shed Shell or uses Baton Pass, Parting Shot, U-turn, or Volt Switch. If the target leaves the field using Baton Pass, the replacement will remain trapped. The effect ends if the user leaves the field.",
@@ -1511,7 +1511,7 @@ exports.BattleMovedex = {
     },
     "bloomdoom": {
         num: 644,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -1748,7 +1748,7 @@ exports.BattleMovedex = {
     },
     "breakneckblitz": {
         num: 622,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -1933,7 +1933,7 @@ exports.BattleMovedex = {
     },
     "bulkup": {
         num: 339,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack and Defense by 1 stage.",
@@ -2045,7 +2045,7 @@ exports.BattleMovedex = {
     },
     "calmmind": {
         num: 347,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Special Attack and Special Defense by 1 stage.",
@@ -2068,7 +2068,7 @@ exports.BattleMovedex = {
     },
     "camouflage": {
         num: 293,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user's type changes based on the battle terrain. Normal type on the regular Wi-Fi terrain, Electric type during Electric Terrain, Fairy type during Misty Terrain, Grass type during Grassy Terrain, and Psychic type during Psychic Terrain. Fails if the user's type cannot be changed or if the user is already purely that type.",
@@ -2128,7 +2128,7 @@ exports.BattleMovedex = {
     },
     "catastropika": {
         num: 658,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 210,
         category: "Physical",
         desc: "No additional effect.",
@@ -2146,7 +2146,7 @@ exports.BattleMovedex = {
     },
     "celebrate": {
         num: 606,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "It is your birthday.",
@@ -2168,7 +2168,7 @@ exports.BattleMovedex = {
     },
     "charge": {
         num: 268,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Special Defense by 1 stage. If the user uses an Electric-type attack on the next turn, its power will be doubled.",
@@ -2357,7 +2357,7 @@ exports.BattleMovedex = {
     },
     "clearsmog": {
         num: 499,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 50,
         category: "Special",
         desc: "Resets all of the target's stat stages to 0.",
@@ -2405,7 +2405,7 @@ exports.BattleMovedex = {
     },
     "coil": {
         num: 489,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack, Defense, and accuracy by 1 stage.",
@@ -2448,7 +2448,7 @@ exports.BattleMovedex = {
     },
     "confide": {
         num: 590,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Lowers the target's Special Attack by 1 stage.",
@@ -2532,7 +2532,7 @@ exports.BattleMovedex = {
     },
     "continentalcrush": {
         num: 632,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -2550,7 +2550,7 @@ exports.BattleMovedex = {
     },
     "conversion": {
         num: 160,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user's type changes to match the original type of the move in its first move slot. Fails if the user cannot change its type, or if the type is one of the user's current types.",
@@ -2573,7 +2573,7 @@ exports.BattleMovedex = {
     },
     "conversion2": {
         num: 176,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user's type changes to match a type that resists or is immune to the type of the last move used by the target, but not either of its current types. The determined type of the move is used rather than the original type. Fails if the target has not made a move, if the user cannot change its type, or if this move would only be able to select one of the user's current types.",
@@ -2612,7 +2612,7 @@ exports.BattleMovedex = {
     },
     "copycat": {
         num: 383,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user uses the last move used by any Pokemon, including itself. Fails if no move has been used, or if the last move used was Assist, Belch, Bestow, Chatter, Circle Throw, Copycat, Counter, Covet, Destiny Bond, Detect, Dragon Tail, Endure, Feint, Focus Punch, Follow Me, Helping Hand, Hold Hands, King's Shield, Mat Block, Me First, Metronome, Mimic, Mirror Coat, Mirror Move, Nature Power, Protect, Rage Powder, Roar, Sketch, Sleep Talk, Snatch, Spiky Shield, Struggle, Switcheroo, Thief, Transform, Trick, or Whirlwind.",
@@ -2660,7 +2660,7 @@ exports.BattleMovedex = {
     },
     "corkscrewcrash": {
         num: 638,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -2678,7 +2678,7 @@ exports.BattleMovedex = {
     },
     "cosmicpower": {
         num: 322,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense and Special Defense by 1 stage.",
@@ -2700,7 +2700,7 @@ exports.BattleMovedex = {
     },
     "cottonguard": {
         num: 538,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense by 3 stages.",
@@ -2844,7 +2844,7 @@ exports.BattleMovedex = {
     },
     "craftyshield": {
         num: 578,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user and its party members are protected from non-damaging attacks made by other Pokemon, including allies, during this turn. Fails if the user moves last this turn or if this move is already in effect for the user's side.",
@@ -2988,7 +2988,7 @@ exports.BattleMovedex = {
     },
     "curse": {
         num: 174,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "If the user is not a Ghost type, lowers the user's Speed by 1 stage and raises the user's Attack and Defense by 1 stage. If the user is a Ghost type, the user loses 1/2 of its maximum HP, rounded down and even if it would cause fainting, in exchange for the target losing 1/4 of its maximum HP, rounded down, at the end of each turn while it is active. If the target uses Baton Pass, the replacement will continue to be affected. Fails if there is no target or if the target is already affected.",
@@ -3142,7 +3142,7 @@ exports.BattleMovedex = {
     },
     "defendorder": {
         num: 455,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense and Special Defense by 1 stage.",
@@ -3165,7 +3165,7 @@ exports.BattleMovedex = {
     },
     "defensecurl": {
         num: 111,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense by 1 stage. As long as the user remains active, the power of the user's Ice Ball and Rollout will be doubled (this effect is not stackable).",
@@ -3190,7 +3190,7 @@ exports.BattleMovedex = {
     },
     "defog": {
         num: 432,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Lowers the target's evasiveness by 1 stage. If this move is successful and whether or not the target's evasiveness was affected, the effects of Reflect, Light Screen, Safeguard, Mist, Spikes, Toxic Spikes, Stealth Rock, and Sticky Web end for the target's side, and the effects of Spikes, Toxic Spikes, Stealth Rock, and Sticky Web end for the user's side. Ignores a target's substitute, although a substitute will still block the lowering of evasiveness.",
@@ -3225,7 +3225,7 @@ exports.BattleMovedex = {
     },
     "destinybond": {
         num: 194,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Until the user's next turn, if a foe's attack knocks the user out, that foe faints as well, unless the attack was Doom Desire or Future Sight.",
@@ -3273,7 +3273,7 @@ exports.BattleMovedex = {
     },
     "detect": {
         num: 197,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user is protected from most attacks made by other Pokemon during this turn. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
@@ -3300,7 +3300,7 @@ exports.BattleMovedex = {
     },
     "devastatingdrake": {
         num: 652,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -3465,7 +3465,7 @@ exports.BattleMovedex = {
     },
     "disarmingvoice": {
         num: 574,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 40,
         category: "Special",
         desc: "This move does not check accuracy.",
@@ -3698,7 +3698,7 @@ exports.BattleMovedex = {
     },
     "doubleteam": {
         num: 104,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's evasiveness by 1 stage.",
@@ -3807,7 +3807,7 @@ exports.BattleMovedex = {
     },
     "dragondance": {
         num: 349,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack and Speed by 1 stage.",
@@ -4193,7 +4193,7 @@ exports.BattleMovedex = {
     },
     "electricterrain": {
         num: 604,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the terrain becomes Electric Terrain. During the effect, the power of Electric-type attacks made by grounded Pokemon is multiplied by 1.5 and grounded Pokemon cannot fall asleep; Pokemon already asleep do not wake up. Camouflage transforms the user into an Electric type, Nature Power becomes Thunderbolt, and Secret Power has a 30% chance to cause paralysis. Fails if the current terrain is Electric Terrain.",
@@ -4254,7 +4254,7 @@ exports.BattleMovedex = {
     },
     "electrify": {
         num: 582,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Causes the target's move to become Electric type this turn. Fails if the target already moved this turn.",
@@ -4483,7 +4483,7 @@ exports.BattleMovedex = {
     },
     "endure": {
         num: 203,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user will survive attacks made by other Pokemon during this turn with at least 1 HP. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
@@ -4644,7 +4644,7 @@ exports.BattleMovedex = {
     },
     "extremeevoboost": {
         num: 702,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack, Defense, Special Attack, Special Defense, and Speed by 2 stages.",
@@ -4714,7 +4714,7 @@ exports.BattleMovedex = {
     },
     "feintattack": {
         num: 185,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 60,
         category: "Physical",
         desc: "This move does not check accuracy.",
@@ -4732,7 +4732,7 @@ exports.BattleMovedex = {
     },
     "fairylock": {
         num: 587,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Prevents all active Pokemon from switching next turn. A Pokemon can still switch out if it is holding Shed Shell or uses Baton Pass, Parting Shot, U-turn, or Volt Switch. Fails if this move was used successfully last turn.",
@@ -5508,7 +5508,7 @@ exports.BattleMovedex = {
     },
     "floralhealing": {
         num: 666,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The target restores 1/2 of its maximum HP, rounded half up. If the terrain is Grassy Terrain, the target instead restores 2/3 of its maximum HP, rounded half down.",
@@ -5534,7 +5534,7 @@ exports.BattleMovedex = {
     },
     "flowershield": {
         num: 579,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the Defense of all Grass-type Pokemon on the field by 1 stage.",
@@ -5664,7 +5664,7 @@ exports.BattleMovedex = {
     },
     "focusenergy": {
         num: 116,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's chance for a critical hit by 2 stages. Fails if the user already has the effect. Baton Pass can be used to transfer this effect to an ally.",
@@ -5733,7 +5733,7 @@ exports.BattleMovedex = {
     },
     "followme": {
         num: 266,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Until the end of the turn, all single-target attacks from the foe's team are redirected to the user if they are in range. Such attacks are redirected to the user before they can be reflected by Magic Coat or the Ability Magic Bounce, or drawn in by the Abilities Lightning Rod or Storm Drain. Fails if it is not a Double or Triple Battle.",
@@ -5793,7 +5793,7 @@ exports.BattleMovedex = {
     },
     "foresight": {
         num: 193,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Causes the target to have its positive evasiveness stat stage ignored while it is active. Normal- and Fighting-type attacks can hit the target if it is a Ghost type. The effect ends when the target is no longer active. Fails if the target is already affected, or affected by Miracle Eye or Odor Sleuth.",
@@ -6225,7 +6225,7 @@ exports.BattleMovedex = {
     },
     "gearup": {
         num: 674,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the Attack and Special Attack of Pokemon on the user's side with the Abilities Plus or Minus by 1 stage.",
@@ -6253,7 +6253,7 @@ exports.BattleMovedex = {
     },
     "genesissupernova": {
         num: 703,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 185,
         category: "Special",
         desc: "The terrain becomes Psychic Terrain.",
@@ -6274,7 +6274,7 @@ exports.BattleMovedex = {
     },
     "geomancy": {
         num: 601,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Special Attack, Special Defense, and Speed by 2 stages. This attack charges on the first turn and executes on the second. If the user is holding a Power Herb, the move completes in one turn.",
@@ -6352,7 +6352,7 @@ exports.BattleMovedex = {
     },
     "gigavolthavoc": {
         num: 646,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -6542,7 +6542,7 @@ exports.BattleMovedex = {
     },
     "grassyterrain": {
         num: 580,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the terrain becomes Grassy Terrain. During the effect, the power of Grass-type attacks used by grounded Pokemon is multiplied by 1.5, the power of Bulldoze, Earthquake, and Magnitude used against grounded Pokemon is multiplied by 0.5, and grounded Pokemon have 1/16 of their maximum HP, rounded down, restored at the end of each turn, including the last turn. Camouflage transforms the user into a Grass type, Nature Power becomes Energy Ball, and Secret Power has a 30% chance to cause sleep. Fails if the current terrain is Grassy Terrain.",
@@ -6617,7 +6617,7 @@ exports.BattleMovedex = {
     },
     "gravity": {
         num: 356,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the evasiveness of all active Pokemon is multiplied by 0.6. At the time of use, Bounce, Fly, Magnet Rise, Sky Drop, and Telekinesis end immediately for all active Pokemon. During the effect, Bounce, Fly, Flying Press, High Jump Kick, Jump Kick, Magnet Rise, Sky Drop, Splash, and Telekinesis are prevented from being used by all active Pokemon. Ground-type attacks, Spikes, Toxic Spikes, Sticky Web, and the Ability Arena Trap can affect Flying types or Pokemon with the Ability Levitate. Fails if this move is already in effect.",
@@ -6720,7 +6720,7 @@ exports.BattleMovedex = {
     },
     "growth": {
         num: 74,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack and Special Attack by 1 stage. If the weather is Sunny Day, raises the user's Attack and Special Attack by 2 stages.",
@@ -6745,7 +6745,7 @@ exports.BattleMovedex = {
     },
     "grudge": {
         num: 288,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Until the user's next turn, if a foe's attack knocks the user out, that foe loses all remaining PP for that attack.",
@@ -6785,7 +6785,7 @@ exports.BattleMovedex = {
     },
     "guardsplit": {
         num: 470,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user and the target have their Defense and Special Defense stats set to be equal to the average of the user and the target's Defense and Special Defense stats, respectively, rounded down. Stat stage changes are unaffected.",
@@ -6812,7 +6812,7 @@ exports.BattleMovedex = {
     },
     "guardswap": {
         num: 385,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user swaps its Defense and Special Defense stat stage changes with the target.",
@@ -6844,7 +6844,7 @@ exports.BattleMovedex = {
     },
     "guardianofalola": {
         num: 698,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         damageCallback: function(pokemon, target) {
             if (target.volatiles['banefulbunker'] || target.volatiles['kingsshield'] || target.side.sideConditions['matblock'] || target.volatiles['protect'] || target.volatiles['spikyshield']) {
@@ -6953,7 +6953,7 @@ exports.BattleMovedex = {
     },
     "hail": {
         num: 258,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the weather becomes Hail. At the end of each turn except the last, all active Pokemon lose 1/16 of their maximum HP, rounded down, unless they are an Ice type, or have the Abilities Ice Body, Magic Guard, Overcoat, or Snow Cloak. Lasts for 8 turns if the user is holding Icy Rock. Fails if the current weather is Hail.",
@@ -6996,7 +6996,7 @@ exports.BattleMovedex = {
     },
     "happyhour": {
         num: 603,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Money falls from the sky.",
@@ -7018,7 +7018,7 @@ exports.BattleMovedex = {
     },
     "harden": {
         num: 106,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense by 1 stage.",
@@ -7039,7 +7039,7 @@ exports.BattleMovedex = {
     },
     "haze": {
         num: 114,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Resets the stat stages of all active Pokemon to 0.",
@@ -7127,7 +7127,7 @@ exports.BattleMovedex = {
     },
     "healbell": {
         num: 215,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Every Pokemon in the user's party is cured of its major status condition. Active Pokemon with the Ability Soundproof are not cured.",
@@ -7203,7 +7203,7 @@ exports.BattleMovedex = {
     },
     "healorder": {
         num: 456,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP, rounded half up.",
@@ -7223,7 +7223,7 @@ exports.BattleMovedex = {
     },
     "healpulse": {
         num: 505,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The target restores 1/2 of its maximum HP, rounded half up. If the user has the Ability Mega Launcher, the target instead restores 3/4 of its maximum HP, rounded half down.",
@@ -7248,7 +7248,7 @@ exports.BattleMovedex = {
     },
     "healingwish": {
         num: 361,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user faints and the Pokemon brought out to replace it has its HP fully restored along with having any major status condition cured. Fails if the user is the last unfainted Pokemon in its party.",
@@ -7324,7 +7324,7 @@ exports.BattleMovedex = {
     },
     "heartswap": {
         num: 391,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user swaps all its stat stage changes with the target.",
@@ -7449,7 +7449,7 @@ exports.BattleMovedex = {
     },
     "helpinghand": {
         num: 270,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The power of the target's attack this turn is multiplied by 1.5 (this effect is stackable). Fails if there is no ally adjacent to the user, but does not fail if the ally is using a two-turn move.",
@@ -7849,7 +7849,7 @@ exports.BattleMovedex = {
     },
     "holdhands": {
         num: 615,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Nothing happens... Fails if there is no ally adjacent to the user.",
@@ -7870,7 +7870,7 @@ exports.BattleMovedex = {
     },
     "honeclaws": {
         num: 468,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack and accuracy by 1 stage.",
@@ -7950,7 +7950,7 @@ exports.BattleMovedex = {
     },
     "howl": {
         num: 336,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack by 1 stage.",
@@ -8040,7 +8040,7 @@ exports.BattleMovedex = {
     },
     "hydrovortex": {
         num: 642,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -8100,7 +8100,7 @@ exports.BattleMovedex = {
     },
     "hyperspacefury": {
         num: 621,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 100,
         category: "Physical",
         desc: "Lowers the user's Defense by 1 stage. This move cannot be used successfully unless the user's current form, while considering Transform, is Hoopa Unbound. If this move is successful, it breaks through the target's Detect, King's Shield, Protect, or Spiky Shield for this turn, allowing other Pokemon to attack the target normally. If the target's side is protected by Crafty Shield, Mat Block, Quick Guard, or Wide Guard, that protection is also broken for this turn and other Pokemon may attack the target's side normally.",
@@ -8137,7 +8137,7 @@ exports.BattleMovedex = {
     },
     "hyperspacehole": {
         num: 593,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 80,
         category: "Special",
         desc: "If this move is successful, it breaks through the target's Detect, King's Shield, Protect, or Spiky Shield for this turn, allowing other Pokemon to attack the target normally. If the target's side is protected by Crafty Shield, Mat Block, Quick Guard, or Wide Guard, that protection is also broken for this turn and other Pokemon may attack the target's side normally.",
@@ -8453,7 +8453,7 @@ exports.BattleMovedex = {
     },
     "imprison": {
         num: 286,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user prevents all of its foes from using any moves that the user also knows as long as the user remains active.",
@@ -8539,7 +8539,7 @@ exports.BattleMovedex = {
     },
     "infernooverdrive": {
         num: 640,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -8576,7 +8576,7 @@ exports.BattleMovedex = {
     },
     "ingrain": {
         num: 275,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user has 1/16 of its maximum HP restored at the end of each turn, but it is prevented from switching out and other Pokemon cannot force the user to switch out. The user can still switch out if it uses Baton Pass, Parting Shot, U-turn, or Volt Switch. If the user leaves the field using Baton Pass, the replacement will remain trapped and still receive the healing effect. During the effect, the user can be hit normally by Ground-type attacks and be affected by Spikes, Toxic Spikes, and Sticky Web, even if the user is a Flying type or has the Ability Levitate.",
@@ -8612,7 +8612,7 @@ exports.BattleMovedex = {
     },
     "instruct": {
         num: 689,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The target immediately uses its last used move. Fails if the target has not made a move, or if the move is...",
@@ -8653,7 +8653,7 @@ exports.BattleMovedex = {
     },
     "iondeluge": {
         num: 569,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Causes Normal-type moves to become Electric type this turn.",
@@ -8685,7 +8685,7 @@ exports.BattleMovedex = {
     },
     "irondefense": {
         num: 334,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense by 2 stages.",
@@ -8839,7 +8839,7 @@ exports.BattleMovedex = {
     },
     "kingsshield": {
         num: 588,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user is protected from most attacks made by other Pokemon during this turn, and Pokemon trying to make contact with the user have their Attack lowered by 2 stages. Non-damaging moves go through this protection. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
@@ -8947,7 +8947,7 @@ exports.BattleMovedex = {
     },
     "laserfocus": {
         num: 673,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "On the next turn, the user's attack will be a critical hit. Fails if the user already has the effect.",
@@ -9238,7 +9238,7 @@ exports.BattleMovedex = {
     },
     "lightscreen": {
         num: 113,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the user and its party members take 0.5x damage from special attacks, or 0.66x damage if in a Double or Triple Battle. Critical hits ignore this protection. It is removed from the user's side if the user or an ally is successfully hit by Brick Break or Defog. Lasts for 8 turns if the user is holding Light Clay.",
@@ -9308,7 +9308,7 @@ exports.BattleMovedex = {
     },
     "lockon": {
         num: 199,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "On the following turn, the target cannot avoid the user's moves, even if the target is in the middle of a two-turn move. Fails if the user used this move successfully last turn and that target is still active.",
@@ -9421,7 +9421,7 @@ exports.BattleMovedex = {
     },
     "luckychant": {
         num: 381,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the user and its party members cannot be struck by a critical hit. Fails if this move is already in effect for the user's side.",
@@ -9452,7 +9452,7 @@ exports.BattleMovedex = {
     },
     "lunardance": {
         num: 461,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user faints and the Pokemon brought out to replace it has its HP and PP fully restored along with having any major status condition cured. Fails if the user is the last unfainted Pokemon in its party.",
@@ -9576,7 +9576,7 @@ exports.BattleMovedex = {
     },
     "magiccoat": {
         num: 277,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Until the end of the turn, the user is unaffected by certain non-damaging moves directed at it and will instead use such moves against the original user. Moves reflected in this way are unable to be reflected again by this or the Ability Magic Bounce's effect. Spikes, Stealth Rock, Sticky Web, and Toxic Spikes can only be reflected once per side, by the leftmost Pokemon under this or the Ability Magic Bounce's effect. If the user has the Ability Soundproof, this move's effect happens before a sound-based move can be nullified. The Abilities Lightning Rod and Storm Drain redirect their respective moves before this move takes effect.",
@@ -9621,7 +9621,7 @@ exports.BattleMovedex = {
     },
     "magicroom": {
         num: 478,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the held items of all active Pokemon have no effect. An item's effect of causing forme changes is unaffected, but any other effects from such items are negated. During the effect, Fling and Natural Gift are prevented from being used by all active Pokemon. If this move is used during the effect, the effect ends.",
@@ -9664,7 +9664,7 @@ exports.BattleMovedex = {
     },
     "magicalleaf": {
         num: 345,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 60,
         category: "Special",
         desc: "This move does not check accuracy.",
@@ -9701,7 +9701,7 @@ exports.BattleMovedex = {
     },
     "magnetbomb": {
         num: 443,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 60,
         category: "Physical",
         desc: "This move does not check accuracy.",
@@ -9719,7 +9719,7 @@ exports.BattleMovedex = {
     },
     "magneticflux": {
         num: 602,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the Defense and Special Defense of Pokemon on the user's side with the Abilities Plus or Minus by 1 stage.",
@@ -9747,7 +9747,7 @@ exports.BattleMovedex = {
     },
     "magnetrise": {
         num: 393,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the user is immune to Ground-type attacks and the effects of Spikes, Toxic Spikes, Sticky Web, and the Ability Arena Trap as long as it remains active. If the user uses Baton Pass, the replacement will gain the effect. Ingrain, Smack Down, Thousand Arrows, and Iron Ball override this move if the user is under any of their effects. Fails if the user is already under this effect or the effects of Ingrain, Smack Down, or Thousand Arrows.",
@@ -9826,7 +9826,7 @@ exports.BattleMovedex = {
     },
     "maliciousmoonsault": {
         num: 696,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 180,
         category: "Physical",
         desc: "No additional effect.",
@@ -9844,7 +9844,7 @@ exports.BattleMovedex = {
     },
     "matblock": {
         num: 561,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user and its party members are protected from damaging attacks made by other Pokemon, including allies, during this turn. Fails unless it is the user's first turn on the field, if the user moves last this turn, or if this move is already in effect for the user's side.",
@@ -9890,7 +9890,7 @@ exports.BattleMovedex = {
     },
     "mefirst": {
         num: 382,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user uses the move the target chose for use this turn against it, if possible, with its power multiplied by 1.5. The move must be a damaging move other than Chatter, Counter, Covet, Focus Punch, Me First, Metal Burst, Mirror Coat, Thief, or Struggle. Fails if the target moves before the user. Ignores the target's substitute for the purpose of copying the move.",
@@ -9938,7 +9938,7 @@ exports.BattleMovedex = {
     },
     "meanlook": {
         num: 212,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Prevents the target from switching out. The target can still switch out if it is holding Shed Shell or uses Baton Pass, Parting Shot, U-turn, or Volt Switch. If the target leaves the field using Baton Pass, the replacement will remain trapped. The effect ends if the user leaves the field.",
@@ -9961,7 +9961,7 @@ exports.BattleMovedex = {
     },
     "meditate": {
         num: 96,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack by 1 stage.",
@@ -10201,7 +10201,7 @@ exports.BattleMovedex = {
     },
     "metronome": {
         num: 118,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "A random move is selected for use, other than After You, Assist, Belch, Bestow, Celebrate, Chatter, Copycat, Counter, Covet, Crafty Shield, Destiny Bond, Detect, Diamond Storm, Endure, Feint, Focus Punch, Follow Me, Freeze Shock, Happy Hour, Helping Hand, Hold Hands, Hyperspace Hole, Ice Burn, King's Shield, Light of Ruin, Mat Block, Me First, Metronome, Mimic, Mirror Coat, Mirror Move, Nature Power, Protect, Quash, Quick Guard, Rage Powder, Relic Song, Secret Sword, Sketch, Sleep Talk, Snarl, Snatch, Snore, Spiky Shield, Steam Eruption, Struggle, Switcheroo, Techno Blast, Thief, Thousand Arrows, Thousand Waves, Transform, Trick, V-create, or Wide Guard.",
@@ -10299,7 +10299,7 @@ exports.BattleMovedex = {
     },
     "milkdrink": {
         num: 208,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP, rounded half up.",
@@ -10319,7 +10319,7 @@ exports.BattleMovedex = {
     },
     "mimic": {
         num: 102,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "This move is replaced by the last move used by the target. The copied move has the maximum PP for that move. Fails if the target has not made a move, if the user has Transformed, or if the move is Chatter, Mimic, Sketch, Struggle, or Transform.",
@@ -10356,7 +10356,7 @@ exports.BattleMovedex = {
     },
     "mindreader": {
         num: 170,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "On the following turn, the target cannot avoid the user's moves, even if the target is in the middle of a two-turn move. Fails if the user used this move successfully last turn and that target is still active.",
@@ -10381,7 +10381,7 @@ exports.BattleMovedex = {
     },
     "minimize": {
         num: 107,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's evasiveness by 2 stages. Whether or not the user's evasiveness was changed, Body Slam, Dragon Rush, Flying Press, Heat Crash, Heavy Slam, Phantom Force, Shadow Force, Steamroller, and Stomp will not check accuracy and have their damage doubled if used against the user while it is active.",
@@ -10417,7 +10417,7 @@ exports.BattleMovedex = {
     },
     "miracleeye": {
         num: 357,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Causes the target to have its positive evasiveness stat stage ignored while it is active. Psychic-type attacks can hit the target if it is a Dark type. The effect ends when the target is no longer active. Fails if the target is already affected, or affected by Foresight or Odor Sleuth.",
@@ -10502,7 +10502,7 @@ exports.BattleMovedex = {
     },
     "mirrormove": {
         num: 119,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user uses the last move used by the target. The copied move is used against that target, if possible. Fails if the target has not made a move, or the last move used was Acupressure, After You, Aromatherapy, Aromatic Mist, Belch, Conversion 2, Counter, Crafty Shield, Curse, Doom Desire, Electric Terrain, Final Gambit, Flower Shield, Focus Punch, Future Sight, Grassy Terrain, Gravity, Guard Split, Hail, Happy Hour, Haze, Heal Bell, Heal Pulse, Helping Hand, Hold Hands, Ion Deluge, Light Screen, Lucky Chant, Magnetic Flux, Mat Block, Me First, Mimic, Mirror Coat, Mirror Move, Mist, Misty Terrain, Mud Sport, Nature Power, Perish Song, Power Split, Psych Up, Quick Guard, Rain Dance, Reflect, Reflect Type, Role Play, Rototiller, Safeguard, Sandstorm, Sketch, Spikes, Spit Up, Stealth Rock, Sticky Web, Struggle, Sunny Day, Tailwind, Toxic Spikes, Transform, Water Sport, Wide Guard, or any move that is self-targeting.",
@@ -10550,7 +10550,7 @@ exports.BattleMovedex = {
     },
     "mist": {
         num: 54,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the user and its party members are protected from having their stats lowered by other Pokemon.",
@@ -10615,7 +10615,7 @@ exports.BattleMovedex = {
     },
     "mistyterrain": {
         num: 581,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the terrain becomes Misty Terrain. During the effect, the power of Dragon-type attacks used against grounded Pokemon is multiplied by 0.5 and grounded Pokemon cannot be inflicted with a major status condition nor confusion. Camouflage transforms the user into a Fairy type, Nature Power becomes Moonblast, and Secret Power has a 30% chance to lower Special Attack by 1 stage. Fails if the current terrain is Misty Terrain.",
@@ -10719,7 +10719,7 @@ exports.BattleMovedex = {
     },
     "moonlight": {
         num: 236,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP if no weather conditions are in effect, 2/3 of its maximum HP if the weather is Sunny Day, and 1/4 of its maximum HP if the weather is Hail, Rain Dance, or Sandstorm, all rounded half down.",
@@ -10747,7 +10747,7 @@ exports.BattleMovedex = {
     },
     "morningsun": {
         num: 234,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP if no weather conditions are in effect, 2/3 of its maximum HP if the weather is Sunny Day, and 1/4 of its maximum HP if the weather is Hail, Rain Dance, or Sandstorm, all rounded half down.",
@@ -10844,7 +10844,7 @@ exports.BattleMovedex = {
     },
     "mudsport": {
         num: 300,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, all Electric-type attacks used by any active Pokemon have their power reduced to 0.33x. Fails if this move is already in effect.",
@@ -10954,7 +10954,7 @@ exports.BattleMovedex = {
     },
     "nastyplot": {
         num: 417,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Special Attack by 2 stages.",
@@ -11021,7 +11021,7 @@ exports.BattleMovedex = {
     },
     "naturepower": {
         num: 267,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "This move calls another move for use based on the battle terrain. Tri Attack on the regular Wi-Fi terrain, Thunderbolt during Electric Terrain, Moonblast during Misty Terrain, Energy Ball during Grassy Terrain, and Psychic during Psychic Terrain.",
@@ -11095,7 +11095,7 @@ exports.BattleMovedex = {
     },
     "neverendingnightmare": {
         num: 636,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -11278,7 +11278,7 @@ exports.BattleMovedex = {
     },
     "oceanicoperetta": {
         num: 697,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 195,
         category: "Special",
         desc: "No additional effect.",
@@ -11319,7 +11319,7 @@ exports.BattleMovedex = {
     },
     "odorsleuth": {
         num: 316,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Causes the target to have its positive evasiveness stat stage ignored while it is active. Normal- and Fighting-type attacks can hit the target if it is a Ghost type. The effect ends when the target is no longer active. Fails if the target is already affected, or affected by Foresight or Miracle Eye.",
@@ -11439,7 +11439,7 @@ exports.BattleMovedex = {
     },
     "painsplit": {
         num: 220,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user and the target's HP become the average of their current HP, rounded down, but not more than the maximum HP of either one.",
@@ -11572,7 +11572,7 @@ exports.BattleMovedex = {
     },
     "perishsong": {
         num: 195,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Each active Pokemon receives a perish count of 4 if it doesn't already have a perish count. At the end of each turn including the turn used, the perish count of all active Pokemon lowers by 1 and Pokemon faint if the number reaches 0. The perish count is removed from Pokemon that switch out. If a Pokemon uses Baton Pass while it has a perish count, the replacement will gain the perish count and continue to count down.",
@@ -11732,7 +11732,7 @@ exports.BattleMovedex = {
     },
     "playnice": {
         num: 589,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Lowers the target's Attack by 1 stage.",
@@ -12043,7 +12043,7 @@ exports.BattleMovedex = {
     },
     "powersplit": {
         num: 471,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user and the target have their Attack and Special Attack stats set to be equal to the average of the user and the target's Attack and Special Attack stats, respectively, rounded down. Stat stage changes are unaffected.",
@@ -12070,7 +12070,7 @@ exports.BattleMovedex = {
     },
     "powerswap": {
         num: 384,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user swaps its Attack and Special Attack stat stage changes with the target.",
@@ -12102,7 +12102,7 @@ exports.BattleMovedex = {
     },
     "powertrick": {
         num: 379,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user swaps its Attack and Defense stats; stat stage changes remain on their respective stats. This move can be used again to swap the stats back. If the user uses Baton Pass, the replacement will have its Attack and Defense stats swapped if the effect is active. If the user has its stats recalculated by changing forme while its stats are swapped, this effect is ignored but is still active for the purposes of Baton Pass.",
@@ -12281,7 +12281,7 @@ exports.BattleMovedex = {
     },
     "protect": {
         num: 182,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user is protected from most attacks made by other Pokemon during this turn. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
@@ -12348,7 +12348,7 @@ exports.BattleMovedex = {
     },
     "psychup": {
         num: 244,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user copies all of the target's current stat stage changes.",
@@ -12423,7 +12423,7 @@ exports.BattleMovedex = {
     },
     "psychicterrain": {
         num: 678,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the terrain becomes Psychic Terrain. During the effect, the power of Psychic-type attacks made by grounded Pokemon is multiplied by 1.5 and grounded Pokemon cannot be hit by moves with priority greater than 0, unless the target is an ally. Camouflage transforms the user into a Psychic type, Nature Power becomes Psychic, and Secret Power has a 30% chance to lower the target's Speed by 1 stage. Fails if the current terrain is Psychic Terrain.",
@@ -12608,7 +12608,7 @@ exports.BattleMovedex = {
     },
     "pulverizingpancake": {
         num: 701,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 210,
         category: "Physical",
         desc: "No additional effect.",
@@ -12649,7 +12649,7 @@ exports.BattleMovedex = {
     },
     "purify": {
         num: 685,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The target is cured if it has a major status condition. If the target was cured, the user restores 1/2 of its maximum HP, rounded half up.",
@@ -12794,7 +12794,7 @@ exports.BattleMovedex = {
     },
     "quickguard": {
         num: 501,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user and its party members are protected from attacks with original or altered priority greater than 0 made by other Pokemon, including allies, during this turn. This move modifies the same 1/X chance of being successful used by other protection moves, where X starts at 1 and triples each time this move is successfully used, but does not use the chance to check for failure. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn or if this move is already in effect for the user's side.",
@@ -12842,7 +12842,7 @@ exports.BattleMovedex = {
     },
     "quiverdance": {
         num: 483,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Special Attack, Special Defense, and Speed by 1 stage.",
@@ -12902,7 +12902,7 @@ exports.BattleMovedex = {
     },
     "ragepowder": {
         num: 476,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Until the end of the turn, all single-target attacks from the foe's team are redirected to the user if they are in range. Such attacks are redirected to the user before they can be reflected by Magic Coat or the Ability Magic Bounce, or drawn in by the Abilities Lightning Rod or Storm Drain. Fails if it is not a Double or Triple Battle.",
@@ -12937,7 +12937,7 @@ exports.BattleMovedex = {
     },
     "raindance": {
         num: 240,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the weather becomes Rain Dance. The damage of Water-type attacks is multiplied by 1.5 and the damage of Fire-type attacks is multiplied by 0.5 during the effect. Lasts for 8 turns if the user is holding Damp Rock. Fails if the current weather is Rain Dance.",
@@ -13071,7 +13071,7 @@ exports.BattleMovedex = {
     },
     "recover": {
         num: 105,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP, rounded half up.",
@@ -13091,7 +13091,7 @@ exports.BattleMovedex = {
     },
     "recycle": {
         num: 278,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user regains the item it last used, if it is not holding an item. Fails if the user was not holding an item, if the item was a popped Air Balloon, if the item was picked up by a Pokemon with the Ability Pickup, or if the item was lost to Bug Bite, Covet, Incinerate, Knock Off, Pluck, or Thief. Items thrown with Fling can be regained.",
@@ -13114,7 +13114,7 @@ exports.BattleMovedex = {
     },
     "reflect": {
         num: 115,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the user and its party members take 0.5x damage from physical attacks, or 0.66x damage if in a Double or Triple Battle. Critical hits ignore this protection. It is removed from the user's side if the user or an ally is successfully hit by Brick Break or Defog. Brick Break removes the effect before damage is calculated. Lasts for 8 turns if the user is holding Light Clay.",
@@ -13159,7 +13159,7 @@ exports.BattleMovedex = {
     },
     "reflecttype": {
         num: 513,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Causes the user's types to become the same as the current types of the target. Fails if the user is an Arceus.",
@@ -13184,7 +13184,7 @@ exports.BattleMovedex = {
     },
     "refresh": {
         num: 287,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user cures its burn, poison, or paralysis.",
@@ -13242,7 +13242,7 @@ exports.BattleMovedex = {
     },
     "rest": {
         num: 156,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user falls asleep for the next two turns and restores all of its HP, curing itself of any major status condition in the process. Fails if the user has full HP, is already asleep, or if another effect is preventing sleep.",
@@ -13402,7 +13402,7 @@ exports.BattleMovedex = {
     },
     "roar": {
         num: 46,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The target is forced to switch out and be replaced with a random unfainted ally. Fails if the target used Ingrain previously or has the Ability Suction Cups.",
@@ -13484,7 +13484,7 @@ exports.BattleMovedex = {
     },
     "rockpolish": {
         num: 397,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Speed by 2 stages.",
@@ -13613,7 +13613,7 @@ exports.BattleMovedex = {
     },
     "roleplay": {
         num: 272,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user's Ability changes to match the target's Ability. Fails if the user's Ability is Multitype, Stance Change, or already matches the target, or if the target's Ability is Flower Gift, Forecast, Illusion, Imposter, Multitype, Stance Change, Trace, Wonder Guard, or Zen Mode.",
@@ -13715,7 +13715,7 @@ exports.BattleMovedex = {
     },
     "roost": {
         num: 355,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP, rounded half up. Until the end of the turn, Flying-type users lose their Flying type and pure Flying-type users become Normal type. Does nothing if the user's HP is full.",
@@ -13742,7 +13742,7 @@ exports.BattleMovedex = {
     },
     "rototiller": {
         num: 563,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the Attack and Special Attack of all grounded Grass-type Pokemon on the field by 1 stage.",
@@ -13858,7 +13858,7 @@ exports.BattleMovedex = {
     },
     "safeguard": {
         num: 219,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the user and its party members cannot have major status conditions or confusion inflicted on them by other Pokemon. It is removed from the user's side if the user or an ally is successfully hit by Defog.",
@@ -13949,7 +13949,7 @@ exports.BattleMovedex = {
     },
     "sandstorm": {
         num: 201,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the weather becomes Sandstorm. At the end of each turn except the last, all active Pokemon lose 1/16 of their maximum HP, rounded down, unless they are a Ground, Rock, or Steel type, or have the Abilities Magic Guard, Overcoat, Sand Force, Sand Rush, or Sand Veil. The Special Defense of Rock-type Pokemon is multiplied by 1.5 when taking damage from a special attack during the effect. Lasts for 8 turns if the user is holding Smooth Rock. Fails if the current weather is Sandstorm.",
@@ -13968,7 +13968,7 @@ exports.BattleMovedex = {
     },
     "savagespinout": {
         num: 634,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -14354,7 +14354,7 @@ exports.BattleMovedex = {
     },
     "shadowpunch": {
         num: 325,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 60,
         category: "Physical",
         desc: "This move does not check accuracy.",
@@ -14392,7 +14392,7 @@ exports.BattleMovedex = {
     },
     "sharpen": {
         num: 159,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack by 1 stage.",
@@ -14413,7 +14413,7 @@ exports.BattleMovedex = {
     },
     "shatteredpsyche": {
         num: 648,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -14450,7 +14450,7 @@ exports.BattleMovedex = {
     },
     "shellsmash": {
         num: 504,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Lowers the user's Defense and Special Defense by 1 stage. Raises the user's Attack, Special Attack, and Speed by 2 stages.",
@@ -14514,7 +14514,7 @@ exports.BattleMovedex = {
     },
     "shiftgear": {
         num: 508,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Speed by 2 stages and its Attack by 1 stage.",
@@ -14537,7 +14537,7 @@ exports.BattleMovedex = {
     },
     "shockwave": {
         num: 351,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 60,
         category: "Special",
         desc: "This move does not check accuracy.",
@@ -14555,7 +14555,7 @@ exports.BattleMovedex = {
     },
     "shoreup": {
         num: 659,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP, rounded half up. If the weather is Sandstorm, the user instead restores 2/3 of its maximum HP, rounded half down.",
@@ -14683,7 +14683,7 @@ exports.BattleMovedex = {
     },
     "sinisterarrowraid": {
         num: 695,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 180,
         category: "Physical",
         desc: "No additional effect.",
@@ -14701,7 +14701,7 @@ exports.BattleMovedex = {
     },
     "sketch": {
         num: 166,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "This move is permanently replaced by the last move used by the target. The copied move has the maximum PP for that move. Fails if the target has not made a move, if the user has Transformed, or if the move is Chatter, Sketch, Struggle, or any move the user knows.",
@@ -14740,7 +14740,7 @@ exports.BattleMovedex = {
     },
     "skillswap": {
         num: 285,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user swaps its Ability with the target's Ability. Fails if either the user or the target's Ability is Illusion, Multitype, Stance Change, or Wonder Guard, but does not fail if both have the same Ability.",
@@ -14987,7 +14987,7 @@ exports.BattleMovedex = {
     },
     "slackoff": {
         num: 303,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP, rounded half up.",
@@ -15064,7 +15064,7 @@ exports.BattleMovedex = {
     },
     "sleeptalk": {
         num: 214,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "One of the user's known moves, besides this move, is selected for use at random. Fails if the user is not asleep. The selected move does not have PP deducted from it, and can currently have 0 PP. This move cannot select Assist, Belch, Bide, Chatter, Copycat, Focus Punch, Hold Hands, Me First, Metronome, Mimic, Mirror Move, Nature Power, Sketch, Sleep Talk, Struggle, Uproar, or any two-turn move.",
@@ -15234,7 +15234,7 @@ exports.BattleMovedex = {
     },
     "smartstrike": {
         num: 684,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 70,
         category: "Physical",
         desc: "This move does not check accuracy.",
@@ -15342,7 +15342,7 @@ exports.BattleMovedex = {
     },
     "snatch": {
         num: 289,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "If another Pokemon uses one of the following moves this turn, the user steals that move to use itself. If multiple Pokemon use this move in the same turn, the applicable moves will be stolen in turn order; a move cannot be stolen multiple times. Aqua Ring, Aromatherapy, Autotomize, Belly Drum, Camouflage, Charge, Conversion, Cosmic Power, Cotton Guard, Heal Bell, Healing Wish, Imprison, Ingrain, Light Screen, Lucky Chant, Lunar Dance, Magnet Rise, Mist, Power Trick, Quick Guard, Recycle, Reflect, Refresh, Safeguard, Stockpile, Substitute, Swallow, Tailwind, Wide Guard, Wish, and any move that has a primary effect of raising the user's stats or healing the user.",
@@ -15424,7 +15424,7 @@ exports.BattleMovedex = {
     },
     "speedswap": {
         num: 683,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user swaps its raw Speed stat with the target.",
@@ -15448,7 +15448,7 @@ exports.BattleMovedex = {
     },
     "spikyshield": {
         num: 596,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user is protected from most attacks made by other Pokemon during this turn, and Pokemon making contact with the user lose 1/8 of their maximum HP, rounded down. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
@@ -15541,7 +15541,7 @@ exports.BattleMovedex = {
     },
     "softboiled": {
         num: 135,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP, rounded half up.",
@@ -15654,7 +15654,7 @@ exports.BattleMovedex = {
     },
     "soulstealing7starstrike": {
         num: 699,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 195,
         category: "Physical",
         desc: "No additional effect.",
@@ -15734,7 +15734,7 @@ exports.BattleMovedex = {
     },
     "spiderweb": {
         num: 169,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Prevents the target from switching out. The target can still switch out if it is holding Shed Shell or uses Baton Pass, Parting Shot, U-turn, or Volt Switch. If the target leaves the field using Baton Pass, the replacement will remain trapped. The effect ends if the user leaves the field.",
@@ -15776,7 +15776,7 @@ exports.BattleMovedex = {
     },
     "spikes": {
         num: 191,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Sets up a hazard on the foe's side of the field, damaging each foe that switches in, unless it is a Flying-type Pokemon or has the Ability Levitate. Can be used up to three times before failing. Foes lose 1/8 of their maximum HP with one layer, 1/6 of their maximum HP with two layers, and 1/4 of their maximum HP with three layers, all rounded down. Can be removed from the foe's side if any foe uses Rapid Spin or Defog, or is hit by Defog.",
@@ -15868,7 +15868,7 @@ exports.BattleMovedex = {
     },
     "splash": {
         num: 150,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Nothing happens...",
@@ -15910,7 +15910,7 @@ exports.BattleMovedex = {
     },
     "spotlight": {
         num: 671,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Until the end of the turn, all single-target attacks from other Pokemon are redirected to the target. Such attacks are redirected to the target before they can be reflected by Magic Coat or the Ability Magic Bounce, or drawn in by the Abilities Lightning Rod or Storm Drain. Fails if it is not a Double Battle or Battle Royale.",
@@ -15945,7 +15945,7 @@ exports.BattleMovedex = {
     },
     "stealthrock": {
         num: 446,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Sets up a hazard on the foe's side of the field, damaging each foe that switches in. Can be used only once before failing. Foes lose 1/32, 1/16, 1/8, 1/4, or 1/2 of their maximum HP, rounded down, based on their weakness to the Rock type; 0.25x, 0.5x, neutral, 2x, or 4x, respectively. Can be removed from the foe's side if any foe uses Rapid Spin or Defog, or is hit by Defog.",
@@ -16023,7 +16023,7 @@ exports.BattleMovedex = {
     },
     "stickyweb": {
         num: 564,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Sets up a hazard on the foe's side of the field, lowering the Speed by 1 stage of each foe that switches in, unless it is a Flying-type Pokemon or has the Ability Levitate. Can be used only once before failing. Can be removed from the foe's side if any foe uses Rapid Spin or Defog, or is hit by Defog.",
@@ -16053,7 +16053,7 @@ exports.BattleMovedex = {
     },
     "stockpile": {
         num: 254,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense and Special Defense by 1 stage. The user's Stockpile count increases by 1. Fails if the user's Stockpile count is 3.",
@@ -16095,7 +16095,7 @@ exports.BattleMovedex = {
     },
     "stokedsparksurfer": {
         num: 700,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 175,
         category: "Special",
         desc: "Has a 100% chance to paralyze the target.",
@@ -16301,7 +16301,7 @@ exports.BattleMovedex = {
     },
     "struggle": {
         num: 165,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 50,
         category: "Physical",
         desc: "Deals typeless damage to one adjacent foe at random. If this move was successful, the user loses 1/4 of its maximum HP, rounded half up; the Ability Rock Head does not prevent this. This move can only be used if none of the user's known moves can be selected.",
@@ -16387,7 +16387,7 @@ exports.BattleMovedex = {
     },
     "substitute": {
         num: 164,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user takes 1/4 of its maximum HP, rounded down, and puts it into a substitute to take its place in battle. The substitute is removed once enough damage is inflicted on it, or if the user switches out or faints. Baton Pass can be used to transfer the substitute to an ally, and the substitute will keep its remaining HP. Until the substitute is broken, it receives damage from all attacks made by other Pokemon and shields the user from status effects and stat stage changes caused by other Pokemon. Sound-based moves and Pokemon with the Ability Infiltrator ignore substitutes. The user still takes normal damage from weather and status effects while behind its substitute. If the substitute breaks during a multi-hit attack, the user will take damage from any remaining hits. If a substitute is created while the user is partially trapped, the partial-trapping effect ends immediately. This move fails if the user does not have enough HP remaining to create a substitute, or if it already has a substitute.",
@@ -16463,7 +16463,7 @@ exports.BattleMovedex = {
     },
     "subzeroslammer": {
         num: 650,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -16508,7 +16508,7 @@ exports.BattleMovedex = {
     },
     "sunnyday": {
         num: 241,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, the weather becomes Sunny Day. The damage of Fire-type attacks is multiplied by 1.5 and the damage of Water-type attacks is multiplied by 0.5 during the effect. Lasts for 8 turns if the user is holding Heat Rock. Fails if the current weather is Sunny Day.",
@@ -16613,7 +16613,7 @@ exports.BattleMovedex = {
     },
     "supersonicskystrike": {
         num: 626,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -16672,7 +16672,7 @@ exports.BattleMovedex = {
     },
     "swallow": {
         num: 256,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores its HP based on its Stockpile count. Restores 1/4 of its maximum HP if it's 1, 1/2 of its maximum HP if it's 2, both rounded half down, and all of its HP if it's 3. Fails if the user's Stockpile count is 0. The user's Defense and Special Defense decrease by as many stages as Stockpile had increased them, and the user's Stockpile count resets to 0.",
@@ -16738,7 +16738,7 @@ exports.BattleMovedex = {
     },
     "swift": {
         num: 129,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 60,
         category: "Special",
         desc: "This move does not check accuracy.",
@@ -16804,7 +16804,7 @@ exports.BattleMovedex = {
     },
     "swordsdance": {
         num: 14,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack by 2 stages.",
@@ -16847,7 +16847,7 @@ exports.BattleMovedex = {
     },
     "synthesis": {
         num: 235,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user restores 1/2 of its maximum HP if no weather conditions are in effect, 2/3 of its maximum HP if the weather is Sunny Day, and 1/4 of its maximum HP if the weather is Hail, Rain Dance, or Sandstorm, all rounded half down.",
@@ -16893,7 +16893,7 @@ exports.BattleMovedex = {
     },
     "tailglow": {
         num: 294,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Special Attack by 3 stages.",
@@ -16956,7 +16956,7 @@ exports.BattleMovedex = {
     },
     "tailwind": {
         num: 366,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 4 turns, the user and its party members have their Speed doubled. Fails if this move is already in effect for the user's side.",
@@ -17063,7 +17063,7 @@ exports.BattleMovedex = {
     },
     "tearfullook": {
         num: 715,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Lowers the target's Attack and Special Attack by 1 stage.",
@@ -17107,7 +17107,7 @@ exports.BattleMovedex = {
     },
     "tectonicrage": {
         num: 630,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -17144,7 +17144,7 @@ exports.BattleMovedex = {
     },
     "telekinesis": {
         num: 477,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 3 turns, the target cannot avoid any attacks made against it, other than OHKO moves, as long as it remains active. During the effect, the target is immune to Ground-type attacks and the effects of Spikes, Toxic Spikes, Sticky Web, and the Ability Arena Trap as long as it remains active. If the target uses Baton Pass, the replacement will gain the effect. Ingrain, Smack Down, Thousand Arrows, and Iron Ball override this move if the target is under any of their effects. Fails if the target is already under this effect or the effects of Ingrain, Smack Down, or Thousand Arrows.",
@@ -17181,7 +17181,7 @@ exports.BattleMovedex = {
     },
     "teleport": {
         num: 100,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Fails when used.",
@@ -17506,7 +17506,7 @@ exports.BattleMovedex = {
     },
     "topsyturvy": {
         num: 576,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The target's positive stat stages become negative and vice versa. Fails if all of the target's stat stages are 0.",
@@ -17586,7 +17586,7 @@ exports.BattleMovedex = {
     },
     "toxicspikes": {
         num: 390,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Sets up a hazard on the foe's side of the field, poisoning each foe that switches in, unless it is a Flying-type Pokemon or has the Ability Levitate. Can be used up to two times before failing. Foes become poisoned with one layer and badly poisoned with two layers. Can be removed from the foe's side if any foe uses Rapid Spin or Defog, is hit by Defog, or a grounded Poison-type Pokemon switches in. Safeguard prevents the foe's party from being poisoned on switch-in, but a substitute does not.",
@@ -17653,7 +17653,7 @@ exports.BattleMovedex = {
     },
     "transform": {
         num: 144,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user transforms into the target. The target's current stats, stat stages, types, moves, Ability, weight, gender, and sprite are copied. The user's level and HP remain the same and each copied move receives only 5 PP, with a maximum of 5 PP each. The user can no longer change formes if it would have the ability to do so. This move fails if the target has a substitute, if either the user or the target is already transformed, or if either is behind an Illusion.",
@@ -17790,7 +17790,7 @@ exports.BattleMovedex = {
     },
     "trickroom": {
         num: 433,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, all active Pokemon with lower Speed will move before those with higher Speed, within their priority brackets. If this move is used during the effect, the effect ends.",
@@ -17847,7 +17847,7 @@ exports.BattleMovedex = {
         priority: 0,
         flags: { contact: 1, protect: 1, mirror: 1 },
         multihit: 3,
-        multiaccuracy: true,
+        multiaccuracy: 'Never Misses',
         effect: {
             duration: 1,
             onStart: function() {
@@ -17891,7 +17891,7 @@ exports.BattleMovedex = {
     },
     "trumpcard": {
         num: 376,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         basePowerCallback: function(pokemon) {
             let move = pokemon.getMoveData(pokemon.lastMove); // Account for calling Trump Card via other moves
@@ -17947,7 +17947,7 @@ exports.BattleMovedex = {
     },
     "twinkletackle": {
         num: 656,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 1,
         category: "Physical",
         shortDesc: "Power is equal to the base move's Z-Power.",
@@ -18190,7 +18190,7 @@ exports.BattleMovedex = {
     },
     "vitalthrow": {
         num: 233,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 70,
         category: "Physical",
         desc: "This move does not check accuracy.",
@@ -18386,7 +18386,7 @@ exports.BattleMovedex = {
     },
     "watersport": {
         num: 346,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, all Fire-type attacks used by any active Pokemon have their power reduced to 0.33x. Fails if this move is already in effect.",
@@ -18556,7 +18556,7 @@ exports.BattleMovedex = {
     },
     "whirlwind": {
         num: 18,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The target is forced to switch out and be replaced with a random unfainted ally. Fails if the target used Ingrain previously or has the Ability Suction Cups.",
@@ -18576,7 +18576,7 @@ exports.BattleMovedex = {
     },
     "wideguard": {
         num: 469,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "The user and its party members are protected from moves made by other Pokemon, including allies, during this turn that target all adjacent foes or all adjacent Pokemon. This move modifies the same 1/X chance of being successful used by other protection moves, where X starts at 1 and triples each time this move is successfully used, but does not use the chance to check for failure. X resets to 1 if this move fails or if the user's last move used is not Baneful Bunker, Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn or if this move is already in effect for the user's side.",
@@ -18681,7 +18681,7 @@ exports.BattleMovedex = {
     },
     "wish": {
         num: 273,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "At the end of the next turn, the Pokemon at the user's position has 1/2 of the user's maximum HP restored to it, rounded half up. Fails if this move is already in effect for the user's position.",
@@ -18716,7 +18716,7 @@ exports.BattleMovedex = {
     },
     "withdraw": {
         num: 110,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Defense by 1 stage.",
@@ -18737,7 +18737,7 @@ exports.BattleMovedex = {
     },
     "wonderroom": {
         num: 472,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "For 5 turns, all active Pokemon have their Defense and Special Defense stats swapped. Stat stage changes are unaffected. If this move is used during the effect, the effect ends.",
@@ -18793,7 +18793,7 @@ exports.BattleMovedex = {
     },
     "workup": {
         num: 526,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Raises the user's Attack and Special Attack by 1 stage.",
@@ -18909,7 +18909,7 @@ exports.BattleMovedex = {
     },
     "yawn": {
         num: 281,
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 0,
         category: "Status",
         desc: "Causes the target to fall asleep at the end of the next turn. Fails when used if the target cannot fall asleep or if it already has a major status condition. At the end of the next turn, if the target is still on the field, does not have a major status condition, and can fall asleep, it falls asleep. If the target becomes affected, this effect cannot be prevented by Safeguard or a substitute, or by falling asleep and waking up during the effect.",
@@ -19054,7 +19054,7 @@ exports.BattleMovedex = {
         contestType: "Clever",
     },
     "magikarpsrevenge": {
-        accuracy: true,
+        accuracy: 'Never Misses',
         basePower: 120,
         category: "Physical",
         desc: "Has a 100% chance to confuse the target and lower its Defense and Special Attack by 1 stage. The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.3x normal, rounded half down. If this move is successful, the weather changes to rain unless it is already in effect, and the user gains the effects of Aqua Ring and Magic Coat.",

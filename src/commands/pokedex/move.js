@@ -65,7 +65,6 @@ module.exports = class moveCommand extends commando.Command {
 
             let descString = move.desc ? move.desc : move.shortDesc;
             let accuracyString = move.accuracy ? "Certain Success" : move.accuracy;
-            let viableString = move.isViable ? "Yes" : "No";
             let targetString = move.target == 'normal' ? 'One Enemy' : capitalizeFirstLetter(move.target.replace(/([A-Z])/g, ' $1'))
             let crystalString = move.isZ ? `${capitalizeFirstLetter(move.isZ.substring(0, move.isZ.length - 1))}Z` : "None";
             const moveEmbed = new Discord.RichEmbed();
@@ -78,9 +77,9 @@ module.exports = class moveCommand extends commando.Command {
                 .addField('PP', move.pp, true)
                 .addField('Category', move.category, true)
                 .addField('Accuracy', move.accuracy, true)
-                .addField('Competitively viable', viableString, true)
                 .addField('Priority', move.priority, true)
                 .addField('Target', targetString, true)
+                .addField('Contest Condition', move.contest, true)
                 .addField('Z-Crystal', crystalString, true)
                 .addField('External Resources', `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${move.name.replace(" ", "_")}_(move\\))  |  [Smogon](http://www.smogon.com/dex/sm/moves/${move.name.replace(" ", "_")})  |  [PokémonDB](http://pokemondb.net/move/${move.name.replace(" ", "-")})`);
             msg.embed(moveEmbed, `**${capitalizeFirstLetter(move.name)}**`)
