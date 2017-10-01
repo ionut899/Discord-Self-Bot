@@ -43,7 +43,7 @@ module.exports = class debugCommand extends commando.Command {
 
         let debugEmbed = new Discord.RichEmbed();
         debugEmbed.setColor("#FF0000")
-        debugEmbed.setTitle(`The ${bugger.slice(4)} on this server are as follows`);
+        debugEmbed.setTitle(`The ${bugger} on this server are as follows`);
 
         if (bugger === "channels") {
             let channelNames = msg.guild.channels.filter(function (textFilter) {
