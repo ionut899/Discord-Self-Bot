@@ -71,7 +71,6 @@ module.exports = class serverInfoCommand extends commando.Command {
             .addField('Members', guild.memberCount, true)
             .addField('Currently Online', onlineMembers, true)
             .addField('Region', guild.region, true)
-            .addField('Default Channel', `<#${guild.defaultChannel.id}>`, true)
             .addField('Highest Role', guild.roles.sort((a, b) => a.position - b.position || a.id - b.id).last().name, true)
             .addField('Number of emojis', guild.emojis.size, true)
             .addField('Number of roles', guild.roles.size, true)
