@@ -10,5 +10,6 @@
         "largeText": "See the GitHub!",
         "application_id": "355326429178757131",
         "url": ""
-    }
+    },
+    "webhookNotifiers": false
 } 
