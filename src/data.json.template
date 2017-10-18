@@ -1,5 +1,6 @@
 {
-    "richpresences": {
+    "richPresenceEnabled": false,
+    "richpresenceData": {
         "name": "Discord-Self-Bot",
         "type": 0,
         "details": "Selfbot by Favna",

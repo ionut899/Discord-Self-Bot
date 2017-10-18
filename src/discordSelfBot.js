@@ -57,26 +57,36 @@ class discordSelfBot {
              * having your entire Discord account banned. It is highly ill advised
              * to enable the RichPresence section!!
              */
-            this.client.user.setPresence({
-                game: {
-                    name: data.richpresences.name,
-                    type: data.richpresences.type,
-                    url: data.richpresences.url,
-                    /*  details: data.richpresences.details,
-                      state: data.richpresences.state,
-                      
-                      timestamps: {
-                          end: data.richpresences.endTimestamp,
-                      },
-                      assets: {
-                          large_image: data.richpresences.largeImageID,
-                          large_text: data.richpresences.largeText,
-                          small_image: data.richpresences.smallImageID
-                      },
-                      application_id: data.richpresences.application_id*/
 
-                }
-            });
+            if (!data.richPresenceEnabled) {
+                this.client.user.setPresence({
+                    game: {
+                        name: data.richpresenceData.name,
+                        type: data.richpresenceData.type,
+                        url: data.richpresenceData.url,
+                    }
+                });
+            } else {
+                this.client.user.setPresence({
+                    game: {
+                        name: data.richpresenceData.name,
+                        type: data.richpresenceData.type,
+                        url: data.richpresenceData.url,
+                        details: data.richpresenceData.details,
+                        state: data.richpresenceData.state,
+                        timestamps: {
+                            start: data.richpresenceData.endTimestamp,
+                        },
+                        assets: {
+                            large_image: data.richpresenceData.largeImageID,
+                            large_text: data.richpresenceData.largeText,
+                            small_image: data.richpresenceData.smallImageID
+                        },
+                        application_id: data.richpresenceData.application_id
+                    }
+                });
+            }
+
             this.isReady = true;
         })
     }
