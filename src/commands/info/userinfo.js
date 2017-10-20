@@ -35,7 +35,8 @@ module.exports = class userInfoCommand extends commando.Command {
                 key: 'member',
                 label: 'user',
                 prompt: 'What user would you like to snoop on?',
-                type: 'member'
+                type: 'member',
+                label: 'member name or ID'
             }]
         });
     }

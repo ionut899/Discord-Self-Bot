@@ -34,7 +34,8 @@ module.exports = class embedCommand extends commando.Command {
             args: [{
                 key: 'scparticle',
                 prompt: 'Please enter the SCP you\'d like an URL for.',
-                type: 'string'
+                type: 'string',
+                label: 'Search query'
             }]
         });
     }

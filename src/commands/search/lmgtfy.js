@@ -32,7 +32,8 @@ module.exports = class lmgtfyCommand extends commando.Command {
             args: [{
                 key: 'question',
                 prompt: 'What does the idiot want to find?',
-                type: 'string'
+                type: 'string',
+                label: 'Search query to lmgtfy'
             }]
         });
     }

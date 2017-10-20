@@ -35,7 +35,8 @@ module.exports = class wikipediaCommand extends commando.Command {
             args: [{
                 key: 'input',
                 prompt: 'What page do you want to get info from?',
-                type: 'string'
+                type: 'string',
+                label: 'Article to find'
             }]
         });
     }

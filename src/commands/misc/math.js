@@ -33,7 +33,8 @@ module.exports = class mathCommand extends commando.Command {
             args: [{
                 key: 'equation',
                 prompt: 'What is the equation to solve?',
-                type: 'string'
+                type: 'string',
+                label: 'Equation to calculate'
             }]
         });
     }

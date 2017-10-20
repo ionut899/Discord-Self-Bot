@@ -34,7 +34,8 @@ module.exports = class typeCommand extends commando.Command {
             args: [{
                 key: 'type',
                 prompt: 'Get info on which type?',
-                type: 'string'
+                type: 'string',
+                label: 'Type matchup to check'
             }]
         });
     }

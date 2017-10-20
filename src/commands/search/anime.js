@@ -35,7 +35,8 @@ module.exports = class animeCommand extends commando.Command {
             args: [{
                 key: 'query',
                 prompt: 'What anime do you want to find?',
-                type: 'string'
+                type: 'string',
+                label: 'Anime to look up'
             }]
         });
     }

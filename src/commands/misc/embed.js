@@ -33,7 +33,8 @@ module.exports = class embedCommand extends commando.Command {
             args: [{
                 key: 'embedContent',
                 prompt: 'What should the content of the embed be?',
-                type: 'string'
+                type: 'string',
+                label: 'input for the custom embed'
             }]
         });
     }

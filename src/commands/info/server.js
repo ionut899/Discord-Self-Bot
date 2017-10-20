@@ -35,7 +35,8 @@ module.exports = class serverInfoCommand extends commando.Command {
                 key: 'server',
                 prompt: 'Get info from which server?',
                 type: 'guild',
-                default: 'current'
+                default: 'current',
+                label: 'serverName ID (partial or full)'
             }]
         });
     }

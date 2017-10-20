@@ -35,7 +35,8 @@ module.exports = class cydiaCommand extends commando.Command {
             args: [{
                 key: 'packageName',
                 prompt: 'Please supply package name',
-                type: 'string'
+                type: 'string',
+                label: 'Package name to look up'
             }]
         });
     }

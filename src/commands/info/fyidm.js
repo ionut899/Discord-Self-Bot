@@ -28,14 +28,17 @@ module.exports = class fyidmCommand extends commando.Command {
             aliases: ['dm', 'discmatch', 'dmatch'],
             memberName: 'fyidm',
             description: 'Returns a list of users who have the same discriminator (the 4 digits after the username) as you. fyidm is short for "Find your ID Mate"',
-            examples: ['fyidm'],
+            examples: ['fyidm {4 digit discriminator}', 'fyidm 0000'],
             guildOnly: false,
 
             args: [{
                 key: 'discrim',
                 prompt: 'Check which discriminator',
                 type: 'string',
-                default: 'self'
+                default: 'self',
+                max: 4,
+                min: 4,
+                label: 'The custom input discriminator'
             }]
         });
     }

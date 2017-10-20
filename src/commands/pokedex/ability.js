@@ -36,7 +36,8 @@ module.exports = class abilityCommand extends commando.Command {
             args: [{
                 key: 'ability',
                 prompt: 'Get info on which ability?',
-                type: 'string'
+                type: 'string',
+                label: 'Ability to find'
             }]
         });
     }

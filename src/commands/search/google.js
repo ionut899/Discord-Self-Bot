@@ -39,7 +39,8 @@ module.exports = class googleCommand extends commando.Command {
             args: [{
                 key: 'query',
                 prompt: 'What do you want to google?',
-                type: 'string'
+                type: 'string',
+                label: 'Search query'
             }]
         });
     }

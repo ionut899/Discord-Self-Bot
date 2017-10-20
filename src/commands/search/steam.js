@@ -40,7 +40,8 @@ module.exports = class steamCommand extends commando.Command {
             args: [{
                 key: 'steamGameName',
                 prompt: 'What game do you want to find on the steam store?',
-                type: 'string'
+                type: 'string',
+                label: 'Game to look up'
             }]
         });
     }

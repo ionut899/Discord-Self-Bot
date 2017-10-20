@@ -41,17 +41,20 @@ module.exports = class moneyCommand extends commando.Command {
             args: [{
                     key: 'value',
                     prompt: 'Amount of money?',
-                    type: 'string'
+                    type: 'string',
+                    label: 'Amount to convert'
                 },
                 {
                     key: 'curOne',
                     prompt: 'What is the currency you want to convert **from**?',
-                    type: 'string'
+                    type: 'string',
+                    label: 'First Currency'
                 },
                 {
                     key: 'curTwo',
                     prompt: 'What is the currency you want to convert **to**?',
-                    type: 'string'
+                    type: 'string',
+                    label: 'Second Currency'
                 }
             ]
         });
@@ -62,7 +65,7 @@ module.exports = class moneyCommand extends commando.Command {
             fx.rates = oxr.rates;
             fx.base = oxr.base;
 
-console.log(oxr.rates);
+            console.log(oxr.rates);
 
             await converter(replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo).then((convertedMoney) => {
                 let oxrEmbed = new Discord.RichEmbed();

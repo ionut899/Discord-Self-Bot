@@ -27,7 +27,7 @@ module.exports = class strawpollCommand extends commando.Command {
             group: 'fun',
             aliases: ['poll', 'straw'],
             memberName: 'strawpoll',
-            description: 'Strawpoll something',
+            description: 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
             examples: ['strawpoll {Title} {Option1 Option2 .... OptionX}', 'strawpoll Best_Anime_Waifu? Pyrrha_Nikos Asuna Saber'],
             guildOnly: false,
 
@@ -35,13 +35,15 @@ module.exports = class strawpollCommand extends commando.Command {
                     key: 'title',
                     prompt: 'Title of the strawpoll',
                     type: 'string',
-                    wait: 60
+                    wait: 60,
+                    label: 'Title of the strawpoll'
                 },
                 {
                     key: 'options',
                     prompt: 'Options for the strawpoll?',
                     type: 'string',
-                    wait: 60
+                    wait: 60,
+                    label: 'Questions for the strawpoll'
                 }
             ]
         });

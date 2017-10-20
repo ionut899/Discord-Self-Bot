@@ -39,7 +39,8 @@ module.exports = class imageCommand extends commando.Command {
             args: [{
                 key: 'query',
                 prompt: 'What do you want to find images of?',
-                type: 'string'
+                type: 'string',
+                label: 'Search query'
             }]
         });
     }

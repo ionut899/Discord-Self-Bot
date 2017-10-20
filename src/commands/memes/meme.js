@@ -34,7 +34,8 @@ module.exports = class memeCommand extends commando.Command {
             args: [{
                 key: 'image',
                 prompt: 'What image do you want send?',
-                type: 'string'
+                type: 'string',
+                label: 'image name to send'
             }]
         });
     }

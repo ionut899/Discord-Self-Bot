@@ -34,18 +34,21 @@ module.exports = class quoteCommand extends commando.Command {
             args: [{
                     key: 'channel',
                     prompt: 'Which channel from the server?',
-                    type: 'channel'
+                    type: 'channel',
+                    label: 'Channel name or ID'
                 },
                 {
                     key: 'message',
                     prompt: 'And what message?',
-                    type: 'string'
+                    type: 'string',
+                    label: 'MessageID to quote'
                 },
                 {
                     key: 'content',
                     prompt: 'What content would you like to send along with the quote?',
                     type: 'string',
-                    default: ""
+                    default: "",
+                    label: 'Content to send along with your quote'
                 }
             ]
         });

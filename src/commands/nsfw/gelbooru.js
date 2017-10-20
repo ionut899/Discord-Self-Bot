@@ -34,7 +34,8 @@ module.exports = class gelbooruCommand extends commando.Command {
             args: [{
                 key: 'nsfwtags',
                 prompt: 'What do you want to find NSFW for?',
-                type: 'string'
+                type: 'string',
+                label: 'Search query'
             }]
         });
     }

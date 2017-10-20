@@ -35,26 +35,30 @@ module.exports = class quoteCommand extends commando.Command {
                     key: 'guild',
                     prompt: 'Which server?',
                     type: 'guild',
-                    wait: 60
+                    wait: 60,
+                    label: 'Server Name or ID'
                 },
                 {
                     key: 'channel',
                     prompt: 'Which channel on that server?',
                     type: 'string',
-                    wait: 60
+                    wait: 60,
+                    label: 'ChannelID'
                 },
                 {
                     key: 'message',
                     prompt: 'And what message?',
                     type: 'string',
-                    wait: 60
+                    wait: 60,
+                    label: 'MessageID to quote'
                 },
                 {
                     key: 'content',
                     prompt: 'What content would you like to send along with the quote?',
                     type: 'string',
                     default: "",
-                    wait: 60
+                    wait: 60,
+                    label: 'Content to send along with your quote'
                 }
             ]
         });

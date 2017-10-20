@@ -33,12 +33,14 @@ module.exports = class cydiaPackageCommand extends commando.Command {
             args: [{
                     key: 'repo',
                     prompt: 'What is the repo URL?',
-                    type: 'string'
+                    type: 'string',
+                    label: 'URL of the repo'
                 },
                 {
                     key: 'package',
                     prompt: 'And what is the package name?',
-                    type: 'string'
+                    type: 'string',
+                    label: 'PackageName of the package'
                 }
             ]
         });

@@ -33,7 +33,8 @@ module.exports = class debugCommand extends commando.Command {
             args: [{
                 key: 'buggerType',
                 prompt: 'Do you want to debug `channels` or `roles`?',
-                type: 'string'
+                type: 'string',
+                label: 'channels or roles to debug'
             }]
         });
     }

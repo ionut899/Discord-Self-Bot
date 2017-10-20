@@ -34,7 +34,8 @@ module.exports = class listEmojisCommand extends commando.Command {
             args: [{
                 key: 'server',
                 prompt: 'What server would you like the emojis from?',
-                type: 'guild'
+                type: 'guild',
+                label: 'serverName or ID (partial or full)'
             }]
         });
     }

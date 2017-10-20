@@ -36,7 +36,8 @@ module.exports = class movieCommand extends commando.Command {
             args: [{
                 key: 'name',
                 prompt: 'Please supply movie title',
-                type: 'string'
+                type: 'string',
+                label: 'Movie or TV Show to look up'
             }]
         });
     }

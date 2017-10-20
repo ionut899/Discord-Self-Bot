@@ -33,7 +33,8 @@ module.exports = class cydiaSourceCommand extends commando.Command {
             args: [{
                 key: 'repo',
                 prompt: 'What is the repo URL?',
-                type: 'string'
+                type: 'string',
+                label: 'URL of the repo'
             }]
         });
     }

@@ -34,12 +34,14 @@ module.exports = class sendEmojiCommand extends commando.Command {
             args: [{
                 key: 'emojiName',
                 prompt: 'What emoji do you want send?',
-                type: 'string'
+                type: 'string',
+                label: 'name of the emoji'
             }, {
                 key: 'message',
                 prompt: 'Content to send along with the emoji?',
                 type: 'string',
-                default: ""
+                default: "",
+                label: 'Message to send along with the emoji'
             }]
         });
     }

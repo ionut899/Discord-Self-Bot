@@ -34,7 +34,8 @@ module.exports = class urbanCommand extends commando.Command {
             args: [{
                 key: 'query',
                 prompt: 'What word do you want to define?',
-                type: 'string'
+                type: 'string',
+                label: 'Word to define'
             }]
         });
     }

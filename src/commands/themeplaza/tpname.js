@@ -29,22 +29,23 @@ module.exports = class themeNameCommand extends commando.Command {
         super(client, {
             name: 'tpname',
             group: 'themeplaza',
-            aliases: ['themename', 'name', 'tname'],
+            aliases: ['themename', 'name', 'tname', 'tsearch', 'ts'],
             memberName: 'tpname',
-            description: 'Get info from a theme on themeplaza based on name',
-            examples: ['tname megaman', 'name megaman'],
+            description: 'Get info from a theme on themeplaza based on search query',
+            examples: ['tname {search query}', 'name megaman'],
             guildOnly: false,
 
             args: [{
-                key: 'themeName',
-                prompt: 'Name of the theme?',
-                type: 'string'
+                key: 'themeSQ',
+                prompt: 'Search query to fire at ThemePlaza?',
+                type: 'string',
+                label: 'Search query to fire on the site'
             }]
         });
     }
 
     async run(msg, args) {
-        let searchURL = `https://themeplaza.eu/themes?query=${args.themeName}&sort=newest`
+        let searchURL = `https://themeplaza.eu/themes?query=${args.themeSQ}&sort=newest`
         request({
                 uri: searchURL,
                 headers: {
@@ -94,7 +95,7 @@ module.exports = class themeNameCommand extends commando.Command {
 
                                 themeData.nsfw === '0' ? themeEmbed.setImage(`https://themeplaza.eu/download/${args.themeID}/preview`) : null
                                 msg.channel.nsfw ? themeEmbed.setImage(`https://themeplaza.eu/download/${args.themeID}/preview`) : null
-                                
+
                                 await msg.embed(themeEmbed, `https://themeplaza.eu/item/${themeID}`);
                             } else {
                                 console.error(err);

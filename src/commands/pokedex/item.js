@@ -36,7 +36,8 @@ module.exports = class itemCommand extends commando.Command {
             args: [{
                 key: 'item',
                 prompt: 'Get info on which item?',
-                type: 'string'
+                type: 'string',
+                label: 'Item to find'
             }]
         });
     }

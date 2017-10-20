@@ -43,7 +43,8 @@ module.exports = class youtubeCommand extends commando.Command {
             args: [{
                 key: 'query',
                 prompt: 'What kind of video do you want to find?',
-                type: 'string'
+                type: 'string',
+                label: 'Video to find'
             }]
         });
     }

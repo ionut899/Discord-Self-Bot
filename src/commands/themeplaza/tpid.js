@@ -38,7 +38,8 @@ module.exports = class themeIDCommand extends commando.Command {
             args: [{
                 key: 'themeID',
                 prompt: 'ID of which theme?',
-                type: 'string'
+                type: 'string',
+                label: 'ID of the theme'
             }]
         });
     }

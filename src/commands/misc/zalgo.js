@@ -32,7 +32,8 @@ module.exports = class zalgoCommand extends commando.Command {
             args: [{
                 key: 'txt',
                 prompt: 'What should I zalgolize?',
-                type: 'string'
+                type: 'string',
+                label: 'Text to zalgolize'
             }]
         });
     }

@@ -29,18 +29,20 @@ module.exports = class fightCommand extends commando.Command {
             aliases: ['combat'],
             memberName: 'fight',
             description: 'Pit two things against each other in a fight to the death',
-            examples: ['fight {fighterOne} {fighterTwo}','fight Favna Chuck Norris'],
+            examples: ['fight {fighterOne} {fighterTwo}', 'fight Favna Chuck Norris'],
             guildOnly: false,
 
             args: [{
                     key: 'fighterOne',
                     prompt: 'Who or what is the first fighter?',
-                    type: 'string'
+                    type: 'string',
+                    label: 'Name of the first fighter'
                 },
                 {
                     key: 'fighterTwo',
                     prompt: 'What should fighter one be fighting?',
-                    type: 'string'
+                    type: 'string',
+                    label: 'Name of the second fighter'
                 }
             ]
         });

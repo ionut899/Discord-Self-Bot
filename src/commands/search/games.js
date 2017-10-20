@@ -36,7 +36,8 @@ module.exports = class gameCommand extends commando.Command {
             args: [{
                 key: 'gameData',
                 prompt: 'Please supply game title',
-                type: 'string'
+                type: 'string',
+                label: 'Game to look up'
             }]
         });
     }

@@ -34,13 +34,15 @@ module.exports = class zoneConvCommand extends commando.Command {
                     key: 'time',
                     label: 'Time',
                     prompt: 'What time to convert? (24 hour format)',
-                    type: 'string'
+                    type: 'string',
+                    label: 'Time in 24h format'
                 },
                 {
                     key: 'zone',
                     label: 'tz',
                     prompt: 'What timezone to convert to?',
-                    type: 'string'
+                    type: 'string',
+                    label: 'timezone to convert to'
                 }
             ]
         });
