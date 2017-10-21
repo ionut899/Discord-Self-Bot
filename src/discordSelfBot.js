@@ -71,7 +71,7 @@ class discordSelfBot {
                     game: {
                         name: data.richpresenceData.name,
                         type: data.richpresenceData.type,
-                        url: data.richpresenceData.url,
+                        url: data.richpresenceData.url != "" ? data.richpresenceData.url : null,
                         details: data.richpresenceData.details,
                         state: data.richpresenceData.state,
                         timestamps: {
