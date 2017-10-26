@@ -63,7 +63,7 @@ class discordSelfBot {
                     game: {
                         name: data.richpresenceData.name,
                         type: data.richpresenceData.type,
-                        url: data.richpresenceData.url,
+                        url: data.richpresenceData.url != "" ? data.richpresenceData.url : null
                     }
                 });
             } else {
