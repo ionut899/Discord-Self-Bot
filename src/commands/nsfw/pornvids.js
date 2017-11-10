@@ -18,7 +18,7 @@
 
 const Discord = require("discord.js");
 const commando = require('discord.js-commando');
-const pornsearch = require('pornsearch');
+const pornsearch = require('pornsearch').default;
 const random = require('node-random');
 
 module.exports = class pornvidsCommand extends commando.Command {
