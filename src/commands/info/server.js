@@ -76,10 +76,9 @@ module.exports = class serverInfoCommand extends commando.Command {
             .addField('Number of emojis', guild.emojis.size, true)
             .addField('Number of roles', guild.roles.size, true)
             .addField('Number of channels', guildChannels, true)
-
             .addField('Created At', moment(guild.createdTimestamp).format('MMMM Do YYYY [@] HH:mm:ss [UTC]Z'), false)
             .addField('Verification Level', data.verifyLevel[guild.verificationLevel], false)
-            .addField('Excplicit Content Filter', data.contentFilter[guild.explicitContentFilter], false)
+            .addField('Explicit Content Filter', data.contentFilter[guild.explicitContentFilter], false)
 
         guild.splashURL !== null ? serverEmbed.setImage(guild.splashURL) : null;
         await msg.embed(serverEmbed);
