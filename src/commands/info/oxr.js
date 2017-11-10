@@ -65,8 +65,6 @@ module.exports = class moneyCommand extends commando.Command {
             fx.rates = oxr.rates;
             fx.base = oxr.base;
 
-            console.log(oxr.rates);
-
             await converter(replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo).then((convertedMoney) => {
                 let oxrEmbed = new Discord.RichEmbed();
                 oxrEmbed
