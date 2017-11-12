@@ -41,7 +41,7 @@ module.exports = class defineCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        let defineEmbed = new Discord.RichEmbed();
+        let defineEmbed = new Discord.MessageEmbed();
         superagent.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${args.query}`)
             .then((res) => res.body)
             .then((res) => {

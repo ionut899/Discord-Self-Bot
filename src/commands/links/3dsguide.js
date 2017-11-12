@@ -32,7 +32,7 @@ module.exports = class threeDSguideCommand extends commando.Command {
     }
 
     async run(msg) {
-        let plaiGuideEmbed = new Discord.RichEmbed();
+        let plaiGuideEmbed = new Discord.MessageEmbed();
         plaiGuideEmbed
             .setColor("#FF0000")
             .setTitle("A one stop guide for (New) Nintendo 3DS (XL) / (New) Nintendo 2DS (XL)")

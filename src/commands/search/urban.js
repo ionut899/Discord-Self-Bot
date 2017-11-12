@@ -45,7 +45,7 @@ module.exports = class urbanCommand extends commando.Command {
             if (json == undefined) {
                 await msg.say(`**No Results Found!**`);
             }
-            let urbanEmbed = new Discord.RichEmbed;
+            let urbanEmbed = new Discord.MessageEmbed;
             urbanEmbed
                 .setAuthor(`Urban Search - ${json.word}`, `https://i.imgur.com/miYLsGw.jpg`)
                 .setColor("#E86121")

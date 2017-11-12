@@ -32,7 +32,7 @@ module.exports = class vitaGuideEmbed extends commando.Command {
     }
 
     async run(msg) {
-        let vitaGuideEmbed = new Discord.RichEmbed();
+        let vitaGuideEmbed = new Discord.MessageEmbed();
 
         vitaGuideEmbed
             .setColor("#FF0000")

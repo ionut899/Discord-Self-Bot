@@ -44,7 +44,7 @@ module.exports = class serverInfoCommand extends commando.Command {
     async run(msg, args) {
         if (msg.channel.type !== 'text' && args.server === 'current') return msg.reply('An argument of server name (partial or full) or server ID is required when talking outside of a server')
 
-        const serverEmbed = new Discord.RichEmbed();
+        const serverEmbed = new Discord.MessageEmbed();
         const guild = args.server === 'current' ? msg.guild : args.server
         const presences = guild.presences.map(st => st.status)
         const channels = guild.channels.map(ty => ty.type);
@@ -65,7 +65,7 @@ module.exports = class serverInfoCommand extends commando.Command {
         serverEmbed
             .setColor(guild.owner.displayHexColor)
             .setAuthor('Server Info', 'https://favna.s-ul.eu/O0qc0yt7.png')
-            .setThumbnail(guild.iconURL)
+            .setThumbnail(guild.iconURL())
             .setFooter(`Server ID: ${guild.id}`)
             .addField('Server Name', guild.name, true)
             .addField('Owner', guild.owner.user.tag, true)
@@ -80,7 +80,7 @@ module.exports = class serverInfoCommand extends commando.Command {
             .addField('Verification Level', data.verifyLevel[guild.verificationLevel], false)
             .addField('Explicit Content Filter', data.contentFilter[guild.explicitContentFilter], false)
 
-        guild.splashURL !== null ? serverEmbed.setImage(guild.splashURL) : null;
+        guild.splashURL() !== null ? serverEmbed.setImage(guild.splashURL()) : null;
         await msg.embed(serverEmbed);
     }
 };

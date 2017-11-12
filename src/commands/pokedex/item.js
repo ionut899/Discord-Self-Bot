@@ -52,7 +52,7 @@ module.exports = class itemCommand extends commando.Command {
         }
 
         if (item) {
-            const itemEmbed = new Discord.RichEmbed();
+            const itemEmbed = new Discord.MessageEmbed();
             itemEmbed
                 .setColor('#FF0000')
                 .addField('Description', item.desc)

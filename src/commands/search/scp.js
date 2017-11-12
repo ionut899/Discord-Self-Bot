@@ -42,7 +42,7 @@ module.exports = class embedCommand extends commando.Command {
 
     async run(msg, args) {
         msg.delete();
-        const scpEmbed = new Discord.RichEmbed();
+        const scpEmbed = new Discord.MessageEmbed();
 
         scpEmbed
             .setTitle(`SCP-${args.scparticle}`)

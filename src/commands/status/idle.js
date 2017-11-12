@@ -32,8 +32,9 @@ module.exports = class idleCommand extends commando.Command {
     }
 
     async run(msg) {
-        msg.author.setStatus('idle')
-            .then(msg.reply('Status set to idle'))
+        msg.client.user.setPresence({
+                status: "idle"
+            }).then(msg.reply('Status set to idle'))
             .catch((e) => console.error(e));
     };
 };

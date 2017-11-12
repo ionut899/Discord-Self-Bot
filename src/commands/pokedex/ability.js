@@ -53,7 +53,7 @@ module.exports = class abilityCommand extends commando.Command {
         let abilityDesc = ability.desc !== undefined ? ability.desc : ability.shortDesc
 
         if (ability) {
-            const abilityEmbed = new Discord.RichEmbed();
+            const abilityEmbed = new Discord.MessageEmbed();
 
             abilityEmbed
                 .setColor('#0088FF')

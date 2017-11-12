@@ -31,6 +31,7 @@ module.exports = class pornvidsCommand extends commando.Command {
             description: 'Search porn videos',
             examples: ['pornvids {pornography query}', 'pornvids babe'],
             guildOnly: false,
+            nsfw: true,
 
             args: [{
                 key: 'pornInput',
@@ -55,7 +56,7 @@ module.exports = class pornvidsCommand extends commando.Command {
                         console.error(error);
                         return msg.reply('An error occured while drawing a random number. Check your error log.');
                     }
-                    const pornEmbed = new Discord.RichEmbed();
+                    const pornEmbed = new Discord.MessageEmbed();
                     pornEmbed
                         .setURL(videos[data].url)
                         .setTitle(videos[data].title)

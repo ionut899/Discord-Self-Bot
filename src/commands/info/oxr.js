@@ -66,7 +66,7 @@ module.exports = class moneyCommand extends commando.Command {
             fx.base = oxr.base;
 
             await converter(replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo).then((convertedMoney) => {
-                let oxrEmbed = new Discord.RichEmbed();
+                let oxrEmbed = new Discord.MessageEmbed();
                 oxrEmbed
                     .setColor('#2558CF')
                     .setAuthor('🌐 Currency Converter')

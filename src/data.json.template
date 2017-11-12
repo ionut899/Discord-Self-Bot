@@ -1,16 +1,20 @@
 {
     "richPresenceEnabled": false,
     "richpresenceData": {
+        "applicationID": "355326429178757131",
         "name": "Discord-Self-Bot",
-        "type": 0,
-        "details": "Selfbot by Favna",
+        "type": "PLAYING",
+        "details": "Made by Favna",
         "state": "https://goo.gl/YtQLCX",
-        "endTimestamp": 1504879200,
-        "largeImageID": "355327858534645760",
-        "smallImageID": "355327858534645760",
+        "startDate": 1504879200,
+        "largeImage": "355327858534645760",
+        "smallImage": "355327858534645760",
         "largeText": "See the GitHub!",
-        "application_id": "355326429178757131",
-        "url": ""
+        "url": "",
+        "partySize": {
+            "current": 1,
+            "max": 1
+        }
     },
-    "webhookNotifiers": false
-} 
+    "webhookNotifiers": true
+}

@@ -41,7 +41,7 @@ module.exports = class eightBallCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        let eightBallEmbed = new Discord.RichEmbed();
+        let eightBallEmbed = new Discord.MessageEmbed();
         eightBallEmbed
             .setColor('#71CD40')
             .addField(':question: Question', args.question, false)

@@ -34,7 +34,7 @@ module.exports = class coinCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        let coinEmbed = new Discord.RichEmbed();
+        let coinEmbed = new Discord.MessageEmbed();
         let res = coin();
         coinEmbed
             .setColor('#FF0000')

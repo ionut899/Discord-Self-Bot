@@ -264,7 +264,7 @@ module.exports = class typeCommand extends commando.Command {
             atkVulnDisplay[3] = `Doesn't affect: ${atkNoTypes.join(", ")}`;
         }
 
-        const typeEmbed = new Discord.RichEmbed();
+        const typeEmbed = new Discord.MessageEmbed();
         typeEmbed
             .setColor('#FF0000')
             .setAuthor(`Type effectiveness for ${displayTypes.join(', ')}`)

@@ -60,7 +60,7 @@ module.exports = class movieCommand extends commando.Command {
             tmdb.movieInfo({
                 id: movieID
             }, (idErr, idRes) => {
-                let movieEmbed = new Discord.RichEmbed();
+                let movieEmbed = new Discord.MessageEmbed();
                 movieEmbed
                     .setImage(`http://image.tmdb.org/t/p/w640${idRes.backdrop_path}`)
                     .setColor('#00D474')

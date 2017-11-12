@@ -30,6 +30,7 @@ module.exports = class pahealCommand extends commando.Command {
             description: 'Find NSFW Content on Rule34 - Paheal',
             examples: ['paheal {NSFW Query}', 'paheal Pyrrha Nikos'],
             guildOnly: false,
+            nsfw: true,
 
             args: [{
                 key: 'nsfwtags',

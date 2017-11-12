@@ -47,7 +47,7 @@ module.exports = class listEmojisCommand extends commando.Command {
         let emojisSetOne = [];
         let emojisSetTwo = [];
         let emojisSetThree = [];
-        let emojisEmbed = new Discord.RichEmbed();
+        let emojisEmbed = new Discord.MessageEmbed();
         for (let i = 0; i < guildMojiNames.length; i++) {
 
             if (emojisSetOne.toString().length <= 900) {

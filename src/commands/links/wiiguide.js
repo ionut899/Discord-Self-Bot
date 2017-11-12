@@ -32,7 +32,7 @@ module.exports = class wiiGuideCommand extends commando.Command {
     }
 
     async run(msg) {
-        let wiiGuideEmbed = new Discord.RichEmbed();
+        let wiiGuideEmbed = new Discord.MessageEmbed();
 
         wiiGuideEmbed
             .setColor("#FF0000")

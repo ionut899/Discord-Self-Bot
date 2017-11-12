@@ -43,7 +43,7 @@ module.exports = class animeCommand extends commando.Command {
 
     async run(msg, args) {
 
-        let animeEmbed = new Discord.RichEmbed();
+        let animeEmbed = new Discord.MessageEmbed();
 
         malware.fromName(args.query).then(anime => {
                 let japName = anime.alternativeTitles.japanese;

@@ -26,7 +26,7 @@ module.exports = class embedCommand extends commando.Command {
             group: 'misc',
             aliases: ['emb'],
             memberName: 'embed',
-            description: 'Create custom RichEmbeds on the fly',
+            description: 'Create custom MessageEmbeds on the fly',
             examples: ['embed {FieldName>Value1;Value2<FieldName2>Value1;Value2... etc}', 'embed What goes up but never comes down?>Your Age'],
             guildOnly: false,
 
@@ -41,7 +41,7 @@ module.exports = class embedCommand extends commando.Command {
 
     async run(msg, args) {
         let paramString = args.embedContent
-        let customEmbed = new Discord.RichEmbed();
+        let customEmbed = new Discord.MessageEmbed();
 
         let fields = paramString.split('<');
         fields.forEach(field => {

@@ -632,17 +632,17 @@ dijkstrajs@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
-"discord.js-commando@git+https://github.com/Favna/discord.js-commando.git#active":
+"discord.js-commando@github:favna/discord.js-commando#active":
   version "0.9.0"
-  resolved "git+https://github.com/Favna/discord.js-commando.git#830120dad2a6d9b2bf15a77179faf6f4c74bb060"
+  resolved "https://codeload.github.com/favna/discord.js-commando/tar.gz/eb498c2f2ab126ee802b5f5da103d63f28c24884"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
     require-all "^2.0.0"
 
-"discord.js@git+https://github.com/Favna/discord.js.git#active":
+"discord.js@github:favna/discord.js#active":
   version "12.0.0-dev"
-  resolved "git+https://github.com/Favna/discord.js.git#7daf66a793bf0065d0a7a596755ca999fe5e73c8"
+  resolved "https://codeload.github.com/favna/discord.js/tar.gz/7daf66a793bf0065d0a7a596755ca999fe5e73c8"
   dependencies:
     long "^3.0.0"
     pako "^1.0.0"

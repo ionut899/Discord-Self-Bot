@@ -48,7 +48,7 @@ module.exports = class sendEmojiCommand extends commando.Command {
 
     async run(msg, args) {
         await msg.channel.send(args.message, {
-            file: path.join(__dirname, `/images/${args.emojiName.toLowerCase()}.png`)
+            files: [new Discord.MessageAttachment(path.join(__dirname, `images/${args.emojiName.toLowerCase()}.png`), `${args.emojiName}Emoji.png`)]
         });
         await msg.delete();
     }

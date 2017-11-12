@@ -44,7 +44,7 @@ module.exports = class fyidmCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        const fyidmEmbed = new Discord.RichEmbed();
+        const fyidmEmbed = new Discord.MessageEmbed();
         const discrim = args.discrim === 'self' ? msg.author.discriminator : args.discrim;
 
         var discrimMatches = msg.client.users.filter(u => u.discriminator === discrim);

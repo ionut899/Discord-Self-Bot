@@ -17,6 +17,7 @@
 // 
 
 const scalc = require('scalc');
+const Discord = require("discord.js");
 const commando = require('discord.js-commando');
 
 module.exports = class mathCommand extends commando.Command {
@@ -40,8 +41,11 @@ module.exports = class mathCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        let toCalc = args.equation;
-        msg.delete();
-        await msg.say(`\`The answer to ${toCalc} is ${scalc(toCalc)}\``)
+        const mathEmbed = new Discord.MessageEmbed();
+        mathEmbed
+            .setColor('#3eb0f2')
+            .addField('Equation', args.equation.toString(), false)
+            .addField('Result', scalc(args.equation), false);
+        msg.embed(mathEmbed);
     }
 };

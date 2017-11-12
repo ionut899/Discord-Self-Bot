@@ -68,7 +68,7 @@ module.exports = class moveCommand extends commando.Command {
             let accuracyString = move.accuracy ? "Certain Success" : move.accuracy;
             let targetString = move.target == 'normal' ? 'One Enemy' : capitalizeFirstLetter(move.target.replace(/([A-Z])/g, ' $1'))
             let crystalString = move.isZ ? `${capitalizeFirstLetter(move.isZ.substring(0, move.isZ.length - 1))}Z` : "None";
-            const moveEmbed = new Discord.RichEmbed();
+            const moveEmbed = new Discord.MessageEmbed();
 
             moveEmbed
                 .setColor('#FF0000')

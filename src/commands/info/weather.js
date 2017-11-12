@@ -43,7 +43,7 @@ module.exports = class weatherCommand extends commando.Command {
 
     async run(msg, args) {
         weather(args.city).then(info => {
-            const wthEmb = new Discord.RichEmbed();
+            const wthEmb = new Discord.MessageEmbed();
             wthEmb
                 .setAuthor(`Weather data for ${info.location.city} - ${info.location.country}`)
                 .setFooter(`Weather data pulled from ${info.image.title} at ${moment().format('MMMM Do YYYY | HH:mm')}`)

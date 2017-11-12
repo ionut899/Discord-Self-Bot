@@ -42,8 +42,9 @@ module.exports = class memeCommand extends commando.Command {
 
     async run(msg, args) {
         await msg.channel.send({
-            file: path.join(__dirname, `/images/${args.image.toLowerCase()}.jpg`)
+            files: [new Discord.MessageAttachment(path.join(__dirname, `/images/${args.image.toLowerCase()}.jpg`), `${args.image}Meme.jpg`)]
         });
         await msg.delete();
     }
 };
+

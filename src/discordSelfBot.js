@@ -48,19 +48,9 @@ class discordSelfBot {
             console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
             this.client.user.setAFK(true); // Set bot to AFK to enable mobile notifications
 
-            /**
-             * The following section is for setting your presence as visible to other users
-             * The active section will set a normal playing presence
-             * While the disabled section would make it a RichPresence
-             * However RichPresences are currently in private alpha stage and using them
-             * can lead to being removed from or banned from public discord servers or 
-             * having your entire Discord account banned. It is highly ill advised
-             * to enable the RichPresence section!!
-             */
-
             if (!data.richPresenceEnabled) {
                 this.client.user.setPresence({
-                    game: {
+                    activity: {
                         name: data.richpresenceData.name,
                         type: data.richpresenceData.type,
                         url: data.richpresenceData.url != "" ? data.richpresenceData.url : null
@@ -68,7 +58,8 @@ class discordSelfBot {
                 });
             } else {
                 this.client.user.setPresence({
-                    game: {
+                    activity: {
+                        applicationID: data.richpresenceData.applicationID,
                         name: data.richpresenceData.name,
                         type: data.richpresenceData.type,
                         url: data.richpresenceData.url != "" ? data.richpresenceData.url : null,
@@ -78,11 +69,13 @@ class discordSelfBot {
                             start: data.richpresenceData.endTimestamp,
                         },
                         assets: {
-                            large_image: data.richpresenceData.largeImageID,
-                            large_text: data.richpresenceData.largeText,
-                            small_image: data.richpresenceData.smallImageID
+                            largeImage: data.richpresenceData.largeImage,
+                            largeText: data.richpresenceData.largeText,
+                            smallImage: data.richpresenceData.smallImage
                         },
-                        application_id: data.richpresenceData.application_id
+                        party: {
+                            size: [data.richpresenceData.partySize.current,data.richpresenceData.partySize.max]
+                        }
                     }
                 });
             }
@@ -153,13 +146,13 @@ class discordSelfBot {
         return (msg) => {
             // Notifies user when someone drops their name without a mention
             if (msg.author.id !== ownerID && msg.content.toLowerCase().indexOf(this.client.user.username.toLowerCase()) !== -1 && !msg.mentions.users.get(ownerID)) {
-                let mentionEmbed = new Discord.RichEmbed();
+                let mentionEmbed = new Discord.MessageEmbed();
 
                 mentionEmbed
-                    .setAuthor(msg.channel.type === 'text' ? `${msg.member.displayName} dropped your name in #${msg.channel.name} in ${msg.guild.name}` : `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL)
+                    .setAuthor(msg.channel.type === 'text' ? `${msg.member.displayName} dropped your name in #${msg.channel.name} in ${msg.guild.name}` : `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL())
                     .setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
                     .setColor(msg.channel.type === 'text' ? msg.member.displayHexColor : '#535B62')
-                    .setThumbnail(msg.author.displayAvatarURL)
+                    .setThumbnail(msg.author.displayAvatarURL())
                     .addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
                     .addField('Message Attachments', msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? msg.attachments.map(au => au.url) : 'None');
 

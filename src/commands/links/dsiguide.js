@@ -32,7 +32,7 @@ module.exports = class dsiGuideCommand extends commando.Command {
     }
 
     async run(msg) {
-        let dsiGuideEmbed = new Discord.RichEmbed();
+        let dsiGuideEmbed = new Discord.MessageEmbed();
 
         dsiGuideEmbed
             .setColor("#FF0000")

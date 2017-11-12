@@ -27,7 +27,7 @@ module.exports = class quoteCommand extends commando.Command {
             group: 'misc',
             aliases: ['xq'],
             memberName: 'xquote',
-            description: 'Quote someone else\'s message into a RichEmbed. Allows for cross server quoting but IDs are required',
+            description: 'Quote someone else\'s message into a MessageEmbed. Allows for cross server quoting but IDs are required',
             examples: ['quote {server name or ID} {channelID} {messageID} {content you want to send along with the embed}'],
             guildOnly: false,
 
@@ -67,18 +67,18 @@ module.exports = class quoteCommand extends commando.Command {
     async run(msg, args) {
 
 
-        msg.client.guilds.get(args.guild.id).channels.get(args.channel)
-            .fetchMessage(args.message)
+        msg.client.guilds.get(args.guild.id).channels.get(args.channel).messages
+            .fetch(args.message)
             .then(quote => {
 
-                const quoteEmbed = new Discord.RichEmbed();
+                const quoteEmbed = new Discord.MessageEmbed();
                 if (quote.member === null) {
                     quoteEmbed
-                        .setAuthor(`Quoting ${quote.author.username}`, quote.author.displayAvatarURL)
+                        .setAuthor(`Quoting ${quote.author.username}`, quote.author.displayAvatarURL())
                         .setColor('#FF0000')
                 } else {
                     quoteEmbed
-                        .setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL)
+                        .setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL())
                         .setColor(quote.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000')
                 }
                 quoteEmbed

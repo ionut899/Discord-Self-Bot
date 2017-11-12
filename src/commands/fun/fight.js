@@ -49,7 +49,7 @@ module.exports = class fightCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        var fighterEmbed = new Discord.RichEmbed();
+        var fighterEmbed = new Discord.MessageEmbed();
         fighterEmbed
             .setColor("#be1931")
             .setTitle("🥊 Fight Results 🥊")

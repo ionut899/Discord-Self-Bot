@@ -18,19 +18,19 @@
 
 const commando = require('discord.js-commando');
 
-module.exports = class selfbotGithubCommnad extends commando.Command {
+module.exports = class selfbotSiteCommnad extends commando.Command {
     constructor(client) {
         super(client, {
-            name: 'selfbotgithub',
-            aliases: ['bothub', 'linkgit', 'gitlink'],
+            name: 'selfbotsite',
+            aliases: ['bothub', 'linkgit', 'gitlink', 'botsite'],
             group: 'links',
-            memberName: 'selfbotgithub',
-            description: 'Link to the github repo for Favna\'s discord-self-bot',
+            memberName: 'selfbotsite',
+            description: 'Link to Favna\'s discord-self-bot',
             guildOnly: false
         });
     }
 
     async run(msg) {
-        await msg.say("Favna's selfbot can be found here: https://github.com/favna/discord-Self-Bot. Check the Wiki for installation instructions.")
+        await msg.say("Favna's selfbot can be found here: http://selfbot.favna.xyz.")
     };
 };

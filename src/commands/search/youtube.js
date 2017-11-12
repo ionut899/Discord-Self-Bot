@@ -52,7 +52,7 @@ module.exports = class youtubeCommand extends commando.Command {
     async run(msg, args) {
         const query = args.query
 
-        var youtubeEmbed = new Discord.RichEmbed();
+        var youtubeEmbed = new Discord.MessageEmbed();
         youtubeEmbed.setColor("#ff0000");
         youtube.search(args.query, 1, async function (error, result) {
             if (error) {

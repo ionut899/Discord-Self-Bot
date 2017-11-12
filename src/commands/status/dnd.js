@@ -32,8 +32,9 @@ module.exports = class dndCommand extends commando.Command {
     }
 
     async run(msg) {
-        msg.author.setStatus('dnd')
-            .then(msg.reply('Status set to do not disturb'))
+        msg.client.user.setPresence({
+                status: "dnd"
+            }).then(msg.reply('Status set to do not disturb'))
             .catch((e) => console.error(e));
     };
 };

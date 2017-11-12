@@ -26,13 +26,13 @@ module.exports = class embedValsCommand extends commando.Command {
             aliases: ['valsofembed', 'vals'],
             group: 'info',
             memberName: 'embedvals',
-            description: 'Shows how a Discord RichEmbed is build up',
+            description: 'Shows how a Discord MessageEmbed is build up',
             guildOnly: false
         });
     }
 
     async run(msg) {
-        var valsOfEmbed = new Discord.RichEmbed();
+        var valsOfEmbed = new Discord.MessageEmbed();
         valsOfEmbed
             .setAuthor("This is the author", "https://i.imgur.com/cgr5eSk.png")
             .setColor("#ffffff")

@@ -42,7 +42,7 @@ module.exports = class cydiaCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        let cydiaEmbed = new Discord.RichEmbed();
+        let cydiaEmbed = new Discord.MessageEmbed();
 
         cydiaEmbed
             .setColor("#5D2E1F")

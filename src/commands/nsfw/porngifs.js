@@ -31,6 +31,7 @@ module.exports = class porngifsCommand extends commando.Command {
             description: 'Search porn gifs',
             examples: ['porngifs {pornograpgy query}', 'porngifs babe'],
             guildOnly: false,
+            nsfw: true,
 
             args: [{
                 key: 'pornInput',
@@ -56,11 +57,11 @@ module.exports = class porngifsCommand extends commando.Command {
                         return msg.reply('An error occured while drawing a random number. Check your error log.');
                     }
 
-                    const pornEmbed = new Discord.RichEmbed();
+                    const pornEmbed = new Discord.MessageEmbed();
                     pornEmbed
                         .setURL(gifs[data].url)
                         .setTitle(gifs[data].title)
-                        .setImage(gifs[data].url)
+                        .setImage(`${gifs[data].url}`)
                         .setColor('#F780B8')
                         .addField('Gif webm', `[Click Here](${gifs[data].webm})`, true)
                     await msg.embed(pornEmbed, gifs[data].webm)

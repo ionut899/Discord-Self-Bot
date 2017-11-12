@@ -42,7 +42,7 @@ module.exports = class debugCommand extends commando.Command {
     async run(msg, args) {
         let bugger = args.buggerType
 
-        let debugEmbed = new Discord.RichEmbed();
+        let debugEmbed = new Discord.MessageEmbed();
         debugEmbed.setColor("#FF0000")
         debugEmbed.setTitle(`The ${bugger} on this server are as follows`);
 

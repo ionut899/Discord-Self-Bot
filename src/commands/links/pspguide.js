@@ -32,7 +32,7 @@ module.exports = class pspGuideCommand extends commando.Command {
     }
 
     async run(msg) {
-        let pspGuideEmbed = new Discord.RichEmbed();
+        let pspGuideEmbed = new Discord.MessageEmbed();
         pspGuideEmbed
             .setColor("#FF0000")
             .setTitle("A one stop guide for PSP")

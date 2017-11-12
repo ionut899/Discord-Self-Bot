@@ -130,7 +130,7 @@ module.exports = class dexCommand extends commando.Command {
                 var pokedexEntry = "*PokéDex data not found for this Pokémon*";
             }
 
-            const dexEmbed = new Discord.RichEmbed();
+            const dexEmbed = new Discord.MessageEmbed();
             dexEmbed
                 .setColor(embedColours[pokeEntry.color])
                 .setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`, `https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(" ", "_").toLowerCase()}.png`)

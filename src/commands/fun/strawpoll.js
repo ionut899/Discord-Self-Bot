@@ -50,7 +50,7 @@ module.exports = class strawpollCommand extends commando.Command {
     }
 
     async run(msg, args) {
-        const pollEmbed = new Discord.RichEmbed();
+        const pollEmbed = new Discord.MessageEmbed();
 
         await strawpoll.make({
                 title: args.title,

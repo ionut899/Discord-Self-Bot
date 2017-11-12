@@ -42,6 +42,6 @@ module.exports = class avatarCommand extends commando.Command {
     async run(msg, args) {
         const member = args.member;
         const user = member.user;
-        await msg.say(user.displayAvatarURL);
+        await msg.say(user.displayAvatarURL());
     }
 };

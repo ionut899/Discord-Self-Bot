@@ -60,7 +60,7 @@ module.exports = class steamCommand extends commando.Command {
                 if (!err && resp.statusCode === 200) {
                     let $ = cheerio.load(body);
                     const appID = $('#search_result_container > div:nth-child(2) > a:nth-child(2)').attr('href').split('/')[4];
-                    const steamEmbed = new Discord.RichEmbed();
+                    const steamEmbed = new Discord.MessageEmbed();
                     steam.getGameDetails(appID).then(data => {
 
                         var platforms = [];

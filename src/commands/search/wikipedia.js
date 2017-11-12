@@ -64,7 +64,7 @@ module.exports = class wikipediaCommand extends commando.Command {
                 return wikiData
             })
             .then((wikiData) => {
-                const wikiEmbed = new Discord.RichEmbed();
+                const wikiEmbed = new Discord.MessageEmbed();
                 wikiEmbed
                     .setAuthor(`Wikipedia - ${wikiData.pageTitle}`, "https://favna.s-ul.eu/dYdFA880")
                     .setColor("#FF0000")

@@ -67,7 +67,7 @@ module.exports = class themeNameCommand extends commando.Command {
                         async function (err, resp, body) {
                             if (!err && resp.statusCode == 200) {
                                 let $ = cheerio.load(body);
-                                const themeEmbed = new Discord.RichEmbed();
+                                const themeEmbed = new Discord.MessageEmbed();
 
                                 var themeData = JSON.parse($('body').text())
                                 themeEmbed
