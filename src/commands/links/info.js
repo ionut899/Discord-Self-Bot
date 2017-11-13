@@ -19,13 +19,13 @@
 const commando = require('discord.js-commando');
 const Discord = require("discord.js");
 
-module.exports = class selfbotSiteCommnad extends commando.Command {
+module.exports = class infoCommnad extends commando.Command {
     constructor(client) {
         super(client, {
-            name: 'selfbotsite',
+            name: 'info',
             aliases: ['shill', 'plug'],
             group: 'links',
-            memberName: 'selfbotsite',
+            memberName: 'info',
             description: 'Link to Favna\'s discord-self-bot',
             guildOnly: false
         });
@@ -37,9 +37,9 @@ module.exports = class selfbotSiteCommnad extends commando.Command {
             .setTitle('Discord-Self-Bot by Favna')
             .setDescription('Empower your Discord experience with a fully modular and expansive set of commands')
             .setThumbnail('http://selfbot.favna.xyz/images/selfbot.png')
-            .setFooter('http://selfbot.favna.xyz')
-            .setURL('http://selfbot.favna.xyz');
+            .setURL('http://selfbot.favna.xyz')
+            .addField('​', '[Website](http://selfbot.favna.xyz) | [GitHub](https://github.com/Favna/Discord-Self-Bot) | [Wiki](https://github.com/Favna/Discord-Self-Bot/wiki)')
 
-        await msg.embed(shillEmbed, 'http://selfbot.favna.xyz');
+        await msg.embed(shillEmbed, 'Find information on the bot here http://selfbot.favna.xyz');
     };
 };
