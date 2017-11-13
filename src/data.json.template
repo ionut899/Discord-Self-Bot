@@ -1,7 +1,7 @@
 {
     "richPresenceEnabled": false,
     "richpresenceData": {
-        "applicationID": "355326429178757131",
+        "application": "355326429178757131",
         "name": "Discord-Self-Bot",
         "type": "PLAYING",
         "details": "Made by Favna",

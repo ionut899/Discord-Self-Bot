@@ -59,7 +59,7 @@ class discordSelfBot {
             } else {
                 this.client.user.setPresence({
                     activity: {
-                        applicationID: data.richpresenceData.applicationID,
+                        application: data.richpresenceData.application,
                         name: data.richpresenceData.name,
                         type: data.richpresenceData.type,
                         url: data.richpresenceData.url != "" ? data.richpresenceData.url : null,
