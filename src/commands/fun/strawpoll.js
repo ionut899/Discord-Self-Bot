@@ -30,6 +30,7 @@ module.exports = class strawpollCommand extends commando.Command {
             description: 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
             examples: ['strawpoll {Title} {Option1 Option2 .... OptionX}', 'strawpoll Best_Anime_Waifu? Pyrrha_Nikos Asuna Saber'],
             guildOnly: false,
+            argsSingleQuotes: true,
 
             args: [{
                     key: 'title',
