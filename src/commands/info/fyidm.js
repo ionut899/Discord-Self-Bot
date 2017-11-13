@@ -47,7 +47,7 @@ module.exports = class fyidmCommand extends commando.Command {
         const fyidmEmbed = new Discord.MessageEmbed();
         const discrim = args.discrim === 'self' ? msg.author.discriminator : args.discrim;
 
-        var discrimMatches = msg.client.users.filter(u => u.discriminator === discrim);
+        var discrimMatches = this.client.users.filter(u => u.discriminator === discrim);
         discrimMatches.delete(msg.author.id);
         var matchEntries = discrimMatches.entries()
 

@@ -67,7 +67,7 @@ module.exports = class quoteCommand extends commando.Command {
     async run(msg, args) {
 
 
-        msg.client.guilds.get(args.guild.id).channels.get(args.channel).messages
+        this.client.guilds.get(args.guild.id).channels.get(args.channel).messages
             .fetch(args.message)
             .then(quote => {
 

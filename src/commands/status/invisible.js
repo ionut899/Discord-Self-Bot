@@ -32,7 +32,7 @@ module.exports = class dndCommand extends commando.Command {
     }
 
     async run(msg) {
-        msg.client.user.setPresence({
+        this.client.user.setPresence({
                 status: "invisible"
             }).then(msg.reply('Status set to invisible'))
             .catch((e) => console.error(e));

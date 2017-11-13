@@ -32,7 +32,7 @@ module.exports = class dndCommand extends commando.Command {
     }
 
     async run(msg) {
-        msg.client.user.setPresence({
+        this.client.user.setPresence({
                 status: "online"
             }).then(msg.reply('Status set to online'))
             .catch((e) => console.error(e));
