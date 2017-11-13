@@ -34,7 +34,14 @@ module.exports = class embedCommand extends commando.Command {
                 key: 'embedContent',
                 prompt: 'What should the content of the embed be?',
                 type: 'string',
-                label: 'input for the custom embed'
+                label: 'input for the custom embed',
+                validate: input => {
+                    if (input.match(/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\|\,\<\.\>\/\?\`\~]*)>([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\|\,\<\.\>\/\?\`\~]*).*/)) {
+                        return true;
+                    }
+                    return "The format for a custom rich embed should at least be `FieldName>Value`"
+                },
+                wait: 60
             }]
         });
     }
