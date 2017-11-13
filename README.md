@@ -9,7 +9,8 @@ This it the source for Favna's Discord-Self-Bot. Come join the dedicated server 
 
 ### [**Install guide + list of all commands.**](https://github.com/Favna/Discord-Self-Bot/wiki)
 
-![FeaturesGif](https://i.imgur.com/wbfyq65.gif)
+![FeaturesGif](https://i.imgur.com/Op5CO0Y.gif)
+
 
 ## Features
 
