@@ -54,7 +54,7 @@ class discordSelfBot {
                     activity: {
                         name: data.richpresenceData.name !== null || data.richpresenceData.name !== "" ? data.richpresenceData.name : "Discord-Self-Bot",
                         type: data.richpresenceData.type !== null || validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'PLAYING',
-                        url: data.richpresenceData.url !== null || data.richpresenceData.url !== "" ? data.richpresenceData.url : null,
+                        url: data.richpresenceData.url !== null || data.richpresenceData.url !== "" ? data.richpresenceData.url : null
                     }
                 });
             } else {
