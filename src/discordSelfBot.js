@@ -25,6 +25,7 @@ const moment = require('moment');
 const auth = require(path.join(__dirname + '/auth.json'));
 const data = require(path.join(__dirname + '/data.json'));
 const ownerID = auth.ownerID;
+const validTypes = ["PLAYING", "STREAMING", "WATCHING", "LISTENING"];
 const hookClient = new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {
     disableEveryone: true
 });
@@ -51,30 +52,32 @@ class discordSelfBot {
             if (!data.richPresenceEnabled) {
                 this.client.user.setPresence({
                     activity: {
-                        name: data.richpresenceData.name,
-                        type: data.richpresenceData.type,
-                        url: data.richpresenceData.url != "" ? data.richpresenceData.url : null
+                        name: data.richpresenceData.name !== null || data.richpresenceData.name !== "" ? data.richpresenceData.name : "Discord-Self-Bot",
+                        type: data.richpresenceData.type !== null || validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'PLAYING',
+                        url: data.richpresenceData.url !== null || data.richpresenceData.url !== "" ? data.richpresenceData.url : null,
                     }
                 });
             } else {
                 this.client.user.setPresence({
                     activity: {
-                        application: data.richpresenceData.application,
-                        name: data.richpresenceData.name,
-                        type: data.richpresenceData.type,
-                        url: data.richpresenceData.url != "" ? data.richpresenceData.url : null,
-                        details: data.richpresenceData.details,
-                        state: data.richpresenceData.state,
-                        timestamps: {
-                            start: data.richpresenceData.endTimestamp,
+                        application: data.richpresenceData.application !== null || data.richpresenceData.application !== "" ? data.richpresenceData.application : "355326429178757131",
+                        name: data.richpresenceData.name !== null || data.richpresenceData.name !== "" ? data.richpresenceData.name : "Discord-Self-Bot",
+                        type: data.richpresenceData.type !== null || validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'WATCHING',
+                        url: data.richpresenceData.url !== null || data.richpresenceData.url !== "" ? data.richpresenceData.url : null,
+                        details: data.richpresenceData.details !== null || data.richpresenceData.details !== "" ? data.richpresenceData.details : "Made by Favna",
+                        state: data.richpresenceData.state !== null || data.richpresenceData.state !== "" ? data.richpresenceData.state : "http://selfbot.favna.xyz",
+                        timestamps: data.richpresenceData.startDate === null && data.richpresenceData.endDate === null ? null : {
+                            start: data.richpresenceData.startDate !== null ? data.richpresenceData.startDate : null,
+                            end: data.richpresenceData.endDate !== null ? data.richpresenceData.endDate : null
                         },
                         assets: {
-                            largeImage: data.richpresenceData.largeImage,
-                            largeText: data.richpresenceData.largeText,
-                            smallImage: data.richpresenceData.smallImage
+                            largeImage: data.richpresenceData.largeImage !== null || data.richpresenceData.largeImage !== "" ? data.richpresenceData.largeImage : "355327858534645760",
+                            smallImage: data.richpresenceData.smallImage !== null || data.richpresenceData.smallImage !== "" ? data.richpresenceData.smallImage : "355327858534645760",
+                            largeText: data.richpresenceData.largeText !== null || data.richpresenceData.largeText !== "" ? data.richpresenceData.largeText : "See the website",
+                            smallText: data.richpresenceData.smallText !== null || data.richpresenceData.largeText !== "" ? data.richpresenceData.smallText : "Or the GitHub"
                         },
-                        party: {
-                            size: [data.richpresenceData.partySize.current,data.richpresenceData.partySize.max]
+                        party: data.richpresenceData.partySize.current === null || data.richpresenceData.partySize.max === null ? null : {
+                            size: [data.richpresenceData.partySize.current, data.richpresenceData.partySize.max]
                         }
                     }
                 });

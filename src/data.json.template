@@ -5,16 +5,18 @@
         "name": "Discord-Self-Bot",
         "type": "PLAYING",
         "details": "Made by Favna",
-        "state": "https://goo.gl/YtQLCX",
-        "startDate": 1504879200,
-        "largeImage": "355327858534645760",
-        "smallImage": "355327858534645760",
-        "largeText": "See the GitHub!",
+        "state": "http://selfbot.favna.xyz",
+        "startDate": 1510603008,
+        "endDate": 1510686000,
+        "largeImage": "379734851206512640",
+        "smallImage": "379734813751377921",
+        "largeText": "See the website",
+        "smallText": "Or the GitHub",
         "url": "",
         "partySize": {
             "current": 1,
             "max": 1
         }
     },
-    "webhookNotifiers": true
+    "webhookNotifiers": false
 }

@@ -5,3 +5,4 @@ src/data.json
 *.log
 src/commands/misc/multisender.js
 src/commands/status/gameset.js
+src/test/RichPresenceTemplateIcon\.png
