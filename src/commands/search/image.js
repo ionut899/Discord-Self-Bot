@@ -51,7 +51,7 @@ module.exports = class imageCommand extends commando.Command {
             .split(' ')
             .map(x => encodeURIComponent(x))
             .join('+');
-        let safe = msg.channel.name.includes('nsfw') ? 'off' : 'medium';
+        let safe = msg.channel.nsfw ? 'medium' : 'off';
         let QUERY_PARAMS = {
             searchType: 'image',
             key: googleapikey,
