@@ -49,13 +49,12 @@ class discordSelfBot {
             console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
             this.client.user.setAFK(true); // Set bot to AFK to enable mobile notifications
 
-
             if (!data.richPresenceEnabled) {
                 this.client.user.setPresence({
                     activity: {
-                        name: data.richpresenceData.name != null || data.richpresenceData.name != "" ? data.richpresenceData.name : "Discord-Self-Bot",
-                        type: data.richpresenceData.type != null || validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'PLAYING',
-                        url: data.richpresenceData.url != null || data.richpresenceData.url != "" ? data.richpresenceData.url : null
+                        name: data.richpresenceData.name !== "" ? data.richpresenceData.name : "Discord-Self-Bot",
+                        type: validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'PLAYING',
+                        url: data.richpresenceData.url !== "" ? data.richpresenceData.url : null,
                     }
                 });
             } else {
@@ -66,10 +65,9 @@ class discordSelfBot {
                         type: validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'WATCHING',
                         url: data.richpresenceData.url !== "" ? data.richpresenceData.url : null,
                         details: data.richpresenceData.details !== "" ? data.richpresenceData.details : "Made by Favna",
-                        state: data.richpresenceData.state !== "" ? data.richpresenceData.state : "http://selfbot.favna.xyz",
+                        state: data.richpresenceData.state !== "" ? data.richpresenceData.state : "https://selfbot.favna.xyz",
                         timestamps: {
-                            start: data.richpresenceData.startDate !== null ? data.richpresenceData.startDate : Date.now(),
-                            end: data.richpresenceData.endDate !== null ? data.richpresenceData.endDate : Date.now() + 86400
+                            start: data.richpresenceData.timestamp ? Math.floor(Date.now() / 1000) : null
                         },
                         assets: {
                             largeImage: data.richpresenceData.largeImage !== "" ? data.richpresenceData.largeImage : "379734851206512640",
@@ -221,6 +219,11 @@ class discordSelfBot {
         // return the promise from "destroy()"
         return this.client.destroy();
     }
+}
+
+Date.prototype.addHours = function (h) {
+    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+    return this;
 }
 
 module.exports = discordSelfBot

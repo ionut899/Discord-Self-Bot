@@ -27,6 +27,7 @@ module.exports = class infoCommnad extends commando.Command {
             group: 'links',
             memberName: 'info',
             description: 'Link to Favna\'s discord-self-bot',
+            examples: ['info'],
             guildOnly: false
         });
     }
@@ -36,10 +37,10 @@ module.exports = class infoCommnad extends commando.Command {
         shillEmbed
             .setTitle('Discord-Self-Bot by Favna')
             .setDescription('Empower your Discord experience with a fully modular and expansive set of commands')
-            .setThumbnail('http://selfbot.favna.xyz/images/selfbot.png')
-            .setURL('http://selfbot.favna.xyz')
-            .addField('​', '[Website](http://selfbot.favna.xyz) | [GitHub](https://github.com/Favna/Discord-Self-Bot) | [Wiki](https://github.com/Favna/Discord-Self-Bot/wiki)')
+            .setThumbnail('https://selfbot.favna.xyz/images/selfbot.png')
+            .setURL('https://selfbot.favna.xyz')
+            .addField('​', '[Website](https://selfbot.favna.xyz) | [GitHub](https://github.com/Favna/Discord-Self-Bot) | [Wiki](https://github.com/Favna/Discord-Self-Bot/wiki)')
 
-        await msg.embed(shillEmbed, 'Find information on the bot here http://selfbot.favna.xyz');
+        await msg.embed(shillEmbed, 'Find information on the bot here https://selfbot.favna.xyz');
     };
 };

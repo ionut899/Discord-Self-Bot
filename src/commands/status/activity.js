@@ -28,7 +28,7 @@ module.exports = class activityCommand extends commando.Command {
             aliases: ['act'],
             memberName: 'activity',
             description: 'Sets your RichPresence data',
-            examples: ['activity {name} {type} {details} {state} {starttime} {endtime} {largeimage} {smallimage} {largetext} {smalltext} {partycurrent} {partymax} {url}', 'activity '],
+            examples: ['activity {name} {type} {details} {state} {timestamp} {largeimage} {smallimage} {largetext} {smalltext} {partycurrent} {partymax} {url}'],
             guildOnly: false,
             argsSingleQuotes: true,
 
@@ -66,16 +66,17 @@ module.exports = class activityCommand extends commando.Command {
                     label: 'State of the activity to set'
                 },
                 {
-                    key: 'starttime',
-                    prompt: 'Start timestamp to use? ("none" to skip)',
-                    type: 'string',
-                    label: 'Start time to use for the activity (set "none" if skipping)',
-                },
-                {
-                    key: 'endtime',
-                    prompt: 'End timestamp to use? ("none" to skip)',
-                    type: 'string',
-                    label: 'End time to use for the activity (set "none" if skipping)',
+                    key: 'timestamp',
+                    prompt: 'Include a timestamp?',
+                    type: 'boolean',
+                    label: 'Whether a timestamp is included in the activity',
+                    validate: bool => {
+                        const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-']
+                        if (validBools.includes(bool)) {
+                            return true;
+                        }
+                        return `Has to be one of ${validBools.join(', ')}`
+                    }
                 },
                 {
                     key: 'largeimage',
@@ -145,8 +146,8 @@ module.exports = class activityCommand extends commando.Command {
                 details: args.details,
                 state: args.state,
                 timestamps: {
-                    start: args.starttime !== 'none' ? parseInt(args.starttime) : Date.now(),
-                    end: args.endtime !== 'none' ? parseInt(args.endtime) : Date.now() + 86400
+                    start: args.timestamps ? Math.floor(Date.now() / 1000) : null
+
                 },
                 assets: {
                     largeImage: args.largeimage,
