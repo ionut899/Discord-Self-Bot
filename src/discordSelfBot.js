@@ -49,36 +49,37 @@ class discordSelfBot {
             console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
             this.client.user.setAFK(true); // Set bot to AFK to enable mobile notifications
 
+
             if (!data.richPresenceEnabled) {
                 this.client.user.setPresence({
                     activity: {
-                        name: data.richpresenceData.name !== null || data.richpresenceData.name !== "" ? data.richpresenceData.name : "Discord-Self-Bot",
-                        type: data.richpresenceData.type !== null || validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'PLAYING',
-                        url: data.richpresenceData.url !== null || data.richpresenceData.url !== "" ? data.richpresenceData.url : null
+                        name: data.richpresenceData.name != null || data.richpresenceData.name != "" ? data.richpresenceData.name : "Discord-Self-Bot",
+                        type: data.richpresenceData.type != null || validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'PLAYING',
+                        url: data.richpresenceData.url != null || data.richpresenceData.url != "" ? data.richpresenceData.url : null
                     }
                 });
             } else {
                 this.client.user.setPresence({
                     activity: {
-                        application: data.richpresenceData.application !== null || data.richpresenceData.application !== "" ? data.richpresenceData.application : "355326429178757131",
-                        name: data.richpresenceData.name !== null || data.richpresenceData.name !== "" ? data.richpresenceData.name : "Discord-Self-Bot",
-                        type: data.richpresenceData.type !== null || validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'WATCHING',
-                        url: data.richpresenceData.url !== null || data.richpresenceData.url !== "" ? data.richpresenceData.url : null,
-                        details: data.richpresenceData.details !== null || data.richpresenceData.details !== "" ? data.richpresenceData.details : "Made by Favna",
-                        state: data.richpresenceData.state !== null || data.richpresenceData.state !== "" ? data.richpresenceData.state : "http://selfbot.favna.xyz",
-                        timestamps: data.richpresenceData.startDate === null && data.richpresenceData.endDate === null ? null : {
-                            start: data.richpresenceData.startDate !== null ? data.richpresenceData.startDate : null,
-                            end: data.richpresenceData.endDate !== null ? data.richpresenceData.endDate : null
+                        application: data.richpresenceData.application !== "" ? data.richpresenceData.application : "355326429178757131",
+                        name: data.richpresenceData.name !== "" ? data.richpresenceData.name : "Discord-Self-Bot",
+                        type: validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'WATCHING',
+                        url: data.richpresenceData.url !== "" ? data.richpresenceData.url : null,
+                        details: data.richpresenceData.details !== "" ? data.richpresenceData.details : "Made by Favna",
+                        state: data.richpresenceData.state !== "" ? data.richpresenceData.state : "http://selfbot.favna.xyz",
+                        timestamps: {
+                            start: data.richpresenceData.startDate !== null ? data.richpresenceData.startDate : Date.now(),
+                            end: data.richpresenceData.endDate !== null ? data.richpresenceData.endDate : Date.now() + 86400
                         },
                         assets: {
-                            largeImage: data.richpresenceData.largeImage !== null || data.richpresenceData.largeImage !== "" ? data.richpresenceData.largeImage : "355327858534645760",
-                            smallImage: data.richpresenceData.smallImage !== null || data.richpresenceData.smallImage !== "" ? data.richpresenceData.smallImage : "355327858534645760",
-                            largeText: data.richpresenceData.largeText !== null || data.richpresenceData.largeText !== "" ? data.richpresenceData.largeText : "See the website",
-                            smallText: data.richpresenceData.smallText !== null || data.richpresenceData.largeText !== "" ? data.richpresenceData.smallText : "Or the GitHub"
+                            largeImage: data.richpresenceData.largeImage !== "" ? data.richpresenceData.largeImage : "379734851206512640",
+                            smallImage: data.richpresenceData.smallImage !== "" ? data.richpresenceData.smallImage : "379734813751377921",
+                            largeText: data.richpresenceData.largeText !== "" ? data.richpresenceData.largeText : "See the website",
+                            smallText: data.richpresenceData.smallText !== "" ? data.richpresenceData.smallText : "Or the GitHub"
                         },
-                        party: data.richpresenceData.partySize.current === null || data.richpresenceData.partySize.max === null ? null : {
-                            size: [data.richpresenceData.partySize.current, data.richpresenceData.partySize.max]
-                        }
+                        party: {
+                            size: [data.richpresenceData.partySize.current !== 0 ? data.richpresenceData.partySize.current : 1, data.richpresenceData.partySize.max !== 0 ? data.richpresenceData.partySize.max : 1]
+                        },
                     }
                 });
             }
@@ -148,7 +149,7 @@ class discordSelfBot {
     onmessage() {
         return (msg) => {
             // Notifies user when someone drops their name without a mention
-            if (msg.author.id !== ownerID && msg.content.toLowerCase().indexOf(this.client.user.username.toLowerCase()) !== -1 && !msg.mentions.users.get(ownerID)) {
+            if (msg.author.id != ownerID && msg.content.toLowerCase().indexOf(this.client.user.username.toLowerCase()) != -1 && !msg.mentions.users.get(ownerID)) {
                 let mentionEmbed = new Discord.MessageEmbed();
 
                 mentionEmbed
@@ -157,7 +158,7 @@ class discordSelfBot {
                     .setColor(msg.channel.type === 'text' ? msg.member.displayHexColor : '#535B62')
                     .setThumbnail(msg.author.displayAvatarURL())
                     .addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
-                    .addField('Message Attachments', msg.attachments.first() !== undefined && msg.attachments.first().url !== undefined ? msg.attachments.map(au => au.url) : 'None');
+                    .addField('Message Attachments', msg.attachments.first() != undefined && msg.attachments.first().url != undefined ? msg.attachments.map(au => au.url) : 'None');
 
                 hookClient.send(`Stalkify away <@${ownerID}>`, {
                     embeds: [mentionEmbed]

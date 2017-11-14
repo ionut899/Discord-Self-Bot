@@ -141,11 +141,12 @@ module.exports = class activityCommand extends commando.Command {
                 application: data.richpresenceData.application,
                 name: args.name,
                 type: args.type,
+                url: args.url !== 'none' ? args.url : null,
                 details: args.details,
                 state: args.state,
-                timestamps: args.starttime === 'none' && args.starttime === 'none' ? null : {
-                    start: args.starttime !== 'none' ? parseInt(args.starttime) : null,
-                    end: args.endtime !== 'none' ? parseInt(args.endtime) : null
+                timestamps: {
+                    start: args.starttime !== 'none' ? parseInt(args.starttime) : Date.now(),
+                    end: args.endtime !== 'none' ? parseInt(args.endtime) : Date.now() + 86400
                 },
                 assets: {
                     largeImage: args.largeimage,
@@ -153,10 +154,10 @@ module.exports = class activityCommand extends commando.Command {
                     largeText: args.largetext !== 'none' ? args.largetext : null,
                     smallText: args.smalltext !== 'none' ? args.smalltext : null
                 },
-                party: args.partycurrent === 0 || args.partymax === 0 ? null : {
+                party: {
                     size: [args.partycurrent, args.partymax]
                 },
-                url: args.url !== 'none' && args.type == 'STREAMING' ? args.url : null
+
             }
         });
     };
