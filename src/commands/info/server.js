@@ -20,6 +20,9 @@ const commando = require('discord.js-commando');
 const Discord = require("discord.js");
 const moment = require('moment');
 
+const verificationLevel = ['None - unrestricted', 'Low - must have verified email on account', 'Medium - must be registered on Discord for longer than 5 minutes', 'High - 	(╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes', 'Very High - ┻━┻ミヽ(ಠ益ಠ)ﾉ彡┻━┻ - must have a verified phone number']
+const contentFilter = ['Content filter disabled', 'Scan messages of members without a role', 'Scan messages sent by all members']
+
 module.exports = class serverInfoCommand extends commando.Command {
     constructor(client) {
         super(client, {
@@ -77,25 +80,10 @@ module.exports = class serverInfoCommand extends commando.Command {
             .addField('Number of roles', guild.roles.size, true)
             .addField('Number of channels', guildChannels, true)
             .addField('Created At', moment(guild.createdTimestamp).format('MMMM Do YYYY [@] HH:mm:ss [UTC]Z'), false)
-            .addField('Verification Level', data.verifyLevel[guild.verificationLevel], false)
-            .addField('Explicit Content Filter', data.contentFilter[guild.explicitContentFilter], false)
+            .addField('Verification Level', verificationLevel[guild.verificationLevel], false)
+            .addField('Explicit Content Filter', contentFilter[`${guild.explicitContentFilter}`], false)
 
         guild.splashURL() !== null ? serverEmbed.setImage(guild.splashURL()) : null;
         await msg.embed(serverEmbed);
     }
 };
-
-data = {
-    verifyLevel: {
-        0: 'None - unrestricted',
-        1: 'Low - must have verified email on account',
-        2: 'Medium - must be registered on Discord for longer than 5 minutes',
-        3: 'High - 	(╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes',
-        4: 'Very High - ┻━┻ミヽ(ಠ益ಠ)ﾉ彡┻━┻ - must have a verified phone number'
-    },
-    contentFilter: {
-        0: 'Content filter disabled',
-        1: 'Scan messages of members without a role',
-        2: 'Scan messages sent by all members',
-    }
-}
