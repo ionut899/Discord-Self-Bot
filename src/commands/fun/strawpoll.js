@@ -44,7 +44,7 @@ module.exports = class strawpollCommand extends commando.Command {
                     prompt: 'Options for the strawpoll?',
                     type: 'string',
                     wait: 60,
-                    label: 'Questions for the strawpoll'
+                    label: 'Questions for the strawpoll, delimited by a |'
                 }
             ]
         });
@@ -55,7 +55,7 @@ module.exports = class strawpollCommand extends commando.Command {
 
         await strawpoll.make({
                 title: args.title,
-                options: args.options.split(' '),
+                options: args.options.split('|'),
                 multi: false,
                 dupcheck: "normal",
                 captcha: false
