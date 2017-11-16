@@ -30,7 +30,6 @@ module.exports = class activityCommand extends commando.Command {
             description: 'Sets your RichPresence data',
             examples: ['activity {name} {type} {details} {state} {timestamp} {largeimage} {smallimage} {largetext} {smalltext} {partycurrent} {partymax} {url}'],
             guildOnly: false,
-            argsSingleQuotes: true,
 
             args: [{
                     key: 'name',
