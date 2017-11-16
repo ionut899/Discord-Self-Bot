@@ -18,43 +18,49 @@
 
 const commando = require('discord.js-commando');
 const Discord = require('discord.js');
+const Matcher = require('did-you-mean');
 const path = require('path');
 const fs = require('fs');
+var match = new Matcher();
 
 module.exports = class copypastaCommand extends commando.Command {
-    constructor(client) {
-        super(client, {
-            name: 'copypasta',
-            aliases: ['cp', 'pasta'],
-            group: 'fun',
-            memberName: 'copypasta',
-            description: 'Sends contents of a copypasta file to the chat',
-            examples: ['copypasta <file_name>', 'copypasta navy'],
-            guildOnly: false,
+        constructor(client) {
+            super(client, {
+                name: 'copypasta',
+                aliases: ['cp', 'pasta'],
+                group: 'fun',
+                memberName: 'copypasta',
+                description: 'Sends contents of a copypasta file to the chat',
+                examples: ['copypasta <file_name>', 'copypasta navy'],
+                guildOnly: false,
 
-            args: [{
-                key: 'name',
-                prompt: 'Send which copypasta?',
-                type: 'string',
-                label: 'Name of the file that has your copypasta content'
-            }]
-        });
-    }
+                args: [{
+                    key: 'name',
+                    prompt: 'Send which copypasta?',
+                    type: 'string',
+                    label: 'Name of the file that has your copypasta content'
+                }]
+            });
+        }
 
-    run(msg, args) {
-        fs.readFile(path.join(__dirname, `pastas/${args.name}.txt`), 'utf8', (err, data) => {
-            if (!err) {
-                if (data.length <= 1024) {
-                    const cpEmbed = new MessageEmbed();
-                    cpEmbed.setDescription(data)
-                    return msg.embed(cpEmbed);
-                };
+        run(msg, args) {
+            match.values = fs.readdirSync(path.join(__dirname, 'pastas'));
 
-                return msg.say(data, {
-                    split: true
+                fs.readFile(path.join(__dirname, `pastas/${args.name}.txt`), (err, data) => {
+                    if (!err) {
+                        if (data.length <= 1024) {
+                            const cpEmbed = new MessageEmbed();
+                            cpEmbed.setDescription(data)
+                            return msg.embed(cpEmbed);
+                        };
+
+                        return msg.say(data, {
+                            split: true
+                        });
+                    }
+                    let dym = match.get(`${args.name}.txt`),
+                        dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'You can save it with `$copypastaadd <filename> <content>` or verify the file name manually';
+                    msg.reply(`⚠ That copypata does not exist! ${dymString}`);
                 });
-            }
-            return msg.reply("That copypasta does not exist, you can save it with `$copypastaadd <filename> <content>` or verify the file name manually")
-        });
-    };
-};
+            };
+        };
