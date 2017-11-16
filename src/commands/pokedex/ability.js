@@ -50,14 +50,12 @@ module.exports = class abilityCommand extends commando.Command {
             }
         };
 
-        let abilityDesc = ability.desc !== undefined ? ability.desc : ability.shortDesc
-
         if (ability) {
             const abilityEmbed = new Discord.MessageEmbed();
 
             abilityEmbed
                 .setColor('#0088FF')
-                .addField('Description', abilityDesc)
+                .addField('Description', ability.desc !== undefined ? ability.desc : ability.shortDesc)
                 .addField('External Resource', `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(" ", "_"))}_(Ability\\))  |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(" ", "_")})  |  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(" ", "-")})`);
 
             msg.embed(abilityEmbed, `**${capitalizeFirstLetter(ability.name)}**`);
