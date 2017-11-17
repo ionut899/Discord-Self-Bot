@@ -1,6 +1,6 @@
 {
   "name": "discord-self-bot",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Favna#2846's Discord-Self-Bot for anyone to grant extreme power to their Discord usage",
   "author": "Favna",
   "license": "LGPL-3.0",
@@ -15,6 +15,7 @@
   },
   "scripts": {
     "prestart": "yarn install",
+    "lint": "./node_modules/.bin/eslint **/*.js",
     "start": "node src/app.js",
     "test": "node src/test/test.js | tap-summary"
   },
