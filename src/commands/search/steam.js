@@ -88,7 +88,7 @@ module.exports = class steamCommand extends commando.Command {
 						.addField(`Price in ${data.price_overview.currency}`, `${currencySymbol(data.price_overview.currency)}${insert(data.price_overview.final.toString(), 2, ',')}`, true)
 						.addField('Release Date', data.release_date.date, true)
 						.addField('Platforms', platforms.join(', '), true)
-						.addField('Controller Support', data.controller_support !== undefined ? data.controller_support : 'None', true)
+						.addField('Controller Support', data.controller_support ? data.controller_support : 'None', true)
 						.addField('Age requirement', data.required_age !== 0 ? data.required_age : 'Everyone / Not in API', true)
 						.addField('Genres', genres.join(', '), true)
 						.addField('Developer(s)', data.developers, true)
@@ -103,7 +103,7 @@ module.exports = class steamCommand extends commando.Command {
 
 				return msg.reply('⚠ An error occured while getting the store search result');
 			}
-			
+
 			return msg.reply('⚠ An error occured while getting the store search result');
 		}
 

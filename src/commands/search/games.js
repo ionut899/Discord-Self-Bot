@@ -176,6 +176,8 @@ module.exports = class gameCommand extends commando.Command {
 			} else {
 				return console.error(err) && msg.reply('An error occured while fetching search results'); // eslint-disable-line no-console
 			}
+			
+			return null;
 		});
 
 	}

@@ -88,7 +88,7 @@ module.exports = class quoteCommand extends commando.Command {
 				if (quote.attachments.first()) {
 					const fileExt = quote.attachments.first().url.slice(-3); // eslint-disable-line one-var
 
-					if (fileExt === 'peg' || fileExt === 'jpg' || fileExt === 'png' || fileExt == 'gif' || fileExt === 'webp') {
+					if (fileExt === 'peg' || fileExt === 'jpg' || fileExt === 'png' || fileExt === 'gif' || fileExt === 'webp') {
 						quoteEmbed.setImage(quote.attachments.first().url);
 					}
 				}

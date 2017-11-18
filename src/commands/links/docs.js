@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+
 /*
  *   This file is part of discord-self-bot
  *   Copyright (C) 2017-2018 Favna
@@ -67,7 +69,7 @@ module.exports = class DocsCommand extends Command {
 	}
 
 	search (docs, query) { // eslint-disable-line max-statements
-		query = query.split(/[#.]/);
+		query = query.split(/[#.]/); // eslint-disable-line no-param-reassign
 		const mainQuery = query[0].toLowerCase();
 		let memberQuery = query[1] ? query[1].toLowerCase() : null;
 

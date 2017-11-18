@@ -17,23 +17,23 @@
 
 const DiscordSelfBot = require('../DiscordSelfBot.js'),
 	test = require('tape'),
-	{token} = require('../auth.json').token;
+	token = require('../auth.json').token; // eslint-disable-line prefer-destructuring
 
 
-test('connect & disconnect', (t) => {
-	t.timeoutAfter(15000);
-	t.ok(token, 'discord token should be set');
+test('connect & disconnect', (timeout) => {
+	timeout.timeoutAfter(15000);
+	timeout.ok(token, 'discord token should be set');
 
 	const bot = new DiscordSelfBot(token);
 
-	t.false(bot.isReady, 'bot should not be ready');
+	timeout.false(bot.isReady, 'bot should not be ready');
 	bot.init();
 
 	const si = setInterval(() => { // eslint-disable-line one-var
 		if (bot.isReady) {
 			bot.deinit();
 			clearInterval(si);
-			t.end();
+			timeout.end();
 		}
 	}, 5000);
 });

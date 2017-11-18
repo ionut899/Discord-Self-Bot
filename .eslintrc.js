@@ -91,7 +91,7 @@ module.exports = {
         "guard-for-in": "off",
         "handle-callback-err": "error",
         "id-blacklist": "error",
-        "id-length": "error",
+        "id-length": "off",
         "id-match": "error",
         "indent": ["error", "tab", {
             "SwitchCase": 1
@@ -112,7 +112,7 @@ module.exports = {
         }],
         "linebreak-style": [
             "error",
-            "windows"
+            "unix"
         ],
         "lines-around-comment": "error",
         "lines-around-directive": "error",

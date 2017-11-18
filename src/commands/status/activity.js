@@ -85,7 +85,7 @@ module.exports = class activityCommand extends commando.Command {
 					'type': 'string',
 					'label': 'the Large Image to use for the activity',
 					'validate': (limgid) => {
-						if (limgid.length == 18) {
+						if (limgid.length === 18) {
 							return true;
 						}
 
@@ -98,7 +98,7 @@ module.exports = class activityCommand extends commando.Command {
 					'type': 'string',
 					'label': 'the Small Image to use for the activity',
 					'validate': (simgid) => {
-						if (simgid.length == 18) {
+						if (simgid.length === 18) {
 							return true;
 						}
 

@@ -54,7 +54,7 @@ module.exports = class themeIDCommand extends commando.Command {
 			'uri': searchURL,
 			'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'}
 		},
-		async (err, resp, body) => {
+		(err, resp, body) => {
 			if (!err && resp.statusCode === 200) {
 				const cheerioLoader = cheerio.load(body);
 

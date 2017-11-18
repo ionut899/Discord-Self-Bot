@@ -65,7 +65,7 @@ module.exports = class themeNameCommand extends commando.Command {
 					'uri': themeURL,
 					'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'}
 				},
-				async (error, response, result) => {
+				(error, response, result) => {
 					if (!error && response.statusCode === 200) {
 						const cheerioLoader = cheerio.load(result),
 							themeData = JSON.parse(cheerioLoader('body').text());

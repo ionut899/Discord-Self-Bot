@@ -66,7 +66,7 @@ module.exports = class pornvidsCommand extends commando.Command {
 						.setImage(videos[data].thumb)
 						.setColor('#F780B8')
 						.addField('Porn video URL', `[Click Here](${videos[data].url})`, true)
-						.addField('Porn video duration', videos[data].duration == !'' ? videos[data].url : 'unknown', true);
+						.addField('Porn video duration', videos[data].duration === !'' ? videos[data].url : 'unknown', true);
 
 					return msg.embed(pornEmbed, videos[data].url);
 				});
