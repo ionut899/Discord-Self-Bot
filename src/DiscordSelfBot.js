@@ -15,6 +15,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// eslint-disable-next-line no-mixed-requires
 const Commando = require('discord.js-commando'),
 	Discord = require('discord.js'),
 	path = require('path'),
@@ -22,19 +23,19 @@ const Commando = require('discord.js-commando'),
 	data = require(path.join(`${__dirname}/data.json`)), // eslint-disable-line sort-vars
 	moment = require('moment'), // eslint-disable-line sort-vars
 	{oneLine} = require('common-tags'),
-	sqlite = require('sqlite');
-
-const hookClient = new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {'disableEveryone': true}), // eslint-disable-line one-var
-	{ownerID} = auth.ownerID,
-	validTypes = ['PLAYING', 'STREAMING', 'WATCHING', 'LISTENING'];
-
+	sqlite = require('sqlite'),
+	values = {
+		'hookClient': new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {'disableEveryone': true}),
+		'ownerID': auth.ownerID,
+		'validTypes': ['PLAYING', 'STREAMING', 'WATCHING', 'LISTENING']
+	};
 
 class DiscordSelfBot {
 	constructor (token) { // eslint-disable-line no-unused-vars
 		this.bootTime = new Date();
 		this.token = auth.token;
 		this.client = new Commando.Client({
-			'owner': auth.ownerID,
+			'owner': values.ownerID,
 			'commandPrefix': '$',
 			'selfbot': true
 		});
@@ -50,7 +51,7 @@ class DiscordSelfBot {
 				this.client.user.setPresence({
 					'activity': {
 						'name': data.richpresenceData.name !== '' ? data.richpresenceData.name : 'Discord-Self-Bot',
-						'type': validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'PLAYING',
+						'type': values.validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'PLAYING',
 						'url': data.richpresenceData.url !== '' ? data.richpresenceData.url : null
 					}
 				});
@@ -59,7 +60,7 @@ class DiscordSelfBot {
 					'activity': {
 						'application': data.richpresenceData.application !== '' ? data.richpresenceData.application : '355326429178757131',
 						'name': data.richpresenceData.name !== '' ? data.richpresenceData.name : 'Discord-Self-Bot',
-						'type': validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'WATCHING',
+						'type': values.validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'WATCHING',
 						'url': data.richpresenceData.url !== '' ? data.richpresenceData.url : null,
 						'details': data.richpresenceData.details !== '' ? data.richpresenceData.details : 'Made by Favna',
 						'state': data.richpresenceData.state !== '' ? data.richpresenceData.state : 'https://selfbot.favna.xyz',
@@ -154,7 +155,7 @@ class DiscordSelfBot {
 
 	onmessage () {
 		return (msg) => {
-			if (msg.author.id !== ownerID && msg.content.toLowerCase().indexOf(this.client.user.username.toLowerCase()) !== -1 && !msg.mentions.users.get(ownerID)) {
+			if (msg.author.id !== values.ownerID && msg.content.toLowerCase().indexOf(this.client.user.username.toLowerCase()) !== -1 && !msg.mentions.users.get(values.ownerID)) {
 				const mentionEmbed = new Discord.MessageEmbed();
 
 				mentionEmbed
@@ -167,7 +168,7 @@ class DiscordSelfBot {
 					.addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
 					.addField('Message Attachments', msg.attachments.first() && msg.attachments.first().url ? msg.attachments.map(au => au.url) : 'None');
 
-				hookClient.send(`Stalkify away <@${ownerID}>`, {'embeds': [mentionEmbed]}).catch(console.error); // eslint-disable-line no-console
+				values.hookClient.send(`Stalkify away <@${values.ownerID}>`, {'embeds': [mentionEmbed]}).catch(console.error); // eslint-disable-line no-console
 			}
 		};
 	}
