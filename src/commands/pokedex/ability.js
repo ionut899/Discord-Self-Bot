@@ -1,72 +1,79 @@
-// Copyright (C) 2017 110Percent
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as
-// published by the Free Software Foundation, either version 3 of the
-// License, or (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-// 
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-// For source to Beheeyem see: https://github.com/110Percent
+/*
+ *   This file is part of discord-self-bot
+ *   Copyright (C) 2017-2018 Favna
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, version 3 of the License
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-const path = require('path');
-const Matcher = require('did-you-mean');
-const abilities = require(path.join(__dirname, 'data/abilities.js')).BattleAbilities;
-const commando = require('discord.js-commando');
-const Discord = require("discord.js");
-const match = new Matcher(Object.keys(abilities).join(' '));
+const Discord = require('discord.js'),
+	Matcher = require('did-you-mean'),
+	Path = require('path'),
+	abilities = require(Path.join(__dirname, 'data/abilities.js')).BattleAbilities,
+	commando = require('discord.js-commando'),
+	{oneLine} = require('common-tags');
+
+const capitalizeFirstLetter = function (string) { // eslint-disable-line one-var
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	},
+	match = new Matcher(Object.keys(abilities).join(' '));
 
 module.exports = class abilityCommand extends commando.Command {
-    constructor(client) {
-        super(client, {
-            name: 'ability',
-            group: 'pokedex',
-            aliases: ['abilities', 'abi'],
-            memberName: 'ability',
-            description: 'Get the info on a Pokémon ability',
-            examples: ['ability {ability name}', 'ability Multiscale'],
-            guildOnly: false,
+	constructor (client) {
+		super(client, {
+			'name': 'ability',
+			'group': 'pokedex',
+			'aliases': ['abilities', 'abi'],
+			'memberName': 'ability',
+			'description': 'Get the info on a Pokémon ability',
+			'examples': ['ability {ability name}', 'ability Multiscale'],
+			'guildOnly': false,
 
-            args: [{
-                key: 'ability',
-                prompt: 'Get info on which ability?',
-                type: 'string',
-                label: 'Ability to find'
-            }]
-        });
-    }
+			'args': [
+				{
+					'key': 'ability',
+					'prompt': 'Get info on which ability?',
+					'type': 'string',
+					'label': 'Ability to find'
+				}
+			]
+		});
+	}
 
-    async run(msg, args) {
-        for (var i = 0; i < Object.keys(abilities).length; i++) {
-            if (abilities[Object.keys(abilities)[i]].name.toLowerCase() == args.ability.toLowerCase()) {
-                var ability = abilities[Object.keys(abilities)[i]];
-                break;
-            }
-        };
+	run (msg, args) {
+		let ability = {};
+		const abilityEmbed = new Discord.MessageEmbed();
 
-        if (ability) {
-            const abilityEmbed = new Discord.MessageEmbed();
+		for (let index = 0; index < Object.keys(abilities).length; index += 1) {
+			if (abilities[Object.keys(abilities)[index]].name.toLowerCase() === args.ability.toLowerCase()) {
+				ability = abilities[Object.keys(abilities)[index]];
+				break;
+			}
+		}
 
-            abilityEmbed
-                .setColor('#0088FF')
-                .addField('Description', ability.desc !== undefined ? ability.desc : ability.shortDesc)
-                .addField('External Resource', `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(" ", "_"))}_(Ability\\))  |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(" ", "_")})  |  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(" ", "-")})`);
+		if (ability) {
+			abilityEmbed
+				.setColor('#0088FF')
+				.addField('Description', ability.desc ? ability.desc : ability.shortDesc)
+				.addField('External Resource', oneLine `
+                [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(' ', '_'))}_(Ability\\))  
+                |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(' ', '_')})  
+                |  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(' ', '-')})`);
 
-            msg.embed(abilityEmbed, `**${capitalizeFirstLetter(ability.name)}**`);
-        } else {
-            let dym = match.get(args.ability);
-            let dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
-            msg.channel.send("⚠ Ability not found! " + dymString);
-        }
-    };
+			return msg.embed(abilityEmbed, `**${capitalizeFirstLetter(ability.name)}**`);
+		}
+		const dym = match.get(args.ability), // eslint-disable-line one-var
+			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
+
+		return msg.reply(`⚠ Ability not found! ${dymString}`);
+	}
 };
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}

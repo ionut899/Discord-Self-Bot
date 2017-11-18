@@ -1,73 +1,83 @@
-// Copyright (C) 2017 Favna
-// 
-// This file is part of Discord-Self-Bot.
-// 
-// Discord-Self-Bot is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Discord-Self-Bot is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Discord-Self-Bot.  If not, see <http://www.gnu.org/licenses/>.
-// 
+/*
+ *   This file is part of discord-self-bot
+ *   Copyright (C) 2017-2018 Favna
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, version 3 of the License
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-const commando = require('discord.js-commando');
-const Discord = require("discord.js");
+const Discord = require('discord.js'),
+	commando = require('discord.js-commando');
 
 module.exports = class debugCommand extends commando.Command {
-    constructor(client) {
-        super(client, {
-            name: 'debug',
-            aliases: ['bug'],
-            group: 'info',
-            memberName: 'debug',
-            description: 'Gets the channel or role names and their matching IDs on a server',
-            examples: ['debug {bugType}', 'debug roles'],
-            guildOnly: true,
+	constructor (client) {
+		super(client, {
+			'name': 'debug',
+			'aliases': ['bug'],
+			'group': 'info',
+			'memberName': 'debug',
+			'description': 'Gets the channel or role names and their matching IDs on a server',
+			'examples': ['debug {bugType}', 'debug roles'],
+			'guildOnly': true,
 
-            args: [{
-                key: 'buggerType',
-                prompt: 'Do you want to debug `channels` or `roles`?',
-                type: 'string',
-                label: 'channels or roles to debug'
-            }]
-        });
-    }
+			'args': [
+				{
+					'key': 'buggerType',
+					'prompt': 'Do you want to debug `channels` or `roles`?',
+					'type': 'string',
+					'label': 'channels or roles to debug'
+				}
+			]
+		});
+	}
 
-    async run(msg, args) {
-        let bugger = args.buggerType
+	run (msg, args) {
+		const bugger = args.buggerType,
+			debugEmbed = new Discord.MessageEmbed();
 
-        let debugEmbed = new Discord.MessageEmbed();
-        debugEmbed.setColor("#FF0000")
-        debugEmbed.setTitle(`The ${bugger} on this server are as follows`);
+		debugEmbed
+			.setColor('#FF0000')
+			.setTitle(`The ${bugger} on this server are as follows`);
 
-        if (bugger === "channels") {
-            let channelNames = msg.guild.channels.filter(function (textFilter) {
-                return textFilter.type === 'text';
-            }).map(cn => cn.name);
-            let channelIDs = msg.guild.channels.filter(function (textFilter) {
-                return textFilter.type === 'text';
-            }).map(cid => cid.id);
+		switch (bugger) {
+			case 'channels':
+			{
+				const chanIDs = msg.guild.channels.filter(textFilter => textFilter.type === 'text').map(cid => cid.id),
+					chanNames = msg.guild.channels.filter(textFilter => textFilter.type === 'text').map(cn => cn.name);
 
-            debugEmbed.addField("Channel name", channelNames, true);
-            debugEmbed.addBlankField(true);
-            debugEmbed.addField("channel ID", channelIDs, true);
+				debugEmbed
+					.addField('Channel name', chanNames, true)
+					.addBlankField(true)
+					.addField('channel ID', chanIDs, true);
+				break;
+			}
+			case 'roles':
+			{
+				const roleIDs = msg.guild.roles.map(rid => rid.id),
+					roleNames = msg.guild.roles.map(rn => rn.name).slice(1);
 
-        } else if (bugger === "roles") {
-            let roleIDs = msg.guild.roles.map(rid => rid.id);
-            let roleNames = msg.guild.roles.map(rn => rn.name).slice(1);
-            roleNames.unshift("Everyone");
-            debugEmbed.addField("Role name", roleNames, true);
-            debugEmbed.addBlankField(true);
-            debugEmbed.addField("Role ID", roleIDs, true);
-        } else {
-            msg.reply('That is not a valid debugger option. Either `channels` or `roles`')
-        };
-        msg.embed(debugEmbed);
-    };
+				roleNames.unshift('Everyone');
+				debugEmbed
+					.addField('Role name', roleNames, true)
+					.addBlankField(true)
+					.addField('Role ID', roleIDs, true);
+				break;
+			}
+			default:
+			{
+				return msg.reply('That is not a valid debugger option. Either `channels` or `roles`');
+			}
+		}
+
+		return msg.embed(debugEmbed);
+	}
 };

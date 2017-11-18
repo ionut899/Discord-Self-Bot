@@ -14,8 +14,6 @@ src/commands/fun/pastas/*
 # Any logs created
 *.log
 
-# Some of my own files
-src/commands/misc/multisender.js
-src/test/RichPresenceTemplateIcon\.png
 
 
+src/settings.sqlite3

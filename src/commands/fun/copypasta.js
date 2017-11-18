@@ -63,7 +63,7 @@ module.exports = class copypastaCommand extends commando.Command {
 			const dym = match.get(`${args.name}.txt`),
 				dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'You can save it with `$copypastaadd <filename> <content>` or verify the file name manually';
 
-			msg.reply(`⚠ That copypata does not exist! ${dymString}`);
+			return msg.reply(`⚠ That copypata does not exist! ${dymString}`);
 		});
 	}
 };

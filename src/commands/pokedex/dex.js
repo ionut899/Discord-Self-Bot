@@ -1,161 +1,179 @@
-// Copyright (C) 2017 110Percent
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as
-// published by the Free Software Foundation, either version 3 of the
-// License, or (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-// 
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-// For source to Beheeyem see: https://github.com/110Percent
+/*
+ *   This file is part of discord-self-bot
+ *   Copyright (C) 2017-2018 Favna
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, version 3 of the License
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-const path = require('path');
-const Matcher = require('did-you-mean');
-const dex = require(path.join(__dirname, 'data/pokedex.js')).BattlePokedex;
-const dexEntries = require(path.join(__dirname, 'data/flavorText.json'));
-const abilities = require(path.join(__dirname, 'data/abilities.js')).BattleAbilities;
-const commando = require('discord.js-commando');
-const Discord = require("discord.js");
-const match = new Matcher(Object.keys(dex).join(' '));
+/* eslint-disable max-statements, complexity, one-var, vars-on-top, block-scoped-var, prefer-const, no-unused-vars, no-undef */
 
-const embedColours = {
-    Red: 16724530,
-    Blue: 2456831,
-    Yellow: 16773977,
-    Green: 4128590,
-    Black: 3289650,
-    Brown: 10702874,
-    Purple: 10894824,
-    Gray: 9868950,
-    White: 14803425,
-    Pink: 16737701
-};
+const Discord = require('discord.js'),
+	Matcher = require('did-you-mean'),
+	Path = require('path'),
+	commando = require('discord.js-commando'),
+	dex = require(Path.join(__dirname, 'data/pokedex.js')).BattlePokedex,
+	dexEntries = require(Path.join(__dirname, 'data/flavorText.json')),
+	{oneLine} = require('common-tags');
+
+
+const capitalizeFirstLetter = function (string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	},
+	embedColours = {
+		'Red': 16724530,
+		'Blue': 2456831,
+		'Yellow': 16773977,
+		'Green': 4128590,
+		'Black': 3289650,
+		'Brown': 10702874,
+		'Purple': 10894824,
+		'Gray': 9868950,
+		'White': 14803425,
+		'Pink': 16737701
+	},
+	match = new Matcher(Object.keys(dex).join(' '));
+
 
 module.exports = class dexCommand extends commando.Command {
-    constructor(client) {
-        super(client, {
-            name: 'dex',
-            group: 'pokedex',
-            aliases: ['pokedex', 'dexfind'],
-            memberName: 'dex',
-            description: 'Get the info on a Pokémon',
-            examples: ['dex {Pokemon Name}', 'dex Dragonite'],
-            guildOnly: false,
+	constructor (client) {
+		super(client, {
+			'name': 'dex',
+			'group': 'pokedex',
+			'aliases': ['pokedex', 'dexfind'],
+			'memberName': 'dex',
+			'description': 'Get the info on a Pokémon',
+			'examples': ['dex {Pokemon Name}', 'dex Dragonite'],
+			'guildOnly': false,
 
-            args: [{
-                key: 'pokemon',
-                prompt: 'Get info from which Pokémon?',
-                type: 'string',
-                label: 'Pokemon to find'
-            }]
-        });
-    }
+			'args': [
+				{
+					'key': 'pokemon',
+					'prompt': 'Get info from which Pokémon?',
+					'type': 'string',
+					'label': 'Pokemon to find'
+				}
+			]
+		});
+	}
 
-    async run(msg, args) {
-        
-        var poke = args.pokemon.toLowerCase();
-        if (poke.split(" ")[0] == "mega") {
-            poke = poke.substring(poke.split(" ")[0].length + 1) + "mega";
-        }
-        var pokeEntry = dex[poke];
-        if (!pokeEntry) {
-            for (var i = 0; i < Object.keys(dex).length; i++) {
-                if (dex[Object.keys(dex)[i]].num == Number(poke)) {
-                    poke = dex[Object.keys(dex)[i]].species.toLowerCase();
-                    pokeEntry = dex[poke];
-                    break;
-                }
-            }
-        }
-        if (!pokeEntry) {
-            for (var i = 0; i < Object.keys(dex).length; i++) {
-                if (dex[Object.keys(dex)[i]].species.toLowerCase() == poke) {
-                    pokeEntry = dex[Object.keys(dex)[i]];
-                    break;
-                }
-            }
-        }
-        if (pokeEntry) {
-            poke = pokeEntry.species;
-            var evoLine = "**" + capitalizeFirstLetter(poke) + "**";
-            var preEvos = "";
-            if (pokeEntry.prevo) {
-                preEvos = preEvos + capitalizeFirstLetter(pokeEntry.prevo) + " > ";
-                var preEntry = dex[pokeEntry.prevo];
-                if (preEntry.prevo) {
-                    preEvos = capitalizeFirstLetter(preEntry.prevo) + " > " + preEvos;
-                }
-                evoLine = preEvos + evoLine;
-            }
-            var evos = ""
-            if (pokeEntry.evos) {
-                evos = evos + " > " + pokeEntry.evos.map(entry => capitalizeFirstLetter(entry)).join(", ");
-                if (pokeEntry.evos.length < 2) {
-                    var evoEntry = dex[pokeEntry.evos[0]];
-                    if (evoEntry.evos) {
-                        evos = evos + " > " + evoEntry.evos.map(entry => capitalizeFirstLetter(entry)).join(", ");
-                    }
-                }
-                evoLine = evoLine + evos;
-            }
-            if (!pokeEntry.prevo && !pokeEntry.evos) {
-                evoLine = evoLine + " (No Evolutions)";
-            }
-            var typestring = "Type";
-            if (pokeEntry.types.length > 1) {
-                typestring += "s";
-            }
-            var abilityString = pokeEntry.abilities[0];
-            for (var i = 1; i < Object.keys(pokeEntry.abilities).length; i++) {
-                if (Object.keys(pokeEntry.abilities)[i] == 'H') {
-                    abilityString = abilityString + ", *" + pokeEntry.abilities['H'] + "*";
-                } else {
-                    abilityString = abilityString + ", " + pokeEntry.abilities[i];
-                }
-            }
+	run (msg, args) {
 
-            for (var i = 0; i < dexEntries.length; i++) {
-                if (dexEntries[i].species_id == pokeEntry.num) {
-                    var pokedexEntry = "*" + dexEntries[i].flavor_text + "*";
-                    break;
-                }
-            }
-            if (!pokedexEntry) {
-                var pokedexEntry = "*PokéDex data not found for this Pokémon*";
-            }
+		let poke = args.pokemon.toLowerCase();
+		const dexEmbed = new Discord.MessageEmbed();
 
-            const dexEmbed = new Discord.MessageEmbed();
-            dexEmbed
-                .setColor(embedColours[pokeEntry.color])
-                .setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`, `https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(" ", "_").toLowerCase()}.png`)
-                .addField(typestring, pokeEntry.types.join(", "), true)
-                .addField('Abilities', abilityString, true)
-                .addField('Height', `${pokeEntry.heightm}m`, true)
-                .addField('Weight', `${pokeEntry.weightkg}kg`, true)
-                .addField('Egg Groups', pokeEntry.eggGroups.join(', '), true)
-            pokeEntry.otherFormes !== undefined ? dexEmbed.addField('Other Formes', pokeEntry.otherFormes.join(', '), true) : null;
-            dexEmbed
-                .addField('Evolutionary Line', evoLine, false)
-                .addField('Base Stats', Object.keys(pokeEntry.baseStats).map(i => i.toUpperCase() + ": **" + pokeEntry.baseStats[i] + "**").join(", "))
-                .addField('PokéDex Data', pokedexEntry)
-                .addField('External Resource', `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(poke).replace(" ", "_")}_(Pokémon\\))  |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.replace(" ", "_")})  |  [PokémonDB](http://pokemondb.net/pokedex/${poke.replace(" ", "-")})`)
-                .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(" ", "")}.gif`)
+		if (poke.split(' ')[0] === 'mega') {
+			poke = `${poke.substring(poke.split(' ')[0].length + 1)}mega`;
+		}
+		let pokeEntry = dex[poke];
 
-            msg.embed(dexEmbed)
-        } else {
-            let dym = match.get(args.pokemon);
-            let dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
-            msg.reply(`⚠ Dex entry not found! ${dymString}`);
-        }
-    };
+		if (!pokeEntry) {
+			for (let index = 0; index < Object.keys(dex).length; index += 1) {
+				if (dex[Object.keys(dex)[index]].num === Number(poke)) {
+					poke = dex[Object.keys(dex)[index]].species.toLowerCase();
+					pokeEntry = dex[poke];
+					break;
+				}
+			}
+		}
+		if (!pokeEntry) {
+			for (let index = 0; index < Object.keys(dex).length; index += 1) {
+				if (dex[Object.keys(dex)[index]].species.toLowerCase() === poke) {
+					pokeEntry = dex[Object.keys(dex)[index]];
+					break;
+				}
+			}
+		}
+		if (pokeEntry) {
+			poke = pokeEntry.species;
+			let evoLine = `**${capitalizeFirstLetter(poke)}**`;
+			let preEvos = '';
+
+			if (pokeEntry.prevo) {
+				preEvos = `${preEvos + capitalizeFirstLetter(pokeEntry.prevo)} > `;
+				const preEntry = dex[pokeEntry.prevo];
+
+				if (preEntry.prevo) {
+					preEvos = `${capitalizeFirstLetter(preEntry.prevo)} > ${preEvos}`;
+				}
+				evoLine = preEvos + evoLine;
+			}
+			let evos = '';
+
+			if (pokeEntry.evos) {
+				evos = `${evos} > ${pokeEntry.evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
+				if (pokeEntry.evos.length < 2) {
+					const evoEntry = dex[pokeEntry.evos[0]];
+
+					if (evoEntry.evos) {
+						evos = `${evos} > ${evoEntry.evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
+					}
+				}
+				evoLine += evos;
+			}
+			if (!pokeEntry.prevo && !pokeEntry.evos) {
+				evoLine += ' (No Evolutions)';
+			}
+			let typestring = 'Type';
+
+			if (pokeEntry.types.length > 1) {
+				typestring += 's';
+			}
+			let abilityString = pokeEntry.abilities[0];
+
+			for (let index = 1; index < Object.keys(pokeEntry.abilities).length; index += 1) {
+				if (Object.keys(pokeEntry.abilities)[index] === 'H') {
+					abilityString = `${abilityString}, *${pokeEntry.abilities.H}*`;
+				} else {
+					abilityString = `${abilityString}, ${pokeEntry.abilities[index]}`;
+				}
+			}
+
+			for (let index = 0; index < dexEntries.length; index += 1) {
+				if (dexEntries[index].species_id === pokeEntry.num) {
+					let pokedexEntry = `*${dexEntries[index].flavor_text}*`;
+
+					break;
+				}
+			}
+			if (!pokedexEntry) {
+				let pokedexEntry = '*PokéDex data not found for this Pokémon*';
+			}
+
+			dexEmbed
+				.setColor(embedColours[pokeEntry.color])
+				.setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`, `https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(' ', '_').toLowerCase()}.png`)
+				.addField(typestring, pokeEntry.types.join(', '), true)
+				.addField('Abilities', abilityString, true)
+				.addField('Height', `${pokeEntry.heightm}m`, true)
+				.addField('Weight', `${pokeEntry.weightkg}kg`, true)
+				.addField('Egg Groups', pokeEntry.eggGroups.join(', '), true);
+			pokeEntry.otherFormes ? dexEmbed.addField('Other Formes', pokeEntry.otherFormes.join(', '), true) : null;
+			dexEmbed
+				.addField('Evolutionary Line', evoLine, false)
+				.addField('Base Stats', Object.keys(pokeEntry.baseStats).map(index => `${index.toUpperCase()}: **${pokeEntry.baseStats[index]}**`)
+					.join(', '))
+				.addField('PokéDex Data', pokedexEntry)
+				.addField('External Resource', oneLine `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(poke).replace(' ', '_')}_(Pokémon\\))  
+                |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.replace(' ', '_')})  
+                |  [PokémonDB](http://pokemondb.net/pokedex/${poke.replace(' ', '-')})`)
+				.setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(' ', '')}.gif`);
+
+			return msg.embed(dexEmbed);
+		}
+		const dym = match.get(args.pokemon);
+		const dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
+
+		return msg.reply(`⚠ Dex entry not found! ${dymString}`);
+
+	}
 };
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}

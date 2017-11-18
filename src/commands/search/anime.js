@@ -1,100 +1,91 @@
-// Copyright (C) 2017 Favna
-// 
-// This file is part of Discord-Self-Bot.
-// 
-// Discord-Self-Bot is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Discord-Self-Bot is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Discord-Self-Bot.  If not, see <http://www.gnu.org/licenses/>.
-// 
+/*
+ *   This file is part of discord-self-bot
+ *   Copyright (C) 2017-2018 Favna
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, version 3 of the License
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-const Discord = require("discord.js");
-const commando = require('discord.js-commando');
-const moment = require('moment');
-const malware = require('malapi').Anime;
+const Discord = require('discord.js'),
+	commando = require('discord.js-commando'),
+	malware = require('malapi').Anime;
 
 module.exports = class animeCommand extends commando.Command {
-    constructor(client) {
-        super(client, {
-            name: 'anime',
-            group: 'search',
-            aliases: ['ani', 'mal'],
-            memberName: 'anime',
-            description: 'Find anime on MyAnimeList',
-            examples: ['anime {animeName}', 'anime Yu-Gi-Oh'],
-            guildOnly: false,
+	constructor (client) {
+		super(client, {
+			'name': 'anime',
+			'group': 'search',
+			'aliases': ['ani', 'mal'],
+			'memberName': 'anime',
+			'description': 'Find anime on MyAnimeList',
+			'examples': ['anime {animeName}', 'anime Yu-Gi-Oh'],
+			'guildOnly': false,
 
-            args: [{
-                key: 'query',
-                prompt: 'What anime do you want to find?',
-                type: 'string',
-                label: 'Anime to look up'
-            }]
-        });
-    }
+			'args': [
+				{
+					'key': 'query',
+					'prompt': 'What anime do you want to find?',
+					'type': 'string',
+					'label': 'Anime to look up'
+				}
+			]
+		});
+	}
 
-    async run(msg, args) {
+	run (msg, args) {
+		malware.fromName(args.query).then((anime) => {
+			const animeEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
-        let animeEmbed = new Discord.MessageEmbed();
+			animeEmbed
+				.setAuthor(args.query, 'https://myanimelist.cdn-dena.com/img/sp/icon/apple-touch-icon-256.png')
+				.setColor('#FF0000')
+				.setImage(anime.image)
+				.setURL(`https://myanimelist.net/anime/${anime.id}`);
 
-        malware.fromName(args.query).then(anime => {
-                let japName = anime.alternativeTitles.japanese;
-                let engName = anime.alternativeTitles.english;
-                let score = anime.statistics.score.value;
-                let type = anime.type;
-                var episodeCount = anime.episodes;
-                let status = anime.status;
-                let synopsis = anime.synopsis;
-                let image = anime.image;
-                let animeUrl = `https://myanimelist.net/anime/${anime.id}`;
+			if (anime.alternativeTitles.japanese) {
+				animeEmbed.addField('Japanese name', anime.alternativeTitles.japanese, true);
+			} else {
+				animeEmbed.addField('Japanese name', 'None', true);
+			}
 
-                animeEmbed
-                    .setAuthor(args.query, "https://myanimelist.cdn-dena.com/img/sp/icon/apple-touch-icon-256.png")
-                    .setColor("#FF0000")
-                    .setImage(image)
-                    .setURL(animeUrl);
-
-                if (japName != null) {
-                    animeEmbed.addField("Japanese name", japName, true);
-                } else {
-                    animeEmbed.addField("Japanese name", "None", true);
-                };
-
-                if (engName != null) {
-                    animeEmbed.addField("English name", engName, true);
-                } else {
-                    animeEmbed
-                        .addField("English name", "None", true)
-                        .addBlankField(true);
-                };
+			if (anime.alternativeTitles.english) {
+				animeEmbed.addField('English name', anime.alternativeTitles.english, true);
+			} else {
+				animeEmbed
+					.addField('English name', 'None', true)
+					.addBlankField(true);
+			}
 
 
-                if (synopsis.length >= 1024) {
-                    animeEmbed.addField("Synposis", `The synopsis for this anime exceeds the maximum length, check the full synopsis on myanimelist.\nSynopsis Snippet:\n${synopsis.slice(0,500)}`, false);
-                } else {
-                    animeEmbed.addField("Synposis", synopsis, false);
-                };
+			if (anime.synopsis.length >= 1024) {
+				animeEmbed.addField('Synposis',
+					`The synopsis for this anime exceeds the maximum length, check the full synopsis on myanimelist.\nSynopsis Snippet:\n${anime.synopsis.slice(0, 500)}`);
+			} else {
+				animeEmbed.addField('Synposis', anime.synopsis, false);
+			}
 
-                score !== "" ? animeEmbed.addField("Score", score, true) : animeEmbed.addField("Score", 'Score unknown', true)
-                animeEmbed
-                    .addField("Episodes", episodeCount, true)
-                    .addField("Status", status, true)
-                    .addField("URL", animeUrl, true);
+			anime.statistics.score.value !== '' ? animeEmbed.addField('Score', anime.statistics.score.value, true) : animeEmbed.addField('Score', 'Score unknown', true);
+			animeEmbed
+				.addField('Episodes', anime.episodes, true)
+				.addField('Status', anime.status, true)
+				.addField('URL', `https://myanimelist.net/anime/${anime.id}`, true);
 
-                return msg.embed(animeEmbed);
-            })
-            .catch((err) => {
-                console.error(err);
-                return msg.say(`**No results found!**`)
-            });
+			return msg.embed(animeEmbed);
+		})
+			.catch((err) => {
+				console.error(err); // eslint-disable-line no-console
 
-    };
+				return msg.reply('⚠ No results found. An error was logged to your error console');
+			});
+
+	}
 };
