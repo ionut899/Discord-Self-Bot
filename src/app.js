@@ -15,9 +15,10 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* eslint-disable no-mixed-requires */
+/* eslint-disable no-mixed-requires, sort-vars */
 
-const DiscordSelfBot = require('./DiscordSelfBot.js'),
+const Path = require('path'),
+	DiscordSelfBot = require(Path.join(__dirname, 'DiscordSelfBot.js')),
 	keys = require('./auth.json'),
 	start = function () {
 		new DiscordSelfBot(keys.token).init();
