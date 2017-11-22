@@ -82,7 +82,7 @@ module.exports = class movieCommand extends commando.Command {
 				return msg.embed(movieEmbed);
 			});
 
-			return msg.reply('⚠ No results found');
+			return null; // This is to get consistent return
 		});
 	}
 };
