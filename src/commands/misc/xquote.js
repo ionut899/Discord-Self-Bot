@@ -82,7 +82,7 @@ module.exports = class quoteCommand extends commando.Command {
 						.setColor(quote.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000');
 				}
 				quoteEmbed
-					.setFooter(`Message dates from ${moment(quote.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
+					.setFooter(`Message sent in ${quote.guild.name} in the #${quote.channel.name} channel on ${moment(quote.createdAt).format('MMMM Do YYYY [at] HH:mm')}`)
 					.setDescription(quote.cleanContent);
 
 				if (quote.attachments.first()) {
