@@ -31,6 +31,6 @@ module.exports = class dndCommand extends commando.Command {
 	}
 
 	run (msg) {
-		return this.client.user.setPresence({'status': 'online'}).then(msg.reply('Status set to online'));
+		this.client.user.setPresence({'status': 'online'}).then(msg.reply('Status set to online'));
 	}
 };

@@ -31,6 +31,6 @@ module.exports = class idleCommand extends commando.Command {
 	}
 
 	run (msg) {
-		return this.client.user.setPresence({'status': 'idle'}).then(msg.reply('Status set to idle'));
+		this.client.user.setPresence({'status': 'idle'}).then(msg.reply('Status set to idle'));
 	}
 };

@@ -31,6 +31,6 @@ module.exports = class dndCommand extends commando.Command {
 	}
 
 	run (msg) {
-		return this.client.user.setPresence({'status': 'invisible'}).then(msg.reply('Status set to invisible'));
+		this.client.user.setPresence({'status': 'invisible'}).then(msg.reply('Status set to invisible'));
 	}
 };
