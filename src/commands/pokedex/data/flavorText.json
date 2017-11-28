@@ -3316,14 +3316,50 @@
   },
   {
     "species_id": "800",
-    "flavor_text": "Light is apparently the source of its energy. It has an extraordinarily vicious disposition and is constantly firing off laser beams."
+    "flavor_text": "Light is the source of its energy. If it isn't devouring light, impurities build up in it and on it, and Necrozma darkens and stops moving."
+  },
+  {
+    "species_id": "800dm",
+    "flavor_text": "This is Necrozma's form while it's absorbing the power of Solgaleo, making it extremely ferocious and impossible to control."
+  },
+  {
+    "species_id": "800dw",
+    "flavor_text": "This is its form while it's devouring the light of Lunala. It grasps foes in its giant claws and rips them apart with brute force."
+  },
+  {
+    "species_id": "800u",
+    "flavor_text": "The light pouring out from all over its body affects living things and nature, impacting them in various ways."
   },
   {
     "species_id": "801",
-    "flavor_text": "Its mechanized body is merely a vessel. Its true self is its Soul-Heart, an artificial soul."
+    "flavor_text": "Built roughly 500 years ago by a scientist, the part called the Soul-Heart is the actual life-form."
+  },
+  {
+    "species_id": "801o",
+    "flavor_text": "It functions thanks to its artificial soul. The vivid decoration is proof that it was presented as a gift to royalty."
   },
   {
     "species_id": "802",
     "flavor_text": "It lurks in the shadows of others, copying their movements and powers. This Pokémon is craven and cowering."
+  },
+  {
+    "species_id": "803",
+    "flavor_text": "An Ultra Beast that lives in a different world, it cackles wildly as it sprays its opponents with poison from the needles on its head."
+  },
+  {
+    "species_id": "804",
+    "flavor_text": "One kind of Ultra Beast, it fires a glowing, venomous liquid from its needles. This liquid is also immensely adhesive."
+  },
+  {
+    "species_id": "805",
+    "flavor_text": "When stone walls started moving and attacking, the brute’s true identity was this mysterious life-form, which brings to mind an Ultra Beast."
+  },
+  {
+    "species_id": "806",
+    "flavor_text": "A UB that appeared from an Ultra Wormhole, it causes explosions, then takes advantage of opponents' surprise to rob them of their vitality."
+  },
+  {
+    "species_id": "807",
+    "flavor_text": "It approaches its enemies at the speed of lightning, then tears them limb from limb with its sharp claws."
   }
 ]
