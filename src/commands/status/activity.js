@@ -33,7 +33,7 @@ module.exports = class activityCommand extends commando.Command {
 
 			'args': [
 				{
-					'key': 'name',
+					'key': 'activityName',
 					'prompt': 'Name of the activity?',
 					'type': 'string',
 					'label': 'Name of the activity to set'
@@ -139,11 +139,11 @@ module.exports = class activityCommand extends commando.Command {
 		});
 	}
 
-	run (args) {
-		return this.client.user.setPresence({
+	run (msg, args) {
+		this.client.user.setPresence({
 			'activity': {
 				'application': data.richpresenceData.application,
-				'name': args.name,
+				'name': args.activityName,
 				'type': args.type,
 				'url': args.url !== 'none' ? args.url : null,
 				'details': args.details,
@@ -159,5 +159,7 @@ module.exports = class activityCommand extends commando.Command {
 
 			}
 		});
+
+		return msg.reply('Your activity should be changed. Keep in mind that you cannot see it on your own account and it may take a little while before your change is visisble due to caching.');
 	}
 };
