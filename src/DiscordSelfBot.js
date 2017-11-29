@@ -25,14 +25,11 @@ const Commando = require('discord.js-commando'),
 	sqlite = require('sqlite');
 
 // eslint-disable-next-line one-var	
-const arrayMatch = function (haystack, arr) {
-		return arr.some(v => haystack.indexOf(v) >= 0);
-	},
-	values = {
-		'hookClient': new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {'disableEveryone': true}),
-		'ownerID': auth.ownerID,
-		'validTypes': ['PLAYING', 'STREAMING', 'WATCHING', 'LISTENING']
-	};
+const values = {
+	'hookClient': new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {'disableEveryone': true}),
+	'ownerID': auth.ownerID,
+	'validTypes': ['PLAYING', 'STREAMING', 'WATCHING', 'LISTENING']
+};
 
 class DiscordSelfBot {
 	constructor (token) { // eslint-disable-line no-unused-vars
@@ -152,7 +149,8 @@ class DiscordSelfBot {
 		return (msg) => {
 			if (data.webhookNotifiers &&
 				msg.author.id !== values.ownerID &&
-				arrayMatch(data.webhookData.keywords, msg.cleanContent.toLowerCase().split(' ')) &&
+				data.webhookData.keywords.some(v => msg.cleanContent.toLowerCase().split(' ')
+					.indexOf(v) >= 0) &&
 				!msg.mentions.users.get(values.ownerID)) {
 
 				const mentionEmbed = new Discord.MessageEmbed();
