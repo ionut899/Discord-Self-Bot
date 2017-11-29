@@ -155,10 +155,11 @@ class DiscordSelfBot {
 
 	onmessage () {
 		return (msg) => {
-			if (/http.?:\/\/.*\.*.*\..*/.test(msg.content.toLowerCase())) {
-				return;
-			}
-			if (msg.author.id !== values.ownerID && msg.content.toLowerCase().indexOf(this.client.user.username.toLowerCase()) !== -1 && !msg.mentions.users.get(values.ownerID)) {
+			if (data.webhookNotifiers &&
+				msg.author.id !== values.ownerID &&
+				msg.content.toLowerCase().indexOf(this.client.user.username.toLowerCase()) !== -1 &&
+				!msg.mentions.users.get(values.ownerID)) {
+
 				const mentionEmbed = new Discord.MessageEmbed();
 
 				mentionEmbed
