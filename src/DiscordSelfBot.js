@@ -15,7 +15,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// eslint-disable-next-line no-mixed-requires
 const Commando = require('discord.js-commando'),
 	Discord = require('discord.js'),
 	path = require('path'),
@@ -23,7 +22,12 @@ const Commando = require('discord.js-commando'),
 	data = require(path.join(`${__dirname}/data.json`)), // eslint-disable-line sort-vars
 	moment = require('moment'), // eslint-disable-line sort-vars
 	{oneLine} = require('common-tags'),
-	sqlite = require('sqlite'),
+	sqlite = require('sqlite');
+
+// eslint-disable-next-line one-var	
+const arrayMatch = function (haystack, arr) {
+		return arr.some(v => haystack.indexOf(v) >= 0);
+	},
 	values = {
 		'hookClient': new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {'disableEveryone': true}),
 		'ownerID': auth.ownerID,
@@ -148,7 +152,7 @@ class DiscordSelfBot {
 		return (msg) => {
 			if (data.webhookNotifiers &&
 				msg.author.id !== values.ownerID &&
-				msg.content.toLowerCase().indexOf(this.client.user.username.toLowerCase()) !== -1 &&
+				arrayMatch(data.webhookData.keywords, msg.cleanContent.toLowerCase().split(' ')) &&
 				!msg.mentions.users.get(values.ownerID)) {
 
 				const mentionEmbed = new Discord.MessageEmbed();
