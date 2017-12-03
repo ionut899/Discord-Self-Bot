@@ -147,25 +147,30 @@ class DiscordSelfBot {
 
 	onmessage () {
 		return (msg) => {
-			if (data.webhookNotifiers &&
-				msg.author.id !== values.ownerID &&
-				data.webhookData.keywords.some(v => msg.cleanContent.toLowerCase().split(' ')
-					.indexOf(v) >= 0) &&
-				!msg.mentions.users.get(values.ownerID)) {
 
-				const mentionEmbed = new Discord.MessageEmbed();
+			if (data.webhookNotifiers && msg.author.id !== values.ownerID && !msg.mentions.users.get(values.ownerID)) {
+				const mentionEmbed = new Discord.MessageEmbed(),
+					regexpKeywords = [];
 
-				mentionEmbed
-					.setAuthor(msg.channel.type === 'text'
-						? `${msg.member.displayName} dropped your name in #${msg.channel.name} in ${msg.guild.name}`
-						: `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL())
-					.setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
-					.setColor(msg.channel.type === 'text' ? msg.member.displayHexColor : '#535B62')
-					.setThumbnail(msg.author.displayAvatarURL())
-					.addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
-					.addField('Message Attachments', msg.attachments.first() && msg.attachments.first().url ? msg.attachments.map(au => au.url) : 'None');
+				for (let i = 0; i < data.webhookData.keywords.length; i += 1) {
+					const regex = new RegExp(`.*${data.webhookData.keywords[i]}.*`);
 
-				values.hookClient.send(`Stalkify away <@${values.ownerID}>`, {'embeds': [mentionEmbed]}).catch(console.error); // eslint-disable-line no-console
+					regexpKeywords.push(regex);
+				}
+
+				if (regexpKeywords.some(rx => rx.test(msg.cleanContent.split(' ')))) {
+					mentionEmbed
+						.setAuthor(msg.channel.type === 'text'
+							? `${msg.member.displayName} dropped your name in #${msg.channel.name} in ${msg.guild.name}`
+							: `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL())
+						.setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY | HH:mm:ss')}`)
+						.setColor(msg.channel.type === 'text' ? msg.member.displayHexColor : '#535B62')
+						.setThumbnail(msg.author.displayAvatarURL())
+						.addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
+						.addField('Message Attachments', msg.attachments.first() && msg.attachments.first().url ? msg.attachments.map(au => au.url) : 'None');
+
+					values.hookClient.send(`Stalkify away <@${values.ownerID}>`, {'embeds': [mentionEmbed]}).catch(console.error); // eslint-disable-line no-console
+				}
 			}
 		};
 	}
