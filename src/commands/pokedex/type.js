@@ -282,6 +282,7 @@ module.exports = class typeCommand extends commando.Command {
 
 		typeEmbed
 			.setColor('#FF0000')
+			.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 			.setAuthor(`Type effectiveness for ${displayTypes.join(', ')}`)
 			.addField('Offense', atkVulnDisplay.join('\n\n'))
 			.addField('Defense', vulnDisplay.join('\n\n'))

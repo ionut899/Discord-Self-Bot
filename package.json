@@ -1,6 +1,6 @@
 {
   "name": "discord-self-bot",
-  "version": "6.1.1",
+  "version": "6.2.0",
   "description": "Favna#2846's Discord-Self-Bot for anyone to grant extreme power to their Discord usage",
   "author": "Favna",
   "license": "LGPL-3.0",
@@ -54,6 +54,7 @@
     "qrcode": "^1.0.0",
     "querystring": "^0.2.0",
     "request": "^2.83.0",
+    "require-from-url": "^3.1.2",
     "scalc": "^2.0.1",
     "snekfetch": "^3.5.8",
     "sqlite": "^2.8.0",

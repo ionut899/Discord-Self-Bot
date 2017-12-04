@@ -80,6 +80,7 @@ module.exports = class moveCommand extends commando.Command {
 
 			moveEmbed
 				.setColor('#FF0000')
+				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.addField('Description', descString)
 				.addField('Type', move.type, true)
 				.addField('Base Power', move.basePower, true)
@@ -88,7 +89,7 @@ module.exports = class moveCommand extends commando.Command {
 				.addField('Accuracy', accuracyString, true)
 				.addField('Priority', move.priority, true)
 				.addField('Target', targetString, true)
-				.addField('Contest Condition', move.contest, true)
+				.addField('Contest Condition', move.contestType, true)
 				.addField('Z-Crystal', crystalString, true)
 				.addField('External Resources', oneLine `
                 [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${move.name.replace(' ', '_')}_(move\\))  
