@@ -37,7 +37,8 @@ module.exports = class copypastaCommand extends commando.Command {
 					'key': 'name',
 					'prompt': 'Send which copypasta?',
 					'type': 'string',
-					'label': 'Name of the file that has your copypasta content'
+					'label': 'Name of the file that has your copypasta content',
+					'parse': p => p.toLowerCase()
 				}
 			]
 		});
@@ -54,14 +55,18 @@ module.exports = class copypastaCommand extends commando.Command {
 					const cpEmbed = new Discord.MessageEmbed();
 
 					cpEmbed.setDescription(data);
+					msg.delete();
 
 					return msg.embed(cpEmbed);
 				}
+				msg.delete();
 
 				return msg.say(data, {'split': true});
 			}
 			const dym = match.get(`${args.name}.txt`),
 				dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'You can save it with `$copypastaadd <filename> <content>` or verify the file name manually';
+
+			msg.delete();
 
 			return msg.reply(`⚠ That copypata does not exist! ${dymString}`);
 		});
