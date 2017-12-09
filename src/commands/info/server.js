@@ -73,12 +73,12 @@ module.exports = class serverInfoCommand extends commando.Command {
 		}
 
 		serverEmbed
-			.setColor(guild.owner.displayHexColor)
+			.setColor(guild.owner ? guild.owner.displayHexColor : '#FF0000')
 			.setAuthor('Server Info', 'https://favna.s-ul.eu/O0qc0yt7.png')
 			.setThumbnail(msg.guild.iconURL({'format': 'png'}))
 			.setFooter(`Server ID: ${guild.id}`)
 			.addField('Server Name', guild.name, true)
-			.addField('Owner', guild.owner.user.tag, true)
+			.addField('Owner', guild.owner ? guild.owner.user.tag : 'Owner is MIA', true)
 			.addField('Members', guild.memberCount, true)
 			.addField('Currently Online', onlineMembers, true)
 			.addField('Region', guild.region, true)
