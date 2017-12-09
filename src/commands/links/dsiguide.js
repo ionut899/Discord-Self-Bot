@@ -36,7 +36,7 @@ module.exports = class dsiGuideCommand extends commando.Command {
 		dsiGuideEmbed
 			.setColor('#FF0000')
 			.setTitle('A one stop guide for DSI')
-			.setDescription('Want to do a thing on your DSI? Need instructions on how to set up DSI hacks? Follow this guide')
+			.setDescription('Dusting off your DSi? Need instructions on how to set up DSi hacks? Follow this guide')
 			.addField('\u200b', 'http://cfw.guide/dsi/')
 			.setThumbnail('https://silento.s-ul.eu/1RKVHclC');
 
