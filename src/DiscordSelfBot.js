@@ -72,7 +72,7 @@ class DiscordSelfBot {
 							'largeText': data.richpresenceData.largeText !== '' ? data.richpresenceData.largeText : 'See the website',
 							'smallText': data.richpresenceData.smallText !== '' ? data.richpresenceData.smallText : 'Or the GitHub'
 						},
-						'party': {'size': [data.richpresenceData.partySize.current, data.richpresenceData.partySize.max]}
+						'party': data.richpresenceData.partySize[0] !== 0 ? {'size': [data.richpresenceData.partySize[0], data.richpresenceData.partySize[1]]} : null
 					}
 				});
 			}
