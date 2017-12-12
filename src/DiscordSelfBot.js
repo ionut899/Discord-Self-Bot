@@ -153,7 +153,7 @@ class DiscordSelfBot {
 					regexpKeywords = [];
 
 				for (let i = 0; i < data.webhookData.keywords.length; i += 1) {
-					const regex = new RegExp(`.*${data.webhookData.keywords[i]}.*`);
+					const regex = new RegExp(`.*${data.webhookData.keywords[i]}.*`, "gim");
 
 					regexpKeywords.push(regex);
 				}
