@@ -15,7 +15,9 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const commando = require('discord.js-commando');
+const Discord = require('discord.js'),
+	commando = require('discord.js-commando'),
+	{stripIndents} = require('common-tags');
 
 module.exports = class tvOSCommand extends commando.Command {
 	constructor (client) {
@@ -30,7 +32,18 @@ module.exports = class tvOSCommand extends commando.Command {
 	}
 
 	run (msg) {
-		return msg.say('If you want to block getting OTA updates on your iOS device install the tvOS beta profile.' +
-            'To download open this link in Safari: https://hikay.github.io/app/NOOTA.mobileconfig');
+		const embed = new Discord.MessageEmbed();
+
+		embed
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+			.setTitle('OTA Blocking for iOS')
+			.setDescription('If you want to block iOS OTA updates you need to install the tvOS beta profile. From the URLs below follow the one that matches your iOS version')
+			.addField('iOS 9', '[click here](https://oldcat.me/web/NOOTA9.mobileconfig)')
+			.addField('iOS 10', '[click here](https://github.com/TheMultiplix/OTA-BLOCKER-FOR-IOS/blob/master/NOOTA.mobileconfig?raw=true)')
+			.addField('iOS 11', '[click here](https://github.com/alexd-p/noota/blob/master/NOOTA.mobileconfig?raw=true)');
+
+		return msg.embed(embed, stripIndents `iOS 9: https://oldcat.me/web/NOOTA9.mobileconfig
+		iOS 10: https://github.com/TheMultiplix/OTA-BLOCKER-FOR-IOS/blob/master/NOOTA.mobileconfig?raw=true
+		iOS 11: https://github.com/alexd-p/noota/blob/master/NOOTA.mobileconfig?raw=true`);
 	}
 };
