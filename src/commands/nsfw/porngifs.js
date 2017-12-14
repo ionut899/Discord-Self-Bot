@@ -64,7 +64,7 @@ module.exports = class porngifsCommand extends commando.Command {
 						.setURL(gifs[data].url)
 						.setTitle(gifs[data].title)
 						.setImage(`${gifs[data].url}`)
-						.setColor('#F780B8')
+						.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 						.addField('Gif webm', `[Click Here](${gifs[data].webm})`, true);
 
 					return msg.embed(pornEmbed, gifs[data].webm);

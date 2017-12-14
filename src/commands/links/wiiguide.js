@@ -34,7 +34,7 @@ module.exports = class wiiGuideCommand extends commando.Command {
 		const wiiGuideEmbed = new Discord.MessageEmbed();
 
 		wiiGuideEmbed
-			.setColor('#FF0000')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setTitle('A one stop guide for Wii')
 			.setDescription('Want to run game backups on your Wii? Need instructions on how to set up Priiloader, Homebrew Launcher and cios? Follow this guide')
 			.addField('\u200b', 'https://wii.guide')

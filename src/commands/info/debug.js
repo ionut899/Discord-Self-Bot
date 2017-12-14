@@ -45,7 +45,7 @@ module.exports = class debugCommand extends commando.Command {
 			debugEmbed = new Discord.MessageEmbed();
 
 		debugEmbed
-			.setColor('#FF0000')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setTitle(`The ${bugger} on this server are as follows`);
 
 		switch (bugger) {

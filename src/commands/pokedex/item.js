@@ -137,7 +137,7 @@ module.exports = class itemCommand extends commando.Command {
 
 		if (Object.keys(item).length !== 0) {
 			itemEmbed
-				.setColor('#FF0000')
+				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.setAuthor(`${capitalizeFirstLetter(item.name)}`, imgURL)
 				.addField('Description', item.desc)

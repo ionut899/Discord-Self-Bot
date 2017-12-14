@@ -59,7 +59,7 @@ module.exports = class listEmojisCommand extends commando.Command {
 		}
 
 		emojisEmbed
-			.setColor('#FF0000')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setFooter(`Command issued at ${moment().format('MMMM Do YYYY HH:mm:ss')}`)
 			.setDescription(`Emojis from the server \`${args.server.name}\``);
 		emojisFirst.length !== 0 ? emojisEmbed.addField('\u200b', emojisFirst, true) : emojisEmbed.addField('This server has no custom emojis', 'Although they should totally get some', true); // eslint-disable-line max-len

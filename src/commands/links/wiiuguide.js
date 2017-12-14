@@ -34,7 +34,7 @@ module.exports = class wiiUGuideCommand extends commando.Command {
 		const wiiuGuideEmbed = new Discord.MessageEmbed();
 
 		wiiuGuideEmbed
-			.setColor('#FF0000')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setTitle('A one stop guide for Wii U')
 			.setDescription('Want to run game backups on your WiiU? Need instructions on how to set up Haxchi, Mocha and RedNAND? Follow this guide')
 			.addField('\u200b', 'https://wiiu.guide')

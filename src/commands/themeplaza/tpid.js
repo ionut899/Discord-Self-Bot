@@ -61,7 +61,7 @@ module.exports = class themeIDCommand extends commando.Command {
 				const themeData = JSON.parse(cheerioLoader('body').text()); // eslint-disable-line one-var
 
 				themeEmbed
-					.setColor('#FF0000')
+					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 					.setTitle(themeData.title)
 					.setURL(`https://themeplaza.eu/item/${args.themeID}`)
 					.setThumbnail(`https://themeplaza.eu/download/${args.themeID}/qr`)

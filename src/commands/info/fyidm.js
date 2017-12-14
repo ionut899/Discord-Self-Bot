@@ -61,7 +61,7 @@ module.exports = class fyidmCommand extends commando.Command {
 		matchEntries = discrimMatches.entries();
 
 		fyidmEmbed
-			.setColor('#FF0000')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setTitle('Uses with matching discriminator')
 			.setFooter(`Discriminator match checked on ${moment().format('MMMM Do YYYY HH:mm:ss')}`);
 

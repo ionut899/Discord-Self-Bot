@@ -65,7 +65,7 @@ module.exports = class quoteCommand extends commando.Command {
 				if (quote.member === null) {
 					quoteEmbed
 						.setAuthor(`Quoting ${quote.author.username}`, quote.author.displayAvatarURL())
-						.setColor('#FF0000');
+						.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000');
 				} else {
 					quoteEmbed
 						.setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL())

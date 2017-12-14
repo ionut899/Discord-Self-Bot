@@ -50,7 +50,7 @@ module.exports = class embedCommand extends commando.Command {
 			.setTitle(`SCP-${args.scparticle}`)
 			.setFooter('SCP Foundation', 'https://ev1l0rd.s-ul.eu/uVu89Guq')
 			.setURL(`http://www.scp-wiki.net/scp-${args.scparticle}`)
-			.setColor('#362727');
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000');
 
 		request({
 			'uri': `http://www.scp-wiki.net/scp-${args.scparticle}`,

@@ -281,7 +281,7 @@ module.exports = class typeCommand extends commando.Command {
 		}
 
 		typeEmbed
-			.setColor('#FF0000')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 			.setAuthor(`Type effectiveness for ${displayTypes.join(', ')}`)
 			.addField('Offense', atkVulnDisplay.join('\n\n'))

@@ -34,7 +34,7 @@ module.exports = class vitaGuideCommand extends commando.Command {
 		const vitaGuideEmbed = new Discord.MessageEmbed();
 
 		vitaGuideEmbed
-			.setColor('#FF0000')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setTitle('A one stop guide for PSVita')
 			.setDescription('Want to run game backups on your PSVita? Need instructions on how to set up Henkaku? Go here!')
 			.addField('\u200b', 'http://cfw.guide/vita/')

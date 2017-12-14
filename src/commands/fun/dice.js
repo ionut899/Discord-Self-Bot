@@ -58,7 +58,7 @@ module.exports = class diceCommand extends commando.Command {
 
 
 		diceEmbed
-			.setColor('#EA596E')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.addField('Dice result', res, false)
 			.addField('Total', throwDice.total, false);
 

@@ -61,7 +61,7 @@ module.exports = class embedCommand extends commando.Command {
 			customEmbed.addField(header, values.join('\n'), true);
 		});
 
-		customEmbed.setColor('#e52431');
+		customEmbed.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000');
 		msg.embed(customEmbed);
 		msg.delete();
 	}

@@ -52,7 +52,7 @@ module.exports = class fightCommand extends commando.Command {
 		const fighterEmbed = new Discord.MessageEmbed();
 
 		fighterEmbed
-			.setColor('#be1931')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setTitle('🥊 Fight Results 🥊')
 			.setThumbnail('http://i.imgur.com/LxPAE2f.png');
 

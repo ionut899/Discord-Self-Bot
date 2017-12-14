@@ -34,7 +34,7 @@ module.exports = class dsiGuideCommand extends commando.Command {
 		const dsiGuideEmbed = new Discord.MessageEmbed();
 
 		dsiGuideEmbed
-			.setColor('#FF0000')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setTitle('A one stop guide for DSI')
 			.setDescription('Dusting off your DSi? Need instructions on how to set up DSi hacks? Follow this guide')
 			.addField('\u200b', 'http://cfw.guide/dsi/')

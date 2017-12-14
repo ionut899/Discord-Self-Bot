@@ -34,7 +34,7 @@ module.exports = class threeDSguideCommand extends commando.Command {
 		const plaiGuideEmbed = new Discord.MessageEmbed();
 
 		plaiGuideEmbed
-			.setColor('#FF0000')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setTitle('A one stop guide for (New) Nintendo 3DS (XL) / (New) Nintendo 2DS (XL)')
 			.setDescription('Want to get Custom Firmware on your Nintendo 3DS? Need instructions on how to set up Boot9Strap, Luma3DS and other homebrew? Follow this guide')
 			.addField('\u200b', 'https://3ds.guide')

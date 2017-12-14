@@ -79,7 +79,7 @@ module.exports = class moveCommand extends commando.Command {
 
 
 			moveEmbed
-				.setColor('#FF0000')
+				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.addField('Description', descString)
 				.addField('Type', move.type, true)

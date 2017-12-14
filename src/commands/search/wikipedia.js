@@ -73,7 +73,7 @@ module.exports = class wikipediaCommand extends commando.Command {
 
 				wikiEmbed
 					.setAuthor(`Wikipedia - ${wikiData.pageTitle}`, 'https://favna.s-ul.eu/dYdFA880')
-					.setColor('#FF0000')
+					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 					.setFooter(`Wikipedia result pulled on ${moment().format('MMMM Do YYYY HH:mm:ss')}`)
 					.setURL(wikiData.url)
 					.setDescription(wikiData.pageExtract);

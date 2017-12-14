@@ -80,7 +80,7 @@ module.exports = class steamCommand extends commando.Command {
 					const steamEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
 					steamEmbed
-						.setColor('#FF0000')
+						.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 						.setTitle(data.name)
 						.setURL(`http://store.steampowered.com/app/${data.steam_appid}/`)
 						.setImage(data.header_image)

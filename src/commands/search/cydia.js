@@ -50,7 +50,7 @@ module.exports = class cydiaCommand extends commando.Command {
 			const cydiaEmbed = new Discord.MessageEmbed();
 
 			cydiaEmbed
-				.setColor('#5D2E1F')
+				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 				.setAuthor('Tweak Info', 'http://i.imgur.com/OPZfdht.png')
 				.addField('Display Name', res.display, true)
 				.addField('Package Name', res.name, true)

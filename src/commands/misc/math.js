@@ -45,7 +45,7 @@ module.exports = class mathCommand extends commando.Command {
 		const mathEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
 		mathEmbed
-			.setColor('#3eb0f2')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.addField('Equation', args.equation.toString(), false)
 			.addField('Result', scalc(args.equation), false);
 

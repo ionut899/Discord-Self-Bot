@@ -35,7 +35,7 @@ module.exports = class embedValsCommand extends commando.Command {
 
 		valsOfEmbed
 			.setAuthor('This is the author', 'https://i.imgur.com/cgr5eSk.png')
-			.setColor('#ffffff')
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setDescription('This is the description')
 			.setFooter('This is the footer', 'https://i.imgur.com/kPNjOuJ.png')
 			.setImage('https://i.imgur.com/l32vg3M.png')
