@@ -21,7 +21,7 @@ const Discord = require('discord.js'),
 	request = require('request');
 
 
-module.exports = class embedCommand extends commando.Command {
+module.exports = class scpCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'scp',
