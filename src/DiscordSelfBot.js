@@ -148,6 +148,7 @@ class DiscordSelfBot {
 	onmessage () {
 		return (msg) => {
 
+
 			if (data.webhookNotifiers && msg.author.id !== values.ownerID && !msg.mentions.users.get(values.ownerID)) {
 				const mentionEmbed = new Discord.MessageEmbed(),
 					regexpKeywords = [];
