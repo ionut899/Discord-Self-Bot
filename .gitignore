@@ -20,4 +20,4 @@ src/commands/fun/pastas/*
 # Exclude single files from gitignore so the folders are created on Git
 !src/commands/fun/pastas/navy.txt
 !src/commands/memes/images/everyone.jpg
-!src/commands/emojis/images/angery.jpg
+!src/commands/emojis/images/angery.png
