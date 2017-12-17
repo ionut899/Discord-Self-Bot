@@ -15,16 +15,17 @@ before_install:
 - sudo apt-get update -y
 - sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential
   g++ python3.4
-- npm install -g node-pre-gyp node-gyp
+- npm install -g node-pre-gyp node-gyp yarn
 - echo "alias python=python3" >> .bashrc
 - source .bashrc
 before_script:
-- npm install sqlite --save
+- yarn add sqlite
 install:
-- npm install
+- yarn install
 script:
-- npm run lint
-- npm test
+- yarn run lintfix
+- yarn run lint
+- yarn run test
 notifications:
   email: false
 env:

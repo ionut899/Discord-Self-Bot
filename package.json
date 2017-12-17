@@ -16,6 +16,7 @@
   "scripts": {
     "prestart": "yarn install",
     "lint": "./node_modules/.bin/eslint **/*.js",
+    "lintfix": "./node_modules/.bin/eslint --fix **/*.js",
     "start": "node src/app.js",
     "test": "node src/test/test.js | tap-summary"
   },
