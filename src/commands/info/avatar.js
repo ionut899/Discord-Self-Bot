@@ -43,7 +43,7 @@ module.exports = class avatarCommand extends commando.Command {
 					'prompt': 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
 					'type': 'integer',
 					'label': 'size of the avatar',
-					'default': 512,
+					'default': 128,
 					'validate': (size) => {
 						const validSizes = ['128', '256', '512', '1024', '2048'];
 
@@ -92,22 +92,39 @@ module.exports = class avatarCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const ava = args.member.user.displayAvatarURL({
-				'format': 'png',
-				'size': args.size
-			}),
-			avaColor = await this.fetchColor(ava),
-			embed = new Discord.MessageEmbed();
+		try {
+			const ava = args.member.user.displayAvatarURL({'size': args.size}),
+				avaColor = await this.fetchColor(ava),
+				embed = new Discord.MessageEmbed();
 
-		embed
-			.setColor(avaColor ? avaColor : this.embedColor)
-			.setImage(ava)
-			.setFooter(`Avatar for ${args.member.displayName}`);
+			embed
+				.setColor(avaColor ? avaColor : this.embedColor)
+				.setImage(ava)
+				.setFooter(`Avatar for ${args.member.displayName}`);
 
-		if (msg.deletable && data.deleteCommandMessages) {
-			msg.delete();
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
+			return msg.embed(embed, ava);
+		} catch (err) {
+			const ava = args.member.user.displayAvatarURL({
+					'format': 'png',
+					'size': args.size
+				}),
+				avaColor = await this.fetchColor(ava),
+				embed = new Discord.MessageEmbed();
+
+			embed
+				.setColor(avaColor ? avaColor : this.embedColor)
+				.setImage(ava)
+				.setFooter(`Avatar for ${args.member.displayName}`);
+
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
+			return msg.embed(embed, ava);
 		}
-
-		return msg.embed(embed, ava);
 	}
 };
