@@ -18,8 +18,8 @@
 const Discord = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
-	request = require('request');
-
+	data = require('../../data.json'),
+	request = require('snekfetch');
 
 module.exports = class scpCommand extends commando.Command {
 	constructor (client) {
@@ -42,39 +42,39 @@ module.exports = class scpCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		msg.delete();
-		const scpEmbed = new Discord.MessageEmbed();
+	async run (msg, args) {
+		try {
+			const scpEmbed = new Discord.MessageEmbed(),
+				scpRes = await request.get(`http://www.scp-wiki.net/scp-${args.scparticle}`);
 
-		scpEmbed
-			.setTitle(`SCP-${args.scparticle}`)
-			.setFooter('SCP Foundation', 'https://ev1l0rd.s-ul.eu/uVu89Guq')
-			.setURL(`http://www.scp-wiki.net/scp-${args.scparticle}`)
-			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000');
-
-		request({
-			'uri': `http://www.scp-wiki.net/scp-${args.scparticle}`,
-			'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'}
-		},
-		(err, resp, body) => {
-			if (!err && resp.statusCode === 200) {
-				const cheerioLoader = cheerio.load(body);
+			if (scpRes) {
+				const $ = cheerio.load(scpRes.text);
 
 				scpEmbed
-					.addField('Object Class', cheerioLoader('strong:contains("Object Class:")').parent()
+					.setTitle(`SCP-${args.scparticle}`)
+					.setFooter('SCP Foundation', 'https://ev1l0rd.s-ul.eu/uVu89Guq')
+					.setURL(`http://www.scp-wiki.net/scp-${args.scparticle}`)
+					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+					.addField('Object Class', $('strong:contains("Object Class:")').parent()
 						.text()
 						.slice(14), false)
-					.addField('Special Containment Procedures', `${cheerioLoader('strong:contains("Special Containment Procedures:")').parent()
+					.addField('Special Containment Procedures', `${$('strong:contains("Special Containment Procedures:")').parent()
 						.text()
 						.slice(32, 332)}... `, false)
-					.addField('Description', `${cheerioLoader('strong:contains("Description:")').parent()
+					.addField('Description', `${$('strong:contains("Description:")').parent()
 						.text()
 						.slice(13, 313)}... [Read more](http://www.scp-wiki.net/scp-${args.scparticle})`, false);
-			} else {
-				return msg.reply('Request error occured and couldn\'t fill in article data');
-			}
 
-			return msg.embed(scpEmbed, `http://www.scp-wiki.net/scp-${args.scparticle}`);
-		});
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
+
+				return msg.embed(scpEmbed, `http://www.scp-wiki.net/scp-${args.scparticle}`);
+			}
+		} catch (err) {
+			return msg.reply('⚠️ ***nothing found***');
+		}
+		
+		return msg.reply('⚠️ ***nothing found***');
 	}
 };

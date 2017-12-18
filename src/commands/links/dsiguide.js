@@ -16,7 +16,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class dsiGuideCommand extends commando.Command {
 	constructor (client) {
@@ -39,6 +40,10 @@ module.exports = class dsiGuideCommand extends commando.Command {
 			.setDescription('Dusting off your DSi? Need instructions on how to set up DSi hacks? Follow this guide')
 			.addField('\u200b', 'http://cfw.guide/dsi/')
 			.setThumbnail('https://silento.s-ul.eu/1RKVHclC');
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
 		return msg.embed(dsiGuideEmbed, 'http://cfw.guide/dsi/');
 	}

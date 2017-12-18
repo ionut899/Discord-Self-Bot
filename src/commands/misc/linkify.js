@@ -15,7 +15,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class linkifyCommand extends commando.Command {
 	constructor (client) {
@@ -31,8 +32,11 @@ module.exports = class linkifyCommand extends commando.Command {
 	}
 
 	run (msg) {
-
 		if (msg.attachments.first() && msg.attachments.first().url) {
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
 			return msg.say(msg.attachments.first().url);
 		}
 		

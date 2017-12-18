@@ -20,6 +20,7 @@
 const Discord = require('discord.js'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment'),
 	tmdb = require('moviedb')(auth.TheMovieDBV3ApiKey);
 
@@ -58,7 +59,7 @@ module.exports = class movieCommand extends commando.Command {
 			if (nameRes.results.length !== 0) {
 				movieID = nameRes.results[0].id;
 			} else {
-				return msg.reply('No result found');
+				return msg.reply('⚠️ ***nothing found***');
 			}
 
 			tmdb.movieInfo({'id': movieID}, (idErr, idRes) => {
@@ -79,10 +80,14 @@ module.exports = class movieCommand extends commando.Command {
 					.addField('IMDB Page', idRes.imdb_id_id !== '' ? `[Click Here](http://www.imdb.com/title/${idRes.imdb_id})` : 'none', true)
 					.addField('Description', idRes.overview);
 
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
+
 				return msg.embed(movieEmbed);
 			});
 
-			return null; // This is to get consistent return
+			return msg.reply('⚠️ ***nothing found***');
 		});
 	}
 };

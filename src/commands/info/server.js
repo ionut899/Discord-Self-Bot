@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment');
 
 
@@ -86,11 +87,15 @@ module.exports = class serverInfoCommand extends commando.Command {
 			.addField('Number of emojis', guild.emojis.size, true)
 			.addField('Number of roles', guild.roles.size, true)
 			.addField('Number of channels', guildChannels, true)
-			.addField('Created At', moment(guild.createdTimestamp).format('MMMM Do YYYY [@] HH:mm:ss [UTC]Z'), false)
+			.addField('Created At', moment(guild.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
 			.addField('Verification Level', verificationLevel[guild.verificationLevel], false)
 			.addField('Explicit Content Filter', contentFilter[`${guild.explicitContentFilter}`], false);
 
 		guild.splashURL() !== null ? serverEmbed.setImage(guild.splashURL()) : null;
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 		
 		return msg.embed(serverEmbed);
 	}

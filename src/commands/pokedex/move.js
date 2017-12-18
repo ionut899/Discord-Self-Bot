@@ -19,6 +19,7 @@ const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	Path = require('path'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moves = require(Path.join(__dirname, 'data/moves.js')).BattleMovedex,
 	{oneLine} = require('common-tags');
 
@@ -96,11 +97,19 @@ module.exports = class moveCommand extends commando.Command {
                 |  [Smogon](http://www.smogon.com/dex/sm/moves/${move.name.replace(' ', '_')})  
                 |  [PokémonDB](http://pokemondb.net/move/${move.name.replace(' ', '-')})`);
 
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
 			return msg.embed(moveEmbed, `**${capitalizeFirstLetter(move.name)}**`);
 		}
 		const dym = match.get(args.move), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the move name?';
 
-		return msg.channel.send(`⚠ Move not found! ${dymString}`);
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.channel.send(`⚠️ Move not found! ${dymString}`);
 	}
 };

@@ -16,11 +16,11 @@
  */
 
 const Discord = require('discord.js'),
-	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment'),
 	path = require('path'),
-	request = require('request'),
+	request = require('snekfetch'),
 	mdobj = require(path.join(__dirname, 'metadata.js')).MetaDataObject; // eslint-disable-line sort-vars
 
 const themeEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
@@ -47,18 +47,13 @@ module.exports = class themeIDCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		const searchURL = `https://themeplaza.eu/api/v0/theme_lookup?item_id=${args.themeID}`;
+	async run (msg, args) {
 
-		request({
-			'uri': searchURL,
-			'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'}
-		},
-		(err, resp, body) => {
-			if (!err && resp.statusCode === 200) {
-				const cheerioLoader = cheerio.load(body);
+		try {
+			const theme = await request.get(`https://themeplaza.eu/api/v0/theme_lookup?item_id=${args.themeID}`);
 
-				const themeData = JSON.parse(cheerioLoader('body').text()); // eslint-disable-line one-var
+			if (theme) {
+				const themeData = JSON.parse(theme.text);
 
 				themeEmbed
 					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
@@ -67,7 +62,7 @@ module.exports = class themeIDCommand extends commando.Command {
 					.setThumbnail(`https://themeplaza.eu/download/${args.themeID}/qr`)
 					.setDescription(themeData.description)
 					.addField('Uploader', themeData.author, true)
-					.addField('Upload Date', moment(themeData.upload_data).format('MMMM Do YYYY'), true)
+					.addField('Upload Date', moment(themeData.upload_data).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
 					.addField('Amount of downloads', `${themeData.download_count}`, true)
 					.addField('Amount of likes', `${themeData.likes}`, true)
 					.addField('NSFW Level', mdobj.nsfw[themeData.nsfw], true)
@@ -87,12 +82,17 @@ module.exports = class themeIDCommand extends commando.Command {
 
 				themeData.nsfw === '0' ? themeEmbed.setImage(`https://themeplaza.eu/download/${args.themeID}/preview`) : null;
 				msg.channel.nsfw ? themeEmbed.setImage(`https://themeplaza.eu/download/${args.themeID}/preview`) : null;
-				
+
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
+
 				return msg.embed(themeEmbed, `https://themeplaza.eu/item/${args.themeID}`);
 			}
-			
-			return msg.reply('An error occured, probably means the theme does not exist.');
-		});
-
+		} catch (err) {
+			return msg.reply('⚠️ ***nothing found***');
+		}
+		
+		return msg.reply('⚠️ ***nothing found***');
 	}
 };

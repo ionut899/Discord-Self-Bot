@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	random = require('node-random');
 
 module.exports = class rpsCommand extends commando.Command {
@@ -47,29 +48,29 @@ module.exports = class rpsCommand extends commando.Command {
 			'number': 1,
 			'minimum': 1,
 			'maximum': 3
-		}, (error, data) => {
+		}, (error, randoms) => {
 			if (!error) {
 				const rpsEmbed = new Discord.MessageEmbed();
 
 				let resString = 'init';
 
-				if (args.hand === 'rock' && data === 1) {
+				if (args.hand === 'rock' && randoms === 1) {
 					resString = 'It\'s a draw 😶! Both picked 🗿';
-				} else if (args.hand === 'rock' && data === 2) {
+				} else if (args.hand === 'rock' && randoms === 2) {
 					resString = 'I won 😃! My 📜 covered your 🗿';
-				} else if (args.hand === 'rock' && data === 3) {
+				} else if (args.hand === 'rock' && randoms === 3) {
 					resString = ' I lost 😞! Your 🗿 smashed my ️️️✂️ to pieces';
-				} else 	if (args.hand === 'paper' && data === 1) {
+				} else 	if (args.hand === 'paper' && randoms === 1) {
 					resString = 'I lost 😞! Your 📜 covered my 🗿';
-				} else if (args.hand === 'paper' && data === 2) {
+				} else if (args.hand === 'paper' && randoms === 2) {
 					resString = 'It\'s a draw 😶! Both picked 📜';
-				} else if (args.hand === 'paper' && data === 3) {
+				} else if (args.hand === 'paper' && randoms === 3) {
 					resString = 'I won 😃! My ✂️ cut your 📜 to shreds';
-				} else 	if (args.hand === 'scissor' && data === 1) {
+				} else 	if (args.hand === 'scissor' && randoms === 1) {
 					resString = 'I won 😃! My 🗿 smashed your ✂️ to pieces';
-				} else if (args.hand === 'scissor' && data === 2) {
+				} else if (args.hand === 'scissor' && randoms === 2) {
 					resString = 'I lost 😞! Your ✂️ cut my 📜 to shreds';
-				} else if (args.hand === 'scissor' && data === 3) {
+				} else if (args.hand === 'scissor' && randoms === 3) {
 					resString = 'It\'s a draw 😶! Both picked ✂️';
 				} 
 
@@ -78,10 +79,14 @@ module.exports = class rpsCommand extends commando.Command {
 					.setTitle('Rock Paper Scissors')
 					.setDescription(resString);
 
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
+
 				return msg.embed(rpsEmbed);
 			}
 
-			return msg.reply('an error occured getting a random result and I\'m not going to rig this game.');
+			return msg.reply('⚠️ an error occured getting a random result and I\'m not going to rig this game.');
 		});
 	}
 };

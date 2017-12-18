@@ -17,7 +17,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	cydia = require('cydia-api-node');
+	cydia = require('cydia-api-node'),
+	data = require('../../data.json');
 
 module.exports = class cydiaCommand extends commando.Command {
 	constructor (client) {
@@ -32,7 +33,7 @@ module.exports = class cydiaCommand extends commando.Command {
 
 			'args': [
 				{
-					'key': 'packageName',
+					'key': 'query',
 					'prompt': 'Please supply package name',
 					'type': 'string',
 					'label': 'Package name to look up'
@@ -41,13 +42,11 @@ module.exports = class cydiaCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		cydia.getAllInfo(args.packageName).then((res) => {
-			if (res === false) {
-				return msg.say(`**Tweak/Theme \`${args.packageName}\` not found!**`);
-			}
+	async run (msg, args) {
+		const cydiaEmbed = new Discord.MessageEmbed(),
+			res = await cydia.getAllInfo(args.query);
 
-			const cydiaEmbed = new Discord.MessageEmbed();
+		if (res) {
 
 			cydiaEmbed
 				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
@@ -61,7 +60,13 @@ module.exports = class cydiaCommand extends commando.Command {
 				.addField('Link', `[Click Here](http://cydia.saurik.com/package/${res.name})`, true)
 				.addField('Repo', `[${res.repo.name}](https://cydia.saurik.com/api/share#?source=${res.repo.link})`, true);
 
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
 			return msg.embed(cydiaEmbed);
-		});
+		}
+
+		return msg.say(`**Tweak/Theme \`${args.query}\` not found!**`);
 	}
 };

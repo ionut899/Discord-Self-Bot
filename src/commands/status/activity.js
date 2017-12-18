@@ -160,6 +160,10 @@ module.exports = class activityCommand extends commando.Command {
 			}
 		});
 
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
 		return msg.reply('Your activity should be changed. Keep in mind that you cannot see it on your own account and it may take a little while before your change is visisble due to caching.');
 	}
 };

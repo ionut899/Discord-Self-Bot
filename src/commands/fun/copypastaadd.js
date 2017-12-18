@@ -16,6 +16,7 @@
  */
 
 const commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	fs = require('fs'),
 	path = require('path');
 
@@ -54,7 +55,11 @@ module.exports = class copypastaAddCommand extends commando.Command {
 				return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with $copypasta ${args.name}`);
 			}
 
-			return msg.reply('An error occured and your pasta was not saved. Consider creating the text file manually.');
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
+			return msg.reply('⚠️ an error occured and your pasta was not saved. Consider creating the text file manually.');
 		});
 	}
 };

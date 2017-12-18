@@ -16,7 +16,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class wiiGuideCommand extends commando.Command {
 	constructor (client) {
@@ -39,6 +40,10 @@ module.exports = class wiiGuideCommand extends commando.Command {
 			.setDescription('Want to run game backups on your Wii? Need instructions on how to set up Priiloader, Homebrew Launcher and cios? Follow this guide')
 			.addField('\u200b', 'https://wii.guide')
 			.setThumbnail('https://silento.s-ul.eu/g9QiwTgG');
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
 		return msg.embed(wiiGuideEmbed, 'https://wii.guide');
 	}

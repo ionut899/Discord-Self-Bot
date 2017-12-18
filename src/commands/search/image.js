@@ -19,8 +19,9 @@ const Discord = require('discord.js'),
 	auth = require('../../auth.json'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	querystring = require('querystring'),
-	superagent = require('superagent'),
+	request = require('snekfetch'),
 	vibrant = require('node-vibrant');
 
 const googleapikey = auth.googleapikey, // eslint-disable-line one-var
@@ -97,7 +98,7 @@ module.exports = class imageCommand extends commando.Command {
 			};
 
 		let hexColor = this.embedColor,
-			res = await superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(query)}`);
+			res = await request.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(query)}`);
 
 		if (res && res.body.items) {
 			hexColor = await this.fetchColor(res.body.items[0].link);
@@ -111,7 +112,7 @@ module.exports = class imageCommand extends commando.Command {
 		}
 
 		if (!res) {
-			res = await superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(query)}`);
+			res = await request.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(query)}`);
 
 			const $ = cheerio.load(res.text),
 				result = $('.images_table').find('img')
@@ -124,9 +125,13 @@ module.exports = class imageCommand extends commando.Command {
 				.setImage(result)
 				.setFooter(`Search query: "${args.query}"`);
 
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
 			return msg.embed(embed);
 		}
 
-		return msg.reply('**no results found 😦**');
+		return msg.reply('⚠️ ***nothing found***');
 	}
 };

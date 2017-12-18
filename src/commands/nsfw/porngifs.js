@@ -18,6 +18,7 @@
 const Discord = require('discord.js'),
 	Pornsearch = require('pornsearch').default,
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	random = require('node-random');
 
 const pornEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
@@ -45,30 +46,34 @@ module.exports = class porngifsCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		const searchUnit = new Pornsearch(args.pornInput);
+	async run (msg, args) {
+		const search = new Pornsearch(args.pornInput),
+			gifs = await search.gifs(); // eslint-disable-line sort-vars
 
-		searchUnit.gifs()
-			.then((gifs) => {
-				random.integers({
-					'number': 1,
-					'minimum': 0,
-					'maximum': gifs.length - 1
-				}, (error, data) => {
-					if (error) {
-						console.error(error); // eslint-disable-line no-console
+		if (gifs) {
+			random.integers({
+				'number': 1,
+				'minimum': 0,
+				'maximum': gifs.length - 1
+			}, (error, gif) => {
+				if (error) {
+					return msg.reply('⚠ An error occured while drawing a random number.');
+				}
+				pornEmbed
+					.setURL(gifs[gif].url)
+					.setTitle(gifs[gif].title)
+					.setImage(`${gifs[gif].url}`)
+					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+					.addField('Gif webm', `[Click Here](${gifs[gif].webm})`, true);
 
-						return msg.reply('⚠ An error occured while drawing a random number. An error was logged to your error console');
-					}
-					pornEmbed
-						.setURL(gifs[data].url)
-						.setTitle(gifs[data].title)
-						.setImage(`${gifs[data].url}`)
-						.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-						.addField('Gif webm', `[Click Here](${gifs[data].webm})`, true);
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
 
-					return msg.embed(pornEmbed, gifs[data].webm);
-				});
+				return msg.embed(pornEmbed, gifs[gif].webm);
 			});
+		}
+
+
 	}
 };

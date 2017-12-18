@@ -33,7 +33,7 @@ module.exports = class timeresetCommand extends commando.Command {
 		});
 	}
 
-	run () {
+	run (msg) {
 		this.client.user.setPresence({
 			'activity': {
 				'application': data.richpresenceData.application !== '' ? data.richpresenceData.application : '355326429178757131',
@@ -60,5 +60,11 @@ module.exports = class timeresetCommand extends commando.Command {
 				}
 			}
 		});
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.reply('🕛 Time has been reset');
 	}
 };

@@ -18,6 +18,7 @@
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	fs = require('fs'),
 	path = require('path');
 
@@ -49,26 +50,28 @@ module.exports = class copypastaCommand extends commando.Command {
 
 		match.values = fs.readdirSync(path.join(__dirname, 'pastas'));
 
-		fs.readFile(path.join(__dirname, `pastas/${args.name}.txt`), (err, data) => {
+		fs.readFile(path.join(__dirname, `pastas/${args.name}.txt`), (err, pastaContent) => {
 			if (!err) {
-				if (data.length <= 1024) {
+				if (pastaContent.length <= 1024) {
 					const cpEmbed = new Discord.MessageEmbed();
 
-					cpEmbed.setDescription(data);
+					cpEmbed.setDescription(pastaContent);
 					msg.delete();
 
 					return msg.embed(cpEmbed);
 				}
 				msg.delete();
 
-				return msg.say(data, {'split': true});
+				return msg.say(pastaContent, {'split': true});
 			}
 			const dym = match.get(`${args.name}.txt`),
 				dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'You can save it with `$copypastaadd <filename> <content>` or verify the file name manually';
 
-			msg.delete();
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
 
-			return msg.reply(`⚠ That copypata does not exist! ${dymString}`);
+			return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
 		});
 	}
 };

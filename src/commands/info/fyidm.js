@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment');
 
 module.exports = class fyidmCommand extends commando.Command {
@@ -63,7 +64,7 @@ module.exports = class fyidmCommand extends commando.Command {
 		fyidmEmbed
 			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setTitle('Uses with matching discriminator')
-			.setFooter(`Discriminator match checked on ${moment().format('MMMM Do YYYY HH:mm:ss')}`);
+			.setFooter(`Discriminator match checked on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
 		for (let index = 0; index < discrimMatches.size; index += 1) {
 			const match = matchEntries.next().value[1];
@@ -78,6 +79,10 @@ module.exports = class fyidmCommand extends commando.Command {
 			}
 		}
 
-		msg.embed(fyidmEmbed);
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.embed(fyidmEmbed);
 	}
 };

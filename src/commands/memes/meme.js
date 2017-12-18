@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	path = require('path');
 
 module.exports = class memeCommand extends commando.Command {
@@ -42,7 +43,10 @@ module.exports = class memeCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		msg.channel.send({'files': [new Discord.MessageAttachment(path.join(__dirname, `/images/${args.image.toLowerCase()}.jpg`), `${args.image}Meme.jpg`)]});
-		msg.delete();
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.channel.send({'files': [new Discord.MessageAttachment(path.join(__dirname, `/images/${args.image.toLowerCase()}.jpg`), `${args.image}Meme.jpg`)]});
 	}
 };

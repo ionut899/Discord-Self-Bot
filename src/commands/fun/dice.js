@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	xdicey = require('xdicey');
 
 module.exports = class diceCommand extends commando.Command {
@@ -51,16 +52,18 @@ module.exports = class diceCommand extends commando.Command {
 			res = [],
 			throwDice = xdicey(args.rolls, args.sides);
 
-
 		for (const index in throwDice.individual) { // eslint-disable-line guard-for-in
 			res.push(`🎲: ${throwDice.individual[index]}`);
 		}
-
 
 		diceEmbed
 			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.addField('Dice result', res, false)
 			.addField('Total', throwDice.total, false);
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
 		return msg.embed(diceEmbed);
 	}

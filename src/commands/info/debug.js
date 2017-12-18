@@ -16,7 +16,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class debugCommand extends commando.Command {
 	constructor (client) {
@@ -76,6 +77,10 @@ module.exports = class debugCommand extends commando.Command {
 			{
 				return msg.reply('That is not a valid debugger option. Either `channels` or `roles`');
 			}
+		}
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
 		}
 
 		return msg.embed(debugEmbed);

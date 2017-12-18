@@ -16,7 +16,8 @@
  */
 
 const booru = require('booru'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class pahealCommand extends commando.Command {
 	constructor (client) {
@@ -41,26 +42,24 @@ module.exports = class pahealCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		booru.search('paheal', args.nsfwtags.split(' '), {
-			'limit': 1,
-			'random': true
-		})
-			.then(booru.commonfy)
-			.then((images) => {
+	async run (msg, args) {
+		try {
+			const booruData = await booru.search('paheal', args.nsfwtags.split(' '), {
+				'limit': 1,
+				'random': true
+			}).then(booru.commonfy);
 
-
-				msg.say(`Score: ${images[0].common.score}\nImage: ${images[0].common.file_url}`);
-
-			})
-			.catch((err) => {
-				if (err.name === 'booruError') {
-					console.error(err.message); // eslint-disable-line no-console
-
-					return msg.reply('⚠ No juicy images found. An error was logged to your error console');
+			if (booruData) {
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
 				}
 
-				return msg.reply('⚠ No juicy images found.');
-			});
+				return msg.say(`Score: ${booruData[0].common.score}\nImage: ${booruData[0].common.file_url}`);
+			}
+
+			return msg.reply('⚠️ No juicy images found.');
+		} catch (booruError) {
+			return msg.reply('⚠️ No juicy images found.');
+		}
 	}
 };

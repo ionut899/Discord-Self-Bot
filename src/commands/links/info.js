@@ -16,7 +16,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class infoCommnad extends commando.Command {
 	constructor (client) {
@@ -40,6 +41,10 @@ module.exports = class infoCommnad extends commando.Command {
 			.setThumbnail('https://selfbot.favna.xyz/images/selfbot.png')
 			.setURL('https://selfbot.favna.xyz')
 			.addField('​', '[Website](https://selfbot.favna.xyz) | [GitHub](https://github.com/Favna/Discord-Self-Bot) | [Wiki](https://github.com/Favna/Discord-Self-Bot/wiki)');
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
 		return msg.embed(shillEmbed, 'Find information on the bot here https://selfbot.favna.xyz');
 	}

@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	predict = require('eightball');
     
 module.exports = class eightBallCommand extends commando.Command {
@@ -49,6 +50,10 @@ module.exports = class eightBallCommand extends commando.Command {
 			.addField(':question: Question', args.question, false)
 			.addField(':8ball: 8ball', predict(), false);
 		
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
 		return msg.embed(eightBallEmbed);
 	}
 };

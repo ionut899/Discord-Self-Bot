@@ -19,6 +19,7 @@ const Discord = require('discord.js'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),
+	data = require('../../data.json'),
 	fx = require('money'),
 	moment = require('moment'),
 	oxr = require('open-exchange-rates');
@@ -89,13 +90,17 @@ module.exports = class moneyCommand extends commando.Command {
 						? `:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`
 						: '💰 Money in Bitcoin',
 					`${currencySymbol(args.curTwo)}${convertedMoney}`, true)
-					.setFooter(`Converted money from input using openexchangerates | converted on: ${moment().format('MMMM Do YYYY | HH:mm:ss')}`);
+					.setFooter(`Converted money from input using openexchangerates | converted on: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
 
 				return msg.embed(oxrEmbed);
 			} catch (error) {
 				console.error(error); // eslint-disable-line no-console
 
-				return msg.reply('⚠ An error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
+				return msg.reply('⚠️ An error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
 			}
 		});
 	}

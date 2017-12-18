@@ -18,6 +18,7 @@
 const Discord = require('discord.js'),
 	Pornsearch = require('pornsearch').default,
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	random = require('node-random');
 
 const pornEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
@@ -45,31 +46,33 @@ module.exports = class pornvidsCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		const searchUnit = new Pornsearch(args.pornInput);
+	async run (msg, args) {
+		const search = new Pornsearch(args.pornInput),
+			vids = await search.videos();
 
-		searchUnit.videos()
-			.then((videos) => {
-				random.integers({
-					'number': 1,
-					'minimum': 0,
-					'maximum': videos.length - 1
-				}, (error, data) => {
-					if (error) {
-						console.error(error); // eslint-disable-line no-console
+		if (vids) {
+			random.integers({
+				'number': 1,
+				'minimum': 0,
+				'maximum': vids.length - 1
+			}, (error, vid) => {
+				if (error) {
+					return msg.reply('⚠ An error occured while drawing a random number.');
+				}
+				pornEmbed
+					.setURL(vids[vid].url)
+					.setTitle(vids[vid].title)
+					.setImage(vids[vid].thumb)
+					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+					.addField('Porn video URL', `[Click Here](${vids[vid].url})`, true)
+					.addField('Porn video duration', vids[vid].duration === !'' ? vids[vid].url : 'unknown', true);
 
-						return msg.reply('⚠ An error occured while drawing a random number. An error was logged to your error console');
-					}
-					pornEmbed
-						.setURL(videos[data].url)
-						.setTitle(videos[data].title)
-						.setImage(videos[data].thumb)
-						.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-						.addField('Porn video URL', `[Click Here](${videos[data].url})`, true)
-						.addField('Porn video duration', videos[data].duration === !'' ? videos[data].url : 'unknown', true);
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
 
-					return msg.embed(pornEmbed, videos[data].url);
-				});
+				return msg.embed(pornEmbed, vids[vid].url);
 			});
+		}
 	}
 };

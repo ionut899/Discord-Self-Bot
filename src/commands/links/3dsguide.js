@@ -16,7 +16,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class threeDSguideCommand extends commando.Command {
 	constructor (client) {
@@ -40,6 +41,10 @@ module.exports = class threeDSguideCommand extends commando.Command {
 			.addField('\u200b', 'https://3ds.guide')
 			.setThumbnail('https://favna.s-ul.eu/d0bn8E0M.png');
 
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+		
 		return msg.embed(plaiGuideEmbed, 'https://3ds.guide');
 	}
 };

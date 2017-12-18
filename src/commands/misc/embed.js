@@ -16,7 +16,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class embedCommand extends commando.Command {
 	constructor (client) {
@@ -62,7 +63,11 @@ module.exports = class embedCommand extends commando.Command {
 		});
 
 		customEmbed.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000');
-		msg.embed(customEmbed);
-		msg.delete();
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.embed(customEmbed);
 	}
 };

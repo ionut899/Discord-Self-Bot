@@ -16,7 +16,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class embedValsCommand extends commando.Command {
 	constructor (client) {
@@ -44,6 +45,11 @@ module.exports = class embedValsCommand extends commando.Command {
 			.setTitle('This is the title')
 			.setURL('https://www.google.com')
 			.addField('FieldName', 'FieldValue', true);
-		msg.embed(valsOfEmbed);
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.embed(valsOfEmbed);
 	}
 };

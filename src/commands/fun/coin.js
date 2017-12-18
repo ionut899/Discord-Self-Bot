@@ -17,7 +17,8 @@
 
 const Discord = require('discord.js'),
 	coin = require('flipacoin'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 
 module.exports = class coinCommand extends commando.Command {
@@ -41,7 +42,11 @@ module.exports = class coinCommand extends commando.Command {
 			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
 			.setTitle(`Flipped ${res}s`);
+	
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
-		msg.embed(coinEmbed);
+		return	msg.embed(coinEmbed);
 	}
 };

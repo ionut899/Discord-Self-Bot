@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment'),
 	random = require('node-random');
 
@@ -76,9 +77,9 @@ module.exports = class fightCommand extends commando.Command {
 
 			return msg.embed(fighterEmbed);
 		}
-		random.integers({'number': 2}, (error, data) => {
-			const fighterOneChance = parseInt(data[0], 10),
-				fighterTwoChance = parseInt(data[1], 10),
+		random.integers({'number': 2}, (error, randoms) => {
+			const fighterOneChance = parseInt(randoms[0], 10),
+				fighterTwoChance = parseInt(randoms[1], 10),
 				loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo,
 				winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo;
 
@@ -86,11 +87,15 @@ module.exports = class fightCommand extends commando.Command {
 			fighterEmbed
 				.addField('🇼 Winner', `**${winner}**`, true)
 				.addField('🇱 Loser', `**${loser}**`, true)
-				.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY | HH:mm:ss')}`);
+				.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
 
 			return msg.embed(fighterEmbed);
 		});
 
-		return null;
+		return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
 	}
 };

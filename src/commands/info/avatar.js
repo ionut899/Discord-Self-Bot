@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	vibrant = require('node-vibrant');
 
 module.exports = class avatarCommand extends commando.Command {
@@ -83,6 +84,10 @@ module.exports = class avatarCommand extends commando.Command {
 			.setColor(avaColor ? avaColor : this.embedColor)
 			.setImage(ava)
 			.setFooter(`Avatar for ${args.member.displayName}`);
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
 		return msg.embed(embed);
 	}

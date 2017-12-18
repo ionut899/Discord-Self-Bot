@@ -21,16 +21,8 @@ const Discord = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),
-	request = require('request');
-
-const insert = function (str, index, value) { // eslint-disable-line one-var
-		return str.substring(0, index) + value + str.substring(index);
-	},
-	replaceAll = function (string, pattern, replacement) {
-		return string.replace(new RegExp(pattern, 'g'), replacement);
-	},
-	steam = new SteamAPI(auth.steamAPIKey);
-
+	data = require('../../data.json'),
+	request = require('snekfetch');
 
 module.exports = class steamCommand extends commando.Command {
 	constructor (client) {
@@ -45,68 +37,71 @@ module.exports = class steamCommand extends commando.Command {
 
 			'args': [
 				{
-					'key': 'steamGameName',
+					'key': 'game',
 					'prompt': 'What game do you want to find on the steam store?',
 					'type': 'string',
-					'label': 'Game to look up'
+					'label': 'Game to look up',
+					'parse': p => p.replace(/ /gim, '+')
 				}
 			]
 		});
 	}
 
-	run (msg, args) {
-		request({
-			'uri': `http://store.steampowered.com/search/?term=${replaceAll(args.steamGameName, / /, '+')}`,
-			'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'}
-		},
-		(err, resp, body) => {
-			if (!err && resp.statusCode === 200) {
-				const cheerioLoader = cheerio.load(body),
-					gameID = cheerioLoader('#search_result_container > div:nth-child(2) > a:nth-child(2)').attr('href')
-						.split('/')[4];
+	insert (str, index, value) { // eslint-disable-line one-var
+		return str.substring(0, index) + value + str.substring(index);
+	}
 
-				steam.getGameDetails(gameID).then((data) => {
+	async run (msg, args) {
 
-					const genres = [],
-						platforms = [];
+		const steam = new SteamAPI(auth.steamAPIKey),
+			steamEmbed = new Discord.MessageEmbed(),
+			steamSearch = await request.get(`http://store.steampowered.com/search/?term=${args.game}`);
 
-					data.platforms.windows ? platforms.push('Windows') : null;
-					data.platforms.mac ? platforms.push('MacOS') : null;
-					data.platforms.linux ? platforms.push('Linux') : null;
+		if (steamSearch) {
+			const $ = cheerio.load(steamSearch.text),
+				gameID = $('#search_result_container > div:nth-child(2) > a:nth-child(2)').attr('href')
+					.split('/')[4],
+				steamData = await steam.getGameDetails(gameID);
 
-					for (const index in data.genres) {
-						genres.push(data.genres[index].description);
-					}
-					const steamEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
+			if (steamData) {
+				const genres = [],
+					platforms = [];
 
-					steamEmbed
-						.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-						.setTitle(data.name)
-						.setURL(`http://store.steampowered.com/app/${data.steam_appid}/`)
-						.setImage(data.header_image)
-						.setDescription(cheerio.load(data.short_description).text())
-						.addField(`Price in ${data.price_overview.currency}`, `${currencySymbol(data.price_overview.currency)}${insert(data.price_overview.final.toString(), 2, ',')}`, true)
-						.addField('Release Date', data.release_date.date, true)
-						.addField('Platforms', platforms.join(', '), true)
-						.addField('Controller Support', data.controller_support ? data.controller_support : 'None', true)
-						.addField('Age requirement', data.required_age !== 0 ? data.required_age : 'Everyone / Not in API', true)
-						.addField('Genres', genres.join(', '), true)
-						.addField('Developer(s)', data.developers, true)
-						.addField('Publisher(s)', data.publishers, true)
-						.addField('Steam Store Link', `http://store.steampowered.com/app/${data.steam_appid}/`, false);
+				steamData.platforms.windows ? platforms.push('Windows') : null;
+				steamData.platforms.mac ? platforms.push('MacOS') : null;
+				steamData.platforms.linux ? platforms.push('Linux') : null;
 
-					return msg.embed(steamEmbed);
-				});
+				for (const index in steamData.genres) {
+					genres.push(steamData.genres[index].description);
+				}
 
-			} else {
-				console.error(err); // eslint-disable-line no-console
+				steamEmbed
+					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+					.setTitle(steamData.name)
+					.setURL(`http://store.steampowered.com/app/${steamData.steam_appid}/`)
+					.setImage(steamData.header_image)
+					.setDescription(cheerio.load(steamData.short_description).text())
+					.addField(`Price in ${steamData.price_overview.currency}`,
+						`${currencySymbol(steamData.price_overview.currency)}${this.insert(steamData.price_overview.final.toString(), 2, ',')}`, true)
+					.addField('Release Date', steamData.release_date.date, true)
+					.addField('Platforms', platforms.join(', '), true)
+					.addField('Controller Support', steamData.controller_support ? steamData.controller_support : 'None', true)
+					.addField('Age requirement', steamData.required_age !== 0 ? steamData.required_age : 'Everyone / Not in API', true)
+					.addField('Genres', genres.join(', '), true)
+					.addField('Developer(s)', steamData.developers, true)
+					.addField('Publisher(s)', steamData.publishers, true)
+					.addField('Steam Store Link', `http://store.steampowered.com/app/${steamData.steam_appid}/`, false);
 
-				return msg.reply('⚠ An error occured while getting the store search result');
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
+
+				return msg.embed(steamEmbed, `http://store.steampowered.com/app/${steamData.steam_appid}/`);
 			}
 
-			return null; // This is to get consistent return
+			return msg.reply('⚠️ Steam API error');
 		}
 
-		);
+		return msg.reply('⚠️ ***nothing found***');
 	}
 };

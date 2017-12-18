@@ -20,6 +20,7 @@
 const Discord = require('discord.js'),
 	Path = require('path'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	typeMatchups = require(Path.join(__dirname, 'data/typechart.js')).BattleTypeChart,
 	{oneLine} = require('common-tags');
 
@@ -290,6 +291,10 @@ module.exports = class typeCommand extends commando.Command {
             [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/${args.type.split(' ')[0]}_(type\\))  
             |  [Smogon](http://www.smogon.com/dex/sm/types/${args.type.split(' ')[0]})
             |  [PokémonDB](http://pokemondb.net/type/${args.type.split(' ')[0]})`);
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
 		return msg.embed(typeEmbed);
 	}

@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	urban = require('urban');
 
 module.exports = class urbanCommand extends commando.Command {
@@ -44,7 +45,7 @@ module.exports = class urbanCommand extends commando.Command {
 	run (msg, args) {
 		urban(args.query).first((json) => {
 			if (!json) {
-				return msg.reply('⚠ No Results Found!');
+				return msg.reply('⚠️ ***nothing found***');
 			}
 			const urbanEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
@@ -54,6 +55,10 @@ module.exports = class urbanCommand extends commando.Command {
 				.addField('Definition', json.definition.length <= 1024 ? json.definition : `Truncated due to exceeding maximum length\n${json.definition.slice(0, 970)}`, false)
 				.addField('Example', json.example.length <= 1024 ? json.example : `Truncated due to exceeding maximum length\n${json.example.slice(0, 970)}`, false)
 				.addField('Permalink', json.permalink, false);
+
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
 
 			return msg.embed(urbanEmbed);
 		});

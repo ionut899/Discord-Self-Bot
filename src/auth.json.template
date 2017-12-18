@@ -7,6 +7,7 @@
   "oxrAppID": "An API key created on Open-Exchange-Rates",
   "TheMovieDBV3ApiKey": "Your API key created on The Movie DB",
   "steamAPIKey": "Your Steam API key here",
+  "igdbAPIKey": "Your IGDB API key here",
   "webhookID": "The ID of a webhook",
   "webhooktoken": "The token of a webhook"
 }

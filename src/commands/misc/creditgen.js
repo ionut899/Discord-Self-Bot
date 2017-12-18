@@ -20,6 +20,7 @@
 const Discord = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	imgur = require('imgur'),
 	moment = require('moment'),
 	{oneLine} = require('common-tags'),
@@ -54,6 +55,10 @@ module.exports = class creditgenCommand extends commando.Command {
 			.setImage(image.data.link)
 			.setFooter(oneLine `${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
-		msg.embed(embed);
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+			
+		return msg.embed(embed);
 	}
 };

@@ -16,7 +16,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class vitaGuideCommand extends commando.Command {
 	constructor (client) {
@@ -39,6 +40,10 @@ module.exports = class vitaGuideCommand extends commando.Command {
 			.setDescription('Want to run game backups on your PSVita? Need instructions on how to set up Henkaku? Go here!')
 			.addField('\u200b', 'http://cfw.guide/vita/')
 			.setThumbnail('https://silento.s-ul.eu/PIKf4IQR');
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
 		return msg.embed(vitaGuideEmbed, 'http://cfw.guide/vita/');
 	}

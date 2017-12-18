@@ -17,10 +17,33 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment'),
 	weather = require('yahoo-weather');
 
-const convertTimeFormat = function (input) { // eslint-disable-line one-var
+module.exports = class weatherCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'weather',
+			'group': 'info',
+			'aliases': ['temp', 'forecast', 'fc', 'wth'],
+			'memberName': 'weather',
+			'description': 'Get the weather in a city',
+			'examples': ['weather {city}', 'weather amsterdam'],
+			'guildOnly': false,
+
+			'args': [
+				{
+					'key': 'city',
+					'prompt': 'Weather in which city?',
+					'type': 'string',
+					'label': 'City to get weather from'
+				}
+			]
+		});
+	}
+
+	convertTimeFormat (input) { // eslint-disable-line one-var
 		const ampm = input.match(/\s(.*)$/)[1],
 			minutes = Number(input.match(/:(\d+)/)[1]);
 		let hours = Number(input.match(/^(\d+)/)[1]),
@@ -43,62 +66,59 @@ const convertTimeFormat = function (input) { // eslint-disable-line one-var
 		}
 
 		return `${sHours}:${sMinutes}`;
-	},
-	data = {
-		'Mon': 'Monday',
-		'Tue': 'Tuesday',
-		'Wed': 'Wednesday',
-		'Thu': 'Thursday',
-		'Fri': 'Friday',
-		'Sat': 'Saturday',
-		'Sun': 'Sunday'
-	};
-
-module.exports = class weatherCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'weather',
-			'group': 'info',
-			'aliases': ['temp'],
-			'memberName': 'weather',
-			'description': 'Get the weather in a city',
-			'examples': ['weather {city}', 'weather amsterdam'],
-			'guildOnly': false,
-
-			'args': [
-				{
-					'key': 'city',
-					'prompt': 'Weather in which city?',
-					'type': 'string',
-					'label': 'City to get weather from'
-				}
-			]
-		});
 	}
 
-	run (msg, args) {
-		weather(args.city).then((info) => {
-			const wthEmb = new Discord.MessageEmbed();
+	convertDays (day) {
+		switch (day) {
+			case 'Mon':
+				return 'Monday';
+			case 'Tue':
+				return 'Tuesday';
+			case 'Wed':
+				return 'Wednesday';
+			case 'Thu':
+				return 'Thursday';
+			case 'Fri':
+				return 'Friday';
+			case 'Sat':
+				return 'Saturday';
+			case 'Sun':
+				return 'Sunday';
+			default:
+				return 'Unknown Day';
+		}
+	}
 
-			wthEmb
+	async run (msg, args) {
+		const info = await weather(args.city),
+			weatherEmbed = new Discord.MessageEmbed();
+
+		if (info) {
+			weatherEmbed
 				.setAuthor(`Weather data for ${info.location.city} - ${info.location.country}`)
-				.setFooter(`Weather data pulled from ${info.image.title} at ${moment().format('MMMM Do YYYY | HH:mm')}`)
+				.setFooter(`Weather data pulled from ${info.image.title} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 				.setThumbnail(info.item.description.slice(19, 56))
 				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 				.addField('💨 Wind Speed', `${info.wind.speed} ${info.units.speed}`, true)
 				.addField('💧 Humidity', `${info.atmosphere.humidity}%`, true)
-				.addField('🌅 Sunrise', convertTimeFormat(info.astronomy.sunrise), true)
-				.addField('🌇 Sunset', convertTimeFormat(info.astronomy.sunset), true)
+				.addField('🌅 Sunrise', this.convertTimeFormat(info.astronomy.sunrise), true)
+				.addField('🌇 Sunset', this.convertTimeFormat(info.astronomy.sunset), true)
 				.addField('☀️ Today\'s High', `${info.item.forecast[0].high} °${info.units.temperature}`, true)
 				.addField('☁️️ Today\'s Low', `${info.item.forecast[0].low} °${info.units.temperature}`, true)
 				.addField('🌡️ Temperature', `${info.item.condition.temp} °${info.units.temperature}`, true)
 				.addField('🏙️ Condition', info.item.condition.text, true)
-				.addField(`🛰️ Forecast ${data[info.item.forecast[1].day]} ${info.item.forecast[1].date.slice(0, -5)}`,
+				.addField(`🛰️ Forecast ${this.convertDays(info.item.forecast[1].day)} ${info.item.forecast[1].date.slice(0, -5)}`,
 					`High: ${info.item.forecast[1].high} °${info.units.temperature} | Low: ${info.item.forecast[1].low} °${info.units.temperature}`, true)
-				.addField(`🛰️ Forecast ${data[info.item.forecast[2].day]} ${info.item.forecast[2].date.slice(0, -5)}`,
+				.addField(`🛰️ Forecast ${this.convertDays(info.item.forecast[2].day)} ${info.item.forecast[2].date.slice(0, -5)}`,
 					`High: ${info.item.forecast[2].high} °${info.units.temperature} | Low: ${info.item.forecast[2].low} °${info.units.temperature}`, true);
 
-			return msg.embed(wthEmb);
-		});
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
+			return msg.embed(weatherEmbed);
+		}
+		
+		return msg.reply('⚠️ an error occured getting weather info for that city');
 	}
 };

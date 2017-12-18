@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment');
 
 module.exports = class quoteCommand extends commando.Command {
@@ -82,7 +83,7 @@ module.exports = class quoteCommand extends commando.Command {
 						.setColor(quote.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000');
 				}
 				quoteEmbed
-					.setFooter(`Message sent in ${quote.guild.name} in the #${quote.channel.name} channel on ${moment(quote.createdAt).format('MMMM Do YYYY [at] HH:mm')}`)
+					.setFooter(`Message sent in ${quote.guild.name} in the #${quote.channel.name} channel on ${moment(quote.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 					.setDescription(quote.cleanContent);
 
 				if (quote.attachments.first()) {
@@ -93,14 +94,16 @@ module.exports = class quoteCommand extends commando.Command {
 					}
 				}
 
-				msg.delete();
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
 
 				return msg.embed(quoteEmbed, args.content);
 			})
 			.catch((err) => {
 				console.error(err); // eslint-disable-line no-console
 
-				return msg.reply('Something went wrong. An error was logged to your error console.');
+				return msg.reply('⚠️ something went wrong. An error was logged to your error console.');
 			});
 	}
 };

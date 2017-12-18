@@ -21,9 +21,11 @@ const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	path = require('path'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	{oneLine} = require('common-tags'),
 	request = require('snekfetch'),
 	requireFromURL = require('require-from-url/sync');
+
 
 /* eslint-enable sort-vars */
 
@@ -128,13 +130,21 @@ module.exports = class abilityCommand extends commando.Command {
 				.addField('External Resource', oneLine `
                 [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(' ', '_'))}_(Ability\\))  
                 |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(' ', '_')})  
-                |  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(' ', '-')})`);
+				|  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(' ', '-')})`);
+
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
 
 			return msg.embed(abilityEmbed, `**${capitalizeFirstLetter(ability.name)}**`);
 		}
 		const dym = this.match.get(args.ability), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
 
-		return msg.reply(`⚠ Ability not found! ${dymString}`);
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.reply(`⚠️ Ability not found! ${dymString}`);
 	}
 };

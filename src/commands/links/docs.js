@@ -17,11 +17,12 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const {Command} = require('discord.js-commando'), 
+const commando = require('discord.js-commando'), 
+	data = require('../../data.json'),
 	{oneLineTrim} = require('common-tags'),
 	request = require('snekfetch');
 
-module.exports = class DocsCommand extends Command {
+module.exports = class DocsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'docs',
@@ -353,6 +354,10 @@ module.exports = class DocsCommand extends Command {
 			'name': version === 'commando' ? 'Commando Docs' : `Discord.js Docs (${version})`,
 			'icon_url': 'https://cdn.discordapp.com/icons/222078108977594368/bc226f09db83b9176c64d923ff37010b.webp'
 		};
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
 		return msg.embed(embed);
 	}

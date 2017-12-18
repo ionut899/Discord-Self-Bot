@@ -17,14 +17,15 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	superagent = require('superagent');
+	data = require('../../data.json'),
+	request = require('snekfetch');
 
 module.exports = class defineCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'define',
 			'group': 'search',
-			'aliases': ['def'],
+			'aliases': ['def', 'dict'],
 			'memberName': 'define',
 			'description': 'Gets the definition on a word on glosbe',
 			'examples': ['define {word}', 'define pixel'],
@@ -41,38 +42,35 @@ module.exports = class defineCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		const defineEmbed = new Discord.MessageEmbed();
+	async run (msg, args) {
+		const defineEmbed = new Discord.MessageEmbed(),
+			word = await request.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${args.query}`);
 
-		superagent.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${args.query}`)
-			.then(res => res.body)
-			.then((res) => {
-				if (!res.tuc) {
-					return msg.reply('**No results found!**');
-				}
-				const final = [`**Definitions for __${args.query}__:**`];
+		if (word.body.tuc) {
+			const final = [`**Definitions for __${args.query}__:**`];
 
-				for (let [index, item] of Object.entries(res.tuc.filter(tuc => tuc.meanings)[0].meanings.slice(0, 5))) { // eslint-disable-line prefer-const
+			for (let [index, item] of Object.entries(word.body.tuc.filter(tuc => tuc.meanings)[0].meanings.slice(0, 5))) { // eslint-disable-line prefer-const
 
-					item = item.text
-						.replace(/\[(\w+)[^\]]*](.*?)\[\/\1]/g, '_')
-						.replace(/&quot;/g, '"')
-						.replace(/&#39;/g, '\'')
-						.replace(/<b>/g, '[')
-						.replace(/<\/b>/g, ']')
-						.replace(/<i>|<\/i>/g, '_');
-					final.push(`**${(parseInt(index, 10) + 1)}:** ${item}`);
-				}
-				defineEmbed
-					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-					.setDescription(final);
-				
-				return msg.embed(defineEmbed);
-			})
-			.catch((err) => {
-				console.error(err); // eslint-disable-line no-console
+				item = item.text
+					.replace(/\[(\w+)[^\]]*](.*?)\[\/\1]/g, '_')
+					.replace(/&quot;/g, '"')
+					.replace(/&#39;/g, '\'')
+					.replace(/<b>/g, '[')
+					.replace(/<\/b>/g, ']')
+					.replace(/<i>|<\/i>/g, '_');
+				final.push(`**${(parseInt(index, 10) + 1)}:** ${item}`);
+			}
+			defineEmbed
+				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+				.setDescription(final);
 
-				return msg.reply('⚠ No results found. An error was logged to your error console');
-			});
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
+			return msg.embed(defineEmbed);
+		}
+
+		return msg.reply('⚠️ ***nothing found***');
 	}
 };

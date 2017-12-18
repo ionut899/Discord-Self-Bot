@@ -22,6 +22,7 @@
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	path = require('path'),
 	dexEntries = require(path.join(__dirname, 'data/flavorText.json')),
 	request = require('snekfetch'),
@@ -207,11 +208,19 @@ module.exports = class flavorCommand extends commando.Command {
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
 
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
 			return msg.embed(dataEmbed);
 		}
 		const dym = this.match.get(args.pokemon), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 
-		return msg.reply(`⚠ Dex entry not found! ${dymString}`);
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.reply(`⚠️ Dex entry not found! ${dymString}`);
 	}
 };

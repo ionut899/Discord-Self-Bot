@@ -16,6 +16,7 @@
  */
 
 const commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	imgur = require('imgur'),
 	qr = require('qrcode');
 
@@ -47,8 +48,14 @@ module.exports = class qrgenCommand extends commando.Command {
 			if (err) {
 				throw err;
 			}
-			imgur.uploadBase64(url.slice(22))
-				.then(json => msg.say(`QR Code for this file: ${json.data.link}`));
+			imgur.uploadBase64(url.slice(22)).then((json) => {
+
+				if (msg.deletable && data.deleteCommandMessages) {
+					msg.delete();
+				}
+
+				return msg.say(`QR Code for this URL: ${json.data.link}`);
+			});
 		});
 	}
 };

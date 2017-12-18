@@ -17,5 +17,6 @@
     "webhookNotifiers": false,
     "webhookData": {
         "keywords": ["username", "nickname"]
-    }
+    },
+    "deleteCommandMessages": false
 }

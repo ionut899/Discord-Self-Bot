@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	scalc = require('scalc');
 
 module.exports = class mathCommand extends commando.Command {
@@ -48,6 +49,10 @@ module.exports = class mathCommand extends commando.Command {
 			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.addField('Equation', args.equation.toString(), false)
 			.addField('Result', scalc(args.equation), false);
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 
 		return msg.embed(mathEmbed);
 	}

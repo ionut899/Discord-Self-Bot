@@ -16,6 +16,7 @@
  */
 
 const commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment-timezone');
 
 module.exports = class zoneConvCommand extends commando.Command {
@@ -54,6 +55,10 @@ module.exports = class zoneConvCommand extends commando.Command {
 		if (convertedTime.split(' | ')[1] === args.time) {
 			return msg.say('***The provided timezone either does not exist or has the same time as your own.\n' +
                 'For the list of correct timezones see this table: <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>***');
+		}
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
 		}
 
 		return msg.say(`***When it is ${args.time} in ${moment.tz.guess()} it will be ${convertedTime} in ${args.zone}***`);

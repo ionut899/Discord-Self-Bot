@@ -16,7 +16,8 @@
  */
 
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class coppersCommand extends commando.Command {
 	constructor (client) {
@@ -32,7 +33,11 @@ module.exports = class coppersCommand extends commando.Command {
 	}
 
 	run (msg) {
-		msg.delete();
+	
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
 		msg.say(':rotating_light: :rotating_light: WEE WOO WEE WOO - PUT YOUR HANDS IN THE AIR, YOU ARE SURROUNDED :rotating_light: :rotating_light:\n\n' +
          ':oncoming_police_car:  <:police:346089253572313088> <:police:346089253572313088> <:police:346089253572313088>  :oncoming_police_car:');
 	}

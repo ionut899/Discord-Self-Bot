@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	malware = require('malapi').Anime;
 
 module.exports = class animeCommand extends commando.Command {
@@ -41,8 +42,10 @@ module.exports = class animeCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		malware.fromName(args.query).then((anime) => {
+	async run (msg, args) {
+		const anime = await malware.fromName(args.query);
+
+		if (anime) {
 			const animeEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
 			animeEmbed
@@ -65,7 +68,6 @@ module.exports = class animeCommand extends commando.Command {
 					.addBlankField(true);
 			}
 
-
 			if (anime.synopsis.length >= 1024) {
 				animeEmbed.addField('Synposis',
 					`The synopsis for this anime exceeds the maximum length, check the full synopsis on myanimelist.\nSynopsis Snippet:\n${anime.synopsis.slice(0, 500)}`);
@@ -79,13 +81,13 @@ module.exports = class animeCommand extends commando.Command {
 				.addField('Status', anime.status, true)
 				.addField('URL', `https://myanimelist.net/anime/${anime.id}`, true);
 
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
 			return msg.embed(animeEmbed);
-		})
-			.catch((err) => {
-				console.error(err); // eslint-disable-line no-console
+		}
 
-				return msg.reply('⚠ No results found. An error was logged to your error console');
-			});
-
+		return msg.reply('⚠️ ***nothing found***');
 	}
 };

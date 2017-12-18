@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	strawpoll = require('strawpoll.js');
 
 module.exports = class strawpollCommand extends commando.Command {
@@ -27,7 +28,7 @@ module.exports = class strawpollCommand extends commando.Command {
 			'aliases': ['poll', 'straw'],
 			'memberName': 'strawpoll',
 			'description': 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
-			'examples': ['strawpoll {Title} {Option1 Option2 .... OptionX}', 'strawpoll Best_Anime_Waifu? Pyrrha_Nikos Asuna Saber'],
+			'examples': ['strawpoll {Title} {Option1 Option2 .... OptionX}', 'strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],
 			'guildOnly': false,
 			'argsSingleQuotes': true,
 
@@ -47,7 +48,7 @@ module.exports = class strawpollCommand extends commando.Command {
 					'label': 'Questions for the strawpoll, delimited by a |',
 					'validate': (opts) => {
 						if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
-                            opts.split('|').length >= 2) {
+							opts.split('|').length >= 2) {
 							return true;
 						}
 
@@ -58,7 +59,7 @@ module.exports = class strawpollCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
+	async run (msg, args) {
 		const APIConvertion = {
 				'dupcheck': {
 					'normal': 'IP Duplication Checking',
@@ -70,26 +71,32 @@ module.exports = class strawpollCommand extends commando.Command {
 					'false': 'Multiple poll answers disabled'
 				}
 			},
+			poll = await strawpoll.make({
+				'title': args.title,
+				'options': args.options.split('|'),
+				'multi': false,
+				'dupcheck': 'normal',
+				'captcha': false
+			}),
 			pollEmbed = new Discord.MessageEmbed();
 
-		strawpoll.make({
-			'title': args.title,
-			'options': args.options.split('|'),
-			'multi': false,
-			'dupcheck': 'normal',
-			'captcha': false
-		})
-			.then((poll) => {
-				pollEmbed
-					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-					.setTitle(poll.title)
-					.setURL(`http://www.strawpoll.me/${poll.id}`)
-					.setImage(`http://www.strawpoll.me/images/poll-results/${poll.id}.png`)
-					.addField('Duplication Check', APIConvertion.dupcheck[poll.dupcheck], true)
-					.addField('Multiple poll answers', APIConvertion.multi[poll.multi], true)
-					.addField('Poll options', poll.options, false);
+		if (poll) {
+			pollEmbed
+				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+				.setTitle(poll.title)
+				.setURL(`http://www.strawpoll.me/${poll.id}`)
+				.setImage(`http://www.strawpoll.me/images/poll-results/${poll.id}.png`)
+				.addField('Duplication Check', APIConvertion.dupcheck[poll.dupcheck], true)
+				.addField('Multiple poll answers', APIConvertion.multi[poll.multi], true)
+				.addField('Poll options', poll.options, false);
 
-				return msg.embed(pollEmbed, `http://www.strawpoll.me/${poll.id}`);
-			});
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
+			return msg.embed(pollEmbed, `http://www.strawpoll.me/${poll.id}`);
+		}
+
+		return msg.reply('⚠️ an error occured creating the strawpoll');
 	}
 };

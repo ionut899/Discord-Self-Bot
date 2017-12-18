@@ -16,6 +16,7 @@
  */
 
 const commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	zalgo = require('zalgotxt');
 
 
@@ -41,7 +42,9 @@ module.exports = class zalgoCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		msg.delete();
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
 		
 		return msg.say(zalgo(args.txt));
 	}

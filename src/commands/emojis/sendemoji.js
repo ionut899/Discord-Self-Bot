@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	path = require('path');
 
 module.exports = class sendEmojiCommand extends commando.Command {
@@ -49,6 +50,11 @@ module.exports = class sendEmojiCommand extends commando.Command {
 
 	run (msg, args) {
 		msg.channel.send(args.message, {'files': [new Discord.MessageAttachment(path.join(__dirname, `images/${args.emojiName.toLowerCase()}.png`), `${args.emojiName}Emoji.png`)]});
-		msg.delete();
+	
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+	
+		return	msg.delete();
 	}
 };

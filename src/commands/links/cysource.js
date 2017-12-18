@@ -15,7 +15,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class cydiaSourceCommand extends commando.Command {
 	constructor (client) {
@@ -40,6 +41,11 @@ module.exports = class cydiaSourceCommand extends commando.Command {
 	}
 
 	run (msg, args) {
+
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
 		return msg.say(`To add this repo directly to cydia click the following URL: https://cydia.saurik.com/api/share#?source=${args.repo}`);
 	}
 

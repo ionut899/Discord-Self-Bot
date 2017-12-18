@@ -22,6 +22,7 @@
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	path = require('path'),
 	dexEntries = require(path.join(__dirname, 'data/flavorText.json')),
 	{oneLine} = require('common-tags'),
@@ -264,12 +265,19 @@ module.exports = class dexCommand extends commando.Command {
 		          |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.replace(' ', '_')})  
 		          |  [PokémonDB](http://pokemondb.net/pokedex/${poke.replace(' ', '-')})`);
 
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
 
 			return msg.embed(dexEmbed);
 		}
 		const dym = this.match.get(args.pokemon), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 
-		return msg.reply(`⚠ Dex entry not found! ${dymString}`);
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.reply(`⚠️ Dex entry not found! ${dymString}`);
 	}
 };

@@ -21,6 +21,7 @@ const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	path = require('path'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	{oneLine} = require('common-tags'),
 	request = require('snekfetch'),
 	requireFromURL = require('require-from-url/sync');
@@ -149,6 +150,10 @@ module.exports = class itemCommand extends commando.Command {
                 |  [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(' ', '-')
 		.replace('\'', '')})`);
 
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
 			return msg.embed(itemEmbed, `**${capitalizeFirstLetter(item.name)}**`);
 		}
 
@@ -159,7 +164,11 @@ module.exports = class itemCommand extends commando.Command {
 
 		/* eslint-enable one-var */
 
-		return msg.reply(`⚠ Item not found! ${dymString}`);
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.reply(`⚠️ Item not found! ${dymString}`);
 
 	}
 };

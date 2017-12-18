@@ -15,7 +15,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	data = require('../../data.json');
 
 module.exports = class dndCommand extends commando.Command {
 	constructor (client) {
@@ -31,6 +32,10 @@ module.exports = class dndCommand extends commando.Command {
 	}
 
 	run (msg) {
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+		
 		this.client.user.setPresence({'status': 'invisible'}).then(msg.reply('Status set to invisible'));
 	}
 };

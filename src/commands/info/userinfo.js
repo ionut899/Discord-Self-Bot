@@ -17,12 +17,13 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment');
 
 const capitalize = function (string) { // eslint-disable-line one-var
 		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 	},
-	data = {
+	statusData = {
 		'status': {
 			'online': 'Online',
 			'idle': 'Idle',
@@ -68,16 +69,20 @@ module.exports = class userInfoCommand extends commando.Command {
 			.addField('ID', vals.user.id, true)
 			.addField('Name', vals.user.username, true)
 			.addField('Nickname', vals.member.nickname ? vals.member.nickname : 'No Nickname', true)
-			.addField('Status', data.status[vals.user.presence.status], true)
+			.addField('Status', statusData.status[vals.user.presence.status], true)
 			.addField(vals.user.presence.activity !== null
 				? capitalize(vals.user.presence.activity.type)
 				: 'Activity', vals.user.presence.activity !== null ? vals.user.presence.activity.name : 'Nothing', true)
 			.addField('Display Color', vals.member.displayHexColor, true)
-			.addField('Account created at', moment(vals.user.createdAt).format('MMMM Do YYYY'), true)
-			.addField('Joined server at', moment(vals.member.joinedAt).format('MMMM Do YYYY'), true)
+			.addField('Account created at', moment(vals.user.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
+			.addField('Joined server at', moment(vals.member.joinedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
 			.addField('Roles', vals.member.roles.size > 1 ? vals.member.roles.map(r => r.name).slice(1) : 'None', true);
 		vals.member.roles.size >= 1 ? uinfoEmbed.setFooter(`has ${vals.member.roles.size - 1} role(s)`) : uinfoEmbed.setFooter('has 0 roles');
 
-		msg.embed(uinfoEmbed);
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+		
+		return msg.embed(uinfoEmbed);
 	}
 };

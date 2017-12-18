@@ -17,6 +17,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	data = require('../../data.json'),
 	moment = require('moment');
 
 module.exports = class listEmojisCommand extends commando.Command {
@@ -43,9 +44,9 @@ module.exports = class listEmojisCommand extends commando.Command {
 
 	run (msg, args) {
 		const emojisEmbed = new Discord.MessageEmbed(),
-			emojisFirst = [], 
+			emojisFirst = [],
 			emojisSecond = [],
-			emojisThird = [], 
+			emojisThird = [],
 			guildMojiNames = args.server.emojis.map(gmoji => gmoji.name);
 
 		for (let index = 0; index < guildMojiNames.length; index += 1) {
@@ -60,12 +61,16 @@ module.exports = class listEmojisCommand extends commando.Command {
 
 		emojisEmbed
 			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-			.setFooter(`Command issued at ${moment().format('MMMM Do YYYY HH:mm:ss')}`)
+			.setFooter(`Command issued at ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 			.setDescription(`Emojis from the server \`${args.server.name}\``);
 		emojisFirst.length !== 0 ? emojisEmbed.addField('\u200b', emojisFirst, true) : emojisEmbed.addField('This server has no custom emojis', 'Although they should totally get some', true); // eslint-disable-line max-len
-		emojisSecond.length !== 0 ? emojisEmbed.addField('\u200b', emojisSecond, true) : null; 
-		emojisThird.length !== 0 ? emojisEmbed.addField('\u200b', emojisThird, true) : null; 
-		msg.embed(emojisEmbed);
-	}
+		emojisSecond.length !== 0 ? emojisEmbed.addField('\u200b', emojisSecond, true) : null;
+		emojisThird.length !== 0 ? emojisEmbed.addField('\u200b', emojisThird, true) : null;
 
+		if (msg.deletable && data.deleteCommandMessages) {
+			msg.delete();
+		}
+
+		return msg.embed(emojisEmbed);
+	}
 };
