@@ -37,6 +37,22 @@ module.exports = class avatarCommand extends commando.Command {
 					'prompt': 'What user would you like to get the avatar from?',
 					'type': 'member',
 					'label': 'member name or ID'
+				},
+				{
+					'key': 'size',
+					'prompt': 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
+					'type': 'integer',
+					'label': 'size of the avatar',
+					'default': 512,
+					'validate': (size) => {
+						const validSizes = ['128', '256', '512', '1024', '2048'];
+
+						if (validSizes.includes(size)) {
+							return true;
+						}
+
+						return `Has to be one of ${validSizes.join(', ')}`;
+					}
 				}
 			]
 		});
@@ -76,7 +92,10 @@ module.exports = class avatarCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const ava = args.member.user.displayAvatarURL({'format': 'png'}),
+		const ava = args.member.user.displayAvatarURL({
+				'format': 'png',
+				'size': args.size
+			}),
 			avaColor = await this.fetchColor(ava),
 			embed = new Discord.MessageEmbed();
 
@@ -89,6 +108,6 @@ module.exports = class avatarCommand extends commando.Command {
 			msg.delete();
 		}
 
-		return msg.embed(embed);
+		return msg.embed(embed, ava);
 	}
 };
