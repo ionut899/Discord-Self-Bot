@@ -65,11 +65,11 @@ module.exports = class googleCommand extends commando.Command {
 
 		/* eslint-enable sort-vars */
 
-		if (knowledgeRes) {
+		knowledgeCheck: if (knowledgeRes) {
 			let result = knowledgeRes.body.itemListElement[0];
 
 			if (!result || !result.result || !result.result.detailedDescription) {
-				return Promise.reject(console.error('No search results')); // eslint-disable-line no-console
+				break knowledgeCheck;
 			}
 			result = result.result;
 			let types = result['@type'].map(t => t.replace(/([a-z])([A-Z])/g, '$1 $2')); // eslint-disable-line one-var
@@ -94,7 +94,9 @@ module.exports = class googleCommand extends commando.Command {
 			}
 
 			return msg.embed(knowledgeGraphEmbed);
+
 		}
+
 
 		/* eslint-disable one-var, sort-vars*/
 		const safe = 'high',
