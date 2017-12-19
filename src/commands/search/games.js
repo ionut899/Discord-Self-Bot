@@ -15,8 +15,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* eslint-disable max-statements */
-
 const Discord = require('discord.js'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),

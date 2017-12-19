@@ -20,18 +20,6 @@ const Discord = require('discord.js'),
 	data = require('../../data.json'),
 	moment = require('moment');
 
-const capitalize = function (string) { // eslint-disable-line one-var
-		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-	},
-	statusData = {
-		'status': {
-			'online': 'Online',
-			'idle': 'Idle',
-			'dnd': 'Do Not Disturb',
-			'invisible': 'Invisible'
-		}
-	};
-
 module.exports = class userInfoCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -54,6 +42,25 @@ module.exports = class userInfoCommand extends commando.Command {
 		});
 	}
 
+	capitalize (string) {
+		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+	}
+
+	convertStatus (status) {
+		switch (status) {
+			case 'online':
+				return 'Online';
+			case 'idle':
+				return 'Idle';
+			case 'dnd':
+				return 'Do Not Disturb';
+			case 'invisible':
+				return 'Invisible';
+			default:
+				return 'Unknown status';
+		}
+	}
+
 	run (msg, args) {
 
 		const uinfoEmbed = new Discord.MessageEmbed(),
@@ -69,9 +76,9 @@ module.exports = class userInfoCommand extends commando.Command {
 			.addField('ID', vals.user.id, true)
 			.addField('Name', vals.user.username, true)
 			.addField('Nickname', vals.member.nickname ? vals.member.nickname : 'No Nickname', true)
-			.addField('Status', statusData.status[vals.user.presence.status], true)
+			.addField('Status', this.convertStatus(vals.user.presence.status), true)
 			.addField(vals.user.presence.activity !== null
-				? capitalize(vals.user.presence.activity.type)
+				? this.capitalize(vals.user.presence.activity.type)
 				: 'Activity', vals.user.presence.activity !== null ? vals.user.presence.activity.name : 'Nothing', true)
 			.addField('Display Color', vals.member.displayHexColor, true)
 			.addField('Account created at', moment(vals.user.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
@@ -82,7 +89,7 @@ module.exports = class userInfoCommand extends commando.Command {
 		if (msg.deletable && data.deleteCommandMessages) {
 			msg.delete();
 		}
-		
+
 		return msg.embed(uinfoEmbed);
 	}
 };

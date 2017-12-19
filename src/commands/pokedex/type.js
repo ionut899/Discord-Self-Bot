@@ -24,10 +24,6 @@ const Discord = require('discord.js'),
 	typeMatchups = require(Path.join(__dirname, 'data/typechart.js')).BattleTypeChart,
 	{oneLine} = require('common-tags');
 
-const capitalizeFirstLetter = function (string) { // eslint-disable-line one-var
-	return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 module.exports = class typeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -50,9 +46,11 @@ module.exports = class typeCommand extends commando.Command {
 		});
 	}
 
+	capitalizeFirstLetter (string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
 	run (msg, args) {
-
-
 		const atkMulti = {
 				'Bug': 1,
 				'Dark': 1,
@@ -128,7 +126,7 @@ module.exports = class typeCommand extends commando.Command {
 
 			if (Object.keys(typeMatchups).map(c => c.toLowerCase())
 				.indexOf(argsSplit.toLowerCase()) !== -1) {
-				const toType = capitalizeFirstLetter(argsSplit);
+				const toType = this.capitalizeFirstLetter(argsSplit);
 
 				displayTypes.push(toType);
 				const dTaken = typeMatchups[toType].damageTaken;
@@ -205,7 +203,6 @@ module.exports = class typeCommand extends commando.Command {
 					}
 				}
 			}
-
 		}
 		if (vulnCheck) {
 			for (var i = 0; i < Object.keys(defMulti).length; i += 1) {

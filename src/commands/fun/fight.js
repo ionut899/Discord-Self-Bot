@@ -68,6 +68,10 @@ module.exports = class fightCommand extends commando.Command {
 					.setImage('https://i.imgur.com/WCFyXRr.png');
 			}
 
+			if (msg.deletable && data.deleteCommandMessages) {
+				msg.delete();
+			}
+
 			return msg.embed(fighterEmbed);
 		}
 		if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
@@ -75,27 +79,34 @@ module.exports = class fightCommand extends commando.Command {
 				.addField('You got mega rekt', '***Favna always wins***')
 				.setImage('https://i.imgur.com/XRsLP7Q.gif');
 
-			return msg.embed(fighterEmbed);
-		}
-		random.integers({'number': 2}, (error, randoms) => {
-			const fighterOneChance = parseInt(randoms[0], 10),
-				fighterTwoChance = parseInt(randoms[1], 10),
-				loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo,
-				winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo;
-
-
-			fighterEmbed
-				.addField('🇼 Winner', `**${winner}**`, true)
-				.addField('🇱 Loser', `**${loser}**`, true)
-				.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
-
 			if (msg.deletable && data.deleteCommandMessages) {
 				msg.delete();
 			}
 
 			return msg.embed(fighterEmbed);
+		}
+		random.integers({'number': 2}, (error, randoms) => {
+			if (!error) {
+				const fighterOneChance = parseInt(randoms[0], 10),
+					fighterTwoChance = parseInt(randoms[1], 10),
+					loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo,
+					winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo;
+
+				fighterEmbed
+					.addField('🇼 Winner', `**${winner}**`, true)
+					.addField('🇱 Loser', `**${loser}**`, true)
+					.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+
+				if (msg.deletable && randoms.deleteCommandMessages) {
+					msg.delete();
+				}
+
+				return msg.embed(fighterEmbed);
+			}
+
+			return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
 		});
 
-		return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
+		return null;
 	}
 };
