@@ -1,3 +1,5 @@
+/* eslint-disable max-lines*/
+
 /*
  *   This file is part of discord-self-bot
  *   Copyright (C) 2017-2018 Favna
@@ -23,7 +25,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando'), 
+const commando = require('discord.js-commando'),
 	{oneLineTrim} = require('common-tags'),
 	request = require('snekfetch');
 

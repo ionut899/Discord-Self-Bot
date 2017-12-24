@@ -66,8 +66,8 @@ module.exports = class rpreloadCommand extends commando.Command {
 					'assets': {
 						'largeImage': this.client.provider.get('global', 'rplargeimage', '379734851206512640'),
 						'smallImage': this.client.provider.get('global', 'rpsmallimage', '379734813751377921'),
-						'largeText': this.client.provider.get('global', 'rplargetext', 'See the Website'),
-						'smallText': this.client.provider.get('global', 'rpsmalltext', 'Or the GitHub')
+						'largeText': this.client.provider.get('global', 'rplargetext') ? this.client.provider.get('global', 'rplargetext') : null,
+						'smallText': this.client.provider.get('global', 'rpsmalltext') ? this.client.provider.get('global', 'rpsmalltext') : null
 					},
 					'party': this.client.provider.get('global', 'rppartysize', [0, 0])[0] !== 0
 						? {'size': [this.client.provider.get('global', 'rppartysize')[0], this.client.provider.get('global', 'rppartysize')[1]]}

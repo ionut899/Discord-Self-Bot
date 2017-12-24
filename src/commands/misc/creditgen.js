@@ -52,8 +52,8 @@ module.exports = class creditgenCommand extends commando.Command {
 
 	async run (msg) {
 		const embed = new Discord.MessageEmbed(),
-			creditinfo = await request.get('http://credit-card-generator.2-ee.com/q_working-credit-card-number-generator.htm'),
-			$ = cheerio.load(creditinfo.body),
+			creditinfo = await request.get('http://credit-card-generator.2-ee.com/q_working-credit-card-number-generator.htm'), // eslint-disable-line sort-vars
+			$ = cheerio.load(creditinfo.body), // eslint-disable-line sort-vars
 			image = await imgur.uploadUrl(`http://credit-card-generator.2-ee.com/${$('#votes > div.grid_4.alpha > img').attr('src')}`),
 			info = $('#votes > div.grid_4.omega > p').text()
 				.replace(/^\s+/mg, '');
@@ -67,7 +67,7 @@ module.exports = class creditgenCommand extends commando.Command {
 			.setFooter(oneLine `${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
 		this.deleteCommandMessages(msg);
-			
+
 		return msg.embed(embed);
 	}
 };
