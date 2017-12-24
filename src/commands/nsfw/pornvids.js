@@ -13,12 +13,19 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Discord = require('discord.js'),
 	Pornsearch = require('pornsearch').default,
 	commando = require('discord.js-commando'),
-	data = require('../../data.json'),
 	random = require('node-random');
 
 const pornEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
@@ -46,6 +53,12 @@ module.exports = class pornvidsCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	async run (msg, args) {
 		const search = new Pornsearch(args.pornInput),
 			vids = await search.videos();
@@ -67,9 +80,7 @@ module.exports = class pornvidsCommand extends commando.Command {
 					.addField('Porn video URL', `[Click Here](${vids[vid].url})`, true)
 					.addField('Porn video duration', vids[vid].duration === !'' ? vids[vid].url : 'unknown', true);
 
-				if (msg.deletable && data.deleteCommandMessages) {
-					msg.delete();
-				}
+				this.deleteCommandMessages(msg);
 
 				return msg.embed(pornEmbed, vids[vid].url);
 			});

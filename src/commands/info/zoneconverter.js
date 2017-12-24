@@ -13,10 +13,17 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const commando = require('discord.js-commando'),
-	data = require('../../data.json'),
 	moment = require('moment-timezone');
 
 module.exports = class zoneConvCommand extends commando.Command {
@@ -47,6 +54,12 @@ module.exports = class zoneConvCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const convertedTime = moment(`${moment().format('YYYY-MM-DD')} ${args.time}`).tz(args.zone)
 			.format('MMMM Do | HH:mm');
@@ -57,9 +70,7 @@ module.exports = class zoneConvCommand extends commando.Command {
                 'For the list of correct timezones see this table: <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>***');
 		}
 
-		if (msg.deletable && data.deleteCommandMessages) {
-			msg.delete();
-		}
+		this.deleteCommandMessages(msg);
 
 		return msg.say(`***When it is ${args.time} in ${moment.tz.guess()} it will be ${convertedTime} in ${args.zone}***`);
 

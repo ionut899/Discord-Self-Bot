@@ -21,7 +21,6 @@ const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	path = require('path'),
 	commando = require('discord.js-commando'),
-	data = require('../../data.json'),
 	{oneLine} = require('common-tags'),
 	request = require('snekfetch'),
 	requireFromURL = require('require-from-url/sync');
@@ -57,6 +56,12 @@ module.exports = class abilityCommand extends commando.Command {
 
 	capitalizeFirstLetter (string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
 	}
 
 	async fetchAbilities () {
@@ -137,18 +142,14 @@ module.exports = class abilityCommand extends commando.Command {
                 |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(' ', '_')})  
 				|  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(' ', '-')})`);
 
-			if (msg.deletable && data.deleteCommandMessages) {
-				msg.delete();
-			}
+			this.deleteCommandMessages(msg);
 
 			return msg.embed(abilityEmbed, `**${this.capitalizeFirstLetter(ability.name)}**`);
 		}
 		const dym = this.match.get(args.ability), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
 
-		if (msg.deletable && data.deleteCommandMessages) {
-			msg.delete();
-		}
+		this.deleteCommandMessages(msg);
 
 		return msg.reply(`⚠️ Ability not found! ${dymString}`);
 	}

@@ -13,12 +13,19 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
-	data = require('../../data.json'),
 	fs = require('fs'),
 	path = require('path');
 
@@ -45,6 +52,12 @@ module.exports = class copypastaCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const match = new Matcher();
 
@@ -67,9 +80,7 @@ module.exports = class copypastaCommand extends commando.Command {
 			const dym = match.get(`${args.name}.txt`),
 				dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'You can save it with `$copypastaadd <filename> <content>` or verify the file name manually';
 
-			if (msg.deletable && data.deleteCommandMessages) {
-				msg.delete();
-			}
+			this.deleteCommandMessages(msg);
 
 			return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
 		});

@@ -13,28 +13,23 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Discord = require('discord.js'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),
-	data = require('../../data.json'),
 	fx = require('money'),
 	moment = require('moment'),
 	oxr = require('open-exchange-rates');
-
-const converter = function (value, curOne, curTwo) { // eslint-disable-line one-var
-		return fx.convert(value, {
-			'from': curOne,
-			'to': curTwo
-		});
-	},
-	replaceAll = function (string, pattern, replacement) {
-		return string.replace(new RegExp(pattern, 'g'), replacement);
-	};
-
-oxr.set({'app_id': auth.oxrAppID});
 
 module.exports = class moneyCommand extends commando.Command {
 	constructor (client) {
@@ -70,12 +65,32 @@ module.exports = class moneyCommand extends commando.Command {
 		});
 	}
 
+
+	converter (value, curOne, curTwo) {
+		return fx.convert(value, {
+			'from': curOne,
+			'to': curTwo
+		});
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
+	replaceAll (string, pattern, replacement) {
+		return string.replace(new RegExp(pattern, 'g'), replacement);
+	}
+
 	run (msg, args) {
+		oxr.set({'app_id': auth.oxrAppID});
+
 		oxr.latest(async () => {
 			try {
 				fx.rates = oxr.rates;
 				fx.base = oxr.base;
-				const convertedMoney = await converter(replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
+				const convertedMoney = await this.converter(this.replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
 					oxrEmbed = new Discord.MessageEmbed();
 
 				oxrEmbed
@@ -84,7 +99,7 @@ module.exports = class moneyCommand extends commando.Command {
 					.addField(args.curOne !== 'BTC'
 						? `:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`
 						: '💰 Money in Bitcoin',
-					`${currencySymbol(args.curOne)}${replaceAll(args.value, /,/, '.')}`, true)
+					`${currencySymbol(args.curOne)}${this.replaceAll(args.value, /,/, '.')}`, true)
 
 					.addField(args.curTwo !== 'BTC'
 						? `:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`
@@ -92,9 +107,7 @@ module.exports = class moneyCommand extends commando.Command {
 					`${currencySymbol(args.curTwo)}${convertedMoney}`, true)
 					.setFooter(`Converted money from input using openexchangerates | converted on: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
-				if (msg.deletable && data.deleteCommandMessages) {
-					msg.delete();
-				}
+				this.deleteCommandMessages(msg);
 
 				return msg.embed(oxrEmbed);
 			} catch (error) {

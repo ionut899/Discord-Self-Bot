@@ -13,13 +13,20 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	Path = require('path'),
 	commando = require('discord.js-commando'),
-	data = require('../../data.json'),
 	moves = require(Path.join(__dirname, 'data/moves.js')).BattleMovedex,
 	{oneLine} = require('common-tags');
 
@@ -47,6 +54,12 @@ module.exports = class moveCommand extends commando.Command {
 
 	capitalizeFirstLetter (string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
 	}
 
 	run (msg, args) {
@@ -96,18 +109,14 @@ module.exports = class moveCommand extends commando.Command {
                 |  [Smogon](http://www.smogon.com/dex/sm/moves/${move.name.replace(' ', '_')})  
                 |  [PokémonDB](http://pokemondb.net/move/${move.name.replace(' ', '-')})`);
 
-			if (msg.deletable && data.deleteCommandMessages) {
-				msg.delete();
-			}
+			this.deleteCommandMessages(msg);
 
 			return msg.embed(moveEmbed, `**${this.capitalizeFirstLetter(move.name)}**`);
 		}
 		const dym = match.get(args.move), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the move name?';
 
-		if (msg.deletable && data.deleteCommandMessages) {
-			msg.delete();
-		}
+		this.deleteCommandMessages(msg);
 
 		return msg.channel.send(`⚠️ Move not found! ${dymString}`);
 	}

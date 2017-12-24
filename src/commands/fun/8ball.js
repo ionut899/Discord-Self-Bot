@@ -13,11 +13,18 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	data = require('../../data.json'),
 	predict = require('eightball');
     
 module.exports = class eightBallCommand extends commando.Command {
@@ -42,6 +49,12 @@ module.exports = class eightBallCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const eightBallEmbed = new Discord.MessageEmbed();
 
@@ -49,10 +62,8 @@ module.exports = class eightBallCommand extends commando.Command {
 			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 			.addField(':question: Question', args.question, false)
 			.addField(':8ball: 8ball', predict(), false);
-		
-		if (msg.deletable && data.deleteCommandMessages) {
-			msg.delete();
-		}
+			
+		this.deleteCommandMessages(msg);
 
 		return msg.embed(eightBallEmbed);
 	}

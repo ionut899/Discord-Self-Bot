@@ -13,6 +13,14 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 /* eslint-disable max-statements, complexity */
@@ -22,7 +30,6 @@
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
-	data = require('../../data.json'),
 	path = require('path'),
 	dexEntries = require(path.join(__dirname, 'data/flavorText.json')),
 	{oneLine} = require('common-tags'),
@@ -59,6 +66,12 @@ module.exports = class dexCommand extends commando.Command {
 
 	capitalizeFirstLetter (string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
 	}
 
 	fetchColor (col) {
@@ -284,18 +297,14 @@ module.exports = class dexCommand extends commando.Command {
 		          |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.replace(' ', '_')})  
 		          |  [PokémonDB](http://pokemondb.net/pokedex/${poke.replace(' ', '-')})`);
 
-			if (msg.deletable && data.deleteCommandMessages) {
-				msg.delete();
-			}
+			this.deleteCommandMessages(msg);
 
 			return msg.embed(dexEmbed);
 		}
 		const dym = this.match.get(args.pokemon), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 
-		if (msg.deletable && data.deleteCommandMessages) {
-			msg.delete();
-		}
+		this.deleteCommandMessages(msg);
 
 		return msg.reply(`⚠️ Dex entry not found! ${dymString}`);
 	}

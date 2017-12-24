@@ -13,11 +13,18 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando'),
-	data = require('../../data.json');
+	commando = require('discord.js-commando');
 
 module.exports = class embedValsCommand extends commando.Command {
 	constructor (client) {
@@ -29,6 +36,12 @@ module.exports = class embedValsCommand extends commando.Command {
 			'description': 'Shows how a Discord MessageEmbed is build up',
 			'guildOnly': false
 		});
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
 	}
 
 	run (msg) {
@@ -46,9 +59,7 @@ module.exports = class embedValsCommand extends commando.Command {
 			.setURL('https://www.google.com')
 			.addField('FieldName', 'FieldValue', true);
 
-		if (msg.deletable && data.deleteCommandMessages) {
-			msg.delete();
-		}
+		this.deleteCommandMessages(msg);
 
 		return msg.embed(valsOfEmbed);
 	}

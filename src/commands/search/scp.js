@@ -13,12 +13,19 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Discord = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
-	data = require('../../data.json'),
 	request = require('snekfetch');
 
 module.exports = class scpCommand extends commando.Command {
@@ -40,6 +47,12 @@ module.exports = class scpCommand extends commando.Command {
 				}
 			]
 		});
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
 	}
 
 	async run (msg, args) {
@@ -65,9 +78,7 @@ module.exports = class scpCommand extends commando.Command {
 						.text()
 						.slice(13, 313)}... [Read more](http://www.scp-wiki.net/scp-${args.scparticle})`, false);
 
-				if (msg.deletable && data.deleteCommandMessages) {
-					msg.delete();
-				}
+				this.deleteCommandMessages(msg);
 
 				return msg.embed(scpEmbed, `http://www.scp-wiki.net/scp-${args.scparticle}`);
 			}

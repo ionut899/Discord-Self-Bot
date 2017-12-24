@@ -13,13 +13,20 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Commando = require('discord.js-commando'),
 	Discord = require('discord.js'),
 	path = require('path'),
 	auth = require(path.join(`${__dirname}/auth.json`)), // eslint-disable-line sort-vars
-	data = require(path.join(`${__dirname}/data.json`)), // eslint-disable-line sort-vars
 	moment = require('moment'), // eslint-disable-line sort-vars
 	{oneLine} = require('common-tags'),
 	sqlite = require('sqlite');
@@ -27,8 +34,7 @@ const Commando = require('discord.js-commando'),
 // eslint-disable-next-line one-var	
 const values = {
 	'hookClient': new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {'disableEveryone': true}),
-	'ownerID': auth.ownerID,
-	'validTypes': ['PLAYING', 'STREAMING', 'WATCHING', 'LISTENING']
+	'ownerID': auth.ownerID
 };
 
 class DiscordSelfBot {
@@ -47,36 +53,6 @@ class DiscordSelfBot {
 		return () => {
 			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
 			this.client.user.setAFK(true); // Set bot to AFK to enable mobile notifications
-
-			if (!data.richPresenceEnabled) {
-				this.client.user.setPresence({
-					'activity': {
-						'name': data.richpresenceData.name !== '' ? data.richpresenceData.name : 'Discord-Self-Bot',
-						'type': values.validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'PLAYING',
-						'url': data.richpresenceData.url !== '' ? data.richpresenceData.url : null
-					}
-				});
-			} else {
-				this.client.user.setPresence({
-					'activity': {
-						'application': data.richpresenceData.application !== '' ? data.richpresenceData.application : '355326429178757131',
-						'name': data.richpresenceData.name !== '' ? data.richpresenceData.name : 'Discord-Self-Bot',
-						'type': values.validTypes.includes(data.richpresenceData.type) ? data.richpresenceData.type : 'WATCHING',
-						'url': data.richpresenceData.url !== '' ? data.richpresenceData.url : null,
-						'details': data.richpresenceData.details !== '' ? data.richpresenceData.details : 'Made by Favna',
-						'state': data.richpresenceData.state !== '' ? data.richpresenceData.state : 'https://selfbot.favna.xyz',
-						'timestamps': {'start': data.richpresenceData.timestamp ? Math.floor(Date.now() / 1000) : null},
-						'assets': {
-							'largeImage': data.richpresenceData.largeImage !== '' ? data.richpresenceData.largeImage : '379734851206512640',
-							'smallImage': data.richpresenceData.smallImage !== '' ? data.richpresenceData.smallImage : '379734813751377921',
-							'largeText': data.richpresenceData.largeText !== '' ? data.richpresenceData.largeText : 'See the website',
-							'smallText': data.richpresenceData.smallText !== '' ? data.richpresenceData.smallText : 'Or the GitHub'
-						},
-						'party': data.richpresenceData.partySize[0] !== 0 ? {'size': [data.richpresenceData.partySize[0], data.richpresenceData.partySize[1]]} : null
-					}
-				});
-			}
-
 			this.isReady = true;
 		};
 	}
@@ -148,12 +124,13 @@ class DiscordSelfBot {
 	onmessage () {
 		return (msg) => {
 
-			if (data.webhookNotifiers && msg.author.id !== values.ownerID && !msg.mentions.users.get(values.ownerID)) {
+			if (this.client.provider.get('global', 'webhooktoggle', false) && msg.author.id !== values.ownerID && !msg.mentions.users.get(values.ownerID)) {
 				const mentionEmbed = new Discord.MessageEmbed(),
-					regexpKeywords = [];
+					regexpKeywords = [],
+					wnsKeywords = this.client.provider.get('global', 'webhookkeywords');
 
-				for (let i = 0; i < data.webhookData.keywords.length; i += 1) {
-					const regex = new RegExp(`.*${data.webhookData.keywords[i]}.*`, 'gim');
+				for (let i = 0; i < wnsKeywords.length; i += 1) {
+					const regex = new RegExp(`.*${wnsKeywords[i]}.*`, 'gim');
 
 					regexpKeywords.push(regex);
 				}
@@ -187,9 +164,8 @@ class DiscordSelfBot {
 			.on('commandError', this.onCmdErr())
 			.on('commandBlocked', this.onCmdBlock())
 			.on('commandStatusChange', this.onCmdStatusChange())
-			.on('groupStatusChange', this.onGroupStatusChange());
-
-		data.webhookNotifiers ? this.client.on('message', this.onmessage()) : null;
+			.on('groupStatusChange', this.onGroupStatusChange())
+			.on('message', this.onmessage());
 
 		this.client.setProvider(
 			sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
@@ -197,17 +173,18 @@ class DiscordSelfBot {
 
 		this.client.registry
 			.registerGroups([
-				['info', 'Information Commands'],
-				['search', 'Web Searching Commands'],
+				['emojis', '"Global" emojis as images'],
 				['fun', 'Fun and Games Commands'],
-				['misc', 'Miscellanious Commands'],
-				['pokedex', 'PokéDex Lookup Commands'],
+				['info', 'Information Commands'],
 				['links', 'Quick Website Links'],
 				['memes', 'React with meme images'],
+				['misc', 'Miscellanious Commands'],
+				['pokedex', 'PokéDex Lookup Commands'],
+				['provider', 'Commands to control your data stored in the client provider'],
+				['search', 'Web Searching Commands'],
 				['status', 'Status setting commands'],
-				['themeplaza', 'Various commands to browse ThemePlaza'],
-				['emojis', '"Global" emojis as images'],
-				['nsfw', 'NSFW finding commands']
+				['nsfw', 'NSFW finding commands'],
+				['themeplaza', 'Various commands to browse ThemePlaza']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()

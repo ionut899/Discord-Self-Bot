@@ -13,11 +13,18 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	data = require('../../data.json'),
 	path = require('path');
 
 module.exports = class memeCommand extends commando.Command {
@@ -42,10 +49,14 @@ module.exports = class memeCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		if (msg.deletable && data.deleteCommandMessages) {
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
 			msg.delete();
 		}
+	}
+
+	run (msg, args) {
+		this.deleteCommandMessages(msg);
 
 		return msg.channel.send({'files': [new Discord.MessageAttachment(path.join(__dirname, `/images/${args.image.toLowerCase()}.jpg`), `${args.image}Meme.jpg`)]});
 	}

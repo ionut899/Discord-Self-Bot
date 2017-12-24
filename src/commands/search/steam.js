@@ -13,6 +13,14 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const Discord = require('discord.js'),
@@ -21,7 +29,6 @@ const Discord = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),
-	data = require('../../data.json'),
 	request = require('snekfetch');
 
 module.exports = class steamCommand extends commando.Command {
@@ -45,6 +52,12 @@ module.exports = class steamCommand extends commando.Command {
 				}
 			]
 		});
+	}
+	
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
+			msg.delete();
+		}
 	}
 
 	insert (str, index, value) { // eslint-disable-line one-var
@@ -92,9 +105,7 @@ module.exports = class steamCommand extends commando.Command {
 					.addField('Publisher(s)', steamData.publishers, true)
 					.addField('Steam Store Link', `http://store.steampowered.com/app/${steamData.steam_appid}/`, false);
 
-				if (msg.deletable && data.deleteCommandMessages) {
-					msg.delete();
-				}
+				this.deleteCommandMessages(msg);
 
 				return msg.embed(steamEmbed, `http://store.steampowered.com/app/${steamData.steam_appid}/`);
 			}
