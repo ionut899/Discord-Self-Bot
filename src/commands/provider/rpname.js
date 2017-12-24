@@ -34,13 +34,13 @@ module.exports = class rpnameCommand extends commando.Command {
 			'aliases': ['name'],
 			'memberName': 'rpname',
 			'description': 'Set your Rich Presence name',
-			'examples': ['rpname {name}', 'rpname See the website'],
+			'examples': ['rpname {name}', 'rpname Discord-Self-Bot'],
 			'guildOnly': false,
 
 			'args': [
 				{
 					'key': 'name',
-					'prompt': 'What is the name string for your richpresence?',
+					'prompt': 'What is the activity for your richpresence?',
 					'type': 'string',
 					'label': 'name',
 					'validate': (name) => {

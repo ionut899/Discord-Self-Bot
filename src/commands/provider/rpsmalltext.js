@@ -31,7 +31,7 @@ module.exports = class rpsmalltextCommand extends commando.Command {
 		super(client, {
 			'name': 'rpsmalltext',
 			'group': 'provider',
-			'aliases': ['smalltext', 'stext'],
+			'aliases': ['smalltext', 'smalltext'],
 			'memberName': 'rpsmalltext',
 			'description': 'Set your Rich Presence smalltext',
 			'examples': ['rpsmalltext {smalltext}', 'rpsmalltext Or the GitHub'],
