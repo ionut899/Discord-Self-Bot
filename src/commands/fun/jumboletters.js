@@ -92,6 +92,8 @@ module.exports = class jumbolettersCommand extends commando.Command {
 				jumboString.push(':exclamation:');
 			} else if (/\?/gim.test(args.text[i])) {
 				jumboString.push(':question:');
+			} else if (/ /gim.test(args.text[i])) {
+				jumboString.push('  ');
 			} else {
 				jumboString.push(args.text[i]);
 			}
