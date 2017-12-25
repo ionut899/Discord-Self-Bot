@@ -99,6 +99,6 @@ module.exports = class jumbolettersCommand extends commando.Command {
 
 		this.deleteCommandMessages(msg);
 
-		return msg.say(jumboString.join(''));
+		return msg.say(jumboString.join(' '));
 	}
 };
