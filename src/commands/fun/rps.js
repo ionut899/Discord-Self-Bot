@@ -43,8 +43,7 @@ module.exports = class rpsCommand extends commando.Command {
 					'key': 'hand',
 					'prompt': 'Play Rock, Paper or Scissors?',
 					'type': 'string',
-					'label': 'What hand to play',
-					'default': 'rock'
+					'label': 'What hand to play'
 				}
 			]
 		});
