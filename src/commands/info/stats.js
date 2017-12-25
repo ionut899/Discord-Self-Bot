@@ -75,7 +75,7 @@ module.exports = class statsCommand extends commando.Command {
 			.addField('Channels', this.client.channels.size, true)
 			.addField('Users', this.client.users.size, true)
 			.addField('Owner', this.client.user.tag, true)
-			.addField('License', process.env.npm_package_license, true) // eslint-disable-line no-process-env
+			.addField('License', 'GPL-3.0 + 7b & 7c', true)
 			.addField('Discord.JS', '12.0', true)
 			.addField('NodeJS', process.version, true)
 			.addField('Platform', this.fetchPlatform(process.platform.toLowerCase()), true)
