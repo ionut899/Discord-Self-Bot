@@ -1811,6 +1811,10 @@ mkdirp@0.5.1, mkdirp@0.x.x, "mkdirp@>=0.5 0", mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+moment-duration-format@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.1.0.tgz#d1ad226a6a5d638385e65be80fab02bd0a1b5c8c"
+
 moment-timezone@^0.5.14:
   version "0.5.14"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.14.tgz#4eb38ff9538b80108ba467a458f3ed4268ccfcb1"

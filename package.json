@@ -1,6 +1,6 @@
 {
   "name": "discord-self-bot",
-  "version": "8.0.0",
+  "version": "8.1.0",
   "description": "Favna#2846's Discord-Self-Bot for anyone to grant extreme power to their Discord usage",
   "author": "Favna",
   "license": "GPL-3.0",
@@ -46,6 +46,7 @@
     "imgur": "^0.2.1",
     "malapi": "0.0.3",
     "moment": "^2.19.1",
+    "moment-duration-format": "^2.1.0",
     "moment-timezone": "^0.5.14",
     "money": "^0.2.0",
     "moviedb": "^0.2.10",

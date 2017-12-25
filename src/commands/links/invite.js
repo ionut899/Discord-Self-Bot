@@ -26,15 +26,15 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando');
 
-module.exports = class infoCommnad extends commando.Command {
+module.exports = class inviteCommnad extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'info',
-			'aliases': ['shill', 'plug'],
+			'name': 'invite',
+			'aliases': ['inv', 'shill', 'plug', 'links'],
 			'group': 'links',
-			'memberName': 'info',
+			'memberName': 'invite',
 			'description': 'Link to Favna\'s discord-self-bot',
-			'examples': ['info'],
+			'examples': ['invite'],
 			'guildOnly': false
 		});
 	}
