@@ -32,7 +32,7 @@ module.exports = class jumbolettersCommand extends commando.Command {
 			'group': 'fun',
 			'aliases': ['jumbo', 'bigtext'],
 			'memberName': 'jumboletters',
-			'description': 'Create jumbo letters from your text (using regional indicator emojis)',
+			'description': 'Create jumbo letters from your text',
 			'examples': ['jumboletters {some text}', 'jumboletters Favna is a great coder!'],
 			'guildOnly': false,
 
@@ -88,13 +88,17 @@ module.exports = class jumbolettersCommand extends commando.Command {
 				jumboString.push(`:regional_indicator_${args.text[i].toLowerCase()}:`);
 			} else if (/[0-9]/gim.test(args.text[i])) {
 				jumboString.push(`:${this.fetchNumberWord(args.text[i])}:`);
+			} else if (/!/gim.test(args.text[i])) {
+				jumboString.push(':exclamation:');
+			} else if (/\?/gim.test(args.text[i])) {
+				jumboString.push(':question:');
 			} else {
 				jumboString.push(args.text[i]);
 			}
 		}
 
 		this.deleteCommandMessages(msg);
-		
+
 		return msg.say(jumboString.join(''));
 	}
 };
