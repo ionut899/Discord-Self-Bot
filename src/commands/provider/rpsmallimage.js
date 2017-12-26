@@ -42,14 +42,7 @@ module.exports = class rpsmallimageCommand extends commando.Command {
 					'key': 'smallimage',
 					'prompt': 'What is the SmallImageID for the "small" Rich Presence image you want?',
 					'type': 'string',
-					'label': 'smallimageID',
-					'validate': (id) => {
-						if (id.length === 18) {
-							return true;
-						}
-
-						return 'The SmallImageID has to be 18 digits';
-					}
+					'label': 'smallimageID'
 				}
 			]
 		});
@@ -61,11 +54,36 @@ module.exports = class rpsmallimageCommand extends commando.Command {
 		}
 	}
 
-	run (msg, args) {
-		this.client.provider.set('global', 'rpsmallimage', args.smallimage);
+	async run(msg, args) {
+		var appID = this.client.provider.get('global', 'rpappid');
+		await this.client.fetchApplication(appID).then(a => a.fetchAssets().then(a => {
+			var array = [];
+			if (a.length == 0) return msg.reply(`No assets in application with ID \`${appID}\``);
+			for (let i = 0; i < a.length; i++) {
+				var obj = {};
+				if (a[i].type == 'SMALL') {
+					obj.id = a[i].id;
+					obj.name = a[i].name;
+					array.push(obj);
+				}
+			}
+
+			var imageID;
+			var id = array.find(o => o.id == args.smallimage);
+			var name = array.find(o => o.name == args.smallimage);
+			if (id != null) {
+				imageID = id.id;
+			} else if (name != null) {
+				imageID = name.id;
+			}
+			if (imageID == null) return msg.reply(`Can't find \`${args.smallimage}\` in application with ID \`${appID}\``);
+
+			this.client.provider.set('global', 'rpsmallimage', imageID);
+
+			return msg.reply(oneLine `Your RichPresence SmallImageID has been set to \`${args.smallimage}\``);
+		}));
 
 		this.deleteCommandMessages(msg);
 
-		return msg.reply(oneLine `Your RichPresence SmallImageID has been set to \`${args.smallimage}\``);
 	}
 };
