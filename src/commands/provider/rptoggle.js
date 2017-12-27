@@ -68,6 +68,6 @@ module.exports = class rptoggleCommand extends commando.Command {
 
 		this.deleteCommandMessages(msg);
 
-		return msg.reply(oneLine `Rich Presence is now ${args.option ? 'disabled' : 'enabled'}. Run ${msg.guild.commandPrefix}rpreload to reload your presence.`);
+		return msg.reply(oneLine `Rich Presence is now ${args.option ? 'enabled' : 'disabled'}. Run ${msg.guild.commandPrefix}rpreload to reload your presence.`);
 	}
 };
