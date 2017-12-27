@@ -31,7 +31,7 @@ module.exports = class rppartysizeCommand extends commando.Command {
 		super(client, {
 			'name': 'rppartysize',
 			'group': 'provider',
-			'aliases': ['rparty', 'partysize'],
+			'aliases': ['rparty', 'partysize', 'rpparty'],
 			'memberName': 'rppartysize',
 			'description': 'Set your Rich Presence Party Size',
 			'examples': ['rppartysize {minSize} {maxSize}', 'rppartysize 0 0'],
