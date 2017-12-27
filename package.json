@@ -44,7 +44,7 @@
     "flipacoin": "^1.0.0",
     "igdb-api-node": "^3.1.1",
     "imgur": "^0.2.1",
-    "malapi": "0.0.3",
+    "maljs": "^0.3.0",
     "moment": "^2.19.1",
     "moment-duration-format": "^2.1.0",
     "moment-timezone": "^0.5.14",
