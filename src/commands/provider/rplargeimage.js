@@ -42,14 +42,7 @@ module.exports = class rplargeimageCommand extends commando.Command {
 					'key': 'largeimage',
 					'prompt': 'What is the LargeImageID for the "large" Rich Presence image you want?',
 					'type': 'string',
-					'label': 'largeimageID',
-					'validate': (id) => {
-						if (id.length === 18) {
-							return true;
-						}
-
-						return 'The LargeImageID has to be 18 digits';
-					}
+					'label': 'largeimageID'
 				}
 			]
 		});
@@ -61,11 +54,58 @@ module.exports = class rplargeimageCommand extends commando.Command {
 		}
 	}
 
-	run (msg, args) {
-		this.client.provider.set('global', 'rplargeimage', args.largeimage);
+	/* eslint max-depth: ["error", 5]*/
 
-		this.deleteCommandMessages(msg);
+	async run (msg, args) {
+		const appID = this.client.provider.get('global', 'rpappid');
 
-		return msg.reply(oneLine `Your RichPresence LargeImageID has been set to \`${args.largeimage}\``);
+		if (appID) {
+			const application = await this.client.fetchApplication(appID);
+
+			if (application) {
+				const assets = await application.fetchAssets();
+
+				if (assets) {
+					const array = [];
+
+					if (assets.length === 0) {
+						return msg.reply(`No assets found in application with ID \`${appID}\``);
+					}
+					for (const i in assets) {
+						if (assets[i].type === 'BIG') {
+							array.push({
+								'id': assets[i].id,
+								'name': assets[i].name
+							});
+						}
+					}
+
+					const id = array.find(o => o.id === args.largeimage), // eslint-disable-line one-var
+						name = array.find(o => o.name === args.largeimage);
+					let imageID = '';
+
+					if (id) {
+						imageID = id.id;
+					} else if (name) {
+						imageID = name.id;
+					}
+
+					if (!imageID) {
+						return msg.reply(`Can't find \`${args.largeimage}\` in application with ID \`${appID}\``);
+					}
+
+					this.client.provider.set('global', 'rplargeimage', imageID);
+					this.deleteCommandMessages(msg);
+
+					return msg.reply(oneLine `Your RichPresence LargeImageID has been set to \`${args.largeimage}\``);
+				}
+
+				return msg.reply(`No assets found in application with ID \`${appID}\``);
+			}
+
+			return msg.reply(`An error occured fetching that application. Are you sure the ID is correct? Set it with the \`${msg.guild.commandPrefix}rpappid\`command `);
+		}
+
+		return msg.reply(`You first need to set your application with the \`${msg.guild.commandPrefix}rpappid\` command!`);
 	}
 };
