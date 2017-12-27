@@ -54,36 +54,58 @@ module.exports = class rpsmallimageCommand extends commando.Command {
 		}
 	}
 
-	async run(msg, args) {
-		var appID = this.client.provider.get('global', 'rpappid');
-		await this.client.fetchApplication(appID).then(a => a.fetchAssets().then(a => {
-			var array = [];
-			if (a.length == 0) return msg.reply(`No assets in application with ID \`${appID}\``);
-			for (let i = 0; i < a.length; i++) {
-				var obj = {};
-				if (a[i].type == 'SMALL') {
-					obj.id = a[i].id;
-					obj.name = a[i].name;
-					array.push(obj);
+	/* eslint max-depth: ["error", 5]*/
+
+	async run (msg, args) {
+		const appID = this.client.provider.get('global', 'rpappid');
+
+		if (appID) {
+			const application = await this.client.fetchApplication(appID);
+
+			if (application) {
+				const assets = await application.fetchAssets();
+
+				if (assets) {
+					const array = [];
+
+					if (assets.length === 0) {
+						return msg.reply(`No assets found in application with ID \`${appID}\``);
+					}
+					for (const i in assets) {
+						if (assets[i].type === 'SMALL') {
+							array.push({
+								'id': assets[i].id,
+								'name': assets[i].name
+							});
+						}
+					}
+
+					const id = array.find(o => o.id === args.smallimage), // eslint-disable-line one-var
+						name = array.find(o => o.name === args.smallimage);
+					let imageID = '';
+
+					if (id) {
+						imageID = id.id;
+					} else if (name) {
+						imageID = name.id;
+					}
+
+					if (!imageID) {
+						return msg.reply(`Can't find \`${args.smallimage}\` in application with ID \`${appID}\``);
+					}
+
+					this.client.provider.set('global', 'rpsmallimage', imageID);
+					this.deleteCommandMessages(msg);
+
+					return msg.reply(oneLine `Your RichPresence Small Image has been set to \`${args.smallimage}\``);
 				}
+
+				return msg.reply(`No assets found in application with ID \`${appID}\``);
 			}
 
-			var imageID;
-			var id = array.find(o => o.id == args.smallimage);
-			var name = array.find(o => o.name == args.smallimage);
-			if (id != null) {
-				imageID = id.id;
-			} else if (name != null) {
-				imageID = name.id;
-			}
-			if (imageID == null) return msg.reply(`Can't find \`${args.smallimage}\` in application with ID \`${appID}\``);
+			return msg.reply(`An error occured fetching that application. Are you sure the ID is correct? Set it with the \`${msg.guild.commandPrefix}rpappid\`command `);
+		}
 
-			this.client.provider.set('global', 'rpsmallimage', imageID);
-
-			return msg.reply(oneLine `Your RichPresence SmallImageID has been set to \`${args.smallimage}\``);
-		}));
-
-		this.deleteCommandMessages(msg);
-
+		return msg.reply(`You first need to set your application with the \`${msg.guild.commandPrefix}rpappid\` command!`);
 	}
 };
