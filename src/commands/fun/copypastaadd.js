@@ -35,7 +35,7 @@ module.exports = class copypastaAddCommand extends commando.Command {
 			'group': 'fun',
 			'memberName': 'copypastaadd',
 			'description': 'Saves a copypasta to local file',
-			'examples': ['copypasta <file_name> <pasta>', 'copypasta navy what the fuck did you just say to me ... (etc.)'],
+			'examples': ['copypasta <pasta_name> <pasta>', 'copypasta navy what the fuck did you just say to me ... (etc.)'],
 			'guildOnly': false,
 
 			'args': [

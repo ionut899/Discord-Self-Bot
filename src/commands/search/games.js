@@ -37,7 +37,7 @@ module.exports = class gameCommand extends commando.Command {
 			'group': 'search',
 			'aliases': ['game', 'moby', 'igdb'],
 			'memberName': 'games',
-			'description': 'Finds info on a game on Mobygames',
+			'description': 'Finds info on a game on IGDB (IndieGamesDoneBad)',
 			'examples': ['games {gameName}', 'games Tales of Berseria'],
 			'guildOnly': false,
 

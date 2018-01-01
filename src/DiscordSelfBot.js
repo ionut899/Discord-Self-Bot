@@ -174,17 +174,17 @@ class DiscordSelfBot {
 		this.client.registry
 			.registerGroups([
 				['emojis', '"Global" emojis as images'],
-				['fun', 'Fun and Games Commands'],
-				['info', 'Information Commands'],
+				['fun', 'Fun and Games to play with the bot'],
+				['info', 'Get Information on various things'],
 				['links', 'Quick Website Links'],
-				['memes', 'React with meme images'],
-				['misc', 'Miscellanious Commands'],
-				['pokedex', 'PokéDex Lookup Commands'],
-				['provider', 'Commands to control your data stored in the client provider'],
-				['search', 'Web Searching Commands'],
-				['status', 'Status setting commands'],
-				['nsfw', 'NSFW finding commands'],
-				['themeplaza', 'Various commands to browse ThemePlaza']
+				['memes', 'React with memes'],
+				['misc', 'Commands that cannot be categorized elsewhere'],
+				['pokedex', 'Get information from the PokéDex'],
+				['provider', 'Control your data stored in the client provider'],
+				['search', 'Search the web'],
+				['status', 'Set your status'],
+				['nsfw', 'Find NSFW content ( ͡° ͜ʖ ͡°)'],
+				['themeplaza', 'Browse ThemePlaza']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()

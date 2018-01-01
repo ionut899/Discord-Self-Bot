@@ -37,7 +37,7 @@ module.exports = class copypastaCommand extends commando.Command {
 			'group': 'fun',
 			'memberName': 'copypasta',
 			'description': 'Sends contents of a copypasta file to the chat',
-			'examples': ['copypasta <file_name>', 'copypasta navy'],
+			'examples': ['copypasta <pasta_name>', 'copypasta navy'],
 			'guildOnly': false,
 
 			'args': [
@@ -45,7 +45,7 @@ module.exports = class copypastaCommand extends commando.Command {
 					'key': 'name',
 					'prompt': 'Send which copypasta?',
 					'type': 'string',
-					'label': 'Name of the file that has your copypasta content',
+					'label': 'Name of the pasta',
 					'parse': p => p.toLowerCase()
 				}
 			]
