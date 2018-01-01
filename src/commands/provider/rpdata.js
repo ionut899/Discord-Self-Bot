@@ -70,8 +70,12 @@ module.exports = class rpdataCommand extends commando.Command {
 			.addField('Small Image', this.client.provider.get('global', 'rpsmallimage', 'None Set'), true)
 			.addField('Large Image Text', this.client.provider.get('global', 'rplargetext', 'None Set'), true)
 			.addField('Small Image Text', this.client.provider.get('global', 'rpsmalltext', 'None Set'), true)
-			.addField('Party Minimum', this.client.provider.get('global', 'rppartysize', 'None Set')[0], true)
-			.addField('Party Maximum', this.client.provider.get('global', 'rppartysize', 'None Set')[1], true)
+			.addField('Party Minimum', this.client.provider.get('global', 'rppartysize')
+				? this.client.provider.get('global', 'rppartysize')[0]
+				: 'None Set', true)
+			.addField('Party Maximum', this.client.provider.get('global', 'rppartysize')
+				? this.client.provider.get('global', 'rppartysize')[1]
+				: 'None Set', true)
 			.addField('Timestamp', this.client.provider.get('global', 'rptimestamptoggle', 'Disabled'), true)
 			.addField('Rich Presences Enabled', this.client.provider.get('global', 'rptoggle', 'Disabled'), true);
 
