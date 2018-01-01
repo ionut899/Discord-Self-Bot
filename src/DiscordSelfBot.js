@@ -179,11 +179,11 @@ class DiscordSelfBot {
 				['links', 'Quick Website Links'],
 				['memes', 'React with memes'],
 				['misc', 'Commands that cannot be categorized elsewhere'],
+				['nsfw', 'Find NSFW content ( ͡° ͜ʖ ͡°)'],
 				['pokedex', 'Get information from the PokéDex'],
 				['provider', 'Control your data stored in the client provider'],
 				['search', 'Search the web'],
 				['status', 'Set your status'],
-				['nsfw', 'Find NSFW content ( ͡° ͜ʖ ͡°)'],
 				['themeplaza', 'Browse ThemePlaza']
 			])
 			.registerDefaultGroups()
