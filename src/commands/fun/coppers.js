@@ -24,7 +24,8 @@
  */
 
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{oneLine} = require('common-tags');
 
 module.exports = class coppersCommand extends commando.Command {
 	constructor (client) {
@@ -46,10 +47,17 @@ module.exports = class coppersCommand extends commando.Command {
 	}
 
 	run (msg) {
-	
+
 		this.deleteCommandMessages(msg);
 
-		msg.say(':rotating_light: :rotating_light: WEE WOO WEE WOO - PUT YOUR HANDS IN THE AIR, YOU ARE SURROUNDED :rotating_light: :rotating_light:\n\n' +
-         ':oncoming_police_car:  <:police:346089253572313088> <:police:346089253572313088> <:police:346089253572313088>  :oncoming_police_car:');
+		if (this.client.user.premium) {
+			return msg.say(oneLine `<:police:346089253572313088> :oncoming_police_car: :rotating_light: :rotating_light: 
+			WEE WOO WEE WOO - PUT YOUR HANDS IN THE AIR, YOU ARE SURROUNDED
+			 :rotating_light: :rotating_light: :oncoming_police_car: <:police:346089253572313088>`);
+		}
+
+		return msg.say(oneLine `:oncoming_police_car: :rotating_light: :rotating_light: 
+		WEE WOO WEE WOO - PUT YOUR HANDS IN THE AIR, YOU ARE SURROUNDED
+		 :rotating_light: :rotating_light: :oncoming_police_car:`);
 	}
 };
