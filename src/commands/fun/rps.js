@@ -56,6 +56,7 @@ module.exports = class rpsCommand extends commando.Command {
 	}
 
 	run (msg, args) {
+		/* eslint-disable complexity*/
 		random.integers({
 			'number': 1,
 			'minimum': 1,
@@ -64,7 +65,7 @@ module.exports = class rpsCommand extends commando.Command {
 			if (!error) {
 				const rpsEmbed = new Discord.MessageEmbed();
 
-				let resString = 'init';
+				let resString = 'Woops something went wrong';
 
 				if (args.hand === 'rock' && randoms === 1) {
 					resString = 'It\'s a draw 😶! Both picked 🗿';
@@ -72,19 +73,19 @@ module.exports = class rpsCommand extends commando.Command {
 					resString = 'I won 😃! My 📜 covered your 🗿';
 				} else if (args.hand === 'rock' && randoms === 3) {
 					resString = ' I lost 😞! Your 🗿 smashed my ️️️✂️ to pieces';
-				} else 	if (args.hand === 'paper' && randoms === 1) {
+				} else if (args.hand === 'paper' && randoms === 1) {
 					resString = 'I lost 😞! Your 📜 covered my 🗿';
 				} else if (args.hand === 'paper' && randoms === 2) {
 					resString = 'It\'s a draw 😶! Both picked 📜';
 				} else if (args.hand === 'paper' && randoms === 3) {
 					resString = 'I won 😃! My ✂️ cut your 📜 to shreds';
-				} else 	if (args.hand === 'scissor' && randoms === 1) {
+				} else if (args.hand === 'scissor' && randoms === 1) {
 					resString = 'I won 😃! My 🗿 smashed your ✂️ to pieces';
 				} else if (args.hand === 'scissor' && randoms === 2) {
 					resString = 'I lost 😞! Your ✂️ cut my 📜 to shreds';
 				} else if (args.hand === 'scissor' && randoms === 3) {
 					resString = 'It\'s a draw 😶! Both picked ✂️';
-				} 
+				}
 
 				rpsEmbed
 					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
