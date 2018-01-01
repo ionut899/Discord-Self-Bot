@@ -63,14 +63,14 @@ module.exports = class copypastaAddCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		fs.writeFile(path.join(__dirname, `pastas/${args.name}.txt`), args.content, 'utf8', (err) => {
-			if (!err) {
-				return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with $copypasta ${args.name}`);
-			}
+		fs.writeFileSync(path.join(__dirname, `pastas/${args.name}.txt`), args.content, 'utf8');
 
+		if (fs.existsSync(path.join(__dirname, `pastas/${args.name}.txt`))) {
 			this.deleteCommandMessages(msg);
-
-			return msg.reply('⚠️ an error occured and your pasta was not saved. Consider creating the text file manually.');
-		});
+			
+			return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with $copypasta ${args.name}`);
+		}
+		
+		return msg.reply('⚠️ an error occured and your pasta was not saved. Consider creating the text file manually.');
 	}
 };
