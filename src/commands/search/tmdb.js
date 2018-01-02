@@ -29,9 +29,8 @@ const Discord = require('discord.js'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	tmdb = require('moviedb')(auth.TheMovieDBV3ApiKey);
-
-let movieID = '';
+	moviedb = require('moviedb')(auth.TheMovieDBV3ApiKey),
+	vibrant = require('node-vibrant');
 
 module.exports = class movieCommand extends commando.Command {
 	constructor (client) {
@@ -49,10 +48,12 @@ module.exports = class movieCommand extends commando.Command {
 					'key': 'name',
 					'prompt': 'Please supply movie title',
 					'type': 'string',
-					'label': 'Movie or TV Show to look up'
+					'label': 'Movie or TV Show to look up',
+					'default': 'now you see me'
 				}
 			]
 		});
+		this.embedColor = '#FF0000';
 	}
 
 	deleteCommandMessages (msg) {
@@ -61,44 +62,71 @@ module.exports = class movieCommand extends commando.Command {
 		}
 	}
 
-	run (msg, args) {
-		tmdb.searchMovie({'query': args.name}, (nameErr, nameRes) => {
-			if (nameErr) {
-				console.error(nameErr); // eslint-disable-line no-console
+	async fetchColor (img) {
+		const palette = await vibrant.from(img).getPalette();
 
-				return msg.reply('An error occured');
+		if (palette) {
+			const pops = [],
+				swatches = Object.values(palette);
+
+			let prominentSwatch = {};
+
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
+				}
 			}
 
-			if (nameRes.results.length !== 0) {
-				movieID = nameRes.results[0].id;
-			} else {
-				return msg.reply('⚠️ ***nothing found***');
+			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
+
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
+						prominentSwatch = swatches[swatch];
+						break;
+					}
+				}
 			}
+			this.embedColor = prominentSwatch.getHex();
+		}
 
-			tmdb.movieInfo({'id': movieID}, (idErr, idRes) => {
-				const movieEmbed = new Discord.MessageEmbed();
+		return this.embedColor;
+	}
 
+	async run (msg, args) {
+		const movieEmbed = new Discord.MessageEmbed(),
+			tmdb = (m, q) => new Promise((res, rej) => {
+				moviedb[m](q, (err, data) => err ? rej(err) : res(data)); // eslint-disable-line no-confusing-arrow
+			}),
+			tmdbres = await tmdb('searchMovie', {'query': args.name});
+
+		if (tmdbres) {
+			const movieres = await tmdb('movieInfo', {'id': tmdbres.results[0].id});
+
+			if (movieres) {
 				movieEmbed
-					.setImage(`http://image.tmdb.org/t/p/w640${idRes.backdrop_path}`)
-					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-					.addField('Title', `[${idRes.title}](https://www.themoviedb.org/movie/${idRes.id})`, true)
-					.addField('Release Date', moment(idRes.release_date).format('MMMM Do YYYY'), true)
-					.addField('Runtime', `${idRes.runtime} minutes`, true)
-					.addField('User Score', idRes.vote_average, true)
-					.addField('Genres', idRes.genres.map(genre => genre.name), true)
-					.addField('Production Companies', idRes.production_companies.length === 0 ? idRes.production_companies.map(company => company.name) : 'Unavailable on TheMovieDB', true)
-					.addField('Status', idRes.status, true)
-					.addField('Collection', idRes.belongs_to_collection !== null ? idRes.belongs_to_collection.name : 'none', true)
-					.addField('Home Page', idRes.homepage !== '' ? '[Click Here](idRes.homepage)' : 'none', true)
-					.addField('IMDB Page', idRes.imdb_id_id !== '' ? `[Click Here](http://www.imdb.com/title/${idRes.imdb_id})` : 'none', true)
-					.addField('Description', idRes.overview);
+					.setImage(`http://image.tmdb.org/t/p/w640${movieres.backdrop_path}`)
+					.setColor(await this.fetchColor(`http://image.tmdb.org/t/p/w640${movieres.backdrop_path}`))
+					.addField('Title', `[${movieres.title}](https://www.themoviedb.org/movie/${movieres.id})`, true)
+					.addField('Release Date', moment(movieres.release_date).format('MMMM Do YYYY'), true)
+					.addField('Runtime', `${movieres.runtime} minutes`, true)
+					.addField('User Score', movieres.vote_average, true)
+					.addField('Genres', movieres.genres.map(genre => genre.name), true)
+					.addField('Production Companies', movieres.production_companies.length === 0 ? movieres.production_companies.map(company => company.name) : 'Unavailable on TheMovieDB', true)
+					.addField('Status', movieres.status, true)
+					.addField('Collection', movieres.belongs_to_collection !== null ? movieres.belongs_to_collection.name : 'none', true)
+					.addField('Home Page', movieres.homepage !== '' ? '[Click Here](idRes.homepage)' : 'none', true)
+					.addField('IMDB Page', movieres.imdb_id_id !== '' ? `[Click Here](http://www.imdb.com/title/${movieres.imdb_id})` : 'none', true)
+					.addField('Description', movieres.overview);
 
 				this.deleteCommandMessages(msg);
 
 				return msg.embed(movieEmbed);
-			});
+			}
 
 			return msg.reply('⚠️ ***nothing found***');
-		});
+		}
+
+		return msg.reply('⚠️ ***nothing found***');
 	}
 };
