@@ -122,6 +122,8 @@ module.exports = class googleCommand extends commando.Command {
 
 		if (normalRes) {
 			if (normalRes.body.queries.request[0].totalResults === '0') {
+				msg.reply('⚠️ ***nothing found***');
+				
 				return Promise.reject(console.error('NO RESULTS')); // eslint-disable-line no-console
 			}
 
