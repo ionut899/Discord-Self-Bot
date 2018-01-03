@@ -59,30 +59,43 @@ module.exports = class copypastaCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		const match = new Matcher();
+		/* eslint-disable sort-vars */
+		const match = new Matcher(),
+			dym = match.get(`${args.name}.txt`),
+			dymString = dym !== null ? `Did you mean \`${dym}\`?` : `You can save it with \`${msg.guild.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
+		/* eslint-enable sort-vars */
+
+		let pastaContent = fs.readFileSync(path.join(__dirname, `pastas/${args.name}.txt`), 'utf8');
 
 		match.values = fs.readdirSync(path.join(__dirname, 'pastas'));
 
-		fs.readFile(path.join(__dirname, `pastas/${args.name}.txt`), (err, pastaContent) => {
-			if (!err) {
-				if (pastaContent.length <= 1024) {
-					const cpEmbed = new Discord.MessageEmbed();
+		if (pastaContent) {
+			if (pastaContent.length <= 1024) {
+				/* eslint-disable no-nested-ternary */
+				const cpEmbed = new Discord.MessageEmbed(),
+					ext = pastaContent.includes('.png') ? '.png'
+						: pastaContent.includes('.jpg') ? '.jpg'
+							: pastaContent.includes('.gif') ? '.gif'
+								: pastaContent.includes('.webp') ? '.webp' : 'none',
+					header = ext !== 'none' ? pastaContent.includes('https') ? 'https' : 'http' : 'none';
+				/* eslint-enable no-nested-ternary */
 
-					cpEmbed.setDescription(pastaContent);
-					msg.delete();
-
-					return msg.embed(cpEmbed);
+				if (ext !== 'none' && header !== 'none') {
+					cpEmbed.setImage(`${pastaContent.substring(pastaContent.indexOf(header), pastaContent.indexOf(ext))}${ext}`);
+					pastaContent = pastaContent.substring(0, pastaContent.indexOf(header) - 1) + pastaContent.substring(pastaContent.indexOf(ext) + ext.length);
 				}
+
+				cpEmbed.setDescription(pastaContent);
 				msg.delete();
 
-				return msg.say(pastaContent, {'split': true});
+				return msg.embed(cpEmbed);
 			}
-			const dym = match.get(`${args.name}.txt`),
-				dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'You can save it with `$copypastaadd <filename> <content>` or verify the file name manually';
+			msg.delete();
 
-			this.deleteCommandMessages(msg);
+			return msg.say(pastaContent, {'split': true});
+		}
+		this.deleteCommandMessages(msg);
 
-			return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
-		});
+		return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
 	}
 };
