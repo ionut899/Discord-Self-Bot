@@ -15,6 +15,14 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
  */
 
 const BattlePokedex = {
@@ -24611,6 +24619,5 @@ const BattlePokedex = {
 		'eggGroups': ['Undiscovered']
 	}
 };
-
 
 module.exports = {BattlePokedex};
