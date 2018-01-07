@@ -68,44 +68,67 @@ module.exports = class quoteCommand extends commando.Command {
 		}
 	}
 
-	run (msg, args) {
+	async fetchPreview (url) {
+		/* eslint-disable global-require, no-mixed-requires*/
+		const imgur = require('imgur'),
+			request = require('snekfetch'),
+			requestData = await request.get(`https://api.letsvalidate.com/v1/thumbs/?url=${url}`);
+		/* eslint-enable global-require, no-mixed-requires*/
 
-		msg.guild.channels.get(args.channel.id).messages
-			.fetch(args.message)
-			.then((quote) => {
+		if (requestData) {
+			const upload = await imgur.uploadBase64(requestData.body.toString('base64'));
 
-				const quoteEmbed = new Discord.MessageEmbed();
+			if (upload) {
+				return upload.data.link;
+			}
 
-				if (quote.member === null) {
-					quoteEmbed
-						.setAuthor(`Quoting ${quote.author.username}`, quote.author.displayAvatarURL())
-						.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000');
-				} else {
-					quoteEmbed
-						.setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL())
-						.setColor(quote.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000');
-				}
+			return null;
+		}
+
+		return null;
+	}
+
+	async run (msg, args) {
+		const quote = await msg.guild.channels.get(args.channel.id).messages.fetch(args.message);
+
+		if (quote) {
+			const quoteEmbed = new Discord.MessageEmbed();
+
+			if (quote.member === null) {
 				quoteEmbed
-					.setFooter(`Message sent in #${quote.channel.name} on ${moment(quote.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
-					.setDescription(quote.cleanContent);
+					.setAuthor(`Quoting ${quote.author.username}`, quote.author.displayAvatarURL())
+					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000');
+			} else {
+				quoteEmbed
+					.setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL())
+					.setColor(quote.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000');
+			}
+			quoteEmbed
+				.setFooter(`Message sent in #${quote.channel.name} on ${moment(quote.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+				.setDescription(quote.cleanContent);
 
+			if (quote.cleanContent.match(/\bhttps?:\/\/\S+/gi)) {
+				const img = await this.fetchPreview(quote.cleanContent.match(/\bhttps?:\/\/\S+/gi)[0]);
 
-				if (quote.attachments.first()) {
-					const fileExt = quote.attachments.first().url.slice(-3); // eslint-disable-line one-var
-
-					if (fileExt === 'peg' || fileExt === 'jpg' || fileExt === 'png' || fileExt === 'gif' || fileExt === 'webp') {
-						quoteEmbed.setImage(quote.attachments.first().url);
-					}
+				if (img) {
+					quoteEmbed.setImage(img);
 				}
+			}
 
-				this.deleteCommandMessages(msg);
+			if (quote.attachments.first()) {
+				const fileExt = quote.attachments.first().url.slice(-3); // eslint-disable-line one-var
 
-				return msg.embed(quoteEmbed, args.content);
-			})
-			.catch((err) => {
-				console.error(err); // eslint-disable-line no-console
+				if (fileExt === 'peg' || fileExt === 'jpg' || fileExt === 'png' || fileExt === 'gif' || fileExt === 'webp') {
+					quoteEmbed.setImage(quote.attachments.first().url);
+				}
+			}
 
-				return msg.reply('⚠️ something went wrong. An error was logged to your error console.');
-			});
+			this.deleteCommandMessages(msg);
+
+			return msg.embed(quoteEmbed, args.content);
+		}
+
+		return msg.reply('⚠️ something went wrong quoting that message.');
+
 	}
 };
