@@ -79,11 +79,18 @@ module.exports = class quoteCommand extends commando.Command {
 	}
 
 	async fetchPreview (url) {
-		/* eslint-disable global-require, no-mixed-requires*/
+		/* eslint-disable global-require */
 		const imgur = require('imgur'),
-			request = require('snekfetch'),
+			request = require('snekfetch');
+		/* eslint-enable global-require */
+
+		let requestData = '';
+
+		try {
 			requestData = await request.get(`https://api.letsvalidate.com/v1/thumbs/?url=${url}`);
-		/* eslint-enable global-require, no-mixed-requires*/
+		} catch (err) {
+			return null;
+		}
 
 		if (requestData) {
 			const upload = await imgur.uploadBase64(requestData.body.toString('base64'));
@@ -117,8 +124,8 @@ module.exports = class quoteCommand extends commando.Command {
 				.setFooter(`Message sent in #${quote.channel.name} on ${moment(quote.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 				.setDescription(quote.cleanContent);
 
-			if (quote.cleanContent.match(/\bhttps?:\/\/\S+/gi) && !quote.attachments.first()) {
-				const img = await this.fetchPreview(quote.cleanContent.match(/\bhttps?:\/\/\S+/gi)[0]);
+			if (quote.cleanContent.match(/\bhttps?:\/\/[^\s>]+/gi) && !quote.attachments.first()) {
+				const img = await this.fetchPreview(quote.cleanContent.match(/\bhttps?:\/\/[^\s>]+/gi)[0]);
 
 				if (img) {
 					quoteEmbed.setImage(img);
