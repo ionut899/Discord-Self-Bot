@@ -103,7 +103,9 @@ module.exports = class rpsmallimageCommand extends commando.Command {
 				return msg.reply(`No assets found in application with ID \`${appID}\``);
 			}
 
-			return msg.reply(`An error occured fetching that application. Are you sure the ID is correct? Set it with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}rpappid\`command `);
+			return msg.reply(oneLine `An error occured fetching that application. Are you sure the ID is correct? Set it with the \`${msg.guild
+				? msg.guild.commandPrefix
+				: this.client.commandPrefix}rpappid\`command `);
 		}
 
 		return msg.reply(`You first need to set your application with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}rpappid\` command!`);
