@@ -60,6 +60,6 @@ module.exports = class webhookkeywordsCommand extends commando.Command {
 		this.deleteCommandMessages(msg);
 
 		return msg.reply(oneLine `Webhook Keywords have been set to ${args.keywords.replace(/,/gim, ', ')}. 
-		Please make sure to enable webhooks with the ${msg.guild.commandPrefix}webhookkeywords command`);
+		Please make sure to enable webhooks with the ${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}webhookkeywords command`);
 	}
 };

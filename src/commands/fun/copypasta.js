@@ -62,7 +62,7 @@ module.exports = class copypastaCommand extends commando.Command {
 		/* eslint-disable sort-vars */
 		const match = new Matcher(),
 			dym = match.get(`${args.name}.txt`),
-			dymString = dym !== null ? `Did you mean \`${dym}\`?` : `You can save it with \`${msg.guild.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
+			dymString = dym !== null ? `Did you mean \`${dym}\`?` : `You can save it with \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
 		/* eslint-enable sort-vars */
 
 		match.values = fs.readdirSync(path.join(__dirname, 'pastas'));
