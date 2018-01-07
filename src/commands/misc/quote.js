@@ -107,7 +107,7 @@ module.exports = class quoteCommand extends commando.Command {
 				.setFooter(`Message sent in #${quote.channel.name} on ${moment(quote.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 				.setDescription(quote.cleanContent);
 
-			if (quote.cleanContent.match(/\bhttps?:\/\/\S+/gi)) {
+			if (quote.cleanContent.match(/\bhttps?:\/\/\S+/gi) && !quote.attachments.first()) {
 				const img = await this.fetchPreview(quote.cleanContent.match(/\bhttps?:\/\/\S+/gi)[0]);
 
 				if (img) {
