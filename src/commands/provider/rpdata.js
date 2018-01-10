@@ -76,6 +76,8 @@ module.exports = class rpdataCommand extends commando.Command {
 			.addField('Party Maximum', this.client.provider.get('global', 'rppartysize')
 				? this.client.provider.get('global', 'rppartysize')[1]
 				: 'None Set', true)
+			.addField('End Time Enabled', this.client.provider.get('global', 'rptoggletimeend', 'Disabled'), true)
+			.addField('End Time Duration', this.client.provider.get('global', 'rptimeend', '1'), true)
 			.addField('Timestamp', this.client.provider.get('global', 'rptimestamptoggle', 'Disabled'), true)
 			.addField('Rich Presences Enabled', this.client.provider.get('global', 'rptoggle', 'Disabled'), true);
 

@@ -38,6 +38,10 @@ module.exports = class rpreloadCommand extends commando.Command {
 		});
 	}
 
+	addHours (date, h) {
+		return date.getTime() + h * 60 * 60 * 1000; // eslint-disable-line no-mixed-operators
+	}
+
 	deleteCommandMessages (msg) {
 		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
 			msg.delete();
@@ -62,7 +66,10 @@ module.exports = class rpreloadCommand extends commando.Command {
 					'url': this.client.provider.get('global', 'rpurl', null),
 					'details': this.client.provider.get('global', 'rpdetails', 'Made by Favna'),
 					'state': this.client.provider.get('global', 'rpstate', 'https://selfbot.favna.xyz'),
-					'timestamps': {'start': this.client.provider.get('global', 'rptimestamptoggle', false) ? Math.floor(Date.now() / 1000) : null},
+					'timestamps': this.client.provider.get('global', 'rptimestamptoggle', false) ? {
+						'start': Date.now(),
+						'end': this.client.provider.get('global', 'rptoggletimeend', true) ? this.addHours(new Date(), this.client.provider.get('global', 'rptimeend', 1)) : null
+					} : null,
 					'assets': {
 						'largeImage': this.client.provider.get('global', 'rplargeimage', '379734851206512640'),
 						'smallImage': this.client.provider.get('global', 'rpsmallimage', '379734813751377921'),
@@ -76,6 +83,8 @@ module.exports = class rpreloadCommand extends commando.Command {
 			});
 		}
 
-		return msg.reply('Your Rich Presence has been set! Please remember that you cannot see it on your own account (exception: Android mobile app allows this).');
+		this.deleteCommandMessages(msg);
+
+		return msg.reply(`Your Rich Presence has been set! You can view your activity with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}activity\` command`);
 	}
 };
