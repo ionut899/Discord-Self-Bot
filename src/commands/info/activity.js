@@ -117,13 +117,12 @@ module.exports = class activityCommand extends commando.Command {
 		if (activity) {
 			const gameIcon = gameList.body.find(g => g.name === activity.name);
 
-
 			largeImageAssetCheck: if (activity.assets) {
 				if (activity.assets.largeImage) {
 					embed.setThumbnail(`https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.largeImage}.png`);
 					break largeImageAssetCheck;
 				}
-				if (activity.assets.largeImage.includes('spotify')) {
+				if (activity.assets.largeImage && activity.assets.largeImage.includes('spotify')) {
 					embed.setThumbnail(`https://i.scdn.co/image/${activity.assets.largeImage.split(':')[1]}`);
 					break largeImageAssetCheck;
 				}
@@ -132,7 +131,7 @@ module.exports = class activityCommand extends commando.Command {
 
 			smallImageAssetCheck: if (activity.assets) {
 				if (activity.timestamps && activity.timestamps.start) {
-					if (activity.assets.smallImage.includes('spotify')) {
+					if (activity.assets.smallImage && activity.assets.smallImage.includes('spotify')) {
 						embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`, `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`);
 						break smallImageAssetCheck;
 					} else {
@@ -140,7 +139,7 @@ module.exports = class activityCommand extends commando.Command {
 							`https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`);
 						break smallImageAssetCheck;
 					}
-				} else if (activity.assets.smallImage.includes('spotify')) {
+				} else if (activity.assets.smallImage && activity.assets.smallImage.includes('spotify')) {
 					embed.setFooter('​', `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`);
 					break smallImageAssetCheck;
 				} else {
@@ -151,6 +150,7 @@ module.exports = class activityCommand extends commando.Command {
 			if (activity.timestamps && activity.timestamps.start) {
 				embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`);
 			}
+
 
 			activity.timestamps && activity.timestamps.end
 				? embed.setFooter(`${embed.footer ? `${embed.footer.text} | ` : ''}End Time: ${moment.duration(activity.timestamps.end - Date.now()).format('HH [hours and] mm [minutes]')}`)
