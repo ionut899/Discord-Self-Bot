@@ -107,7 +107,7 @@ module.exports = class gameCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		/* eslint-disable sort-vars*/
+		/* eslint-disable sort-vars, one-var, indent, no-console*/
 		const gameEmbed = new Discord.MessageEmbed(),
 			igdb = igdbapi(auth.igdbAPIKey),
 			gameInfo = await igdb.games({
@@ -124,7 +124,7 @@ module.exports = class gameCommand extends commando.Command {
 				'ids': gameInfo.body[0].genres,
 				'fields': ['name']
 			}),
-			hexColor = gameInfo.body[0].cover ? await this.fetchColor(gameInfo.body[0].cover.url) : this.embedColor,
+			hexColor = gameInfo.body[0].cover ? await this.fetchColor(`https:${gameInfo.body[0].cover.url}`) : this.embedColor,
 			platformInfo = await igdb.platforms({
 				'ids': gameInfo.body[0].platforms,
 				'fields': ['name']
@@ -135,7 +135,7 @@ module.exports = class gameCommand extends commando.Command {
 		gameEmbed
 			.setColor(hexColor)
 			.setAuthor(gameInfo.body[0].name, 'https://favna.s-ul.eu/O704Q7py.png')
-			.setThumbnail(gameInfo.body[0].cover.url)
+			.setThumbnail(`https:${gameInfo.body[0].cover.url}`)
 			.setFooter('Info pulled from IGDB')
 			.addField('Rating', Math.round(gameInfo.body[0].rating * 10) / 10, true)
 			.addField('Release Date', releaseDate, true)
