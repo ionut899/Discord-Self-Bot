@@ -121,32 +121,43 @@ class DiscordSelfBot {
 		};
 	}
 
-	onmessage () {
+	onMessage () {
 		return (msg) => {
 
 			if (this.client.provider.get('global', 'webhooktoggle', false) && msg.author.id !== values.ownerID && !msg.mentions.users.get(values.ownerID)) {
 				const mentionEmbed = new Discord.MessageEmbed(),
+					regexpExclusions = [],
 					regexpKeywords = [],
-					wnsKeywords = this.client.provider.get('global', 'webhookkeywords');
+					wnsExclusions = this.client.provider.get('global', 'webhookexclusions', ['none']),
+					wnsKeywords = this.client.provider.get('global', 'webhookkeywords', ['username', 'nickname']);
 
-				for (let i = 0; i < wnsKeywords.length; i += 1) {
-					const regex = new RegExp(`.*${wnsKeywords[i]}.*`, 'gim');
+				for (const keyword in wnsKeywords) {
+					const regex = new RegExp(`.*${wnsKeywords[keyword]}.*`, 'im');
 
 					regexpKeywords.push(regex);
 				}
 
-				if (regexpKeywords.some(rx => rx.test(msg.cleanContent.split(' ')))) {
-					mentionEmbed
-						.setAuthor(msg.channel.type === 'text'
-							? `${msg.member ? msg.member.displayName : 'someone'} dropped your name in #${msg.channel.name} in ${msg.guild.name}`
-							: `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL())
-						.setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
-						.setColor(msg.member ? msg.member.displayHexColor : '#535B62')
-						.setThumbnail(msg.author.displayAvatarURL())
-						.addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
-						.addField('Message Attachments', msg.attachments.first() && msg.attachments.first().url ? msg.attachments.map(au => au.url) : 'None');
+				for (const exclusion in wnsExclusions) {
+					const regex = new RegExp(`.*${wnsExclusions[exclusion]}.*`, 'im');
 
-					values.hookClient.send(`Stalkify away <@${values.ownerID}>`, {'embeds': [mentionEmbed]}).catch(console.error); // eslint-disable-line no-console
+					regexpExclusions.push(regex);
+				}
+
+				if (regexpKeywords.find(rx => rx.test(msg.cleanContent))) {
+
+					if (!regexpExclusions.find(rx => rx.test(msg.cleanContent))) {
+						mentionEmbed
+							.setAuthor(msg.channel.type === 'text'
+								? `${msg.member ? msg.member.displayName : 'someone'} dropped your name in #${msg.channel.name} in ${msg.guild.name}`
+								: `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL())
+							.setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+							.setColor(msg.member ? msg.member.displayHexColor : '#535B62')
+							.setThumbnail(msg.author.displayAvatarURL())
+							.addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
+							.addField('Message Attachments', msg.attachments.first() && msg.attachments.first().url ? msg.attachments.map(au => au.url) : 'None');
+
+						values.hookClient.send(`Stalkify away <@${values.ownerID}>`, {'embeds': [mentionEmbed]}).catch(console.error); // eslint-disable-line no-console
+					}
 				}
 			}
 		};
@@ -165,7 +176,7 @@ class DiscordSelfBot {
 			.on('commandBlocked', this.onCmdBlock())
 			.on('commandStatusChange', this.onCmdStatusChange())
 			.on('groupStatusChange', this.onGroupStatusChange())
-			.on('message', this.onmessage());
+			.on('message', this.onMessage());
 
 		this.client.setProvider(
 			sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))

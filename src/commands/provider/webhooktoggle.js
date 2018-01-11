@@ -68,10 +68,10 @@ module.exports = class webhooktoggleCommand extends commando.Command {
 
 		this.deleteCommandMessages(msg);
 
-		return msg.reply(oneLine `Webhook Notification System is now ${args.option
-			? `enabled. Make sure to set up your keywords with ${msg.guild
-				? msg.guild.commandPrefix
-				: this.client.commandPrefix}webhooktoggle.`
+		return msg.reply(oneLine `Webhook Notification System is now ${args.option 
+			? `enabled. Make sure to set up your keywords with ${msg.guild 
+				? msg.guild.commandPrefix : this.client.commandPrefix}webhooktoggle and optionally word exclusions with ${msg.guild 
+				? msg.guild.commandPrefix : this.client.commandPrefix}webhookexclusions.` 
 			: 'disabled.'}`);
 	}
 };
