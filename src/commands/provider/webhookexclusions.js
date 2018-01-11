@@ -59,8 +59,8 @@ module.exports = class webhookexclusionsCommand extends commando.Command {
 
 		this.deleteCommandMessages(msg);
 
-		return msg.reply(oneLine `${args.exclusions.replace(/,/gim, ', ')} excluded from WNS. 
-        Make sure to enable webhooks with the ${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}webhooktoggle
+		return msg.reply(oneLine `\`${args.exclusions.replace(/,/gim, ', ')}\` excluded from WNS. 
+        Make sure to enable webhooks with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}webhooktoggle\`
         and set your keywords with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}webhookkeywords\` command`);
 	}
 };
