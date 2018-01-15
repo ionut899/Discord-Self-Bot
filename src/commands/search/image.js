@@ -122,6 +122,8 @@ module.exports = class imageCommand extends commando.Command {
 				.setImage(res.body.items[0].link)
 				.setFooter(`Search query: "${args.query}"`);
 
+			this.deleteCommandMessages(msg);
+
 			return msg.embed(embed);
 		}
 
@@ -143,6 +145,8 @@ module.exports = class imageCommand extends commando.Command {
 
 			return msg.embed(embed);
 		}
+
+		this.deleteCommandMessages(msg);
 
 		return msg.reply('⚠️ ***nothing found***');
 	}
