@@ -41,9 +41,19 @@ module.exports = class rpsCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'hand',
-					'prompt': 'Play Rock, Paper or Scissors?',
+					'prompt': 'Do you play rock, paper or scissors?',
 					'type': 'string',
-					'label': 'What hand to play'
+					'label': 'What hand to play',
+					'validate': (hand) => {
+						const validHands = ['rock', 'paper', 'scissors'];
+
+						if (validHands.includes(hand.toLowerCase())) {
+							return true;
+						}
+
+						return `Has to be one of ${validHands.join(', ')}`;
+					},
+					'parse': p => p.toLowerCase()
 				}
 			]
 		});
