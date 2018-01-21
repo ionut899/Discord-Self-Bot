@@ -49,8 +49,8 @@ acorn@^4.0.4:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.13.tgz#105495ae5361d697bd195c825192e1ad7f253787"
 
 acorn@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.3.0.tgz#7446d39459c54fb49a80e6ee6478149b940ec822"
 
 ajv-keywords@^2.1.0:
   version "2.1.1"
@@ -280,8 +280,8 @@ boom@5.x.x:
     hoek "4.x.x"
 
 booru@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/booru/-/booru-0.3.3.tgz#5e770bb36f53c301d637fe16109fc30d15b1bf3b"
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/booru/-/booru-0.3.6.tgz#f6941295e272f0e0e5f7a369b264342153159e06"
   dependencies:
     request "^2.79.0"
     request-promise-native "^1.0.3"
@@ -452,13 +452,7 @@ commander@>=0.3.0, commander@^2.3.0, commander@^2.9.0:
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
 
-common-tags@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.6.0.tgz#788e4bcc582f16993e5b2c92f76b1ccb80731537"
-  dependencies:
-    babel-runtime "^6.26.0"
-
-common-tags@^1.0.0:
+common-tags@1.7.2, common-tags@^1.0.0:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.7.2.tgz#24d9768c63d253a56ecff93845b44b4df1d52771"
   dependencies:
@@ -664,26 +658,26 @@ dijkstrajs@^1.0.1:
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
 "discord.js-commando@https://github.com/Favna/discord.js-commando.git#active":
-  version "1.1.0-F"
-  resolved "https://github.com/Favna/discord.js-commando.git#093207b370cef42b186fb15e1a7b9c52d414906b"
+  version "1.1.0-F-A.1"
+  resolved "https://github.com/Favna/discord.js-commando.git#bed6b1fe8da3f3698702e22e5ccb3132f79b489b"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
     require-all "^2.0.0"
 
 "discord.js@git+https://github.com/Favna/discord.js.git#active":
-  version "12.0.0-F"
-  resolved "git+https://github.com/Favna/discord.js.git#381f3a01d08f13dbbc6b7c219b2172d5110383ea"
+  version "12.0.0-F.1"
+  resolved "git+https://github.com/Favna/discord.js.git#145e609806cca52a036ff7f5f91cf42cc60b5cae"
   dependencies:
     pako "^1.0.0"
-    prism-media "^0.0.2"
+    prism-media "github:hydrabolt/prism-media"
     snekfetch "^3.5.0"
     tweetnacl "^1.0.0"
     ws "^3.3.1"
 
-doctrine@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.0.2.tgz#68f96ce8efc56cc42651f1faadb4f175273b0075"
+doctrine@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.1.0.tgz#5cd01fc101621b42c4cd7f5d1a66243716d3f39d"
   dependencies:
     esutils "^2.0.2"
 
@@ -811,9 +805,9 @@ eslint-visitor-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
 
-eslint@4.14.0:
-  version "4.14.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.14.0.tgz#96609768d1dd23304faba2d94b7fefe5a5447a82"
+eslint@4.16.0:
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.16.0.tgz#934ada9e98715e1d7bbfd6f6f0519ed2fab35cc1"
   dependencies:
     ajv "^5.3.0"
     babel-code-frame "^6.22.0"
@@ -821,7 +815,7 @@ eslint@4.14.0:
     concat-stream "^1.6.0"
     cross-spawn "^5.1.0"
     debug "^3.1.0"
-    doctrine "^2.0.2"
+    doctrine "^2.1.0"
     eslint-scope "^3.7.1"
     eslint-visitor-keys "^1.0.0"
     espree "^3.5.2"
@@ -1733,9 +1727,9 @@ mkdirp@0.5.1, mkdirp@0.x.x, "mkdirp@>=0.5 0", mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment-duration-format@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.1.1.tgz#2eb0576f66822a47a0dee73af734c23b907ba2bd"
+moment-duration-format@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.2.0.tgz#d65a3cbf5f8233c99efee1b8493c59e38bd581f2"
 
 moment-timezone@^0.5.14:
   version "0.5.14"
@@ -2086,8 +2080,8 @@ pngjs@^3.0.0, pngjs@^3.3.0:
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.3.1.tgz#8e14e6679ee7424b544334c3b2d21cea6d8c209a"
 
 pornsearch@^2.2.5:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/pornsearch/-/pornsearch-2.2.5.tgz#e83d4fa726c329f187bdaca853a3dad063047457"
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/pornsearch/-/pornsearch-2.3.0.tgz#7e60739afc132427dd42049c9fde5c07aebbb4e4"
   dependencies:
     axios "^0.15.3"
     cheerio "^0.22.0"
@@ -2109,9 +2103,9 @@ pretty-ms@^3.0.0:
     parse-ms "^1.0.0"
     plur "^2.1.2"
 
-prism-media@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/prism-media/-/prism-media-0.0.2.tgz#aa917b084576c4df6488e4ea8e7d6d44aed4b411"
+"prism-media@github:hydrabolt/prism-media":
+  version "0.1.0"
+  resolved "https://codeload.github.com/hydrabolt/prism-media/tar.gz/f6737178d10665934669ab2ff3da23a5ecc23e8c"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"
@@ -2182,8 +2176,8 @@ random-ua@0.0.6:
   resolved "https://registry.yarnpkg.com/random-ua/-/random-ua-0.0.6.tgz#eb70901b72a4fe0b8d3ab752a6b25122e40c0ad7"
 
 rc@^1.1.7:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.2.tgz#d8ce9cb57e8d64d9c7badd9876c7c34cbe3c7077"
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.4.tgz#a0f606caae2a3b862bbd0ef85482c0125b315fa3"
   dependencies:
     deep-extend "~0.4.0"
     ini "~1.3.0"
@@ -2446,13 +2440,17 @@ scalc@^2.0.1:
   dependencies:
     copy-paste "^1.1.2"
 
-"semver@2 || 3 || 4 || 5", semver@^5.3.0:
+"semver@2 || 3 || 4 || 5":
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
 
 semver@5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
+
+semver@^5.3.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
 set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
@@ -2529,9 +2527,9 @@ sqlite3@3.1.13:
     nan "~2.7.0"
     node-pre-gyp "~0.6.38"
 
-sqlite@2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-2.9.0.tgz#33f03c646ea0f7a5d506e645a19b9c5352dd9fa4"
+sqlite@2.9.1:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-2.9.1.tgz#2c85192c15d3e20361236f26240187f9d9f71355"
   dependencies:
     sqlite3 "3.1.13"
 
@@ -2864,8 +2862,8 @@ utile@0.2.x:
     rimraf "2.x.x"
 
 uuid@^3.0.0, uuid@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
