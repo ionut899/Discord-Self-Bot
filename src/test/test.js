@@ -28,7 +28,7 @@ const DiscordSelfBot = require('../DiscordSelfBot.js'),
 	token = require('../auth.json').token; // eslint-disable-line prefer-destructuring
 
 test('connect & disconnect', (timeout) => {
-	timeout.timeoutAfter(15000);
+	timeout.timeoutAfter(30000);
 	timeout.ok(token, 'discord token should be set');
 
 	const bot = new DiscordSelfBot(token);
