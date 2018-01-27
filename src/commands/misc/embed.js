@@ -31,7 +31,7 @@ module.exports = class embedCommand extends commando.Command {
 		super(client, {
 			'name': 'embed',
 			'group': 'misc',
-			'aliases': ['emb'],
+			'aliases': ['emb', 'embeds'],
 			'memberName': 'embed',
 			'description': 'Create custom MessageEmbeds on the fly',
 			'examples': ['embed {FieldName>Value1;Value2<FieldName2>Value1;Value2... etc}', 'embed What goes up but never comes down?>Your Age'],
