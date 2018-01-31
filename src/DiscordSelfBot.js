@@ -160,6 +160,22 @@ class DiscordSelfBot {
 					}
 				}
 			}
+
+			if (this.client.provider.get('global', 'channellinktoggle', false) && msg.guild) {
+				const dataArr = this.client.provider.get('global', 'clconfig'),
+					forwardEmbed = new Discord.MessageEmbed();
+
+				if (dataArr.length !== 0 && msg.guild.id === dataArr[0][0] && msg.channel.id === dataArr[0][1]) {
+					forwardEmbed
+						.setColor(msg.member.displayHexColor)
+						.setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
+						.setTitle(`Message from ${this.client.guilds.get(dataArr[0][0]).channels.get(dataArr[0][1]).name} on ${this.client.guilds.get(dataArr[1][0]).name}`)
+						.setDescription(msg.content)
+						.setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+
+					this.client.guilds.get(dataArr[1][0]).channels.get(dataArr[1][1]).send({'embed': forwardEmbed});
+				}
+			}
 		};
 	}
 
