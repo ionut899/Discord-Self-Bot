@@ -25,7 +25,9 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	moment = require('moment');
+	moment = require('moment'),
+	{stripIndents} = require('common-tags'),
+	table = require('markdown-table');
 
 module.exports = class fyidmCommand extends commando.Command {
 	constructor (client) {
@@ -51,7 +53,7 @@ module.exports = class fyidmCommand extends commando.Command {
 						if (id.length === 4) {
 							return true;
 						}
-					
+
 						return 'The length of the ID is exactly 4 digits long';
 					}
 				}
@@ -65,10 +67,14 @@ module.exports = class fyidmCommand extends commando.Command {
 		}
 	}
 
-	run (msg, args) {
-		const discrim = args.discrim === 'self' ? msg.author.discriminator : args.discrim,
+	async run (msg, args) {
+		/* eslint-disable multiline-comment-style, capitalized-comments, one-var*/
+
+		const discrim = args.discrim === 'self' ? this.client.user.discriminator : args.discrim,
 			discrimMatches = this.client.users.filter(u => u.discriminator === discrim),
-			fyidmEmbed = new Discord.MessageEmbed();
+			fyidmEmbed = new Discord.MessageEmbed(),
+			matchTable = [['Username', 'UserID']],
+			messages = [];
 		let matchEntries = {};
 
 		discrimMatches.delete(msg.author.id);
@@ -76,7 +82,7 @@ module.exports = class fyidmCommand extends commando.Command {
 
 		fyidmEmbed
 			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-			.setTitle('Uses with matching discriminator')
+			.setTitle(`Users with discriminator ${args.discrim}`)
 			.setFooter(`Discriminator match checked on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
 		for (let index = 0; index < discrimMatches.size; index += 1) {
@@ -85,15 +91,28 @@ module.exports = class fyidmCommand extends commando.Command {
 			if (discrimMatches.size <= 8) {
 				fyidmEmbed
 					.addField('Username', match.username, true)
-					.addField('Discriminator', match.discriminator, true)
 					.addField('UserID', match.id, true);
+			} else if (discrimMatches.size <= 25) {
+				fyidmEmbed.addField('Username || UserID', `${match.username} || ${match.id}`, false);
 			} else {
-				fyidmEmbed.addField('Username || Discriminator || UserID', `${match.username} || ${match.discriminator} || ${match.id}`, false);
+				matchTable.push([match.username, match.id]);
+			}
+		}
+
+		if (matchTable.length === 0) {
+			messages.push(await msg.embed(fyidmEmbed));
+		} else {
+			const splitTotal = Discord.util.splitMessage(`${table(matchTable)}`);
+
+			for (const part in splitTotal) {
+				// eslint-disable-next-line no-await-in-loop
+				messages.push(await msg.say(stripIndents `\`\`\`Users with discriminator ${this.client.user.discriminator} 
+				${splitTotal[part]}\`\`\``));
 			}
 		}
 
 		this.deleteCommandMessages(msg);
 
-		return msg.embed(fyidmEmbed);
+		return messages;
 	}
 };
