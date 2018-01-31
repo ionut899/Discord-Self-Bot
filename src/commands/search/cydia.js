@@ -60,13 +60,12 @@ module.exports = class cydiaCommand extends commando.Command {
 			res = await cydia.getAllInfo(args.query);
 
 		if (res) {
-
 			cydiaEmbed
 				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 				.setAuthor('Tweak Info', 'http://i.imgur.com/OPZfdht.png')
 				.addField('Display Name', res.display, true)
 				.addField('Package Name', res.name, true)
-				.addField('Description', res.summary, true)
+				.addField('Description', `${res.summary.slice(0, 900)}... [Read more](http://cydia.saurik.com/package/${res.name})`, true)
 				.addField('Version', res.version, true)
 				.addField('Section', res.section, true)
 				.addField('Price', res.price === 0 ? 'Free' : res.price, true)
