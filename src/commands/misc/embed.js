@@ -51,6 +51,20 @@ module.exports = class embedCommand extends commando.Command {
 						return 'The format for a custom rich embed should at least be `FieldName>Value`';
 					},
 					'wait': 60
+				},
+				{
+					'key': 'image',
+					'prompt': 'Any image to send into the embed?',
+					'type': 'string',
+					'label': 'ImageURL to be used as embed URL',
+					'default': 'none',
+					'validate': (url) => {
+						if (url.match(/(https?:\/\/.*\.(?:png|jpg|gif|webp|jpeg|svg))/im)) {
+							return true;
+						}
+
+						return 'Image URl has to be an actual URL';
+					}
 				}
 			]
 		});
@@ -75,7 +89,9 @@ module.exports = class embedCommand extends commando.Command {
 			customEmbed.addField(header, values.join('\n'), true);
 		});
 
-		customEmbed.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000');
+		customEmbed
+			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+			.setImage(args.image !== 'none' ? args.image : null);
 
 		this.deleteCommandMessages(msg);
 
