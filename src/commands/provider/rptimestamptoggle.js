@@ -46,7 +46,7 @@ module.exports = class rptimestamptoggleCommand extends commando.Command {
 					'validate': (bool) => {
 						const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
-						if (validBools.includes(bool)) {
+						if (validBools.includes(bool.toLowerCase())) {
 							return true;
 						}
 
