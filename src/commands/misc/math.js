@@ -36,9 +36,8 @@ module.exports = class mathCommand extends commando.Command {
 			'aliases': ['calc'],
 			'description': 'Calculate anything',
 			'format': 'EquationToSolve',
-			'examples': ['math {equation to solve}', 'math -10 - abs(-3) + 2^5'],
+			'examples': ['math -10 - abs(-3) + 2^5'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'equation',
