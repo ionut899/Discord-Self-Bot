@@ -167,7 +167,7 @@ class DiscordSelfBot {
 
 				if (dataArr.length !== 0 && msg.guild.id === dataArr[0][0] && msg.channel.id === dataArr[0][1]) {
 					forwardEmbed
-						.setColor(msg.member.displayHexColor)
+						.setColor(msg.member ? msg.member.displayHexColor : '#FF0000')
 						.setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
 						.setTitle(`Message from ${this.client.guilds.get(dataArr[0][0]).channels.get(dataArr[0][1]).name} on ${this.client.guilds.get(dataArr[1][0]).name}`)
 						.setDescription(msg.content)
