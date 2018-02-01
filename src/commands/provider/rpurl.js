@@ -30,13 +30,13 @@ module.exports = class rpurlCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rpurl',
+			'memberName': 'rpurl',
 			'group': 'provider',
 			'aliases': ['url'],
-			'memberName': 'rpurl',
 			'description': 'Set your Rich Presence URL',
-			'examples': ['rpurl {url}', 'rpurl https://twitch.tv/favna'],
+			'examples': ['rpurl https://twitch.tv/favna'],
+			'format': 'url',
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'url',

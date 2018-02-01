@@ -31,19 +31,18 @@ module.exports = class defineCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'define',
+			'memberName': 'define',
 			'group': 'search',
 			'aliases': ['def', 'dict'],
-			'memberName': 'define',
 			'description': 'Gets the definition on a word on glosbe',
-			'examples': ['define {word}', 'define pixel'],
+			'format': 'Word',
+			'examples': ['define pixel'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'query',
 					'prompt': 'What word do you want to define?',
-					'type': 'string',
-					'label': 'Word to define'
+					'type': 'string'
 				}
 			]
 		});

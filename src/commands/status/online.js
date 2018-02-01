@@ -29,9 +29,9 @@ module.exports = class dndCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'online',
+			'memberName': 'online',
 			'group': 'status',
 			'aliases': ['here', 'green'],
-			'memberName': 'online',
 			'description': 'Set your status to online',
 			'examples': ['online'],
 			'guildOnly': false

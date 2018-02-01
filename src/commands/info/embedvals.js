@@ -30,9 +30,9 @@ module.exports = class embedValsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'embedvals',
-			'aliases': ['valsofembed', 'vals'],
-			'group': 'info',
 			'memberName': 'embedvals',
+			'group': 'info',
+			'aliases': ['valsofembed', 'vals'],
 			'description': 'Shows how a Discord MessageEmbed is build up',
 			'guildOnly': false
 		});

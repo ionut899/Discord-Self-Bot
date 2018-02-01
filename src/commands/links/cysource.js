@@ -29,19 +29,18 @@ module.exports = class cydiaSourceCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'cysource',
-			'aliases': ['cysrc', 'source'],
-			'group': 'links',
 			'memberName': 'cysource',
+			'group': 'links',
+			'aliases': ['cysrc', 'source'],
 			'description': 'Gets the link to a cydia source using the Cydia Share URL API',
-			'examples': ['cysource {repo_url}', 'cypkg http://apt.thebigboss.org/repofiles/cydia/'],
+			'format': 'RepoURL',
+			'examples': ['cypkg http://apt.thebigboss.org/repofiles/cydia/'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'repo',
 					'prompt': 'What is the repo URL?',
-					'type': 'string',
-					'label': 'URL of the repo'
+					'type': 'string'
 				}
 			]
 		});

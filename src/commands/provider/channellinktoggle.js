@@ -30,14 +30,13 @@ module.exports = class ChannelLinkToggleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'channellinktoggle',
+			'memberName': 'channellinktoggle',
 			'group': 'provider',
 			'aliases': ['clt', 'chanlinktoggle', 'clinktoggle', 'cltoggle'],
-			'memberName': 'channellinktoggle',
-			'format': 'Enable|Disable',
 			'description': 'Enable or disable channel link',
+			'format': 'Enable|Disable',
 			'examples': ['channellinktoggle enable'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'option',

@@ -30,13 +30,13 @@ module.exports = class rpdetailsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rpdetails',
+			'memberName': 'rpdetails',
 			'group': 'provider',
 			'aliases': ['details', 'rpdetail'],
-			'memberName': 'rpdetails',
 			'description': 'Set your Rich Presence details',
-			'examples': ['rpdetails {detail}', 'rpappid Made by Favna'],
+			'format': 'DetailsText',
+			'examples': ['rpappid Made by Favna'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'details',

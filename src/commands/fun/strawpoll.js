@@ -31,28 +31,25 @@ module.exports = class strawpollCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'strawpoll',
+			'memberName': 'strawpoll',
 			'group': 'fun',
 			'aliases': ['poll', 'straw'],
-			'memberName': 'strawpoll',
 			'description': 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
-			'examples': ['strawpoll {Title} {Option1 Option2 .... OptionX}', 'strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],
+			'format': 'TitleOfStrawpoll OptionA|OptionB|OptionC...',
+			'examples': ['strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],
 			'guildOnly': false,
-			'argsSingleQuotes': true,
-
 			'args': [
 				{
 					'key': 'title',
 					'prompt': 'Title of the strawpoll',
 					'type': 'string',
-					'wait': 60,
-					'label': 'Title of the strawpoll'
+					'wait': 60
 				},
 				{
 					'key': 'options',
 					'prompt': 'Options for the strawpoll?',
 					'type': 'string',
 					'wait': 60,
-					'label': 'Questions for the strawpoll, delimited by a |',
 					'validate': (opts) => {
 						if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
 							opts.split('|').length >= 2) {

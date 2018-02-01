@@ -31,11 +31,11 @@ module.exports = class coinCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'coin',
-			'group': 'fun',
-			'aliases': ['flip'],
 			'memberName': 'coin',
+			'group': 'fun',
+			'aliases': ['flip', 'coinflip'],
 			'description': 'Flips a coin',
-			'examples': ['flip'],
+			'examples': ['coin'],
 			'guildOnly': false
 		});
 	}

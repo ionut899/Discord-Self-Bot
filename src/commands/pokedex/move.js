@@ -34,19 +34,18 @@ module.exports = class moveCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'move',
+			'memberName': 'move',
 			'group': 'pokedex',
 			'aliases': ['attack'],
-			'memberName': 'move',
 			'description': 'Get the info on a Pokémon move',
-			'examples': ['move {Pokémon Move Name}', 'move Dragon Dance'],
+			'format': 'MoveName',
+			'examples': ['move Dragon Dance'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'move',
 					'prompt': 'Get info on which move?',
-					'type': 'string',
-					'label': 'Move to find'
+					'type': 'string'
 				}
 			]
 		});

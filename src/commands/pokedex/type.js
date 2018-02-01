@@ -35,19 +35,18 @@ module.exports = class typeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'type',
+			'memberName': 'type',
 			'group': 'pokedex',
 			'aliases': ['matchup', 'weakness', 'advantage'],
-			'memberName': 'type',
 			'description': 'Get type matchup for a given type or type combination',
-			'examples': ['type {type1} {type2}', 'type Dragon Flying'],
+			'format': 'FirstType [SecondType]',
+			'examples': ['type Dragon Flying'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'type',
 					'prompt': 'Get info on which type?',
-					'type': 'string',
-					'label': 'Type matchup to check'
+					'type': 'string'
 				}
 			]
 		});

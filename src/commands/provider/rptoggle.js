@@ -30,13 +30,13 @@ module.exports = class rptoggleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rptoggle',
+			'memberName': 'rptoggle',
 			'group': 'provider',
 			'aliases': ['presencetoggle'],
-			'memberName': 'rptoggle',
 			'description': 'Configure whether you want a Rich Presence or normal presence',
-			'examples': ['rptoggle {option}', 'rptoggle enable'],
+			'format': 'enable|disable',
+			'examples': ['rptoggle enable'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'option',

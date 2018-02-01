@@ -30,13 +30,13 @@ module.exports = class webhooktoggleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'webhooktoggle',
+			'memberName': 'webhooktoggle',
 			'group': 'provider',
 			'aliases': ['wht', 'hooktoggle'],
-			'memberName': 'webhooktoggle',
 			'description': 'Configure whether you want a the Webhook Notification System (WNS)',
+			'format': 'enable|disable',
 			'examples': ['webhooktoggle {option}', 'webhooktoggle enable'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'option',

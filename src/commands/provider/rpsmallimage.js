@@ -30,13 +30,13 @@ module.exports = class rpsmallimageCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rpsmallimage',
+			'memberName': 'rpsmallimage',
 			'group': 'provider',
 			'aliases': ['smallimage', 'simage'],
-			'memberName': 'rpsmallimage',
 			'description': 'Set your Rich Presence SmallImage ID',
-			'examples': ['rpsmallimage {SmallImageID}', 'rpsmallimage 379734813751377921'],
+			'format': 'SmallImageID|SmallImageName',
+			'examples': ['rpsmallimage 379734813751377921'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'smallimage',

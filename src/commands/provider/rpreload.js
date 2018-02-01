@@ -29,9 +29,9 @@ module.exports = class rpreloadCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rpreload',
+			'memberName': 'rpreload',
 			'group': 'provider',
 			'aliases': ['setpresence', 'setrp', 'rpset'],
-			'memberName': 'rpreload',
 			'description': 'Reload your RichPresence data',
 			'examples': ['rpreload'],
 			'guildOnly': false

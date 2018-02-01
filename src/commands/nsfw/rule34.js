@@ -30,20 +30,19 @@ module.exports = class rule34Command extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rule34',
+			'memberName': 'rule34',
 			'group': 'nsfw',
 			'aliases': ['r34'],
-			'memberName': 'rule34',
 			'description': 'Find NSFW Content on Rule34',
-			'examples': ['rule34 {NSFW Query}', 'rule34 Pyrrha Nikos'],
+			'format': 'NSFWToLookUp',
+			'examples': ['rule34 Pyrrha Nikos'],
 			'guildOnly': false,
 			'nsfw': true,
-
 			'args': [
 				{
 					'key': 'nsfwtags',
 					'prompt': 'What do you want to find NSFW for?',
-					'type': 'string',
-					'label': 'Search query'
+					'type': 'string'
 				}
 			]
 		});

@@ -33,11 +33,12 @@ module.exports = class DocsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'docs',
-			'aliases': ['djsguide', 'guide', 'djs'],
-			'group': 'links',
 			'memberName': 'docs',
+			'group': 'links',
+			'aliases': ['djsguide', 'guide', 'djs'],
 			'description': 'Gets info from something in the DJS docs',
-			'examples': ['docs {Thing to find in DJS docs} {DJS docs version}', 'docs ClientUser'],
+			'format': 'TopicToFind [master|stable|commando]',
+			'examples': ['docs ClientUser'],
 			'guildOnly': false,
 			'args': [
 				{

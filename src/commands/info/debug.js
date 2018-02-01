@@ -30,19 +30,27 @@ module.exports = class debugCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'debug',
-			'aliases': ['bug'],
-			'group': 'info',
 			'memberName': 'debug',
+			'group': 'info',
+			'aliases': ['bug'],
 			'description': 'Gets the channel or role names and their matching IDs on a server',
-			'examples': ['debug {bugType}', 'debug roles'],
+			'format': 'channels|roles',
+			'examples': ['debug roles'],
 			'guildOnly': true,
-
 			'args': [
 				{
 					'key': 'buggerType',
 					'prompt': 'Do you want to debug `channels` or `roles`?',
 					'type': 'string',
-					'label': 'channels or roles to debug'
+					'validate': (type) => {
+						const validTypes = ['channels', 'roles'];
+
+						if (validTypes.includes(type.toLowerCase())) {
+							return true;
+						}
+
+						return `Has to be one of ${validTypes.join(', ')}`;
+					}
 				}
 			]
 		});

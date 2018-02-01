@@ -30,13 +30,13 @@ module.exports = class rptypeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rptype',
+			'memberName': 'rptype',
 			'group': 'provider',
 			'aliases': ['rtyp'],
-			'memberName': 'rptype',
 			'description': 'Set your Rich Presence Type',
-			'examples': ['rptype {type}', 'rptype PLAYING'],
+			'format': 'playing|watching|listening|streaming',
+			'examples': ['rptype PLAYING'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'type',

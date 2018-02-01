@@ -28,25 +28,24 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),
 	{oneLine} = require('common-tags'),
-	path = require('path');	
+	path = require('path');
 
 module.exports = class copypastaCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'copypasta',
-			'aliases': ['cp', 'pasta'],
-			'group': 'fun',
 			'memberName': 'copypasta',
+			'group': 'fun',
+			'aliases': ['cp', 'pasta'],
 			'description': 'Sends contents of a copypasta file to the chat',
-			'examples': ['copypasta <pasta_name>', 'copypasta navy'],
+			'format': 'CopypastaName',
+			'examples': ['copypasta navy'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'name',
 					'prompt': 'Send which copypasta?',
 					'type': 'string',
-					'label': 'Name of the pasta',
 					'parse': p => p.toLowerCase()
 				}
 			]
@@ -60,15 +59,14 @@ module.exports = class copypastaCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		/* eslint-disable sort-vars */
-		const match = new Matcher(),
-			dym = match.get(`${args.name}.txt`),
+		const match = new Matcher();
+
+		match.values = fs.readdirSync(path.join(__dirname, 'pastas'));
+
+		const dym = match.get(`${args.name}.txt`), // eslint-disable-line one-var
 			dymString = dym !== null
 				? oneLine `Did you mean \`${dym}\`?`
 				: oneLine `You can save it with \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
-		/* eslint-enable sort-vars */
-
-		match.values = fs.readdirSync(path.join(__dirname, 'pastas'));
 
 		try {
 			let pastaContent = fs.readFileSync(path.join(__dirname, `pastas/${args.name}.txt`), 'utf8');

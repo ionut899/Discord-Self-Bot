@@ -31,19 +31,18 @@ module.exports = class userInfoCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'userinfo',
-			'aliases': ['user', 'uinfo'],
-			'group': 'info',
 			'memberName': 'userinfo',
+			'group': 'info',
+			'aliases': ['user', 'uinfo'],
 			'description': 'Gets information about a user.',
-			'examples': ['uinfo {user}', 'uinfo Favna'],
+			'format': 'MemberID|MemberName(partial or full)',
+			'examples': ['uinfo Favna'],
 			'guildOnly': true,
-
 			'args': [
 				{
 					'key': 'member',
 					'prompt': 'What user would you like to snoop on?',
-					'type': 'member',
-					'label': 'member name or ID'
+					'type': 'member'
 				}
 			]
 		});

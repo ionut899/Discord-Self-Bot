@@ -29,9 +29,9 @@ module.exports = class linkifyCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'linkify',
+			'memberName': 'linkify',
 			'group': 'misc',
 			'aliases': ['link', 'imglink'],
-			'memberName': 'linkify',
 			'description': 'Create a discord cdn link from an attachment - for mobile',
 			'examples': ['linkify while sending a message with an attachment'],
 			'guildOnly': false

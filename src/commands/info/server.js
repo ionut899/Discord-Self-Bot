@@ -31,20 +31,19 @@ module.exports = class serverInfoCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'server',
-			'aliases': ['serverinfo', 'sinfo'],
-			'group': 'info',
 			'memberName': 'server',
+			'group': 'info',
+			'aliases': ['serverinfo', 'sinfo'],
 			'description': 'Gets information about the server.',
-			'examples': ['server {serverName ID (partial or full)}', 'server Favna\'s Selfbot'],
+			'format': 'ServerID|ServerName(partial or full)',
+			'examples': ['server Bots by Favna'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'server',
 					'prompt': 'Get info from which server?',
 					'type': 'guild',
-					'default': 'current',
-					'label': 'serverName ID (partial or full)'
+					'default': 'current'
 				}
 			]
 		});

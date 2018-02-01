@@ -37,19 +37,18 @@ module.exports = class themeNameCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'tpname',
+			'memberName': 'tpname',
 			'group': 'themeplaza',
 			'aliases': ['themename', 'tname', 'tsearch', 'ts'],
-			'memberName': 'tpname',
 			'description': 'Get info from a theme on themeplaza based on search query',
-			'examples': ['tname {search query}', 'name megaman'],
+			'format': 'ThemeName',
+			'examples': ['tpname megaman'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'themeSQ',
 					'prompt': 'Search query to fire at ThemePlaza?',
-					'type': 'string',
-					'label': 'Search query to fire on the site'
+					'type': 'string'
 				}
 			]
 		});

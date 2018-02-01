@@ -39,19 +39,18 @@ module.exports = class itemCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'item',
+			'memberName': 'item',
 			'group': 'pokedex',
 			'aliases': ['it', 'bag'],
-			'memberName': 'item',
 			'description': 'Get the info on an item in Pokémon',
-			'examples': ['item {Item Name}', 'item Life Orb'],
+			'format': 'ItemName',
+			'examples': ['item Life Orb'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'item',
 					'prompt': 'Get info on which item?',
-					'type': 'string',
-					'label': 'Item to find'
+					'type': 'string'
 				}
 			]
 		});

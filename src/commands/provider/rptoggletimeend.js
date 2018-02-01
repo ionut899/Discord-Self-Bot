@@ -30,13 +30,13 @@ module.exports = class rptoggletimeendCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rptoggletimeend',
+			'memberName': 'rptoggletimeend',
 			'group': 'provider',
 			'aliases': ['rptoggleend', 'toggleend', 'tte'],
-			'memberName': 'rptoggletimeend',
 			'description': 'Toggle ending timestamp on or off',
-			'examples': ['rptoggletimeend {option}', 'rptoggletimeend enable'],
+			'format': 'enable|disable',
+			'examples': ['rptoggletimeend enable'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'option',

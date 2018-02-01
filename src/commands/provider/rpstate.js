@@ -30,13 +30,13 @@ module.exports = class rpstateCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rpstate',
+			'memberName': 'rpstate',
 			'group': 'provider',
 			'aliases': ['state'],
-			'memberName': 'rpstate',
 			'description': 'Set your Rich Presence state',
-			'examples': ['rpstate {state}', 'rpstate https://selfbot.favna.xyz'],
+			'format': 'StateText',
+			'examples': ['rpstate https://selfbot.favna.xyz'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'state',

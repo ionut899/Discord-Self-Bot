@@ -31,32 +31,30 @@ module.exports = class quoteCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'quote',
+			'memberName': 'quote',
 			'group': 'misc',
 			'aliases': ['quoter', 'q'],
-			'memberName': 'quote',
-			'description': 'Quote someone else\'s message into a MessageEmbed. Limited to same server, see xquote for cross server.',
-			'examples': ['quote {channel name or ID} {messageID} {content you want to send along with the embed}', 'quote base 355275528002994176 Oh so that was the first message on the channel!'],
+			'description': 'Quote someone else\'s message into a MessageEmbed.',
+			'details': ' Limited to same server, see xquote for cross server.',
+			'format': 'ChannelID|ChannelName(partial or full) MessageID [ContentToSendAlongWithTheEmbed]',
+			'examples': ['quote general 355275528002994176 Oh so that was the first message on the channel!'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'channel',
 					'prompt': 'Which channel from the server?',
-					'type': 'channel',
-					'label': 'Channel name or ID'
+					'type': 'channel'
 				},
 				{
 					'key': 'message',
 					'prompt': 'And what message?',
-					'type': 'string',
-					'label': 'MessageID to quote'
+					'type': 'string'
 				},
 				{
 					'key': 'content',
 					'prompt': 'What content would you like to send along with the quote?',
 					'type': 'string',
-					'default': '',
-					'label': 'Content to send along with your quote'
+					'default': ''
 				}
 			]
 		});

@@ -31,19 +31,18 @@ module.exports = class eightBallCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': '8ball',
+			'memberName': '8ball',
 			'group': 'fun',
 			'aliases': ['eightball'],
-			'memberName': '8ball',
 			'description': 'Roll a magic 8ball',
-			'examples': ['8ball {question}', '8ball is Favna a genius coder?'],
+			'format': 'YourQuestion',
+			'examples': ['8ball is Favna a genius coder?'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'question',
 					'prompt': '8ball what?',
-					'type': 'string',
-					'label': 'Question to ask 8ball'
+					'type': 'string'
 				}
 			]
 		});

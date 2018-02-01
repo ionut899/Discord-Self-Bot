@@ -34,19 +34,18 @@ module.exports = class gameCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'games',
+			'memberName': 'games',
 			'group': 'search',
 			'aliases': ['game', 'moby', 'igdb'],
-			'memberName': 'games',
 			'description': 'Finds info on a game on IGDB (IndieGamesDoneBad)',
+			'format': 'GameName',
 			'examples': ['games {gameName}', 'games Tales of Berseria'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'game',
 					'prompt': 'Please supply game title',
-					'type': 'string',
-					'label': 'Game to look up'
+					'type': 'string'
 				}
 			]
 

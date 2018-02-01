@@ -31,19 +31,18 @@ module.exports = class urbanCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'urban',
+			'memberName': 'urban',
 			'group': 'search',
 			'aliases': ['ub', 'ud'],
-			'memberName': 'urban',
 			'description': 'Find definitions on urban dictionary',
-			'examples': ['urban {word}', 'urban ugt'],
+			'format': 'Term',
+			'examples': ['urban ugt'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'query',
 					'prompt': 'What word do you want to define?',
-					'type': 'string',
-					'label': 'Word to define'
+					'type': 'string'
 				}
 			]
 		});

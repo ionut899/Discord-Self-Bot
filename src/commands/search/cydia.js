@@ -31,19 +31,18 @@ module.exports = class cydiaCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'cydia',
+			'memberName': 'cydia',
 			'group': 'search',
 			'aliases': ['cy'],
-			'memberName': 'cydia',
 			'description': 'Finds info on a Cydia package',
-			'examples': ['cydia {packageName}', 'cydia anemone'],
+			'format': 'PackageName',
+			'examples': ['cydia anemone'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'query',
 					'prompt': 'Please supply package name',
-					'type': 'string',
-					'label': 'Package name to look up'
+					'type': 'string'
 				}
 			]
 		});

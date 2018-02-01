@@ -23,21 +23,31 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
+	fs = require('fs'),
+	{oneLine} = require('common-tags'),
 	path = require('path');
+
+const memes = fs.readdirSync(path.join(__dirname, 'images')); // eslint-disable-line one-var
+let detailString = '';
+
+for (const meme in memes) {
+	detailString += `${memes[meme].slice(0, memes[meme].length - 4)}, `;
+}
 
 module.exports = class memeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'meme',
-			'aliases': ['mem', 'maymay'],
-			'group': 'memes',
 			'memberName': 'meme',
+			'group': 'memes',
+			'aliases': ['mem', 'maymay'],
 			'description': 'Send a meme image',
+			'details': `Available memes: ${detailString}`,
+			'format': 'MemeName [MessageToSendWithEmoji]',
 			'examples': ['meme {imageName}', 'meme cry'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'image',
@@ -56,8 +66,19 @@ module.exports = class memeCommand extends commando.Command {
 	}
 
 	run (msg, args) {
+		const match = new Matcher();
+
+		match.values = memes;
+
+		const dym = match.get(`${args.image}.jpg`), // eslint-disable-line one-var
+			dymString = dym !== null
+				? oneLine `Did you mean \`${dym}\`?`
+				: oneLine `Add it to the images folder!`;
+
 		this.deleteCommandMessages(msg);
 
-		return msg.channel.send({'files': [new Discord.MessageAttachment(path.join(__dirname, `/images/${args.image.toLowerCase()}.jpg`), `${args.image}Meme.jpg`)]});
+		return msg.channel.send({'files': [path.join(__dirname, `/images/${args.image.toLowerCase()}.jpg`)]}).catch((err) => { // eslint-disable-line handle-callback-err, no-unused-vars
+			msg.reply(`⚠️ that meme does not exist! ${dymString}`);
+		});
 	}
 };

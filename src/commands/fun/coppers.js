@@ -31,9 +31,9 @@ module.exports = class coppersCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'coppers',
-			'aliases': ['police', 'cops'],
-			'group': 'fun',
 			'memberName': 'coppers',
+			'group': 'fun',
+			'aliases': ['police', 'cops'],
 			'description': 'Sends a "Police you are surrounded" message',
 			'examples': ['coppers'],
 			'guildOnly': false

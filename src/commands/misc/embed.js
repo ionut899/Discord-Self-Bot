@@ -30,19 +30,18 @@ module.exports = class embedCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'embed',
+			'memberName': 'embed',
 			'group': 'misc',
 			'aliases': ['emb', 'embeds'],
-			'memberName': 'embed',
 			'description': 'Create custom MessageEmbeds on the fly',
-			'examples': ['embed {FieldName>Value1;Value2<FieldName2>Value1;Value2... etc}', 'embed What goes up but never comes down?>Your Age'],
+			'format': 'FieldName>Value1[;Value2<FieldName2>Value1;Value2] [ImageURL]',
+			'examples': ['embed What goes up but never comes down?>Your Age'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'embedContent',
 					'prompt': 'What should the content of the embed be?',
 					'type': 'string',
-					'label': 'input for the custom embed',
 					'validate': (input) => {
 						if (input.match(/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\|\,\<\.\>\/\?\`\~]*)>([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\|\,\<\.\>\/\?\`\~]*).*/)) { // eslint-disable-line max-len
 							return true;
@@ -56,7 +55,6 @@ module.exports = class embedCommand extends commando.Command {
 					'key': 'image',
 					'prompt': 'Any image to send into the embed?',
 					'type': 'string',
-					'label': 'ImageURL to be used as embed URL',
 					'default': 'none',
 					'validate': (url) => {
 						if (url.match(/(https?:\/\/.*\.(?:png|jpg|gif|webp|jpeg|svg))/im)) {

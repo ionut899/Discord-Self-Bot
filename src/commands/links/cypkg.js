@@ -29,25 +29,23 @@ module.exports = class cydiaPackageCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'cypkg',
-			'aliases': ['pkg'],
-			'group': 'links',
 			'memberName': 'cypkg',
+			'group': 'links',
+			'aliases': ['pkg'],
 			'description': 'Gets the link to a cydia package using the Cydia Share URL API',
-			'examples': ['cypkg {repo_url} {package_name}', 'cypkg http://apt.thebigboss.org/repofiles/cydia/ com.anemonetheming.anemone'],
+			'format': 'RepoURL PackageName',
+			'examples': ['cypkg http://apt.thebigboss.org/repofiles/cydia/ com.anemonetheming.anemone'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'repo',
 					'prompt': 'What is the repo URL?',
-					'type': 'string',
-					'label': 'URL of the repo'
+					'type': 'string'
 				},
 				{
 					'key': 'package',
 					'prompt': 'And what is the package name?',
-					'type': 'string',
-					'label': 'PackageName of the package'
+					'type': 'string'
 				}
 			]
 		});

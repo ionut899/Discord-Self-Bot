@@ -31,9 +31,9 @@ module.exports = class tvOSCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'tvos',
-			'aliases': ['blockupdates'],
-			'group': 'links',
 			'memberName': 'tvos',
+			'group': 'links',
+			'aliases': ['blockupdates'],
 			'description': 'A link to download a tvos beta profile to block iOS updates',
 			'guildOnly': false
 		});

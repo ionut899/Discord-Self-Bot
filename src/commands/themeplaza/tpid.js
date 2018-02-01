@@ -28,7 +28,7 @@ const Discord = require('discord.js'),
 	moment = require('moment'),
 	path = require('path'),
 	request = require('snekfetch'),
-	mdobj = require(path.join(__dirname, 'metadata.js')).MetaDataObject; // eslint-disable-line sort-vars
+	mdobj = require(path.join(__dirname, 'metadata.js')); // eslint-disable-line sort-vars
 
 const themeEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
@@ -36,19 +36,18 @@ module.exports = class themeIDCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'tpid',
+			'memberName': 'tpid',
 			'group': 'themeplaza',
 			'aliases': ['id', 'themeid', 'tid'],
-			'memberName': 'tpid',
 			'description': 'Get info from a theme on themeplaza based on ID',
-			'examples': ['tpid {ThemeID}', 'tpid 215'],
+			'format': 'ThemeID',
+			'examples': ['tpid 215'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'themeID',
 					'prompt': 'ID of which theme?',
-					'type': 'string',
-					'label': 'ID of the theme'
+					'type': 'string'
 				}
 			]
 		});

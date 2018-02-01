@@ -30,13 +30,13 @@ module.exports = class rplargeimageCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rplargeimage',
+			'memberName': 'rplargeimage',
 			'group': 'provider',
 			'aliases': ['largeimage', 'limage'],
-			'memberName': 'rplargeimage',
 			'description': 'Set your Rich Presence LargeImage ID',
-			'examples': ['rplargeimage {LargeImageID}', 'rplargeimage 379734851206512640'],
+			'format': 'LargeImageID|LargeImageName',
+			'examples': ['rplargeimage 379734851206512640'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'largeimage',

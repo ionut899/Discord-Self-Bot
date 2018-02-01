@@ -30,25 +30,23 @@ module.exports = class zoneConvCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'zoneconverter',
-			'aliases': ['time', 'conv', 'zone', 'timeconv'],
-			'group': 'info',
 			'memberName': 'zoneconverter',
+			'group': 'info',
+			'aliases': ['time', 'conv', 'zone', 'timeconv'],
 			'description': 'Converts current time to specified timezone',
-			'examples': ['zoneconverter {Time in 24hourformat}  {Timezone in TZ}', 'zoneconverter 18:00 America/New_York'],
+			'format': 'TimeIn24HFormat TimezoneToConvertToInTZDatabaseFormat',
+			'examples': ['zoneconverter 18:00 America/New_York'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'time',
 					'prompt': 'What time to convert? (24 hour format)',
-					'type': 'string',
-					'label': 'Time in 24h format'
+					'type': 'string'
 				},
 				{
 					'key': 'zone',
 					'prompt': 'What timezone to convert to?',
-					'type': 'string',
-					'label': 'timezone to convert to'
+					'type': 'string'
 				}
 			]
 		});
@@ -63,7 +61,6 @@ module.exports = class zoneConvCommand extends commando.Command {
 	run (msg, args) {
 		const convertedTime = moment(`${moment().format('YYYY-MM-DD')} ${args.time}`).tz(args.zone)
 			.format('MMMM Do | HH:mm');
-
 
 		if (convertedTime.split(' | ')[1] === args.time) {
 			return msg.say('***The provided timezone either does not exist or has the same time as your own.\n' +

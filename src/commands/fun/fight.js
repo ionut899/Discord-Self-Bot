@@ -32,25 +32,23 @@ module.exports = class fightCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'fight',
+			'memberName': 'fight',
 			'group': 'fun',
 			'aliases': ['combat'],
-			'memberName': 'fight',
 			'description': 'Pit two things against each other in a fight to the death',
-			'examples': ['fight {fighterOne} {fighterTwo}', 'fight Favna Chuck Norris'],
+			'format': 'FirstFighter, SecondFighter',
+			'examples': ['fight Favna Chuck Norris'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'fighterOne',
 					'prompt': 'Who or what is the first fighter?',
-					'type': 'string',
-					'label': 'Name of the first fighter'
+					'type': 'string'
 				},
 				{
 					'key': 'fighterTwo',
 					'prompt': 'What should fighter one be fighting?',
-					'type': 'string',
-					'label': 'Name of the second fighter'
+					'type': 'string'
 				}
 			]
 		});

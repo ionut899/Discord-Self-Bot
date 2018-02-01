@@ -33,13 +33,14 @@ module.exports = class fyidmCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'fyidm',
+			'memberName': 'fyidm',
 			'group': 'info',
 			'aliases': ['dm', 'discmatch', 'dmatch'],
-			'memberName': 'fyidm',
-			'description': 'Returns a list of users who have the same discriminator (the 4 digits after the username) as you. fyidm is short for "Find your ID Mate"',
-			'examples': ['fyidm {4 digit discriminator}', 'fyidm 0000'],
+			'description': 'Returns a list of users who have the same discriminator as the input.',
+			'details': 'fyidm is short for "Find your ID Mate"',
+			'format': '[DiscriminatorToCheck]',
+			'examples': ['fyidm 0000'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'discrim',
@@ -47,15 +48,7 @@ module.exports = class fyidmCommand extends commando.Command {
 					'type': 'string',
 					'default': 'self',
 					'max': 4,
-					'min': 4,
-					'label': 'The custom input discriminator',
-					'validate': (id) => {
-						if (id.length === 4) {
-							return true;
-						}
-
-						return 'The length of the ID is exactly 4 digits long';
-					}
+					'min': 4
 				}
 			]
 		});

@@ -30,9 +30,9 @@ module.exports = class wiiUGuideCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'wiiuguide',
-			'aliases': ['rednand', 'mocha'],
-			'group': 'links',
 			'memberName': 'wiiuguide',
+			'group': 'links',
+			'aliases': ['rednand', 'mocha'],
 			'description': 'A link to plailect\'s Nintendo WiiU Guide',
 			'guildOnly': false
 		});

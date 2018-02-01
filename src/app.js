@@ -17,8 +17,8 @@
 
 /* eslint-disable no-mixed-requires, sort-vars */
 
-const Path = require('path'),
-	DiscordSelfBot = require(Path.join(__dirname, 'DiscordSelfBot.js')),
+const path = require('path'),
+	DiscordSelfBot = require(path.join(__dirname, 'DiscordSelfBot.js')),
 	keys = require('./auth.json'),
 	start = function () {
 		new DiscordSelfBot(keys.token).init();

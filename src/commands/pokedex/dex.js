@@ -42,19 +42,18 @@ module.exports = class dexCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'dex',
+			'memberName': 'dex',
 			'group': 'pokedex',
 			'aliases': ['pokedex', 'dexfind', 'df', 'rotom'],
-			'memberName': 'dex',
 			'description': 'Get the info on a Pokémon',
-			'examples': ['dex {Pokemon Name}', 'dex Dragonite'],
+			'format': 'PokemonName',
+			'examples': ['dex Dragonite'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'pokemon',
 					'prompt': 'Get info from which Pokémon?',
-					'type': 'string',
-					'label': 'Pokemon to find'
+					'type': 'string'
 				}
 			]
 		});

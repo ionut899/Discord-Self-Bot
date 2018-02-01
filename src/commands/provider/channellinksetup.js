@@ -33,15 +33,15 @@ module.exports = class ChannelLinkSetupCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'channellinksetup',
+			'memberName': 'channellinksetup',
 			'group': 'provider',
 			'aliases': ['channellink', 'channellinker', 'linkchannel', 'chanlink', 'clink'],
-			'memberName': 'channellinksetup',
-			'format': '{Server A|Channel A} {Server B|Channel B}',
 			'description': 'Link two channels',
 			'details': oneLine `Once channel linker is enabled any message from channel A any server is forwarded by the selfbot (yourself) to Channel B on any server (the same or another one)
             This is achieved by actively watching Channel A and automatically formatting any message.
             Note 1: that message edits are *not watched*!
             Note 2: Make sure you enable channellink with channellinktoggle!`,
+			'format': '{Server A|Channel A} {Server B|Channel B}',
 			'examples': ['channellinksetup 349243932447604736|349251570665259008 246821351585742851|309470585027559425'],
 			'guildOnly': false,
 			'args': [

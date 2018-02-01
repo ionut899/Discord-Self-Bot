@@ -30,9 +30,9 @@ module.exports = class threeDSguideCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': '3dsguide',
-			'aliases': ['plaiguide'],
-			'group': 'links',
 			'memberName': '3dsguide',
+			'group': 'links',
+			'aliases': ['plaiguide'],
 			'description': 'A link to plailect\'s Nintendo 3DS Guide',
 			'guildOnly': false
 		});

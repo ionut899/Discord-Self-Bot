@@ -23,33 +23,42 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
+	fs = require('fs'),
+	{oneLine} = require('common-tags'),
 	path = require('path');
+
+const emojis = fs.readdirSync(path.join(__dirname, 'images')); // eslint-disable-line one-var
+let detailString = '';
+
+for (const emoji in emojis) {
+	detailString += `${emojis[emoji].slice(0, emojis[emoji].length - 4)}, `;
+}
 
 module.exports = class sendEmojiCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'sendemoji',
-			'aliases': ['emoji', 'emo', 'sendemo', 'emosend'],
-			'group': 'emojis',
 			'memberName': 'sendemoji',
+			'group': 'emojis',
+			'aliases': ['emoji', 'emo', 'sendemo', 'emosend'],
 			'description': 'Send an emoji',
-			'examples': ['sendemoji {imageName}', 'sendemoji thonk'],
+			'details': `Available emojis: ${detailString}`,
+			'format': 'EmojiName [MessageToSendWithEmoji]',
+			'examples': ['sendemoji thonk'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'emojiName',
 					'prompt': 'What emoji do you want send?',
 					'type': 'string',
-					'label': 'name of the emoji'
+					'parse': p => p.toLowerCase()
 				}, {
 					'key': 'message',
 					'prompt': 'Content to send along with the emoji?',
 					'type': 'string',
-					'default': '',
-					'label': 'Message to send along with the emoji'
+					'default': ''
 				}
 			]
 		});
@@ -62,8 +71,19 @@ module.exports = class sendEmojiCommand extends commando.Command {
 	}
 
 	run (msg, args) {
+		const match = new Matcher();
+
+		match.values = emojis;
+
+		const dym = match.get(`${args.emojiName}.png`), // eslint-disable-line one-var
+			dymString = dym !== null
+				? oneLine `Did you mean \`${dym}\`?`
+				: oneLine `Add it to the images folder!`;
+
 		this.deleteCommandMessages(msg);
-		
-		return msg.channel.send(args.message, {'files': [new Discord.MessageAttachment(path.join(__dirname, `images/${args.emojiName.toLowerCase()}.png`), `${args.emojiName}Emoji.png`)]});
+
+		return msg.say(args.message, {'files': [path.join(__dirname, `images/${args.emojiName}.png`)]}).catch((err) => { // eslint-disable-line handle-callback-err, no-unused-vars
+			msg.reply(`⚠️ that emoji does not exist! ${dymString}`);
+		});
 	}
 };

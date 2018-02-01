@@ -32,18 +32,17 @@ module.exports = class scpCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'scp',
-			'group': 'search',
 			'memberName': 'scp',
+			'group': 'search',
 			'description': 'Get an SCP from the SCP foundation website',
-			'examples': ['scp {article-id}', 'scp 173'],
+			'format': 'ArticleID',
+			'examples': ['scp 173'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'scparticle',
 					'prompt': 'Please enter the SCP you\'d like an URL for.',
-					'type': 'string',
-					'label': 'Search query'
+					'type': 'string'
 				}
 			]
 		});

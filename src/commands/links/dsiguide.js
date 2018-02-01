@@ -30,9 +30,9 @@ module.exports = class dsiGuideCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'dsiguide',
-			'aliases': ['dsi'],
-			'group': 'links',
 			'memberName': 'dsiguide',
+			'group': 'links',
+			'aliases': ['dsi'],
 			'description': 'A link to a Nintendo DSi Guide',
 			'guildOnly': false
 		});

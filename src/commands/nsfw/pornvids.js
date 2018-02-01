@@ -34,20 +34,19 @@ module.exports = class pornvidsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'pornvids',
+			'memberName': 'pornvids',
 			'group': 'nsfw',
 			'aliases': ['porn', 'nsfwvids'],
-			'memberName': 'pornvids',
 			'description': 'Search porn videos',
-			'examples': ['pornvids {pornography query}', 'pornvids babe'],
+			'format': 'NSFWToLookUp',
+			'examples': ['pornvids babe'],
 			'guildOnly': false,
 			'nsfw': true,
-
 			'args': [
 				{
 					'key': 'pornInput',
 					'prompt': 'What pornography do you want to find?',
-					'type': 'string',
-					'label': 'Search query'
+					'type': 'string'
 				}
 			]
 		});

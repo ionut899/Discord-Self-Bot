@@ -30,13 +30,13 @@ module.exports = class rptimestamptoggleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rptimestamptoggle',
+			'memberName': 'rptimestamptoggle',
 			'group': 'provider',
 			'aliases': ['timetoggle', 'tst', 'rptimestamp'],
-			'memberName': 'rptimestamptoggle',
 			'description': 'Configure whether you want a timestamp in your Rich Presence',
-			'examples': ['rptimestamptoggle {option}', 'rptimestamptoggle enable'],
+			'format': 'enable|disable',
+			'examples': ['rptimestamptoggle enable'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'option',

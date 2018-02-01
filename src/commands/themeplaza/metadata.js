@@ -67,4 +67,4 @@ const MetaDataObject = {
 	}
 };
 
-module.exports = {MetaDataObject};
+module.exports = MetaDataObject;

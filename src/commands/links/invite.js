@@ -30,9 +30,9 @@ module.exports = class inviteCommnad extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'invite',
-			'aliases': ['inv', 'shill', 'plug', 'links'],
-			'group': 'links',
 			'memberName': 'invite',
+			'group': 'links',
+			'aliases': ['inv', 'shill', 'plug', 'links'],
 			'description': 'Link to Favna\'s discord-self-bot',
 			'examples': ['invite'],
 			'guildOnly': false

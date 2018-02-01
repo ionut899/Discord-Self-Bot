@@ -31,42 +31,35 @@ module.exports = class quoteCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'xquote',
+			'memberName': 'xquote',
 			'group': 'misc',
 			'aliases': ['xq'],
-			'memberName': 'xquote',
-			'description': 'Quote someone else\'s message into a MessageEmbed. Allows for cross server quoting but IDs are required',
-			'examples': ['quote {server name or ID} {channelID} {messageID} {content you want to send along with the embed}'],
+			'description': 'Quote someone else\'s message into a MessageEmbed.',
+			'details': ' Allows for cross server quoting but IDs are required',
+			'format': 'ServerID|ServerName(partial or full) ChannelID MessageID [ContentToSendAlongWithTheEmbed]',
+			'examples': ['xquote 246821351585742851 355269305941622786 355275528002994176 Oh so that was the first message on the channel!'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'guild',
 					'prompt': 'Which server?',
-					'type': 'guild',
-					'wait': 60,
-					'label': 'Server Name or ID'
+					'type': 'guild'
 				},
 				{
 					'key': 'channel',
 					'prompt': 'Which channel on that server?',
-					'type': 'string',
-					'wait': 60,
-					'label': 'ChannelID'
+					'type': 'string'
 				},
 				{
 					'key': 'message',
 					'prompt': 'And what message?',
-					'type': 'string',
-					'wait': 60,
-					'label': 'MessageID to quote'
+					'type': 'string'
 				},
 				{
 					'key': 'content',
 					'prompt': 'What content would you like to send along with the quote?',
 					'type': 'string',
-					'default': '',
-					'wait': 60,
-					'label': 'Content to send along with your quote'
+					'default': ''
 				}
 			]
 		});

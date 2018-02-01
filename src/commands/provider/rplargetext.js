@@ -30,13 +30,13 @@ module.exports = class rplargetextCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rplargetext',
+			'memberName': 'rplargetext',
 			'group': 'provider',
 			'aliases': ['largetext', 'ltext'],
-			'memberName': 'rplargetext',
 			'description': 'Set your Rich Presence largetext',
-			'examples': ['rplargetext {largetext}', 'rplargetext See the website'],
+			'format': 'LargeText',
+			'examples': ['rplargetext See the website'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'largetext',

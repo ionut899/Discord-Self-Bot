@@ -30,9 +30,9 @@ module.exports = class vitaGuideCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'vitaguide',
-			'aliases': ['henkaku', 'molecule'],
-			'group': 'links',
 			'memberName': 'vitaguide',
+			'group': 'links',
+			'aliases': ['henkaku', 'molecule'],
 			'description': 'A link to a PSVita Hacking Guide',
 			'guildOnly': false
 		});

@@ -30,13 +30,13 @@ module.exports = class webhookexclusionsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'webhookexclusions',
+			'memberName': 'webhookexclusions',
 			'group': 'provider',
 			'aliases': ['whe', 'hookexclusions'],
-			'memberName': 'webhookexclusions',
 			'description': 'Configure the keywords to be avoided in your Webhook Notification System (WNS)',
-			'examples': ['webhookexclusions {words}', 'webhookexclusions Fantasy'],
+			'format': 'user,name,nick,name',
+			'examples': ['webhookexclusions Fantasy'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'exclusions',

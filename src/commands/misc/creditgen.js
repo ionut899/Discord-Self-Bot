@@ -36,19 +36,18 @@ module.exports = class creditgenCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'creditgen',
-			'aliases': ['cg'],
-			'group': 'misc',
 			'memberName': 'creditgen',
+			'group': 'misc',
+			'aliases': ['cg'],
 			'description': 'Generate a valid credit card number for those pesky sites that ask for one',
+			'format': 'CreditcardNetwork',
 			'examples': ['creditgen'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'network',
 					'prompt': 'What credit card network do you want?',
 					'type': 'string',
-					'label': 'IssuingNetwork',
 					'validate': (net) => {
 						const validNets = ['visa', 'mastercard', 'amex'];
 

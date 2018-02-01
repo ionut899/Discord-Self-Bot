@@ -30,13 +30,13 @@ module.exports = class rpappidCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rpappid',
+			'memberName': 'rpappid',
 			'group': 'provider',
 			'aliases': ['appid', 'rpapp', 'rpapplication'],
-			'memberName': 'rpappid',
 			'description': 'Set your Rich Presence app ID',
-			'examples': ['rpappid {appID}', 'rpappid 355326429178757131'],
+			'format': 'ApplicationID',
+			'examples': ['rpappid 355326429178757131'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'appid',

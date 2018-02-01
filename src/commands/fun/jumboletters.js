@@ -29,19 +29,18 @@ module.exports = class jumbolettersCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'jumboletters',
+			'memberName': 'jumboletters',
 			'group': 'fun',
 			'aliases': ['jumbo', 'bigtext'],
-			'memberName': 'jumboletters',
 			'description': 'Create jumbo letters from your text',
-			'examples': ['jumboletters {some text}', 'jumboletters Favna is a great coder!'],
+			'format': 'MessageToJumbo',
+			'examples': ['jumboletters Favna is a great coder!'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'text',
 					'prompt': 'What text to jumbo-fy',
-					'type': 'string',
-					'label': 'input text'
+					'type': 'string'
 				}
 			]
 		});

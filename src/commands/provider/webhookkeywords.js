@@ -30,13 +30,13 @@ module.exports = class webhookkeywordsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'webhookkeywords',
+			'memberName': 'webhookkeywords',
 			'group': 'provider',
 			'aliases': ['whk', 'hookwords', 'hookkeywords'],
-			'memberName': 'webhookkeywords',
 			'description': 'Configure the keywords used in your Webhook Notification System (WNS)',
-			'examples': ['webhookkeywords {words}', 'webhookkeywords Favna,Fanava,Fav'],
+			'format': 'user,name,nick,name',
+			'examples': ['webhookkeywords Favna,Fanava,Fav'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'keywords',

@@ -30,13 +30,13 @@ module.exports = class rpnameCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rpname',
+			'memberName': 'rpname',
 			'group': 'provider',
 			'aliases': ['name'],
-			'memberName': 'rpname',
 			'description': 'Set your Rich Presence name',
-			'examples': ['rpname {name}', 'rpname Discord-Self-Bot'],
+			'format': 'NameText',
+			'examples': ['rpname Discord-Self-Bot'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'name',

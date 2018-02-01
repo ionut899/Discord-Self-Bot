@@ -30,14 +30,14 @@ module.exports = class rpTimeEndCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rptimeend',
+			'memberName': 'rptimeend',
 			'group': 'provider',
 			'aliases': ['timeend', 'endtime', 'rptime', 'rpend'],
-			'memberName': 'rptimeend',
 			'description': 'Set your Rich Presence End Timestamp',
 			'details': 'Make sure to enable timestamp with the `rptoggletimeend` command',
-			'examples': ['rptimeend {hours}', 'rptimeend 2'],
+			'format': 'HoursAmount',
+			'examples': ['rptimeend 2'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'time',

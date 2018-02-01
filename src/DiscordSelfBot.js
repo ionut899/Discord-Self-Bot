@@ -71,7 +71,6 @@ class DiscordSelfBot {
 		return () => {
 			console.warn('Disconnected!'); // eslint-disable-line no-console
 		};
-
 	}
 
 	onReconnect () {

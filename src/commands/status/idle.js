@@ -29,9 +29,9 @@ module.exports = class idleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'idle',
+			'memberName': 'idle',
 			'group': 'status',
 			'aliases': ['away', 'orange'],
-			'memberName': 'idle',
 			'description': 'Set your status to Idle',
 			'examples': ['idle'],
 			'guildOnly': false

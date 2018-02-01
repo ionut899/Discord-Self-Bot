@@ -31,9 +31,9 @@ module.exports = class rpdataCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rpdata',
+			'memberName': 'rpdata',
 			'group': 'provider',
 			'aliases': ['rdata'],
-			'memberName': 'rpdata',
 			'description': 'View your currently set Rich Presence data',
 			'examples': ['rpdata'],
 			'guildOnly': false
