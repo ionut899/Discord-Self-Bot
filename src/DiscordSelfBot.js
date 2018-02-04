@@ -161,7 +161,7 @@ class DiscordSelfBot {
 			}
 
 			if (this.client.provider.get('global', 'channellinktoggle', false) && msg.guild) {
-				const dataArr = this.client.provider.get('global', 'clconfig'),
+				const dataArr = this.client.provider.get('global', 'clconfig', []),
 					forwardEmbed = new Discord.MessageEmbed();
 
 				if (dataArr.length !== 0 && msg.guild.id === dataArr[0][0] && msg.channel.id === dataArr[0][1]) {
