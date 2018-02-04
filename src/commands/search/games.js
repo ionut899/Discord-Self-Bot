@@ -61,7 +61,13 @@ module.exports = class gameCommand extends commando.Command {
 
 	async fetchColor (img) {
 
-		const palette = await vibrant.from(img).getPalette();
+		let palette = '';
+		
+		try {
+			palette = await vibrant.from(img).getPalette();
+		} catch (err) {
+			return this.embedColor;
+		}
 
 		if (palette) {
 			const pops = [],
