@@ -25,25 +25,18 @@
 
 const Commando = require('discord.js-commando'),
 	Discord = require('discord.js'),
+	moment = require('moment'),
 	path = require('path'),
-	auth = require(path.join(`${__dirname}/auth.json`)), // eslint-disable-line sort-vars
-	moment = require('moment'), // eslint-disable-line sort-vars
-	{oneLine} = require('common-tags'),
-	sqlite = require('sqlite');
-
-// eslint-disable-next-line one-var	
-const values = {
-	'hookClient': new Discord.WebhookClient(auth.webhookID, auth.webhooktoken, {'disableEveryone': true}),
-	'ownerID': auth.ownerID
-};
+	sqlite = require('sqlite'),
+	{oneLine, stripIndents} = require('common-tags'),
+	{globalCommandPrefix, ownerID, webhookID, webhooktoken} = require(path.join(__dirname, 'auth.json'));
 
 class DiscordSelfBot {
 	constructor (token) { // eslint-disable-line no-unused-vars
-		this.bootTime = new Date();
-		this.token = auth.token;
+		this.token = token;
 		this.client = new Commando.Client({
-			'owner': values.ownerID,
-			'commandPrefix': '$',
+			'owner': ownerID,
+			'commandPrefix': globalCommandPrefix.toLowerCase().includes('favna') ? '$' : globalCommandPrefix,
 			'selfbot': true
 		});
 		this.isReady = false;
@@ -51,7 +44,11 @@ class DiscordSelfBot {
 
 	onReady () {
 		return () => {
-			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
+			// eslint-disable-next-line no-console
+			console.log(stripIndents `Client ready
+			logged in as ${this.client.user.tag} (${this.client.user.id})
+			Prefix set to ${this.client.commandPrefix}
+			Use ${this.client.commandPrefix}help to view the commands list!`);
 			this.client.user.setAFK(true); // Set bot to AFK to enable mobile notifications
 			this.isReady = true;
 		};
@@ -123,8 +120,9 @@ class DiscordSelfBot {
 	onMessage () {
 		return (msg) => {
 
-			if (this.client.provider.get('global', 'webhooktoggle', false) && msg.author.id !== values.ownerID && !msg.mentions.users.get(values.ownerID)) {
-				const mentionEmbed = new Discord.MessageEmbed(),
+			if (this.client.provider.get('global', 'webhooktoggle', false) && msg.author.id !== ownerID && !msg.mentions.users.get(ownerID)) {
+				const hookClient = new Discord.WebhookClient(webhookID, webhooktoken, {'disableEveryone': true}),
+					mentionEmbed = new Discord.MessageEmbed(),
 					regexpExclusions = [],
 					regexpKeywords = [],
 					wnsExclusions = this.client.provider.get('global', 'webhookexclusions', ['none']),
@@ -155,7 +153,7 @@ class DiscordSelfBot {
 							.addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
 							.addField('Message Attachments', msg.attachments.first() && msg.attachments.first().url ? msg.attachments.map(au => au.url) : 'None');
 
-						values.hookClient.send(`Stalkify away <@${values.ownerID}>`, {'embeds': [mentionEmbed]}).catch(console.error); // eslint-disable-line no-console
+						hookClient.send(`Stalkify away <@${ownerID}>`, {'embeds': [mentionEmbed]}).catch(console.error); // eslint-disable-line no-console
 					}
 				}
 			}

@@ -1,6 +1,7 @@
 {
   "token": "Your bot or user token",
   "ownerID": "Your user ID",
+  "globalCommandPrefix": "An optional global command prefix - As long as this entry has "favna" inside, it will be ignored!",
   "googleapikey": "A Google API Key. Enable Custom Search engine and Youtube Data API",
   "imageEngineKey": "Google Custom Search Engine key (can be the same as searchEngineKey but not recommended)",
   "searchEngineKey": "Google Custom Search Engine key (can be the same as imageEngineKey but not recommended)",

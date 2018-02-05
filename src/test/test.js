@@ -25,7 +25,7 @@
 
 const DiscordSelfBot = require('../DiscordSelfBot.js'),
 	test = require('tape'),
-	token = require('../auth.json').token; // eslint-disable-line prefer-destructuring
+	{token} = require('../auth.json');
 
 test('connect & disconnect', (timeout) => {
 	timeout.timeoutAfter(30000);
