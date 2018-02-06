@@ -70,6 +70,9 @@ module.exports = class youtubeCommand extends commando.Command {
 
 			this.deleteCommandMessages(msg);
 			if (msg.content.split(' ')[0].slice(msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length) === 'yts') {
+			
+				this.deleteCommandMessages(msg);
+
 				return msg.say(`https://www.youtube.com/watch?v=${video.id.videoId}`);
 			}
 
@@ -83,6 +86,8 @@ module.exports = class youtubeCommand extends commando.Command {
 				.addField('Channel', `[${video.snippet.channelTitle}](https://www.youtube.com/channel/${video.snippet.channelId})`, true)
 				.addField('Published At', moment(video.snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
 				.addField('Description', video.snippet.description ? video.snippet.description : 'No Description', false);
+
+			this.deleteCommandMessages(msg);
 
 			return msg.embed(embed, `https://www.youtube.com/watch?v=${video.id.videoId}`);
 		}
