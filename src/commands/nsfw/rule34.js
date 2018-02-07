@@ -68,7 +68,7 @@ module.exports = class rule34Command extends commando.Command {
 			}
 
 			return msg.reply('⚠️ No juicy images found.');
-		} catch (booruError) {
+		} catch (BooruError) {
 			return msg.reply('⚠️ No juicy images found.');
 		}
 	}

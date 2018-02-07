@@ -279,12 +279,11 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
-booru@^0.3.3:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/booru/-/booru-0.3.6.tgz#f6941295e272f0e0e5f7a369b264342153159e06"
+booru@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/booru/-/booru-0.4.0.tgz#eda0514398815280b196d2f24a5a3f0db7f0b183"
   dependencies:
-    request "^2.79.0"
-    request-promise-native "^1.0.3"
+    snekfetch "^3.6.4"
     xml2js "^0.4.17"
 
 brace-expansion@^1.0.0, brace-expansion@^1.1.7:
@@ -785,14 +784,14 @@ escodegen@^1.6.1:
   optionalDependencies:
     source-map "~0.5.6"
 
-eslint-plugin-node@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-5.2.1.tgz#80df3253c4d7901045ec87fa660a284e32bdca29"
+eslint-plugin-node@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-6.0.0.tgz#5ad5ee6b5346aec6cc9cde0b8619caed2c6d8f25"
   dependencies:
     ignore "^3.3.6"
     minimatch "^3.0.4"
     resolve "^1.3.3"
-    semver "5.3.0"
+    semver "^5.4.1"
 
 eslint-scope@^3.7.1:
   version "3.7.1"
@@ -1633,7 +1632,7 @@ lodash.some@^4.4.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.some/-/lodash.some-4.6.0.tgz#1bb9f314ef6b8baded13b549169b2a945eb68e4d"
 
-lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -2258,20 +2257,6 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
-request-promise-core@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/request-promise-core/-/request-promise-core-1.1.1.tgz#3eee00b2c5aa83239cfb04c5700da36f81cd08b6"
-  dependencies:
-    lodash "^4.13.1"
-
-request-promise-native@^1.0.3:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/request-promise-native/-/request-promise-native-1.0.5.tgz#5281770f68e0c9719e5163fd3fab482215f4fda5"
-  dependencies:
-    request-promise-core "1.1.1"
-    stealthy-require "^1.1.0"
-    tough-cookie ">=2.3.3"
-
 request@1.9.x:
   version "1.9.9"
   resolved "https://registry.yarnpkg.com/request/-/request-1.9.9.tgz#af231fe87e3725a5db46ff74833f3aa0ebfd9151"
@@ -2448,11 +2433,7 @@ scalc@^2.0.1:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
 
-semver@5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
-
-semver@^5.3.0:
+semver@^5.3.0, semver@^5.4.1:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
@@ -2480,7 +2461,7 @@ slice-ansi@1.0.0:
   dependencies:
     is-fullwidth-code-point "^2.0.0"
 
-snekfetch@3.6.4:
+snekfetch@3.6.4, snekfetch@^3.6.4:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-3.6.4.tgz#d13e80a616d892f3d38daae4289f4d258a645120"
 
@@ -2535,7 +2516,7 @@ sqlite3@3.1.13:
     nan "~2.7.0"
     node-pre-gyp "~0.6.38"
 
-sqlite@2.9.1:
+sqlite@^2.9.1:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-2.9.1.tgz#2c85192c15d3e20361236f26240187f9d9f71355"
   dependencies:
@@ -2558,10 +2539,6 @@ sshpk@^1.7.0:
 stack-trace@0.0.x:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/stack-trace/-/stack-trace-0.0.10.tgz#547c70b347e8d32b4e108ea1a2a159e5fdde19c0"
-
-stealthy-require@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
 
 steamapi@^1.3.5:
   version "1.3.5"
@@ -2781,7 +2758,7 @@ tmp@^0.0.33:
   dependencies:
     os-tmpdir "~1.0.2"
 
-tough-cookie@>=0.12.0, tough-cookie@>=2.3.3, tough-cookie@^2.3.2, tough-cookie@~2.3.0, tough-cookie@~2.3.3:
+tough-cookie@>=0.12.0, tough-cookie@^2.3.2, tough-cookie@~2.3.0, tough-cookie@~2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.3.tgz#0b618a5565b6dea90bf3425d04d55edc475a7561"
   dependencies:
