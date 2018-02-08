@@ -1,3 +1,89 @@
+function Install-Dependancies {
+    Write-Host "Next lets get your Discord Token" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "1. From either the web application, or the installed Discord app, do ""Ctrl + Shift + i""" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "2. This brings up the ""Developer Tools"". Go to the ""Application tab""" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "3. On the left, expand ""Local Storage"", then click on the discordapp.com entry (it should be the only one)." -ForegroundColor Green -BackgroundColor Black
+    Write-Host "4. Locate the entry called ""token"" and copy it" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "5. Open this GIF to see the process: https://favna.s-ul.eu/B33EG6HK.gif" -ForegroundColor Green -BackgroundColor Black
+     
+    $token = Read-Host -Prompt "Please paste your token, INCLUDING the "" "" marks "
+    
+    Write-Host "Now your User ID" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "Enable Discord developer mode by opening settings -> going to appearance -> Enabling Developer Mode" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "Click your own name on any message sent by you and click ""COPY ID""" -ForegroundColor Green -BackgroundColor Black
+    
+    $ownerid  = Read-Host -Prompt "Please paste your OwnerID, ONLY the number!"
+    
+    Write-Host "Would you like to set your own global command prefix (default $)? [Y/N]" -ForegroundColor Green 
+         $Readhost = Read-Host "[Y/N] " 
+         Switch ($ReadHost) 
+          { 
+            Y {Write-Host "Queueing Visual Studio Code installation"-ForegroundColor Yellow -BackgroundColor Black; $gcpOpt=$true}
+            N {Write-Host "Skipping Visual Studio Code installation"-ForegroundColor DarkRed -BackgroundColor Black; $gcpOpt=$false} 
+            Default {Write-Host "Skipping Visual Studio Code installation"-ForegroundColor DarkRed -BackgroundColor Black; $gcpOpt=$false} 
+          }
+    
+    $gcp = "$"
+    
+    if($gcpOpt) {
+        $gcp  = Read-Host -Prompt "Please enter your global command prefix"
+    }
+    
+    Write-Host "Setting up some dependancies. This may take a couple of minutes to more than 10 minutes depending on fast your system and download speeds are" -ForegroundColor Green -BackgroundColor Black
+    
+    Write-Host "Installing yarn"
+    npm i -g yarn pm2
+    
+    Write-Host "Installing build tools"
+    yarn global add windows-build-tools node-gyp node-pre-gyp
+    
+    Write-Host "Setting up node modules (can take a long time!)"
+    yarn install
+    
+    Write-Host "Ensuring sqlite is properly installed"
+    yarn add sqlite
+    
+    Write-Host "Generating auth.json file"
+    $AuthDetailsToFile =
+@"
+    {{
+        "token": {0},
+        "ownerID": "{1}",
+        "globalCommandPrefix": "{2}",
+        "googleapikey": "AIzaSyBd_jbHu5zZwSqX3LpMLHPWUEzjNCLfs3A",
+        "imageEngineKey": "008067345873846365534:rupdpapnrca",
+        "searchEngineKey": "008067345873846365534:wwp8wiwzxzm",
+        "oxrAppID": "722f3aff47054bc08b2405969b5d38b3",
+        "TheMovieDBV3ApiKey": "acee520942a82c76336b06f4dd8c9463",
+        "steamAPIKey": "B1CBEDDBB86FA6E0401063E19F244474",
+        "igdbAPIKey": "135cffc683eb0b01d98685455247e1b5",
+        "webhookID": "333967825842470913",
+        "webhooktoken": "PsKe5JZSOBS4liG1gMtcdSapVE7ZYy1NtTKhdTNTVA4pCyt4xEqpV9HVUZTRFdNTrkWH"
+    }}
+"@  -f $token, $ownerid, $gcp
+
+    $AuthDetailsToFile | Out-File -FilePath src\auth.json -Encoding UTF8
+    
+    Write-Host "Cleaning up" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "Deleting Downloads folder" -ForegroundColor Green -BackgroundColor Black
+    Remove-Item -Recurse -Force -Path Downloads\
+    
+    Write-Host "Starting the bot using pm2" -ForegroundColor Red -BackgroundColor Black
+    pm2 start .\src\app.js --name selfbot
+    
+    Write-Host "pm2 basic usage list:" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "pm2 stop 0 --> stops the bot" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "pm2 restart 0 --> restarts the bot" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "pm2 list --> shows currently running processes" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "pm2 info 0 --> shows detailed info about selfbot process" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "pm2 reset 0 --> resets error counter to 0 for bot" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "pm2 flush --> flushes the current logs" -ForegroundColor Green -BackgroundColor Black
+    
+    Write-Host "Further Resources:" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "GitHub Wiki: https://github.com/Favna/Discord-Self-Bot/wiki" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "Join the support server: https://discord.gg/zdt5yQt" -ForegroundColor Green -BackgroundColor Black
+    Write-Host "Starting the bot without pm2: yarn start" -ForegroundColor Green -BackgroundColor Black
+}
 function Install-Programs {
     If([Environment]::Is64BitProcess) {
         $64bit=$true
@@ -93,93 +179,8 @@ function Install-Programs {
             Start-Process "Downloads/Code-x32.exe" -Wait
         }
     }
-}
 
-function Install-Dependancies {
-    Write-Host "Next lets get your Discord Token" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "1. From either the web application, or the installed Discord app, do ""Ctrl + Shift + i""" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "2. This brings up the ""Developer Tools"". Go to the ""Application tab""" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "3. On the left, expand ""Local Storage"", then click on the discordapp.com entry (it should be the only one)." -ForegroundColor Green -BackgroundColor Black
-    Write-Host "4. Locate the entry called ""token"" and copy it" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "5. Open this GIF to see the process: https://favna.s-ul.eu/B33EG6HK.gif" -ForegroundColor Green -BackgroundColor Black
-     
-    $token = Read-Host -Prompt "Please paste your token, INCLUDING the "" "" marks "
-    
-    Write-Host "Now your User ID" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "Enable Discord developer mode by opening settings -> going to appearance -> Enabling Developer Mode" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "Click your own name on any message sent by you and click ""COPY ID""" -ForegroundColor Green -BackgroundColor Black
-    
-    $ownerid  = Read-Host -Prompt "Please paste your OwnerID, ONLY the number!"
-    
-    Write-Host "Would you like to set your own global command prefix (default $)? [Y/N]" -ForegroundColor Green 
-         $Readhost = Read-Host "[Y/N] " 
-         Switch ($ReadHost) 
-          { 
-            Y {Write-Host "Queueing Visual Studio Code installation"-ForegroundColor Yellow -BackgroundColor Black; $gcpOpt=$true}
-            N {Write-Host "Skipping Visual Studio Code installation"-ForegroundColor DarkRed -BackgroundColor Black; $gcpOpt=$false} 
-            Default {Write-Host "Skipping Visual Studio Code installation"-ForegroundColor DarkRed -BackgroundColor Black; $gcpOpt=$false} 
-          }
-    
-    $gcp = "$"
-    
-    if($gcpOpt) {
-        $gcp  = Read-Host -Prompt "Please enter your global command prefix"
-    }
-    
-    Write-Host "Setting up some dependancies. This may take a couple of minutes to more than 10 minutes depending on fast your system and download speeds are" -ForegroundColor Green -BackgroundColor Black
-    
-    Write-Host "Installing yarn"
-    npm i -g yarn pm2
-    
-    Write-Host "Installing build tools"
-    yarn global add windows-build-tools node-gyp node-pre-gyp
-    
-    Write-Host "Setting up node modules (can take a long time!)"
-    yarn install
-    
-    Write-Host "Ensuring sqlite is properly installed"
-    yarn add sqlite
-    
-    Write-Host "Generating auth.json file"
-    $AuthDetailsToFile =
-@"
-    {{
-        "token": {0},
-        "ownerID": "{1}",
-        "globalCommandPrefix": "{2}",
-        "googleapikey": "AIzaSyBd_jbHu5zZwSqX3LpMLHPWUEzjNCLfs3A",
-        "imageEngineKey": "008067345873846365534:rupdpapnrca",
-        "searchEngineKey": "008067345873846365534:wwp8wiwzxzm",
-        "oxrAppID": "722f3aff47054bc08b2405969b5d38b3",
-        "TheMovieDBV3ApiKey": "acee520942a82c76336b06f4dd8c9463",
-        "steamAPIKey": "B1CBEDDBB86FA6E0401063E19F244474",
-        "igdbAPIKey": "135cffc683eb0b01d98685455247e1b5",
-        "webhookID": "333967825842470913",
-        "webhooktoken": "PsKe5JZSOBS4liG1gMtcdSapVE7ZYy1NtTKhdTNTVA4pCyt4xEqpV9HVUZTRFdNTrkWH"
-    }}
-"@  -f $token, $ownerid, $gcp
-
-    $AuthDetailsToFile | Out-File -FilePath src\auth.json -Encoding UTF8
-    
-    Write-Host "Cleaning up" -ForegroundColor Red -BackgroundColor Black
-    Write-Host "Deleting Downloads folder" -ForegroundColor Green -BackgroundColor Black
-    Remove-Item -Recurse -Force -Path Downloads\
-    
-    Write-Host "Starting the bot using pm2" -ForegroundColor Red -BackgroundColor Black
-    pm2 start .\src\app.js --name selfbot
-    
-    Write-Host "pm2 basic usage list:" -ForegroundColor Red -BackgroundColor Black
-    Write-Host "pm2 stop 0 --> stops the bot" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "pm2 restart 0 --> restarts the bot" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "pm2 list --> shows currently running processes" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "pm2 info 0 --> shows detailed info about selfbot process" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "pm2 reset 0 --> resets error counter to 0 for bot" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "pm2 flush --> flushes the current logs" -ForegroundColor Green -BackgroundColor Black
-    
-    Write-Host "Further Resources:" -ForegroundColor Red -BackgroundColor Black
-    Write-Host "GitHub Wiki: https://github.com/Favna/Discord-Self-Bot/wiki" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "Join the support server: https://discord.gg/zdt5yQt" -ForegroundColor Green -BackgroundColor Black
-    Write-Host "Starting the bot without pm2: yarn start" -ForegroundColor Green -BackgroundColor Black
+    Install-Dependancies
 }
 
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
