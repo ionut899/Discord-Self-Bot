@@ -24,6 +24,7 @@
  */
 
 const commando = require('discord.js-commando'),
+	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class timezoneCommand extends commando.Command {
@@ -59,6 +60,7 @@ module.exports = class timezoneCommand extends commando.Command {
 
 		deleteCommandMessages(msg, this.client);
 
-		return msg.reply(`Your timezone has been set to \`${args.zone < 0 ? `UTC ${args.zone}` : `UTC +${args.zone}`}\`. You can now use the \'${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}time\' command with your timezone`);
+		return msg.reply(oneLine `Your timezone has been set to \`${args.zone < 0 ? `UTC ${args.zone}` : `UTC +${args.zone}`}\`.
+        You can now use the \'${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}time\' command with your timezone`);
 	}
 };
