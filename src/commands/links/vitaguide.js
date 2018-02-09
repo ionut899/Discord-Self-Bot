@@ -24,7 +24,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class vitaGuideCommand extends commando.Command {
 	constructor (client) {
@@ -38,12 +39,6 @@ module.exports = class vitaGuideCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const vitaGuideEmbed = new Discord.MessageEmbed();
 
@@ -53,8 +48,8 @@ module.exports = class vitaGuideCommand extends commando.Command {
 			.setDescription('Want to run game backups on your PSVita? Need instructions on how to set up Henkaku? Go here!')
 			.addField('\u200b', 'http://cfw.guide/vita/')
 			.setThumbnail('https://silento.s-ul.eu/PIKf4IQR');
-
-		this.deleteCommandMessages(msg);
+			
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(vitaGuideEmbed, 'http://cfw.guide/vita/');
 	}

@@ -24,7 +24,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class embedValsCommand extends commando.Command {
 	constructor (client) {
@@ -36,12 +37,6 @@ module.exports = class embedValsCommand extends commando.Command {
 			'description': 'Shows how a Discord MessageEmbed is build up',
 			'guildOnly': false
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	run (msg) {
@@ -59,7 +54,7 @@ module.exports = class embedValsCommand extends commando.Command {
 			.setURL('https://www.google.com')
 			.addField('FieldName', 'FieldValue', true);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(valsOfEmbed);
 	}

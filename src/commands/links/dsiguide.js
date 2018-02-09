@@ -24,7 +24,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');		
 
 module.exports = class dsiGuideCommand extends commando.Command {
 	constructor (client) {
@@ -38,12 +39,6 @@ module.exports = class dsiGuideCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const dsiGuideEmbed = new Discord.MessageEmbed();
 
@@ -54,7 +49,7 @@ module.exports = class dsiGuideCommand extends commando.Command {
 			.addField('\u200b', 'http://cfw.guide/dsi/')
 			.setThumbnail('https://silento.s-ul.eu/1RKVHclC');
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(dsiGuideEmbed, 'http://cfw.guide/dsi/');
 	}

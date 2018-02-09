@@ -28,7 +28,8 @@ const Discord = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	querystring = require('querystring'),
-	request = require('snekfetch');
+	request = require('snekfetch'),
+	{deleteCommandMessages} = require('../../util.js');
 
 const googleapikey = auth.googleapikey, // eslint-disable-line one-var
 	searchEngineKey = auth.searchEngineKey;
@@ -52,12 +53,6 @@ module.exports = class googleCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	async run (msg, args) {
@@ -101,7 +96,7 @@ module.exports = class googleCommand extends commando.Command {
 				.setTitle(title)
 				.setDescription(description);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(knowledgeGraphEmbed);
 
@@ -126,7 +121,7 @@ module.exports = class googleCommand extends commando.Command {
 				return Promise.reject(console.error('NO RESULTS')); // eslint-disable-line no-console
 			}
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.say(normalRes.body.items[0].link);
 		}
@@ -145,7 +140,7 @@ module.exports = class googleCommand extends commando.Command {
 			}
 			href = querystring.parse(href.replace('/url?', ''));
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.say(href.q);
 		}

@@ -25,7 +25,8 @@
 
 const commando = require('discord.js-commando'),
 	fs = require('fs'),
-	path = require('path');
+	path = require('path'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class copypastaAddCommand extends commando.Command {
 	constructor (client) {
@@ -54,17 +55,11 @@ module.exports = class copypastaAddCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		fs.writeFileSync(path.join(__dirname, `pastas/${args.name}.txt`), args.content, 'utf8');
 
 		if (fs.existsSync(path.join(__dirname, `pastas/${args.name}.txt`))) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with ${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}copypasta ${args.name}`);
 		}

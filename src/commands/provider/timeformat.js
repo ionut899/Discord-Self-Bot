@@ -24,32 +24,30 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class rpdetailsCommand extends commando.Command {
+module.exports = class timeformatCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'rpdetails',
-			'memberName': 'rpdetails',
+			'name': 'timeformat',
+			'memberName': 'timeformat',
 			'group': 'provider',
-			'aliases': ['details', 'rpdetail'],
-			'description': 'Set your Rich Presence details',
-			'format': 'DetailsText',
-			'examples': ['rpappid Made by Favna'],
+			'aliases': ['tf', 'tformat'],
+			'description': 'Configure whether you want 12 hour or 24 hour formatted timestamps where applicable',
+			'format': '12|24',
+			'examples': ['timeformat 12'],
 			'guildOnly': false,
 			'args': [
 				{
-					'key': 'details',
-					'prompt': 'What is the detail string for your richpresence?',
+					'key': 'format',
+					'prompt': 'Would you like your timestamps to be formatted as 12 or 24 hours?',
 					'type': 'string',
-					'label': 'details',
-					'validate': (details) => {
-						if (Buffer.byteLength(details, 'utf8') <= 128) {
+					'validate': (time) => {
+						if (time === '12' || time === '24') {
 							return true;
 						}
 
-						return 'The detail string cannot be longer than 128 UTF-8 bytes';
+						return 'You have to give either `12` or `24` as argument';
 					}
 				}
 			]
@@ -57,10 +55,10 @@ module.exports = class rpdetailsCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		this.client.provider.set('global', 'rpdetails', args.details);
+		this.client.provider.set('global', 'timeformat', args.format);
 
 		deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `Your RichPresence Details have been set to \`${args.details}\``);
+		return msg.reply(`Your timestamps will now appear in \`${args.format} hour\` format`);
 	}
 };

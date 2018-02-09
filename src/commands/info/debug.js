@@ -24,7 +24,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class debugCommand extends commando.Command {
 	constructor (client) {
@@ -54,12 +55,6 @@ module.exports = class debugCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	run (msg, args) {
@@ -100,7 +95,7 @@ module.exports = class debugCommand extends commando.Command {
 			}
 		}
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(debugEmbed);
 	}

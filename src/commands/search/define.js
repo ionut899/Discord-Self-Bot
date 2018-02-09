@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	request = require('snekfetch');
+	request = require('snekfetch'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class defineCommand extends commando.Command {
 	constructor (client) {
@@ -46,12 +47,6 @@ module.exports = class defineCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	async run (msg, args) {
@@ -76,10 +71,12 @@ module.exports = class defineCommand extends commando.Command {
 				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 				.setDescription(final);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(defineEmbed);
 		}
+
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply('⚠️ ***nothing found***');
 	}

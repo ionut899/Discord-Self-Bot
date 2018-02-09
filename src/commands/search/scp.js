@@ -26,7 +26,8 @@
 const Discord = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
-	request = require('snekfetch');
+	request = require('snekfetch'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class scpCommand extends commando.Command {
 	constructor (client) {
@@ -46,12 +47,6 @@ module.exports = class scpCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	async run (msg, args) {
@@ -77,7 +72,7 @@ module.exports = class scpCommand extends commando.Command {
 						.text()
 						.slice(13, 313)}... [Read more](http://www.scp-wiki.net/scp-${args.scparticle})`, false);
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.embed(scpEmbed, `http://www.scp-wiki.net/scp-${args.scparticle}`);
 			}

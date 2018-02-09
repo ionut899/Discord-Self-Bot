@@ -28,8 +28,8 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),
 	fx = require('money'),
-	moment = require('moment'),
-	oxr = require('open-exchange-rates');
+	oxr = require('open-exchange-rates'),
+	{deleteCommandMessages, momentFormat} = require('../../util.js');
 
 module.exports = class moneyCommand extends commando.Command {
 	constructor (client) {
@@ -70,12 +70,6 @@ module.exports = class moneyCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	replaceAll (string, pattern, replacement) {
 		return string.replace(new RegExp(pattern, 'g'), replacement);
 	}
@@ -102,9 +96,9 @@ module.exports = class moneyCommand extends commando.Command {
 						? `:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`
 						: '💰 Money in Bitcoin',
 					`${currencySymbol(args.curTwo)}${convertedMoney}`, true)
-					.setFooter(`Converted money from input using openexchangerates | converted on: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+					.setFooter(`Converted money from input using openexchangerates | converted on: ${momentFormat(new Date(), this.client)}`);
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.embed(oxrEmbed);
 			} catch (error) {

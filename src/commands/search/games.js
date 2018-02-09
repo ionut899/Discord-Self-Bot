@@ -28,7 +28,7 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	igdbapi = require('igdb-api-node').default,
 	moment = require('moment'),
-	vibrant = require('node-vibrant');
+	{deleteCommandMessages, fetchColor} = require('../../util.js');
 
 module.exports = class gameCommand extends commando.Command {
 	constructor (client) {
@@ -51,50 +51,6 @@ module.exports = class gameCommand extends commando.Command {
 
 		});
 		this.embedColor = '#FF0000';
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
-	async fetchColor (img) {
-
-		let palette = '';
-		
-		try {
-			palette = await vibrant.from(img).getPalette();
-		} catch (err) {
-			return this.embedColor;
-		}
-
-		if (palette) {
-			const pops = [],
-				swatches = Object.values(palette);
-
-			let prominentSwatch = {};
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
-				}
-			}
-
-			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
-						prominentSwatch = swatches[swatch];
-						break;
-					}
-				}
-			}
-			this.embedColor = prominentSwatch.getHex();
-		}
-
-		return this.embedColor;
 	}
 
 	extractNames (arr) {
@@ -131,7 +87,7 @@ module.exports = class gameCommand extends commando.Command {
 				'ids': gameInfo.body[0].genres,
 				'fields': ['name']
 			}),
-			hexColor = await this.fetchColor(coverImg),
+			hexColor = await fetchColor(coverImg, this.embedColor),
 			platformInfo = await igdb.platforms({
 				'ids': gameInfo.body[0].platforms,
 				'fields': ['name']
@@ -152,7 +108,7 @@ module.exports = class gameCommand extends commando.Command {
 			.addField('Companies', this.extractNames(developerInfo.body), true)
 			.addField('Summary', gameInfo.body[0].summary, false);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(gameEmbed);
 	}

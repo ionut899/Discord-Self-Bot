@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class rpreloadCommand extends commando.Command {
 	constructor (client) {
@@ -40,12 +41,6 @@ module.exports = class rpreloadCommand extends commando.Command {
 
 	addHours (date, h) {
 		return date.getTime() + h * 60 * 60 * 1000; // eslint-disable-line no-mixed-operators
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	run (msg) {
@@ -83,7 +78,7 @@ module.exports = class rpreloadCommand extends commando.Command {
 			});
 		}
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(`Your Rich Presence has been set! You can view your activity with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}activity\` command`);
 	}

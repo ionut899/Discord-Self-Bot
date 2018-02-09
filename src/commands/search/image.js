@@ -29,7 +29,7 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	querystring = require('querystring'),
 	request = require('snekfetch'),
-	vibrant = require('node-vibrant');
+	{deleteCommandMessages, fetchColor} = require('../../util.js');
 
 const googleapikey = auth.googleapikey, // eslint-disable-line one-var
 	imageEngineKey = auth.imageEngineKey;
@@ -56,50 +56,6 @@ module.exports = class imageCommand extends commando.Command {
 		this.embedColor = '#FF0000';
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
-	async fetchColor (img) {
-		let palette = '';
-		
-		try {
-			palette = await vibrant.from(img).getPalette();
-		} catch (err) {
-			return this.embedColor;
-		}
-
-		if (palette) {
-			const pops = [],
-				swatches = Object.values(palette);
-
-			let prominentSwatch = {};
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
-				}
-			}
-
-			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
-						prominentSwatch = swatches[swatch];
-						break;
-					}
-				}
-			}
-			this.embedColor = prominentSwatch.getHex();
-		}
-
-		return this.embedColor;
-	}
-
-
 	async run (msg, args) {
 		const embed = new Discord.MessageEmbed(),
 			query = args.query
@@ -119,14 +75,14 @@ module.exports = class imageCommand extends commando.Command {
 			res = await request.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(query)}`);
 
 		if (res && res.body.items) {
-			hexColor = await this.fetchColor(res.body.items[0].link);
+			hexColor = await fetchColor(res.body.items[0].link, this.embedColor);
 
 			embed
 				.setColor(hexColor)
 				.setImage(res.body.items[0].link)
 				.setFooter(`Search query: "${args.query}"`);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(embed);
 		}
@@ -145,12 +101,12 @@ module.exports = class imageCommand extends commando.Command {
 				.setImage(result)
 				.setFooter(`Search query: "${args.query}"`);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(embed);
 		}
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply('⚠️ ***nothing found***');
 	}

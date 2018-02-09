@@ -25,7 +25,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	moment = require('moment');
+	{deleteCommandMessages, momentFormat} = require('../../util.js');
 
 module.exports = class rpdataCommand extends commando.Command {
 	constructor (client) {
@@ -40,18 +40,12 @@ module.exports = class rpdataCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const rpEmbed = new Discord.MessageEmbed();
 
 		rpEmbed
 			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-			.setFooter(`Rich Presence data on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+			.setFooter(`Rich Presence data on ${momentFormat(new Date(), this.client)}`)
 			.setAuthor(`${this.client.user.tag} (${this.client.user.id})`)
 			.setDescription(this.client.provider.get('global', 'rptoggle', false) ? 'Rich Presence Data' : 'Presence Data')
 			.setThumbnail(this.client.provider.get('global', 'rptoggle', false)
@@ -80,6 +74,8 @@ module.exports = class rpdataCommand extends commando.Command {
 			.addField('End Time Duration', this.client.provider.get('global', 'rptimeend', '1'), true)
 			.addField('Timestamp', this.client.provider.get('global', 'rptimestamptoggle', 'Disabled'), true)
 			.addField('Rich Presences Enabled', this.client.provider.get('global', 'rptoggle', 'Disabled'), true);
+
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(rpEmbed);
 	}

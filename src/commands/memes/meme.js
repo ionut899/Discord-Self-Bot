@@ -26,8 +26,9 @@
 const Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),
+	path = require('path'),
 	{oneLine} = require('common-tags'),
-	path = require('path');
+	{deleteCommandMessages} = require('../../util.js');
 
 const memes = fs.readdirSync(path.join(__dirname, 'images')); // eslint-disable-line one-var
 let detailString = '';
@@ -59,12 +60,6 @@ module.exports = class memeCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const match = new Matcher();
 
@@ -75,7 +70,7 @@ module.exports = class memeCommand extends commando.Command {
 				? oneLine `Did you mean \`${dym}\`?`
 				: oneLine `Add it to the images folder!`;
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.channel.send({'files': [path.join(__dirname, `/images/${args.image.toLowerCase()}.jpg`)]}).catch((err) => { // eslint-disable-line handle-callback-err, no-unused-vars
 			msg.reply(`⚠️ that meme does not exist! ${dymString}`);

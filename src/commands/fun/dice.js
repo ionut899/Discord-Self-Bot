@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	xdicey = require('xdicey');
+	xdicey = require('xdicey'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class diceCommand extends commando.Command {
 	constructor (client) {
@@ -52,12 +53,6 @@ module.exports = class diceCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const diceEmbed = new Discord.MessageEmbed(),
 			res = [],
@@ -72,7 +67,7 @@ module.exports = class diceCommand extends commando.Command {
 			.addField('Dice result', res, false)
 			.addField('Total', throwDice.total, false);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(diceEmbed);
 	}

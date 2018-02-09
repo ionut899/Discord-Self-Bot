@@ -25,7 +25,8 @@
 
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class coppersCommand extends commando.Command {
 	constructor (client) {
@@ -40,15 +41,9 @@ module.exports = class coppersCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		if (this.client.user.premium) {
 			return msg.say(oneLine `<:police:346089253572313088> :oncoming_police_car: :rotating_light: :rotating_light: 

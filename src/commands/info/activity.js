@@ -28,7 +28,7 @@ const Discord = require('discord.js'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
 	moment = require('moment'),
 	request = require('snekfetch'),
-	vibrant = require('node-vibrant');
+	{fetchColor, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class activityCommand extends commando.Command {
 	constructor (client) {
@@ -41,10 +41,11 @@ module.exports = class activityCommand extends commando.Command {
 			'format': 'MemberID|MemberName(partial or full)',
 			'examples': ['activity Favna'],
 			'guildOnly': true,
+
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'What user would you like to get the avatar from?',
+					'prompt': 'What user would you like to get the activity from?',
 					'type': 'member'
 				}
 			]
@@ -56,50 +57,6 @@ module.exports = class activityCommand extends commando.Command {
 		return type !== 'listening' ? type.charAt(0).toUpperCase() + type.slice(1) : 'Listening to';
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
-	async fetchColor (img) {
-
-		let palette = '';
-		
-		try {
-			palette = await vibrant.from(img).getPalette();
-		} catch (err) {
-			return this.embedColor;
-		}
-
-		if (palette) {
-			const pops = [],
-				swatches = Object.values(palette);
-
-			let prominentSwatch = {};
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
-				}
-			}
-
-			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
-						prominentSwatch = swatches[swatch];
-						break;
-					}
-				}
-			}
-			this.embedColor = prominentSwatch.getHex();
-		}
-
-		return this.embedColor;
-	}
-
 	fetchExt (str) {
 		return str.slice(-4);
 	}
@@ -107,11 +64,13 @@ module.exports = class activityCommand extends commando.Command {
 	/* eslint complexity: ["error", 35], max-statements: ["error", 50]*/
 	async run (msg, args) {
 
+		args.member = this.client.guilds.get('246821351585742851').members.get('311193975635705858');
+
 		const activity = args.member.user.presence.activity,
 			ava = args.member.user.displayAvatarURL(),
 			embed = new Discord.MessageEmbed(),
 			ext = this.fetchExt(ava),
-			avaColor = ext.includes('gif') ? await this.fetchColor(ava) : this.embedColor, // eslint-disable-line sort-vars
+			avaColor = ext.includes('gif') ? await fetchColor(ava, this.embedColor) : this.embedColor, // eslint-disable-line sort-vars
 			gameList = await request.get('https://canary.discordapp.com/api/v6/games');
 
 		embed
@@ -141,10 +100,10 @@ module.exports = class activityCommand extends commando.Command {
 			smallImageAssetCheck: if (activity.assets) {
 				if (activity.timestamps && activity.timestamps.start) {
 					if (activity.assets.smallImage && activity.assets.smallImage.includes('spotify')) {
-						embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`, `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`);
+						embed.setFooter(`Start Time ${moment(activity.timestamps.start).format(`DD-MM-YY [at] ${this.client.provider.get('global', 'timeformat', '24') === '24' ? 'HH:mm' : 'hh:mm A'}`)}`, `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`); // eslint-disable-line max-len
 						break smallImageAssetCheck;
 					} else {
-						embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`,
+						embed.setFooter(`Start Time ${moment(activity.timestamps.start).format(`DD-MM-YY [at] ${this.client.provider.get('global', 'timeformat', '24') === '24' ? 'HH:mm' : 'hh:mm A'}`)}`, // eslint-disable-line max-len
 							`https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`);
 						break smallImageAssetCheck;
 					}
@@ -157,9 +116,8 @@ module.exports = class activityCommand extends commando.Command {
 				}
 			} else
 			if (activity.timestamps && activity.timestamps.start) {
-				embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`);
+				embed.setFooter(`Start Time ${moment(activity.timestamps.start).format(`DD-MM-YY [at] ${this.client.provider.get('global', 'timeformat', '24') === '24' ? 'HH:mm' : 'hh:mm A'}`)}`);
 			}
-
 
 			activity.timestamps && activity.timestamps.end
 				? embed.setFooter(`${embed.footer ? `${embed.footer.text} | ` : ''}End Time: ${moment.duration(activity.timestamps.end - Date.now()).format('HH [hours and] mm [minutes]')}`)
@@ -171,12 +129,12 @@ module.exports = class activityCommand extends commando.Command {
 			activity.party && activity.party.size ? embed.addField('Party Size', `${activity.party.size[0]} of ${activity.party.size[1]}`, true) : null;
 			activity.party && activity.party.id ? embed.addField('Party ID', activity.party.id, true) : null;
 			activity.applicationID ? embed.addField('Application ID', activity.applicationID, false) : null;
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(embed);
 		}
 		embed.addField('Activity', 'Nothing', true);
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(embed);
 	}

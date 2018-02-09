@@ -28,9 +28,10 @@ const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	path = require('path'),
 	commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
 	request = require('snekfetch'),
-	requireFromURL = require('require-from-url/sync');
+	requireFromURL = require('require-from-url/sync'),
+	{oneLine} = require('common-tags'),
+	{capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 
 /* eslint-enable sort-vars */
@@ -58,16 +59,6 @@ module.exports = class abilityCommand extends commando.Command {
 		this.abilities = {};
 		this.pokeAliases = {};
 		this.match = [];
-	}
-
-	capitalizeFirstLetter (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	async fetchAbilities () {
@@ -144,18 +135,18 @@ module.exports = class abilityCommand extends commando.Command {
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.addField('Description', ability.desc ? ability.desc : ability.shortDesc)
 				.addField('External Resource', oneLine `
-                [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${this.capitalizeFirstLetter(ability.name.replace(' ', '_'))}_(Ability\\))  
+                [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(' ', '_'))}_(Ability\\))  
                 |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(' ', '_')})  
 				|  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(' ', '-')})`);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
-			return msg.embed(abilityEmbed, `**${this.capitalizeFirstLetter(ability.name)}**`);
+			return msg.embed(abilityEmbed, `**${capitalizeFirstLetter(ability.name)}**`);
 		}
 		const dym = this.match.get(args.ability), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(`⚠️ Ability not found! ${dymString}`);
 	}

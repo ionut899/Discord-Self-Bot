@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	urban = require('urban');
+	urban = require('urban'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class urbanCommand extends commando.Command {
 	constructor (client) {
@@ -48,12 +49,6 @@ module.exports = class urbanCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		urban(args.query).first((json) => {
 			if (!json) {
@@ -68,7 +63,7 @@ module.exports = class urbanCommand extends commando.Command {
 				.addField('Example', json.example.length <= 1024 ? json.example : `Truncated due to exceeding maximum length\n${json.example.slice(0, 970)}`, false)
 				.addField('Permalink', json.permalink, false);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(urbanEmbed);
 		});

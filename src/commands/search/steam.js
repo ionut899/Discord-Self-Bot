@@ -29,7 +29,8 @@ const Discord = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),
-	request = require('snekfetch');
+	request = require('snekfetch'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class steamCommand extends commando.Command {
 	constructor (client) {
@@ -51,12 +52,6 @@ module.exports = class steamCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	insert (str, value) {
@@ -109,7 +104,7 @@ module.exports = class steamCommand extends commando.Command {
 					.addField('Publisher(s)', steamData.publishers, true)
 					.addField('Steam Store Link', `http://store.steampowered.com/app/${steamData.steam_appid}/`, false);
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.embed(steamEmbed, `http://store.steampowered.com/app/${steamData.steam_appid}/`);
 			}

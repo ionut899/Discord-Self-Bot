@@ -27,8 +27,9 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
 	moment = require('moment'),
+	process = require('process'),
 	{oneLine} = require('common-tags'),
-	process = require('process');
+	{deleteCommandMessages, momentFormat} = require('../../util.js');
 
 module.exports = class statsCommand extends commando.Command {
 	constructor (client) {
@@ -41,16 +42,6 @@ module.exports = class statsCommand extends commando.Command {
 			'examples': ['stats'],
 			'guildOnly': false
 		});
-	}
-
-	capitalizeFirstLetter (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	fetchPlatform (plat) {
@@ -86,9 +77,9 @@ module.exports = class statsCommand extends commando.Command {
 			.addField('\u200b', oneLine `Use the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\` command to get the list of commands available to you in a DM. 
             The default prefix is \`$\`. You can change this with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}prefix\` command. 
             If you ever forget the command prefix, just use \`@${this.client.user.tag} prefix\``)
-			.setFooter(`Discord-Self-Bot | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://selfbot.favna.xyz/images/selfbot.png');
+			.setFooter(`Discord-Self-Bot | ${momentFormat(new Date(), this.client)}`, 'https://selfbot.favna.xyz/images/selfbot.png');
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(statsEmbed);
 	}

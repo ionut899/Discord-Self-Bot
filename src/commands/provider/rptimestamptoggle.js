@@ -24,7 +24,8 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class rptimestamptoggleCommand extends commando.Command {
 	constructor (client) {
@@ -57,16 +58,10 @@ module.exports = class rptimestamptoggleCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		this.client.provider.set('global', 'rptimestamptoggle', args.option);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(oneLine `The Timestamp in Rich Presence is now ${args.option 
 			? 'enabled' 

@@ -25,8 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	weather = require('yahoo-weather');
+	weather = require('yahoo-weather'),
+	{deleteCommandMessages, momentFormat} = require('../../util.js');
 
 module.exports = class weatherCommand extends commando.Command {
 	constructor (client) {
@@ -95,12 +95,6 @@ module.exports = class weatherCommand extends commando.Command {
 		}
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 		const info = await weather(args.city),
 			weatherEmbed = new Discord.MessageEmbed();
@@ -108,7 +102,7 @@ module.exports = class weatherCommand extends commando.Command {
 		if (info) {
 			weatherEmbed
 				.setAuthor(`Weather data for ${info.location.city} - ${info.location.country}`)
-				.setFooter(`Weather data pulled from ${info.image.title} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+				.setFooter(`Weather data pulled from ${info.image.title} on ${momentFormat(new Date(), this.client)}`)
 				.setThumbnail(info.item.description.slice(19, 56))
 				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 				.addField('💨 Wind Speed', `${info.wind.speed} ${info.units.speed}`, true)
@@ -124,7 +118,7 @@ module.exports = class weatherCommand extends commando.Command {
 				.addField(`🛰️ Forecast ${this.convertDays(info.item.forecast[2].day)} ${info.item.forecast[2].date.slice(0, -5)}`,
 					`High: ${info.item.forecast[2].high} °${info.units.temperature} | Low: ${info.item.forecast[2].low} °${info.units.temperature}`, true);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(weatherEmbed);
 		}

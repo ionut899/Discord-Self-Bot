@@ -29,7 +29,8 @@ const Discord = require('discord.js'),
 	moment = require('moment'),
 	path = require('path'),
 	request = require('snekfetch'),
-	mdobj = require(path.join(__dirname, 'metadata.js')).MetaDataObject; // eslint-disable-line sort-vars
+	mdobj = require(path.join(__dirname, 'metadata.js')).MetaDataObject, // eslint-disable-line sort-vars,
+	{deleteCommandMessages} = require('../../util.js');
 
 const themeEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
@@ -52,12 +53,6 @@ module.exports = class themeNameCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	async run (msg, args) {
@@ -100,7 +95,7 @@ module.exports = class themeNameCommand extends commando.Command {
 				themeData.nsfw === '0' ? themeEmbed.setImage(`https://themeplaza.eu/download/${themeID}/preview`) : null;
 				msg.channel.nsfw ? themeEmbed.setImage(`https://themeplaza.eu/download/${themeID}/preview`) : null;
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.embed(themeEmbed, `https://themeplaza.eu/item/${args.themeID}`);
 			}

@@ -24,7 +24,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class threeDSguideCommand extends commando.Command {
 	constructor (client) {
@@ -38,12 +39,6 @@ module.exports = class threeDSguideCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const plaiGuideEmbed = new Discord.MessageEmbed();
 
@@ -54,7 +49,7 @@ module.exports = class threeDSguideCommand extends commando.Command {
 			.addField('\u200b', 'https://3ds.guide')
 			.setThumbnail('https://favna.s-ul.eu/d0bn8E0M.png');
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		
 		return msg.embed(plaiGuideEmbed, 'https://3ds.guide');
 	}

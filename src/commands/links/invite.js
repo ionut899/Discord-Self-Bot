@@ -24,7 +24,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class inviteCommnad extends commando.Command {
 	constructor (client) {
@@ -39,24 +40,18 @@ module.exports = class inviteCommnad extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const shillEmbed = new Discord.MessageEmbed();
 
 		shillEmbed
 			.setTitle('Discord-Self-Bot by Favna')
 			.setDescription('Empower your Discord experience with a fully modular and expansive set of commands')
-			.setThumbnail('https://selfbot.favna.xyz/images/selfbot.png')
-			.setURL('https://selfbot.favna.xyz')
+			.setThumbnail('https://favna.xyz/images/appIcons/selfbot.png')
+			.setURL('https://favna.xyz/selfbot')
 			.addField('​', '[Website](https://selfbot.favna.xyz) | [GitHub](https://github.com/Favna/Discord-Self-Bot) | [Wiki](https://github.com/Favna/Discord-Self-Bot/wiki)');
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
-		return msg.embed(shillEmbed, 'Find information on the bot here https://selfbot.favna.xyz');
+		return msg.embed(shillEmbed, 'Find information on the bot here https://favna.xyz/selfbot');
 	}
 };

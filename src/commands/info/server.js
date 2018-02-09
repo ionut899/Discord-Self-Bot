@@ -25,7 +25,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	moment = require('moment');
+	{deleteCommandMessages, momentFormat} = require('../../util.js');
 
 module.exports = class serverInfoCommand extends commando.Command {
 	constructor (client) {
@@ -59,12 +59,6 @@ module.exports = class serverInfoCommand extends commando.Command {
 				return 'Scan messages sent by all members';
 			default:
 				return 'Content Filter unknown';
-		}
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
 		}
 	}
 
@@ -125,13 +119,13 @@ module.exports = class serverInfoCommand extends commando.Command {
 			.addField('Number of emojis', guild.emojis.size, true)
 			.addField('Number of roles', guild.roles.size, true)
 			.addField('Number of channels', guildChannels, true)
-			.addField('Created At', moment(guild.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
+			.addField('Created At', momentFormat(guild.createdTimestamp, this.client), false)
 			.addField('Verification Level', this.verificationFilter(guild.verificationLevel), false)
 			.addField('Explicit Content Filter', this.contentFilter(guild.explicitContentFilter), false);
 
 		guild.splashURL() !== null ? serverEmbed.setImage(guild.splashURL()) : null;
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(serverEmbed);
 	}

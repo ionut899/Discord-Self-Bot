@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class jumbolettersCommand extends commando.Command {
 	constructor (client) {
@@ -44,12 +45,6 @@ module.exports = class jumbolettersCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	fetchNumberWord (num) {
@@ -98,7 +93,7 @@ module.exports = class jumbolettersCommand extends commando.Command {
 			}
 		}
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.say(jumboString.join(' '));
 	}

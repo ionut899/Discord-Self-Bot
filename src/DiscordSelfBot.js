@@ -25,9 +25,9 @@
 
 const Commando = require('discord.js-commando'),
 	Discord = require('discord.js'),
-	moment = require('moment'),
 	path = require('path'),
 	sqlite = require('sqlite'),
+	{momentFormat} = require(path.join(__dirname, 'util.js')),
 	{oneLine, stripIndents} = require('common-tags'),
 	{globalCommandPrefix, ownerID, webhookID, webhooktoken} = require(path.join(__dirname, 'auth.json'));
 
@@ -147,7 +147,7 @@ class DiscordSelfBot {
 							.setAuthor(msg.channel.type === 'text'
 								? `${msg.member ? msg.member.displayName : 'someone'} dropped your name in #${msg.channel.name} in ${msg.guild.name}`
 								: `${msg.author.username} sent a message with your name`, msg.author.displayAvatarURL())
-							.setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+							.setFooter(`Message dates from ${momentFormat(msg.createdAt, this.client)}`)
 							.setColor(msg.member ? msg.member.displayHexColor : '#535B62')
 							.setThumbnail(msg.author.displayAvatarURL())
 							.addField('Message Content', msg.cleanContent.length > 1024 ? msg.cleanContent.slice(0, 1024) : msg.cleanContent)
@@ -168,7 +168,7 @@ class DiscordSelfBot {
 						.setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
 						.setTitle(`Message from ${this.client.guilds.get(dataArr[0][0]).channels.get(dataArr[0][1]).name} on ${this.client.guilds.get(dataArr[1][0]).name}`)
 						.setDescription(msg.content)
-						.setFooter(`Message dates from ${moment(msg.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+						.setFooter(`Message dates from ${momentFormat(msg.createdAt, this.client)}`);
 
 					this.client.guilds.get(dataArr[1][0]).channels.get(dataArr[1][1]).send({'embed': forwardEmbed});
 				}

@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	scalc = require('scalc');
+	scalc = require('scalc'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class mathCommand extends commando.Command {
 	constructor (client) {
@@ -48,12 +49,6 @@ module.exports = class mathCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const mathEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
@@ -62,7 +57,7 @@ module.exports = class mathCommand extends commando.Command {
 			.addField('Equation', args.equation.toString(), false)
 			.addField('Result', scalc(args.equation), false);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(mathEmbed);
 	}

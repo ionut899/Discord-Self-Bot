@@ -26,11 +26,8 @@
 const Discord = require('discord.js'),
 	card = require('creditcardutils'),
 	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	{
-		oneLine,
-		stripIndents
-	} = require('common-tags');
+	{oneLine, stripIndents} = require('common-tags'),
+	{capitalizeFirstLetter, deleteCommandMessages, momentFormat} = require('../../util.js');
 
 module.exports = class creditgenCommand extends commando.Command {
 	constructor (client) {
@@ -61,16 +58,6 @@ module.exports = class creditgenCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	capitalizeFirstLetter (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	generateAmexNumber () {
@@ -259,7 +246,7 @@ module.exports = class creditgenCommand extends commando.Command {
 			/*  eslint-enable no-nested-ternary*/
 			embed = new Discord.MessageEmbed(),
 			info = stripIndents `
-			**Issuing network**: ${this.capitalizeFirstLetter(args.network)}
+			**Issuing network**: ${capitalizeFirstLetter(args.network)}
 			**Card Number**: ${card.formatCardNumber(cardNum)}
 			**Name**: ${this.randomizeFirstName()} ${this.randomizeSecondName()}
 			**Address**: ${this.randomizeAddress()} ${Math.floor(Math.random() * 150) + 1}
@@ -278,9 +265,9 @@ module.exports = class creditgenCommand extends commando.Command {
 					? 'https://i.imgur.com/oCOOUn0.png'
 					: 'https://i.imgur.com/mETGJCm.png')
 			/*  eslint-enable no-nested-ternary*/
-			.setFooter(oneLine `${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+			.setFooter(oneLine(momentFormat(new Date(), this.client)));
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(embed);
 	}

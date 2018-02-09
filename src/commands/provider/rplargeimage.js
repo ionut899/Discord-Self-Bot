@@ -24,7 +24,8 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class rplargeimageCommand extends commando.Command {
 	constructor (client) {
@@ -46,12 +47,6 @@ module.exports = class rplargeimageCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	/* eslint max-depth: ["error", 5]*/
@@ -95,7 +90,8 @@ module.exports = class rplargeimageCommand extends commando.Command {
 					}
 
 					this.client.provider.set('global', 'rplargeimage', imageID);
-					this.deleteCommandMessages(msg);
+					
+					deleteCommandMessages(msg, this.client);
 
 					return msg.reply(oneLine `Your RichPresence LargeImageID has been set to \`${args.largeimage}\``);
 				}

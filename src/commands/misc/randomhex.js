@@ -24,7 +24,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class RandomHexCommand extends commando.Command {
 	constructor (client) {
@@ -39,12 +40,6 @@ module.exports = class RandomHexCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const embed = new Discord.MessageEmbed(),
 			hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -53,7 +48,7 @@ module.exports = class RandomHexCommand extends commando.Command {
 			.setColor(hex)
 			.setDescription(hex);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		msg.embed(embed);
 	}

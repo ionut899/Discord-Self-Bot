@@ -24,10 +24,8 @@
  */
 
 const commando = require('discord.js-commando'),
-	{
-		oneLine,
-		stripIndents
-	} = require('common-tags');
+	{oneLine, stripIndents} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class ChannelLinkSetupCommand extends commando.Command {
 	constructor (client) {
@@ -75,18 +73,12 @@ module.exports = class ChannelLinkSetupCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const dataArr = [args.source.split('|'), args.target.split('|')];
 
 		this.client.provider.set('global', 'clconfig', dataArr);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(stripIndents `${oneLine `Linked the
 \`${this.client.guilds.get(dataArr[0][0]).channels.get(dataArr[0][1]).name}\` channel on the \`${this.client.guilds.get(dataArr[0][0]).name}\` server to the

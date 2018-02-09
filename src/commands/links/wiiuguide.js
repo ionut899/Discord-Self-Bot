@@ -24,7 +24,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class wiiUGuideCommand extends commando.Command {
 	constructor (client) {
@@ -38,12 +39,6 @@ module.exports = class wiiUGuideCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const wiiuGuideEmbed = new Discord.MessageEmbed();
 
@@ -54,7 +49,7 @@ module.exports = class wiiUGuideCommand extends commando.Command {
 			.addField('\u200b', 'https://wiiu.guide')
 			.setThumbnail('https://favna.s-ul.eu/dy0mg0XC.png');
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(wiiuGuideEmbed, 'https://wiiu.guide');
 	}

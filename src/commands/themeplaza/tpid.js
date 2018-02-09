@@ -28,7 +28,8 @@ const Discord = require('discord.js'),
 	moment = require('moment'),
 	path = require('path'),
 	request = require('snekfetch'),
-	mdobj = require(path.join(__dirname, 'metadata.js')); // eslint-disable-line sort-vars
+	mdobj = require(path.join(__dirname, 'metadata.js')), // eslint-disable-line sort-vars,
+	{deleteCommandMessages} = require('../../util.js');
 
 const themeEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
@@ -53,12 +54,6 @@ module.exports = class themeIDCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 
 		try {
@@ -74,7 +69,7 @@ module.exports = class themeIDCommand extends commando.Command {
 					.setThumbnail(`https://themeplaza.eu/download/${args.themeID}/qr`)
 					.setDescription(themeData.description)
 					.addField('Uploader', themeData.author, true)
-					.addField('Upload Date', moment(themeData.upload_data).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
+					.addField('Upload Date', moment(themeData.upload_data).format('MMMM Do YYYY'), true)
 					.addField('Amount of downloads', `${themeData.download_count}`, true)
 					.addField('Amount of likes', `${themeData.likes}`, true)
 					.addField('NSFW Level', mdobj.nsfw[themeData.nsfw], true)
@@ -95,7 +90,7 @@ module.exports = class themeIDCommand extends commando.Command {
 				themeData.nsfw === '0' ? themeEmbed.setImage(`https://themeplaza.eu/download/${args.themeID}/preview`) : null;
 				msg.channel.nsfw ? themeEmbed.setImage(`https://themeplaza.eu/download/${args.themeID}/preview`) : null;
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.embed(themeEmbed, `https://themeplaza.eu/item/${args.themeID}`);
 			}

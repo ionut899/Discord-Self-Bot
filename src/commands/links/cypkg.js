@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class cydiaPackageCommand extends commando.Command {
 	constructor (client) {
@@ -51,14 +52,8 @@ module.exports = class cydiaPackageCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.say(`To find this package on Cydia follow this URL: https://cydia.saurik.com/api/share#?source=${args.repo}/&package=${args.package}`);
 	}

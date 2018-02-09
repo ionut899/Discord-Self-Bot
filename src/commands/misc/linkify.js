@@ -38,12 +38,6 @@ module.exports = class linkifyCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		if (msg.attachments.first() && msg.attachments.first().url) {
 			return msg.say(msg.attachments.first().url);

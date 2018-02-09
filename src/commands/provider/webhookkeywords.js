@@ -24,7 +24,8 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class webhookkeywordsCommand extends commando.Command {
 	constructor (client) {
@@ -48,16 +49,10 @@ module.exports = class webhookkeywordsCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		this.client.provider.set('global', 'webhookkeywords', args.keywords.split(','));
-
-		this.deleteCommandMessages(msg);
+		
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(oneLine `Webhook Keywords have been set to \`${args.keywords.replace(/,/gim, ', ')}\`. 
         Make sure to enable webhooks with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}webhooktoggle\`

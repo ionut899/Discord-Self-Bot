@@ -26,7 +26,8 @@
 const Discord = require('discord.js'),
 	Pornsearch = require('pornsearch').default,
 	commando = require('discord.js-commando'),
-	random = require('node-random');
+	random = require('node-random'),
+	{deleteCommandMessages} = require('../../util.js');
 
 const pornEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
@@ -52,12 +53,6 @@ module.exports = class porngifsCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 		const search = new Pornsearch(args.pornInput),
 			gifs = await search.gifs(); // eslint-disable-line sort-vars
@@ -78,7 +73,7 @@ module.exports = class porngifsCommand extends commando.Command {
 					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 					.addField('Gif webm', `[Click Here](${gifs[gif].webm})`, true);
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.embed(pornEmbed, gifs[gif].webm);
 			});
