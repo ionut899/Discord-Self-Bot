@@ -52,7 +52,7 @@ module.exports = class timeCommand extends commando.Command {
 		/* eslint-disable newline-per-chained-call */
 		return msg.say(oneLine `
             :clock${moment.utc().set('hours', utcHours).format('hh') < 10 ? `${moment.utc().set('hours', utcHours).format('hh').slice(1)}` : moment.utc().set('hours', utcHours).format('hh')}:
-            Current time for **${msg.guild ? msg.member.displayName : this.client.user.name}** is 
+            Current time for **${msg.guild ? msg.member.displayName : this.client.user.username}** is 
             ${moment.utc().set('hours', utcHours).format('`HH:mm` (`hh:mm A`)')}`);
 	}
 };
