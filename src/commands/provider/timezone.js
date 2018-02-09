@@ -24,52 +24,41 @@
  */
 
 const commando = require('discord.js-commando'),
-	moment = require('moment-timezone');
+	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class zoneConvCommand extends commando.Command {
+module.exports = class timezoneCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'zoneconverter',
-			'memberName': 'zoneconverter',
-			'group': 'info',
-			'aliases': ['time', 'conv', 'zone', 'timeconv'],
-			'description': 'Converts current time to specified timezone',
-			'format': 'TimeIn24HFormat TimezoneToConvertToInTZDatabaseFormat',
-			'examples': ['zoneconverter 18:00 America/New_York'],
+			'name': 'timezone',
+			'memberName': 'timezone',
+			'group': 'provider',
+			'aliases': ['tz', 'tzone'],
+			'description': 'Set your timezone in UTC offset',
+			'format': '[-]UTCOffset',
+			'examples': ['timezone 6'],
 			'guildOnly': false,
 			'args': [
 				{
-					'key': 'time',
-					'prompt': 'What time to convert? (24 hour format)',
-					'type': 'string'
-				},
-				{
 					'key': 'zone',
-					'prompt': 'What timezone to convert to?',
-					'type': 'string'
+					'prompt': 'What is your timezone\'s UTC offset?',
+					'type': 'integer',
+					'validate': (time) => {
+						if (time > -12 && time < 12) {
+							return true;
+						}
+
+						return 'Time has to be between -12 and 12';
+					}
 				}
 			]
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
-		const convertedTime = moment(`${moment().format('YYYY-MM-DD')} ${args.time}`).tz(args.zone)
-			.format('MMMM Do | HH:mm');
+		this.client.provider.set('global', 'timezone', args.zone);
 
-		if (convertedTime.split(' | ')[1] === args.time) {
-			return msg.say('***The provided timezone either does not exist or has the same time as your own.\n' +
-                'For the list of correct timezones see this table: <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>***');
-		}
+		deleteCommandMessages(msg, this.client);
 
-		this.deleteCommandMessages(msg);
-
-		return msg.say(`***When it is ${args.time} in ${moment.tz.guess()} it will be ${convertedTime} in ${args.zone}***`);
-
+		return msg.reply(`Your timezone has been set to \`${args.zone < 0 ? `UTC ${args.zone}` : `UTC +${args.zone}`}\`. You can now use the \'${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}time\' command with your timezone`);
 	}
 };
