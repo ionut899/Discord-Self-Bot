@@ -63,9 +63,6 @@ module.exports = class activityCommand extends commando.Command {
 
 	/* eslint complexity: ["error", 35], max-statements: ["error", 50]*/
 	async run (msg, args) {
-
-		args.member = this.client.guilds.get('246821351585742851').members.get('311193975635705858');
-
 		const activity = args.member.user.presence.activity,
 			ava = args.member.user.displayAvatarURL(),
 			embed = new Discord.MessageEmbed(),
