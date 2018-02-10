@@ -25,15 +25,18 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	{deleteCommandMessages, momentFormat} = require('../../util.js');
-	
+	{
+		deleteCommandMessages,
+		momentFormat
+	} = require('../../util.js');
+
 module.exports = class listEmojisCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'listemojis',
 			'memberName': 'listemojis',
 			'group': 'emojis',
-			'aliases': ['listemo', 'emolist', 'listemoji'],
+			'aliases': ['listemo', 'emolist', 'listemoji', 'emotes'],
 			'description': 'Gets all available custom emojis from a server',
 			'format': 'ServerID|ServerName(partial or full)',
 			'examples': ['emojis Favna\'s Selfbot'],
@@ -42,39 +45,36 @@ module.exports = class listEmojisCommand extends commando.Command {
 				{
 					'key': 'server',
 					'prompt': 'What server would you like the emojis from?',
-					'type': 'guild'
+					'type': 'guild',
+					'default': 'current'
 				}
 			]
 		});
 	}
 
 	run (msg, args) {
-		const emojisEmbed = new Discord.MessageEmbed(),
-			emojisFirst = [],
-			emojisSecond = [],
-			emojisThird = [],
-			guildMojiNames = args.server.emojis.map(gmoji => gmoji.name);
+		const embed = new Discord.MessageEmbed(),
+			server = args.server === 'current' ? msg.guild : args.server;
 
-		for (let index = 0; index < guildMojiNames.length; index += 1) {
-			if (emojisFirst.toString().length <= 900) {
-				emojisFirst.push(`\`:${guildMojiNames[index]}:\` for ${args.server.emojis.find('name', guildMojiNames[index])}`);
-			} else if (emojisSecond.toString().length <= 900) {
-				emojisSecond.push(`\`:${guildMojiNames[index]}:\` for ${args.server.emojis.find('name', guildMojiNames[index])}`);
-			} else {
-				emojisThird.push(`\`:${guildMojiNames[index]}:\` for ${args.server.emojis.find('name', guildMojiNames[index])}`);
-			}
-		}
+		let animEmotes = [],
+			staticEmotes = [];
 
-		emojisEmbed
-			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-			.setFooter(`Command issued at ${momentFormat(new Date(), this.client)}`)
-			.setDescription(`Emojis from the server \`${args.server.name}\``);
-		emojisFirst.length !== 0 ? emojisEmbed.addField('\u200b', emojisFirst, true) : emojisEmbed.addField('This server has no custom emojis', 'Although they should totally get some', true); // eslint-disable-line max-len
-		emojisSecond.length !== 0 ? emojisEmbed.addField('\u200b', emojisSecond, true) : null;
-		emojisThird.length !== 0 ? emojisEmbed.addField('\u200b', emojisThird, true) : null;
+		server.emojis.forEach((e) => {
+			e.animated ? animEmotes.push(`<a:${e.name}:${e.id}>`) : staticEmotes.push(`<:${e.name}:${e.id}>`);
+		});
+
+		embed
+			.setColor(msg.guild ? msg.member.displayHexColor : '#FF0000')
+			.setAuthor(`${staticEmotes.length + animEmotes.length} ${server.name} Emotes`, server.iconURL({'format': 'png'}))
+			.setFooter(`Emotes list from ${momentFormat(new Date(), this.client)}`);
+
+		staticEmotes = staticEmotes.length !== 0 ? `__**${staticEmotes.length} Static Emotes**__\n${staticEmotes.join('')}` : '';
+		animEmotes = animEmotes.length !== 0 ? `\n\n__**${animEmotes.length} Animated Emotes**__\n${animEmotes.join('')}` : '';
+
+		embed.setDescription(staticEmotes + animEmotes);
 
 		deleteCommandMessages(msg, this.client);
 
-		return msg.embed(emojisEmbed);
+		return msg.channel.send(embed);
 	}
 };
