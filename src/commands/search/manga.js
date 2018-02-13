@@ -26,7 +26,7 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	maljs = require('maljs'),
-	{deleteCommandMessages, fetchColor} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class mangaCommand extends commando.Command {
 	constructor (client) {
@@ -47,7 +47,6 @@ module.exports = class mangaCommand extends commando.Command {
 				}
 			]
 		});
-		this.embedColor = '#FF0000';
 	}
 
 	async run (msg, args) {
@@ -60,7 +59,7 @@ module.exports = class mangaCommand extends commando.Command {
 			if (manga) {
 
 				manEmbed
-					.setColor(await fetchColor(manga.cover, this.embedColor))
+					.setColor(msg.guild ? msg.member.displayHexColor : '#FF0000')
 					.setTitle(manga.title)
 					.setImage(manga.cover)
 					.setDescription(manga.description)
