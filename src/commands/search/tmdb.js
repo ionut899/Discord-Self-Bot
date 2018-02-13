@@ -23,14 +23,12 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires*/
-
 const Discord = require('discord.js'),
-	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	moviedb = require('moviedb')(auth.TheMovieDBV3ApiKey),
-	{deleteCommandMessages, fetchColor} = require('../../util.js');
+	request = require('snekfetch'),
+	{TheMovieDBV3ApiKey} = require('../../auth.json'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class movieCommand extends commando.Command {
 	constructor (client) {
@@ -40,60 +38,61 @@ module.exports = class movieCommand extends commando.Command {
 			'group': 'search',
 			'aliases': ['movie'],
 			'description': 'Finds movies and TV shows on TheMovieDB',
-			'format': 'MovieName|ShowName',
+			'format': 'MovieName [release_year_movie]',
 			'examples': ['tmdb Ocean\'s Eleven 2001'],
 			'guildOnly': false,
 			'args': [
 				{
 					'key': 'name',
-					'prompt': 'Please supply movie title',
-					'type': 'string',
-					'default': 'now you see me'
+					'prompt': 'What movie do you want to find?',
+					'type': 'string'
 				}
 			]
 		});
-		this.embedColor = '#FF0000';
 	}
 
 	async run (msg, args) {
-		const movieEmbed = new Discord.MessageEmbed(),
-			tmdb = (m, q) => new Promise((res, rej) => {
-				moviedb[m](q, (err, data) => err ? rej(err) : res(data)); // eslint-disable-line no-confusing-arrow
-			}),
-			tmdbres = await tmdb('searchMovie', {'query': args.name});
+		const embed = new Discord.MessageEmbed(),
+			search = await request.get('https://api.themoviedb.org/3/search/movie')
+				.query('api_key', TheMovieDBV3ApiKey)
+				.query('query', args.name)
+				.query('include_adult', false);
 
-		if (tmdbres && tmdbres.results.length !== 0) {
-			const movieres = await tmdb('movieInfo', {'id': tmdbres.results[0].id});
+		if (search.ok && search.body.total_results > 0) {
+			const details = await request.get(`https://api.themoviedb.org/3/movie/${search.body.results[0].id}`)
+				.query('api_key', TheMovieDBV3ApiKey);
 
-			if (movieres) {
-				const embedColor = movieres.backdrop_path ? await fetchColor(`http://image.tmdb.org/t/p/w640${movieres.backdrop_path}`, this.embedColor) : this.embedColor;
+			if (details.ok) {
+				const movie = details.body;
 
-				movieEmbed
-					.setImage(movieres.backdrop_path ? `http://image.tmdb.org/t/p/w640${movieres.backdrop_path}` : null)
-					.setThumbnail(movieres.poster_path ? `http://image.tmdb.org/t/p/w640${movieres.poster_path}` : null)
-					.setColor(embedColor)
-					.addField('Title', `[${movieres.title}](https://www.themoviedb.org/movie/${movieres.id})`, true)
-					.addField('Release Date', moment(movieres.release_date).format('MMMM Do YYYY'), true)
-					.addField('Runtime', `${movieres.runtime} minutes`, true)
-					.addField('User Score', movieres.vote_average, true)
-					.addField('Genre', movieres.genres.length !== 0 ? movieres.genres.map(genre => genre.name).slice(0, 1) : 'None on TheMovieDB', true)
-					.addField('Production Company',
-						movieres.production_companies.length !== 0 ? movieres.production_companies.map(company => company.name).slice(0, 1) : 'None on TheMovieDB',
-						true)
-					.addField('Status', movieres.status, true)
-					.addField('Collection', movieres.belongs_to_collection !== null ? movieres.belongs_to_collection.name : 'none', true)
-					.addField('Home Page', movieres.homepage !== '' ? '[Click Here](idRes.homepage)' : 'none', true)
-					.addField('IMDB Page', movieres.imdb_id_id !== '' ? `[Click Here](http://www.imdb.com/title/${movieres.imdb_id})` : 'none', true)
-					.addField('Description', movieres.overview);
+				embed
+					.setTitle(movie.title)
+					.setURL(`https://www.themoviedb.org/movie/${movie.id}`)
+					.setColor(msg.guild ? msg.member.displayHexColor : '#FF0000')
+					.setImage(`https://image.tmdb.org/t/p/original${movie.backdrop_path}`)
+					.setThumbnail(`https://image.tmdb.org/t/p/original${movie.poster_path}`)
+					.setDescription(movie.overview)
+					.addField('Runtime', `${movie.runtime} minutes`, true)
+					.addField('User Score', movie.vote_average, true)
+					.addField('Status', movie.status, true)
+					.addField('Release Date', moment(movie.release_date).format('MMMM Do YYYY'), true)
+					.addField('Collection', movie.belongs_to_collection !== null ? movie.belongs_to_collection.name : 'none', true)
+					.addField('IMDB Page', movie.imdb_id_id !== '' ? `[Click Here](http://www.imdb.com/title/${movie.imdb_id})` : 'none', true)
+					.addField('Genres', movie.genres.length !== 0 ? movie.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB')
+					.addField('Production Companies', movie.production_companies.length !== 0 ? movie.production_companies.map(company => company.name).join(', ') : 'None on TheMovieDB');
 
 				deleteCommandMessages(msg, this.client);
 
-				return msg.embed(movieEmbed);
+				return msg.embed(embed);
 			}
 
-			return msg.reply('⚠️ ***nothing found***');
+			deleteCommandMessages(msg, this.client);
+			
+			return msg.reply(`***Failed to fetch details for \`${args.name}\`***`);
 		}
 
-		return msg.reply('⚠️ ***nothing found***');
+		deleteCommandMessages(msg, this.client);
+
+		return msg.reply(`***No movies found for \`${args.name}\`***`);
 	}
 };

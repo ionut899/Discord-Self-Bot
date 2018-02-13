@@ -51,7 +51,6 @@
     "moment-duration-format": "2.2.1",
     "moment-timezone": "^0.5.14",
     "money": "^0.2.0",
-    "moviedb": "^0.2.10",
     "node-random": "^1.0.1",
     "node-vibrant": "^3.0.0",
     "open-exchange-rates": "^0.3.0",
