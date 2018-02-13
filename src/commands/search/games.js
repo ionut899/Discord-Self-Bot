@@ -24,11 +24,11 @@
  */
 
 const Discord = require('discord.js'),
-	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	igdbapi = require('igdb-api-node').default,
 	moment = require('moment'),
-	{deleteCommandMessages, fetchColor} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js'),
+	{igdbAPIKey} = require('../../auth.json');
 
 module.exports = class gameCommand extends commando.Command {
 	constructor (client) {
@@ -50,7 +50,6 @@ module.exports = class gameCommand extends commando.Command {
 			]
 
 		});
-		this.embedColor = '#FF0000';
 	}
 
 	extractNames (arr) {
@@ -70,7 +69,7 @@ module.exports = class gameCommand extends commando.Command {
 	async run (msg, args) {
 		/* eslint-disable sort-vars*/
 		const gameEmbed = new Discord.MessageEmbed(),
-			igdb = igdbapi(auth.igdbAPIKey),
+			igdb = igdbapi(igdbAPIKey),
 			gameInfo = await igdb.games({
 				'search': args.game,
 				'fields': ['name', 'summary', 'rating', 'developers', 'publishers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
@@ -87,7 +86,6 @@ module.exports = class gameCommand extends commando.Command {
 				'ids': gameInfo.body[0].genres,
 				'fields': ['name']
 			}),
-			hexColor = await fetchColor(coverImg, this.embedColor),
 			platformInfo = await igdb.platforms({
 				'ids': gameInfo.body[0].platforms,
 				'fields': ['name']
@@ -96,7 +94,7 @@ module.exports = class gameCommand extends commando.Command {
 		/* eslint-enable sort-vars*/
 
 		gameEmbed
-			.setColor(hexColor)
+			.setColor(msg.guild ? msg.member.displayHexColor : '#FF0000')
 			.setAuthor(gameInfo.body[0].name, 'https://favna.s-ul.eu/O704Q7py.png')
 			.setThumbnail(coverImg)
 			.setFooter('Info pulled from IGDB')
