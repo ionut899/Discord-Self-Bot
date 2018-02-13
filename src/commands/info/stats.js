@@ -61,7 +61,7 @@ module.exports = class statsCommand extends commando.Command {
 
 		statsEmbed
 			.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
-			.setAuthor('Selfbot Stats', 'https://selfbot.favna.xyz/images/selfbot.png')
+			.setAuthor('Selfbot Stats', 'https://favna.xyz/images/appIcons/selfbot.png')
 			.addField('Guilds', this.client.guilds.size, true)
 			.addField('Channels', this.client.channels.size, true)
 			.addField('Users', this.client.users.size, true)
@@ -77,7 +77,7 @@ module.exports = class statsCommand extends commando.Command {
 			.addField('\u200b', oneLine `Use the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\` command to get the list of commands available to you in a DM. 
             The default prefix is \`$\`. You can change this with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}prefix\` command. 
             If you ever forget the command prefix, just use \`@${this.client.user.tag} prefix\``)
-			.setFooter(`Discord-Self-Bot | ${momentFormat(new Date(), this.client)}`, 'https://selfbot.favna.xyz/images/selfbot.png');
+			.setFooter(`Discord-Self-Bot | ${momentFormat(new Date(), this.client)}`, 'https://favna.xyz/images/appIcons/selfbot.png');
 
 		deleteCommandMessages(msg, this.client);
 

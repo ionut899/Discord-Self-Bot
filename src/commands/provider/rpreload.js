@@ -60,7 +60,7 @@ module.exports = class rpreloadCommand extends commando.Command {
 					'type': this.client.provider.get('global', 'rptype', 'WATCHING'),
 					'url': this.client.provider.get('global', 'rpurl', null),
 					'details': this.client.provider.get('global', 'rpdetails', 'Made by Favna'),
-					'state': this.client.provider.get('global', 'rpstate', 'https://selfbot.favna.xyz'),
+					'state': this.client.provider.get('global', 'rpstate', 'https://favna.xyz/selfbot'),
 					'timestamps': this.client.provider.get('global', 'rptimestamptoggle', false) ? {
 						'start': Date.now(),
 						'end': this.client.provider.get('global', 'rptoggletimeend', true) ? this.addHours(new Date(), this.client.provider.get('global', 'rptimeend', 1)) : null

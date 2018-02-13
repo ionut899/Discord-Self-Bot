@@ -36,7 +36,7 @@ module.exports = class rpstateCommand extends commando.Command {
 			'aliases': ['state'],
 			'description': 'Set your Rich Presence state',
 			'format': 'StateText',
-			'examples': ['rpstate https://selfbot.favna.xyz'],
+			'examples': ['rpstate https://favna.xyz/selfbot'],
 			'guildOnly': false,
 			'args': [
 				{

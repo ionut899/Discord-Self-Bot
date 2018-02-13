@@ -48,7 +48,7 @@ module.exports = class inviteCommnad extends commando.Command {
 			.setDescription('Empower your Discord experience with a fully modular and expansive set of commands')
 			.setThumbnail('https://favna.xyz/images/appIcons/selfbot.png')
 			.setURL('https://favna.xyz/selfbot')
-			.addField('​', '[Website](https://selfbot.favna.xyz) | [GitHub](https://github.com/Favna/Discord-Self-Bot) | [Wiki](https://github.com/Favna/Discord-Self-Bot/wiki)');
+			.addField('​', '[Website](https://favna.xyz/selfbot) | [GitHub](https://github.com/Favna/Discord-Self-Bot) | [Wiki](https://github.com/Favna/Discord-Self-Bot/wiki)');
 
 		deleteCommandMessages(msg, this.client);
 

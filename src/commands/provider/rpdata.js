@@ -53,7 +53,7 @@ module.exports = class rpdataCommand extends commando.Command {
 				: this.client.user.displayAvatarURL({'format': 'png'}))
 			.setImage(this.client.provider.get('global', 'rptoggle', false)
 				? `https://cdn.discordapp.com/app-assets/${this.client.provider.get('global', 'rpappid')}/${this.client.provider.get('global', 'rplargeimage')}.png`
-				: 'https://selfbot.favna.xyz/images/selfbot.png')
+				: 'https://favna.xyz/images/appIcons/selfbot.png')
 			.addField('Name', this.client.provider.get('global', 'rpname', 'None Set'), true)
 			.addField('Type', this.client.provider.get('global', 'rptype', 'None Set'), true)
 			.addField('URL', this.client.provider.get('global', 'rpurl', 'None Set'), true)
