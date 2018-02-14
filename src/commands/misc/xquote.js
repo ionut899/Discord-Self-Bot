@@ -98,6 +98,8 @@ module.exports = class quoteCommand extends commando.Command {
 		if (quote) {
 			const quoteEmbed = new Discord.MessageEmbed();
 
+			let content = quote.cleanContent;
+
 			if (quote.member === null) {
 				quoteEmbed
 					.setAuthor(`Quoting ${quote.author.username}`, quote.author.displayAvatarURL())
@@ -107,16 +109,23 @@ module.exports = class quoteCommand extends commando.Command {
 					.setAuthor(`Quoting ${quote.member.displayName}`, quote.author.displayAvatarURL())
 					.setColor(quote.channel.type === 'text' ? quote.member.displayHexColor : '#FF0000');
 			}
-			quoteEmbed
-				.setFooter(`Message sent in #${quote.channel.name} on ${momentFormat(quote.createdAt, this.client)}`)
-				.setDescription(quote.cleanContent);
 
-			if (quote.cleanContent.match(/\bhttps?:\/\/[^\s>]+/gi) && !quote.attachments.first()) {
-				const img = await this.fetchPreview(quote.cleanContent.match(/\bhttps?:\/\/[^\s>]+/gi)[0]);
+			if (content.match(/\bhttps?:\/\/(?![^"\s<>]*(?:png|jpg|gif|webp|jpeg|svg))[^"\s<>]+\.[^"\s<>]+/im) && !quote.attachments.first()) {
+				const img = await this.fetchPreview(content.match(/\bhttps?:\/\/(?![^"\s<>]*(?:png|jpg|gif|webp|jpeg|svg))[^"\s<>]+\.[^"\s<>]+/im)[0]);
 
 				if (img) {
 					quoteEmbed.setImage(img);
 				}
+			}
+
+			if (content.match(/(https?:\/\/.*\.(?:png|jpg|gif|webp|jpeg|svg))/im)) {
+				const match = content.match(/(https?:\/\/.*\.(?:png|jpg|gif|webp|jpeg|svg))/im);
+
+				content = content.substring(0, match.index).match(/(?:<|>)/)
+					? content.substring(0, match.index - 1) + content.substring(match.index + match[0].length + 1)
+					: content.substring(0, match.index) + content.substring(match.index + match[0].length + 1);
+
+				quoteEmbed.setImage(match[0]);
 			}
 
 			if (quote.attachments.first()) {
@@ -126,6 +135,10 @@ module.exports = class quoteCommand extends commando.Command {
 					quoteEmbed.setImage(quote.attachments.first().url);
 				}
 			}
+
+			quoteEmbed
+				.setFooter(`Message sent in #${quote.channel.name} on ${momentFormat(quote.createdAt, this.client)}`)
+				.setDescription(content);
 
 			deleteCommandMessages(msg, this.client);
 
