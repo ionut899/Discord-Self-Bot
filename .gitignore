@@ -21,3 +21,4 @@ src/commands/search/data/*
 !src/commands/fun/pastas/navy.txt
 !src/commands/memes/images/everyone.jpg
 !src/commands/emojis/images/angery.png
+!src/commands/search/data/fileToEnsureFolderOnGit
