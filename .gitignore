@@ -12,13 +12,7 @@ src/auth.json
 
 # Files that are specific for all users
 src/settings.sqlite3
-src/commands/memes/images/*
-src/commands/emojis/images/*
-src/commands/fun/pastas/*
-src/commands/search/data/*
- 
-# Exclude single files from gitignore so the folders are created on Git
-!src/commands/fun/pastas/navy.txt
-!src/commands/memes/images/everyone.jpg
-!src/commands/emojis/images/angery.png
-!src/commands/search/data/fileToEnsureFolderOnGit
+src/commands/memes/images/
+src/commands/emojis/images/
+src/commands/fun/pastas/
+src/commands/search/data/
