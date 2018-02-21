@@ -2,6 +2,14 @@
 
 [![license](https://img.shields.io/github/license/Favna/Discord-Self-Bot.svg?style=flat-square)](https://github.com/Favna/Discord-Self-Bot/blob/master/LICENCE.md) [![Travis](https://img.shields.io/travis/Favna/Discord-Self-Bot.svg?style=flat-square)](https://travis-ci.org/Favna/Discord-Self-Bot) [![NodeV](https://img.shields.io/badge/Node-v8.5.0-FF0000.svg?style=flat-square)](https://nodejs.org/en/download/current/) [![Donate](https://img.shields.io/badge/Donate-PayPal-547ab8.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GY3CFCL25HQNJ) [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/Favna_)
 
+# WARNING!! THE DEVELOPMENT ON THIS PROJECT HAS SADLY STOPPED. THIS IS DUE TO DISCORD STAFF GOING DOWN ON SELFBOT USAGE MORE AND MORE OVER THE PAST MONTHS AND I CAN NO LONGER SUPPORT THE IDEA OF RUNNING A SELFBOT!
+
+_**This decision has been made in part for my own accounts safety as well as yours. Please do not take this decision the wrong way as I have no ill intentions with it. I really deeply do not like having to make this decision but it simply has to be done. For those who used Discord-Self-Bot primarily for Rich Presences I can strongly recommend you to check out JustDotJS' [SimplePresence](https://github.com/justdotJS/SimplePresence) application**_
+
+**Support will still be given but know that I will not make any changes to fix bugs. The Issue tracker has been removed as none will be fixed.**
+
+## Many features that were in the selfbot are also in my public server bot, Ribbon. Ribbon is still going to get fully supported as I hope it continue to grow. If you would like to invite Ribbon to your server you [can click here](https://discord.now.sh/376520643862331396?p8)
+
 
 This it the source for Favna's Discord-Self-Bot. Come join the dedicated server if you have any questions, concerns or other talk about to bot.
 

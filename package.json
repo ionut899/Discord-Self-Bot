@@ -5,20 +5,16 @@
   "author": "Favna",
   "license": "GPL-3.0",
   "main": "src/app.js",
-  "homepage": "https://selfbot.favna.xyz",
+  "homepage": "https://favna.xyz/selfbot",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Favna/discord-self-bot"
-  },
-  "bugs": {
-    "url": "https://github.com/Favna/discord-self-bot/issues"
   },
   "scripts": {
     "prestart": "yarn install",
     "lint": "./node_modules/.bin/eslint **/*.js",
     "lintfix": "./node_modules/.bin/eslint --fix **/*.js",
-    "start": "node src/app.js",
-    "test": "node src/test/test.js | tap-summary"
+    "start": "node src/app.js"
   },
   "keywords": [
     "discord",
@@ -74,8 +70,6 @@
   },
   "devDependencies": {
     "eslint": "4.17.0",
-    "eslint-plugin-node": "6.0.0",
-    "tap-summary": "^4.0.0",
-    "tape": "^4.6.3"
+    "eslint-plugin-node": "6.0.0"
   }
 }
