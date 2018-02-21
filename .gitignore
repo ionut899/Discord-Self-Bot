@@ -4,15 +4,19 @@ node_modules/
 # VS Code workspace settings
 .vscode/
 
-# Files for personal use
-src/auth.json
-
 # Any logs created
 *.log
 
-# Files that are specific for all users
+# Files that are specific to each user
 src/settings.sqlite3
+src/auth.json
 src/commands/memes/images/
 src/commands/emojis/images/
 src/commands/fun/pastas/
 src/commands/search/data/
+
+# Ignore gitkeep files to keep folders on git
+!src/commands/memes/images/*.gitkeep
+!src/commands/emojis/images/*.gitkeep
+!src/commands/fun/pastas/*.gitkeep
+!src/commands/search/data/*.gitkeep
