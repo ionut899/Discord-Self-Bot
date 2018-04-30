@@ -32,11 +32,8 @@ function Install-Dependancies {
     Write-Host "Setting up some dependancies. This may take a couple of minutes to more than 10 minutes depending on fast your system and download speeds are" -ForegroundColor Green -BackgroundColor Black
     
     Write-Host "Installing yarn"
-    npm i -g yarn pm2
-    
-    Write-Host "Installing build tools"
-    yarn global add windows-build-tools node-gyp node-pre-gyp
-    
+    npm i -g yarn windows-build-tools node-pre-gyp node-gyp pm2
+       
     Write-Host "Setting up node modules (can take a long time!)"
     yarn install
     
@@ -85,6 +82,7 @@ function Install-Dependancies {
     Write-Host "Starting the bot without pm2: yarn start" -ForegroundColor Green -BackgroundColor Black
 }
 function Install-Programs {
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     If([Environment]::Is64BitProcess) {
         $64bit=$true
     }
